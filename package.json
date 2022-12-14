@@ -9,12 +9,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vicons/antd": "^0.12.0",
     "axios": "^1.2.1",
     "dayjs": "^1.11.7",
+    "js-md5": "^0.7.3",
+    "moment": "^2.29.4",
     "naive-ui": "^2.34.2",
-    "vue": "^3.2.45"
+    "pinia": "^2.0.28",
+    "sass": "^1.56.2",
+    "unplugin-auto-import": "^0.12.1",
+    "unplugin-vue-components": "^0.22.12",
+    "vfonts": "^0.0.3",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@vicons/ionicons5": "^0.12.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.5.0",

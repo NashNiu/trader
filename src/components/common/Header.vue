@@ -39,9 +39,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="content-login">
-        <router-link>登录 / 注册</router-link>
-      </div>
+      <div class="content-login">登录 / 注册</div>
     </div>
   </header>
 </template>

@@ -4,36 +4,49 @@
       <h1 class="content-logo">
         <img src="/logo.png" />
       </h1>
-      <div class="content-nav">
-        <ul></ul>
-      </div>
+
       <div class="search-buy-login">
         <div class="content-search">
           <input type="" placeholder="请输入要搜索的品种" />
-          <n-icon size="40" :component="GameController" />
+          <el-icon><Search /></el-icon>
         </div>
-        <div class="content-shopping">
-          <el-icon color="#808080" :size="24"
-            ><shopping-cart style="width: 24px; height: 24px"
-          /></el-icon>
-        </div>
-        <div class="content-login">登录 / 注册</div>
+      </div>
+      <div class="content-nav">
+        <el-row :gutter="24">
+          <el-col :span="8"
+            ><div class="grid-content ep-bg-purple">
+              <span class="sp">HK<b>$0.00</b></span>
+              <span>Balance avaliable</span>
+            </div>
+          </el-col>
+          <el-col :span="8"
+            ><div class="grid-content ep-bg-purple">
+              <span class="sp">HK<b>$0.00</b></span>
+              <span>Net worth</span>
+            </div>
+          </el-col>
+          <el-col :span="8"
+            ><div class="grid-content ep-bg-purple">
+              <span class="sp">HK<b>$0.00</b></span>
+              <span>Deposit for maintenance</span>
+            </div>
+          </el-col>
+          <el-col :span="8"
+            ><div class="grid-content ep-bg-purple">
+              <span class="sp">HK<b>$0.00</b></span>
+              <span>Give good</span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <div class="content-login">
+        <router-link>登录 / 注册</router-link>
       </div>
     </div>
   </header>
 </template>
-
-<script>
-import { GameController } from '@vicons/ionicons5';
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  setup() {
-    return {
-      GameController,
-    };
-  },
-});
+<script setup>
+import { Search } from '@element-plus/icons-vue';
 </script>
 
 <style scoped>
@@ -57,6 +70,7 @@ header {
   height: 55px;
   margin: 10px 0;
   cursor: pointer;
+  margin-right: 100px;
 }
 .content-logo img {
   height: 100%;
@@ -65,22 +79,12 @@ header {
   width: 300px;
   height: 75px;
 }
-.content-nav ul {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  height: 75px;
-}
-.content-nav ul li {
-  font-size: 18px;
-  color: #808080;
-}
+
 .search-buy-login {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 650px;
+  width: 400px;
 }
 .content-search {
   display: flex;

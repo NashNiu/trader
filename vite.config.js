@@ -10,6 +10,21 @@ export default defineConfig({
   // 开发时候的端口号，默认为3000
   server: {
     port: 3001,
+    https: false,
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'http://192.168.0.94:9000/',
+        changeOrigin: true,
+        secure: false,
+        PathRewrite: {
+          '^/api': '',
+        },
+        headers: {
+          referer: 'http://127.0.0.1:3001/#/',
+        },
+      },
+    },
   },
   // 打包配置
   build: {

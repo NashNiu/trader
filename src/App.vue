@@ -1,14 +1,15 @@
 <script setup>
-import Header from './components/Header.vue';
-import Test from './components/Test.vue';
+import Header from './components/common/Header.vue';
+import Popular from './components/common/Popular.vue';
 </script>
 
 <template>
   <Header />
-  <Test />
+  <Popular />
 </template>
 
 <style scoped>
+@import './assets/css/reset.css';
 .logo {
   height: 6em;
   padding: 1.5em;

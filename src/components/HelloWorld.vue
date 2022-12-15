@@ -21,7 +21,11 @@ const userInfo = reactive({
 });
 onMounted(() => {
   //调接口，处理返回结果
-  getInfo({ gugeid: '3348847743', password: '123456' }).then((res) => {
+  getInfo({
+    username: '283990103@qq.com',
+    password: '57357613Tf',
+    type: '3',
+  }).then((res) => {
     userInfo.userName = res.userName;
     userInfo.age = res.age;
   });

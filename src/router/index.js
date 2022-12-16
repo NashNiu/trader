@@ -7,10 +7,9 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/HelloWorld',
-      name: 'HelloWorld',
-      //引入组件，我清除了组件中的所有内容
-      component: () => import('../components/HelloWorld.vue'),
+      path: '/Index',
+      name: 'Index',
+      component: () => import('../pages/Index.vue'),
     },
   ],
 });

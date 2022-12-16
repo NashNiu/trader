@@ -1,11 +1,9 @@
 <script setup>
-import Header from './components/common/Header.vue';
-import Popular from './components/common/Popular.vue';
+import Index from './pages/Index.vue';
 </script>
 
 <template>
-  <Header />
-  <Popular />
+  <Index />
 </template>
 
 <style scoped>

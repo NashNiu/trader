@@ -151,6 +151,7 @@ const onSubmitLogin = () => {
         sessionStorage.setItem('token',res.data.token);
         sessionStorage.setItem('userid',res.data.userid);
         sessionStorage.setItem('username',res.data.username);
+        location. reload();
       }else{
         ElMessage.error('登录失败！');
       }

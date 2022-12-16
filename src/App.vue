@@ -1,14 +1,11 @@
 <script setup>
-import Header from './components/common/Header.vue';
-import Popular from './components/common/Popular.vue';
+import Index from './pages/Index.vue';
+// import Trade from './pages/Trade.vue';
 </script>
 
 <template>
-  <div id="app">
-    <Header />
-    <!-- <router-view></router-view> -->
-    <Popular />
-  </div>
+  <Index />
+  <!-- <Trade /> -->
 </template>
 
 <style scoped>

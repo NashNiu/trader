@@ -19,3 +19,27 @@ export function setInfo(data) {
     data,
   });
 }
+// 获取验证码接口
+export function getCodeInterface(data) {
+  return request({
+    url: '/email?reg=' + data,
+    method: 'GET',
+  });
+}
+// 注册接口
+export function registerInterface(code,data) {
+  return request({
+    url: '/api/users/user/reg/3/' + code,
+    method: 'POST',
+    data,
+  });
+}
+// 登录接口
+export function loginInterface(data) {
+  return request({
+    url: '/api/auth/login?randomStr=*&code=*_*',
+    method: 'POST',
+    data,
+  });
+}
+

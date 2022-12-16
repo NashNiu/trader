@@ -25,12 +25,24 @@
           </ul>
         </div>
         <div class="right-side-box">
-          <a class="thm-btn header__cta-btn" href="#"><span>Login</span></a>
+          <a class="thm-btn header__cta-btn" href="#"><span @click="centerDialogVisible = !centerDialogVisible;">Login</span></a>
+        </div>
+        <div v-if="centerDialogVisible" class="positionBox">
+          <LoginRegister/>
         </div>
       </div>
     </nav>
   </header>
 </template>
+<script setup>
+import LoginRegister from '../../components/loginRegister/login.vue';
+import { ref } from 'vue';
+var centerDialogVisible = ref(false);
+if(!sessionStorage.getItem('token')){
+  centerDialogVisible = true;
+}
+</script>
+
 
 <style scoped>
 .page-wrapper {
@@ -194,5 +206,16 @@ a:visited {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+.positionBox{
+  width:480px;
+  height: 290px;
+  position: fixed;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 </style>

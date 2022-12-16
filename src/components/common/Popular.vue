@@ -5,7 +5,7 @@
     <el-table-column prop="d3" label="Sell" />
     <el-table-column>
       <template #header> </template>
-      <template #default="">
+      <template>
         <el-button round size="small" @click="visible = true">Sell</el-button>
       </template>
     </el-table-column>

@@ -6,23 +6,18 @@ import eslintPlugin from 'vite-plugin-eslint';
 const timeStamp = new Date().getTime();
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), eslintPlugin()],
+  // plugins: [vue(), eslintPlugin()],
+  plugins: [vue()],
   // 开发时候的端口号，默认为3000
   server: {
     port: 3001,
-    https: false,
-    open: true,
+    // https: false,
+    // open: true,
     proxy: {
-      '/api': {
+      '/abc': {
         target: 'http://192.168.0.94:9000/',
         changeOrigin: true,
-        secure: false,
-        PathRewrite: {
-          '^/api': '',
-        },
-        headers: {
-          referer: 'http://127.0.0.1:3001/#/',
-        },
+        rewrite: (path) => path.replace(/^\/abc/, ''),
       },
     },
   },

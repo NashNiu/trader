@@ -39,12 +39,19 @@
           </el-col>
         </el-row>
       </div>
-      <div class="content-login">登录 / 注册</div>
+      <div @click="login" class="content-login">登录 / 注册</div>
     </div>
   </header>
 </template>
 <script setup>
 import { Search } from '@element-plus/icons-vue';
+import {useRouter} from 'vue-router'
+const router=useRouter()
+const login = () => {
+  router.push({
+    path:'/login'
+  });
+}
 </script>
 
 <style scoped>

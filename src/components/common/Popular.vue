@@ -28,6 +28,7 @@
     </el-table-column>
     <el-table-column prop="d5" label="High/low" />
   </el-table>
+  <router-view></router-view>
 </template>
 
 <script setup>

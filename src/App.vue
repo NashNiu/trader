@@ -4,8 +4,11 @@ import Popular from './components/common/Popular.vue';
 </script>
 
 <template>
-  <Header />
-  <Popular />
+  <div id="app">
+    <Header />
+    <!-- <router-view></router-view> -->
+    <Popular />
+  </div>
 </template>
 
 <style scoped>

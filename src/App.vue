@@ -1,9 +1,11 @@
 <script setup>
-import Index from './pages/Index.vue';
+// import Index from './pages/Index.vue';
+import Trade from './pages/Trade.vue';
 </script>
 
 <template>
-  <Index />
+  <!-- <Index /> -->
+  <Trade />
 </template>
 
 <style scoped>

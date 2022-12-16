@@ -20,7 +20,7 @@
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
-              <nuxt-link to="/homeCenter">商户中心</nuxt-link>
+              <router-link to="/Popular">商户中心</router-link>
             </li>
           </ul>
         </div>

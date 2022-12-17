@@ -6,7 +6,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/Index',
+      path: '/',
       name: 'Index',
       component: () => import('../pages/Index.vue'),
     },

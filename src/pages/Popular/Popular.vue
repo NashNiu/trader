@@ -5,23 +5,19 @@
     <el-table-column prop="d3" label="Sell" />
     <el-table-column>
       <template #header> </template>
-      <template>
-        <el-button round size="small" @click="visible = true">Sell</el-button>
-      </template>
+      <el-button round size="big" @click="visible = true">Sell</el-button>
     </el-table-column>
     <el-table-column prop="d4" label="Buy" />
     <el-table-column>
       <template #header> </template>
       <template #default="scope">
-        <el-button
-          round
-          size="small"
-          @click="handleEdit(scope.$index, scope.row)"
-          >Buy</el-button
-        >
+        <el-button round size="small" @click="visible2 = true">Buy</el-button>
       </template>
     </el-table-column>
     <el-table-column prop="d5" label="High/low" />
+    <el-table-column prop="d6" label="">
+      <el-icon v-model="starV" @click="starV = 1"><Star /></el-icon>
+    </el-table-column>
   </el-table>
   <div class="tableBox">
     <el-drawer v-model="visible" :show-close="false" :modal="false">
@@ -73,43 +69,115 @@
                 <el-table-column prop="d4" width="80" />
               </el-table>
             </div>
-            <div>
+            <div class="tab1-ts">
               <el-form :model="form" label-width="120px">
                 <el-form-item label="Quantity">
-                  <el-input-number v-model="form.num" :step="1" />
+                  <el-input-number
+                    v-model="form.num"
+                    :step="1"
+                    @change="handleChange"
+                  />
                 </el-form-item>
                 <el-form-item label="Deposit required">
                   <span>HK$10</span>
                 </el-form-item>
-                <el-form-item label="Activity time">
-                  <el-col :span="11">
-                    <el-date-picker
-                      v-model="form.date1"
-                      type="date"
-                      placeholder="Pick a date"
-                      style="width: 100%"
-                    />
-                  </el-col>
-                  <el-col :span="2" class="text-center">
-                    <span class="text-gray-500">-</span>
-                  </el-col>
-                  <el-col :span="11">
-                    <el-time-picker
-                      v-model="form.date2"
-                      placeholder="Pick a time"
-                      style="width: 100%"
-                    />
-                  </el-col>
-                </el-form-item>
                 <el-form-item label="Stop surplus">
-                  <el-switch v-model="form.delivery" />
+                  <el-switch v-model="form.surplus" />
                 </el-form-item>
                 <el-form-item label="Stop loss">
-                  <el-switch v-model="form.delivery" />
+                  <el-switch v-model="form.loss" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="onSubmit">Create</el-button>
-                  <el-button>Cancel</el-button>
+                  <el-button
+                    type="primary"
+                    class="btn-trade"
+                    @click="onSubmitSell"
+                    >Sell</el-button
+                  >
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="Limit" name="second">Limit</el-tab-pane>
+        </el-tabs>
+      </div>
+    </el-drawer>
+  </div>
+  <div class="tableBox">
+    <el-drawer v-model="visible2" :show-close="false" :modal="false">
+      <template #header="{ close, titleId, titleClass }">
+        <h4 :id="titleId" :class="titleClass" @click="close">
+          <el-icon><ArrowRight /></el-icon>
+        </h4>
+      </template>
+      <div class="Tabs">
+        <el-tabs
+          v-model="activeName"
+          class="demo-tabs"
+          @tab-click="handleClick"
+        >
+          <el-tab-pane label="Market" name="first">
+            <h1>Hong Kong HS50 Index</h1>
+            <div>
+              <el-row :gutter="16">
+                <el-col :span="8"
+                  ><div class="grid-content ep-bg-purple">
+                    <span>Bid</span>
+                  </div>
+                </el-col>
+                <el-col :span="8"
+                  ><div class="grid-content ep-bg-purple">
+                    <span>Ask</span>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+            <div class="line-progress">
+              <span class="sp-bid">30%</span>
+              <el-progress
+                :percentage="30"
+                width="100"
+                :show-text="false"
+              ></el-progress>
+              <span class="sp-ask">70%</span>
+            </div>
+            <div>
+              <el-table
+                :data="tableData2"
+                style="width: 100%"
+                :row-class-name="tableRowClassName"
+              >
+                <el-table-column prop="d1" width="80" />
+                <el-table-column prop="d2" width="80" />
+                <el-table-column prop="d3" width="80" />
+                <el-table-column prop="d4" width="80" />
+              </el-table>
+            </div>
+            <div class="tab1-ts">
+              <el-form :model="form" label-width="120px">
+                <el-form-item label="Quantity">
+                  <el-input-number
+                    v-model="form.num"
+                    :step="1"
+                    @change="handleChange"
+                  />
+                </el-form-item>
+                <el-form-item label="Deposit required">
+                  <span>HK$10</span>
+                </el-form-item>
+                <el-form-item label="Stop surplus">
+                  <el-switch v-model="form.surplus" />
+                </el-form-item>
+                <el-form-item label="Stop loss">
+                  <el-switch v-model="form.loss" />
+                </el-form-item>
+                <el-form-item>
+                  <el-button
+                    type="primary"
+                    class="btn-trade"
+                    @click="onSubmitSell"
+                    >Buy</el-button
+                  >
                 </el-form-item>
               </el-form>
             </div>
@@ -123,13 +191,14 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { ElButton } from 'element-plus';
+import { Star } from '@element-plus/icons-vue';
+import { ElButton, ElMessageBox } from 'element-plus';
 import { ArrowRight } from '@element-plus/icons-vue';
-const handleEdit = () => {};
 const activeName = ref('first');
 const handleClick = () => {
   console.log(123);
 };
+const starV = 0;
 const tableData = [
   {
     d1: 'AUD/USD',
@@ -193,20 +262,28 @@ const tableData2 = [
   },
 ];
 const visible = ref(false);
-
+const visible2 = ref(false);
 const form = reactive({
-  mum: 2,
+  num: 1,
   region: '',
   date1: '',
   date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+  surplus: true,
+  loss: true,
 });
-
-const onSubmit = () => {
-  console.log('submit!');
+const handleChange = () => {
+  console.log(123);
+};
+const changeStar = () => {};
+const onSubmitSell = () => {
+  ElMessageBox.confirm(`Are you confirm to chose  ?`)
+    .then(() => {
+      console.log(2);
+      visible.value = false;
+    })
+    .catch(() => {
+      // catch error
+    });
 };
 </script>
 
@@ -263,6 +340,9 @@ const onSubmit = () => {
 
   font-weight: bold;
 }
+.tab1-ts {
+  margin-top: 20px;
+}
 .Tabs ::v-deep .el-tabs__active-bar {
   background-color: #0c3d93;
 }
@@ -287,5 +367,19 @@ const onSubmit = () => {
       background: red;
     }
   }
+}
+.el-form-item__content {
+  margin-left: 0;
+}
+.btn-trade {
+  background: #0d3d92;
+  width: 300px;
+  border: none;
+  border-radius: 30px;
+  margin: 0 auto;
+  display: block;
+  height: 45px;
+  line-height: 30px;
+  font-size: 20px;
 }
 </style>

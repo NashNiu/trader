@@ -13,33 +13,36 @@
       </div>
       <div class="content-nav">
         <el-row :gutter="24">
-          <el-col :span="8"
+          <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
               <span class="sp">HK<b>$0.00</b></span>
+              <br />
               <span>Balance avaliable</span>
             </div>
           </el-col>
-          <el-col :span="8"
+          <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
               <span class="sp">HK<b>$0.00</b></span>
+              <br />
               <span>Net worth</span>
             </div>
           </el-col>
-          <el-col :span="8"
+          <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
               <span class="sp">HK<b>$0.00</b></span>
+              <br />
               <span>Deposit for maintenance</span>
             </div>
           </el-col>
-          <el-col :span="8"
+          <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
               <span class="sp">HK<b>$0.00</b></span>
+              <br />
               <span>Give good</span>
             </div>
           </el-col>
         </el-row>
       </div>
-      <div class="content-login">登录 / 注册</div>
     </div>
   </header>
 </template>
@@ -49,7 +52,6 @@ import { Search } from '@element-plus/icons-vue';
 
 <style scoped>
 header {
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -60,8 +62,8 @@ header {
 }
 .header-content {
   display: flex;
-  justify-content: space-around;
-  width: 1200px;
+  justify-content: normal;
+  width: 1500px;
 }
 .content-logo {
   width: 160px;
@@ -69,15 +71,21 @@ header {
   margin: 10px 0;
   cursor: pointer;
   margin-right: 100px;
+  margin-left: 100px;
 }
 .content-logo img {
   height: 100%;
 }
 .content-nav {
-  width: 300px;
+  width: 800px;
   height: 75px;
 }
-
+.grid-content {
+  padding-top: 12px;
+}
+.grid-content .sp {
+  font-weight: bold;
+}
 .search-buy-login {
   display: flex;
   justify-content: space-between;
@@ -88,14 +96,14 @@ header {
   display: flex;
   align-items: center;
   padding: 5px 10px;
-  width: 350px;
+  width: 200px;
   height: 35px;
   border-radius: 8px;
   background: #f0f2f4;
 }
 .content-search input {
   padding: 0 10px;
-  width: 430px;
+  width: 150px;
   height: 40px;
   border: 0;
   border-radius: 8px;

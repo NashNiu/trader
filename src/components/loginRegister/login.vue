@@ -62,6 +62,8 @@ import type { TabsPaneContext } from 'element-plus';
 import { getCodeInterface,registerInterface,loginInterface } from '../../api/commonapi';
 import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'element-plus'
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const formRef = ref<FormInstance>()
 const activeName = ref('first');
 
@@ -151,7 +153,10 @@ const onSubmitLogin = () => {
         sessionStorage.setItem('token',res.data.token);
         sessionStorage.setItem('userid',res.data.userid);
         sessionStorage.setItem('username',res.data.username);
-        location. reload();
+        router.push({
+          path: '/Trade',
+          query: {},
+        });
       }else{
         ElMessage.error('登录失败！');
       }

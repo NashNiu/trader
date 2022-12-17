@@ -48,6 +48,9 @@
 </template>
 <script setup>
 import { Search } from '@element-plus/icons-vue';
+import { getUserInfo } from '../../utils/storage';
+const userInfo = getUserInfo();
+console.log(userInfo);
 </script>
 
 <style scoped>

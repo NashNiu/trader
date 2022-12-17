@@ -20,17 +20,11 @@
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
-              <router-link to="/Trade">商户中心</router-link>
+              <router-link to="" @click="goTrade">商户中心</router-link>
             </li>
           </ul>
         </div>
-        <div class="right-side-box">
-          <a class="thm-btn header__cta-btn" href="#"
-            ><span @click="centerDialogVisible = !centerDialogVisible"
-              >Login</span
-            ></a
-          >
-        </div>
+
         <div v-if="centerDialogVisible" class="positionBox">
           <LoginRegister />
         </div>
@@ -40,11 +34,22 @@
 </template>
 <script setup>
 import LoginRegister from '../../components/loginRegister/login.vue';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+const router = useRouter();
 var centerDialogVisible = ref(false);
-if (!sessionStorage.getItem('token')) {
-  centerDialogVisible.value = true;
-}
+
+const goTrade = () => {
+  console.log(sessionStorage.getItem('token'));
+  if (sessionStorage.getItem('token')) {
+    router.push({
+      path: '/Trade',
+      query: {},
+    });
+  } else {
+    centerDialogVisible.value = true;
+  }
+};
 </script>
 
 <style scoped>

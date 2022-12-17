@@ -187,6 +187,12 @@
       </div>
     </el-drawer>
   </div>
+  <div>
+    <iframe
+      style="width: 100%; height: 500px"
+      src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"
+    ></iframe>
+  </div>
 </template>
 
 <script setup>

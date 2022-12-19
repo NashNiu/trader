@@ -5,12 +5,11 @@
     <el-table-column prop="d3" label="Sell" />
     <el-table-column>
       <template #header> </template>
-      <el-button round size="big" @click="visible = true">Sell</el-button>
+      <el-button round size="small" @click="visible = true">Sell</el-button>
     </el-table-column>
     <el-table-column prop="d4" label="Buy" />
     <el-table-column>
-      <template #header> </template>
-      <template #default="scope">
+      <template #default>
         <el-button round size="small" @click="visible2 = true">Buy</el-button>
       </template>
     </el-table-column>
@@ -188,59 +187,59 @@
     </el-drawer>
   </div>
   <div>
-    <iframe
-      style="width: 100%; height: 500px"
-      src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"
-    ></iframe>
+    <!--    <iframe-->
+    <!--      style="width: 100%; height: 500px"-->
+    <!--      src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"-->
+    <!--    ></iframe>-->
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-import { Star } from '@element-plus/icons-vue';
+import { ref, reactive, computed } from 'vue';
 import { ElButton, ElMessageBox } from 'element-plus';
-import { ArrowRight } from '@element-plus/icons-vue';
-import SocketStore from '../../store/ws.js';
+import { Star, ArrowRight } from '@element-plus/icons-vue';
+import { socketStore } from '@/store/index.js';
+import { popularSymbols } from '@/assets/data/symbol.js';
+
+const useSocketStore = socketStore();
+const liveData = computed(() => useSocketStore.liveData);
+const statisticData = computed(() => useSocketStore.statisticData);
 const activeName = ref('first');
+
+if (
+  !useSocketStore.socket &&
+  sessionStorage.getItem('account') &&
+  sessionStorage.getItem('password')
+) {
+  useSocketStore.initSocket({
+    account: sessionStorage.getItem('account'),
+    password: sessionStorage.getItem('password'),
+  });
+}
+
 const handleClick = () => {
   console.log(123);
 };
-const socketDataCB = (data) => {
-  console.log(data);
-};
-const socket = new SocketStore({ dataCB: socketDataCB });
-socket.initSocket();
+
 const starV = 0;
-const tableData = [
-  {
-    d1: 'AUD/USD',
-    d2: '-20%',
-    d3: '45.25',
-    d4: '46.25',
-    d5: '0.354154/.0548484',
-  },
-  {
-    d1: 'AUD/USD',
-    d2: '-20%',
-    d3: '45.25',
-    d4: '46.25',
-    d5: '0.354154/.0548484',
-  },
-  {
-    d1: 'AUD/USD',
-    d2: '-20%',
-    d3: '45.25',
-    d4: '46.25',
-    d5: '0.354154/.0548484',
-  },
-  {
-    d1: 'AUD/USD',
-    d2: '-20%',
-    d3: '45.25',
-    d4: '46.25',
-    d5: '0.354154/.0548484',
-  },
-];
+
+const tableData = computed(() =>
+  popularSymbols.map((item) => {
+    const symbolData = statisticData.value?.[item.name];
+    const high =
+      symbolData?.['askHigh']?.toFixed(symbolData?.digits ?? 2) ?? '0.00';
+    const low =
+      symbolData?.['askLow']?.toFixed(symbolData?.digits ?? 2) ?? '0.00';
+    return {
+      d1: item.displayName,
+      d2: '-20%',
+      d3: liveData.value?.[item.name]?.['ask'] ?? '0.00',
+      d4: liveData.value?.[item.name]?.['bid'] ?? '0.00',
+      d5: `${high} \\ ${low}`,
+    };
+  })
+);
+
 const tableData2 = [
   {
     d1: '2013',
@@ -286,7 +285,7 @@ const form = reactive({
 const handleChange = () => {
   console.log(123);
 };
-const changeStar = () => {};
+// const changeStar = () => {};
 const onSubmitSell = () => {
   ElMessageBox.confirm(`Are you confirm to chose  ?`)
     .then(() => {

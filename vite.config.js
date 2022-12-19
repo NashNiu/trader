@@ -1,12 +1,21 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
+import path from 'path';
 
 // 获取当前时间戳
 const timeStamp = new Date().getTime();
 // https://vitejs.dev/config/
 export default defineConfig({
   // plugins: [vue(), eslintPlugin()],
+  resolve: {
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src'),
+      },
+    ],
+  },
   plugins: [vue()],
   // 开发时候的端口号，默认为3000
   server: {

@@ -17,6 +17,7 @@
     "moment": "^2.29.4",
     "naive-ui": "^2.34.2",
     "pinia": "^2.0.28",
+    "reconnecting-websocket": "^4.4.0",
     "sass": "^1.56.2",
     "unplugin-auto-import": "^0.12.1",
     "unplugin-vue-components": "^0.22.12",

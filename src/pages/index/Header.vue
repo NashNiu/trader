@@ -25,9 +25,7 @@
           </ul>
         </div>
 
-        <div v-if="centerDialogVisible" class="positionBox">
-          <LoginRegister />
-        </div>
+        <LoginRegister v-if="centerDialogVisible" @onQuery="onQuery" />
       </div>
     </nav>
   </header>
@@ -37,6 +35,9 @@ import LoginRegister from '../../components/loginRegister/login.vue';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 const router = useRouter();
+const onQuery = () => {
+  centerDialogVisible.value = false;
+};
 var centerDialogVisible = ref(false);
 
 const goTrade = () => {
@@ -48,6 +49,7 @@ const goTrade = () => {
     });
   } else {
     centerDialogVisible.value = true;
+    console.log(centerDialogVisible.value);
   }
 };
 </script>
@@ -217,13 +219,5 @@ a:visited {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
-}
-.positionBox {
-  width: 480px;
-  height: 290px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 </style>

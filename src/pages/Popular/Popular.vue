@@ -200,10 +200,16 @@ import { ref, reactive } from 'vue';
 import { Star } from '@element-plus/icons-vue';
 import { ElButton, ElMessageBox } from 'element-plus';
 import { ArrowRight } from '@element-plus/icons-vue';
+import SocketStore from '../../store/ws.js';
 const activeName = ref('first');
 const handleClick = () => {
   console.log(123);
 };
+const socketDataCB = (data) => {
+  console.log(data);
+};
+const socket = new SocketStore({ dataCB: socketDataCB });
+socket.initSocket();
 const starV = 0;
 const tableData = [
   {

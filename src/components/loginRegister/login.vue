@@ -1,4 +1,5 @@
 <template>
+<div class="positionBox"  >
   <div class="login">
     <el-card class="box-card">
       <!-- <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div> -->
@@ -25,8 +26,8 @@
               <el-input v-model="registerFrom.password" type="password" placeholder="请输入密码" clearable show-password />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmitRegister">Create</el-button>
-              <el-button>Cancel</el-button>
+              <el-button type="primary" @click="onSubmitRegister">创建</el-button>
+              <el-button @click="resetForm(formRef)">取消</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -46,27 +47,29 @@
               <el-input v-model="loginFrom.password" type="password" placeholder="请输入密码" clearable show-password />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmitLogin">Create</el-button>
-              <el-button @click="resetForm(formRef)">Cancel</el-button>
+              <el-button type="primary" @click="onSubmitLogin">登录</el-button>
+              <el-button @click="resetForm(formRef)">取消</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
+</div>
+<div class="positionBoxWindowMaing"></div>
 </template>
 
 <script lang="ts" setup>
-import { ref , reactive } from 'vue';
+import { defineExpose,ref , reactive } from 'vue';
 import type { TabsPaneContext } from 'element-plus';
 import { getCodeInterface,registerInterface,loginInterface } from '../../api/commonapi';
 import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'element-plus'
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const emit = defineEmits(["onQuery"]);
 const formRef = ref<FormInstance>()
 const activeName = ref('first');
-
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   console.log(tab, event)
 };
@@ -111,6 +114,7 @@ const onSubmitRegister = () => {
           message: '注册成功！',
           type: 'success',
         });
+        GOlogin(registerFrom.email,registerFrom.password)
       }else{
         ElMessage.error(res.data.message);
       }
@@ -139,6 +143,8 @@ const checkEmail = (rule, value, callback) => {
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
+  emit("onQuery");
+  
 };
 // 登录表单提交
 const onSubmitLogin = () => {
@@ -174,10 +180,51 @@ const rules = reactive({
   region: [{ required: true, message: '请输入验证码！', trigger: 'blur' }],
   password: [{ required: true, message: '密码不能为空！', trigger: 'blur' }],
 })
-
+const GOlogin=(username,password)=>{
+  loginInterface({username:username,password:password,type:3}).then(res=>{
+      console.log(res);
+      if(res.data.status == 0){
+        ElMessage({
+          message: '登录成功！',
+          type: 'success',
+        })
+        sessionStorage.setItem('token',res.data.token);
+        sessionStorage.setItem('userid',res.data.userid);
+        sessionStorage.setItem('username',res.data.username);
+        router.push({
+          path: '/Trade',
+          query: {},
+        });
+      }else{
+        ElMessage.error('登录失败！');
+      }
+    })
+}
 </script>
 
 <style scoped lang="less">
+.positionBox {
+  width: 480px;
+  height: 290px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+.positionBoxWindowMaing {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+  opacity: 1;
+}
 .login{
   .box-card {
     width: 480px;

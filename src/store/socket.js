@@ -11,6 +11,8 @@ export default defineStore('socket', {
     liveData: {},
     // 品种高开低收数据
     statisticData: {},
+    // 用户资金
+    userFunds: {},
   }),
   actions: {
     // 连接socket
@@ -59,9 +61,11 @@ export default defineStore('socket', {
       } else if (data.cmd === 9999) {
         this.sendHeartBeat();
         this.getStatisticData();
-        this.getUserAssets();
+        this.getUserFunds();
       } else if (data.cmd === 10004) {
         this.handleStatisticData(data);
+      } else if (data.cmd === 10006) {
+        this.handleUserFunds(data);
       }
     },
     // 心跳
@@ -103,8 +107,12 @@ export default defineStore('socket', {
       };
     },
     // 获取用户资金
-    getUserAssets() {
+    getUserFunds() {
       this.sendSocketMsg({ cmd: 10005 });
+    },
+    // 设置用户资金
+    handleUserFunds(data) {
+      this.userFunds = data;
     },
     // 断开socket
     closeSocket() {

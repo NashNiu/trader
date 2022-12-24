@@ -226,15 +226,20 @@ const starV = 0;
 const tableData = computed(() =>
   popularSymbols.map((item) => {
     const symbolData = statisticData.value?.[item.name];
+    const ask = liveData.value?.[item.name]?.['bid'] ?? '0.00';
     const high =
       symbolData?.['askHigh']?.toFixed(symbolData?.digits ?? 2) ?? '0.00';
     const low =
       symbolData?.['askLow']?.toFixed(symbolData?.digits ?? 2) ?? '0.00';
+    const change =
+      ask && symbolData?.['priceOpen']
+        ? (ask - symbolData?.['priceOpen']) / symbolData?.['priceOpen']
+        : 0;
     return {
       d1: item.displayName,
-      d2: '-20%',
-      d3: liveData.value?.[item.name]?.['ask'] ?? '0.00',
-      d4: liveData.value?.[item.name]?.['bid'] ?? '0.00',
+      d2: `${(change * 100).toFixed(2)}%`,
+      d3: ask,
+      d4: liveData.value?.[item.name]?.['ask'] ?? '0.00',
       d5: `${high} \\ ${low}`,
     };
   })

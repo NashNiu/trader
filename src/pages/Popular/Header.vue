@@ -15,28 +15,36 @@
         <el-row :gutter="24">
           <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
-              <span class="sp">HK<b>$0.00</b></span>
+              <span class="sp"
+                >HK<b>${{ userFunds.balance }}</b></span
+              >
               <br />
               <span>Balance avaliable</span>
             </div>
           </el-col>
           <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
-              <span class="sp">HK<b>$0.00</b></span>
+              <span class="sp"
+                >HK<b>${{ userFunds.equity }}</b></span
+              >
               <br />
               <span>Net worth</span>
             </div>
           </el-col>
           <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
-              <span class="sp">HK<b>$0.00</b></span>
+              <span class="sp"
+                >HK<b>${{ userFunds.marginfree }}</b></span
+              >
               <br />
               <span>Deposit for maintenance</span>
             </div>
           </el-col>
           <el-col :span="6"
             ><div class="grid-content ep-bg-purple">
-              <span class="sp">HK<b>$0.00</b></span>
+              <span class="sp"
+                >HK<b>${{ userFunds.margin }}</b></span
+              >
               <br />
               <span>Give good</span>
             </div>
@@ -49,6 +57,10 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue';
 import { getUserInfo } from '../../utils/storage';
+import { socketStore } from '@/store/index.js';
+import { computed } from 'vue';
+const useSocketStore = socketStore();
+const userFunds = computed(() => useSocketStore.userFunds);
 const userInfo = getUserInfo();
 console.log(userInfo);
 </script>

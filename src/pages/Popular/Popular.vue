@@ -1,196 +1,198 @@
 <template>
-  <el-table :data="tableData" style="width: 100%" height="300" class="table1">
-    <el-table-column prop="d1" label="Financial tool" width="180" />
-    <el-table-column prop="d2" label="Change" width="180" />
-    <el-table-column prop="d3" label="Sell" />
-    <el-table-column>
-      <template #header> </template>
-      <el-button round size="small" @click="visible = true">Sell</el-button>
-    </el-table-column>
-    <el-table-column prop="d4" label="Buy" />
-    <el-table-column>
-      <template #default>
-        <el-button round size="small" @click="visible2 = true">Buy</el-button>
-      </template>
-    </el-table-column>
-    <el-table-column prop="d5" label="High/low" />
-    <el-table-column prop="d6" label="">
-      <el-icon v-model="starV" @click="starV = 1"><Star /></el-icon>
-    </el-table-column>
-  </el-table>
-  <div class="tableBox">
-    <el-drawer v-model="visible" :show-close="false" :modal="false">
-      <template #header="{ close, titleId, titleClass }">
-        <h4 :id="titleId" :class="titleClass" @click="close">
-          <el-icon><ArrowRight /></el-icon>
-        </h4>
-      </template>
-      <div class="Tabs">
-        <el-tabs
-          v-model="activeName"
-          class="demo-tabs"
-          @tab-click="handleClick"
-        >
-          <el-tab-pane label="Market" name="first">
-            <h1>Hong Kong HS50 Index</h1>
-            <div>
-              <el-row :gutter="16">
-                <el-col :span="8"
-                  ><div class="grid-content ep-bg-purple">
-                    <span>Bid</span>
-                  </div>
-                </el-col>
-                <el-col :span="8"
-                  ><div class="grid-content ep-bg-purple">
-                    <span>Ask</span>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
-            <div class="line-progress">
-              <span class="sp-bid">30%</span>
-              <el-progress
-                :percentage="30"
-                width="100"
-                :show-text="false"
-              ></el-progress>
-              <span class="sp-ask">70%</span>
-            </div>
-            <div>
-              <el-table
-                :data="tableData2"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-              >
-                <el-table-column prop="d1" width="80" />
-                <el-table-column prop="d2" width="80" />
-                <el-table-column prop="d3" width="80" />
-                <el-table-column prop="d4" width="80" />
-              </el-table>
-            </div>
-            <div class="tab1-ts">
-              <el-form :model="form" label-width="120px">
-                <el-form-item label="Quantity">
-                  <el-input-number
-                    v-model="form.num"
-                    :step="1"
-                    @change="handleChange"
-                  />
-                </el-form-item>
-                <el-form-item label="Deposit required">
-                  <span>HK$10</span>
-                </el-form-item>
-                <el-form-item label="Stop surplus">
-                  <el-switch v-model="form.surplus" />
-                </el-form-item>
-                <el-form-item label="Stop loss">
-                  <el-switch v-model="form.loss" />
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    class="btn-trade"
-                    @click="onSubmitSell"
-                    >Sell</el-button
-                  >
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="Limit" name="second">Limit</el-tab-pane>
-        </el-tabs>
-      </div>
-    </el-drawer>
-  </div>
-  <div class="tableBox">
-    <el-drawer v-model="visible2" :show-close="false" :modal="false">
-      <template #header="{ close, titleId, titleClass }">
-        <h4 :id="titleId" :class="titleClass" @click="close">
-          <el-icon><ArrowRight /></el-icon>
-        </h4>
-      </template>
-      <div class="Tabs">
-        <el-tabs
-          v-model="activeName"
-          class="demo-tabs"
-          @tab-click="handleClick"
-        >
-          <el-tab-pane label="Market" name="first">
-            <h1>Hong Kong HS50 Index</h1>
-            <div>
-              <el-row :gutter="16">
-                <el-col :span="8"
-                  ><div class="grid-content ep-bg-purple">
-                    <span>Bid</span>
-                  </div>
-                </el-col>
-                <el-col :span="8"
-                  ><div class="grid-content ep-bg-purple">
-                    <span>Ask</span>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
-            <div class="line-progress">
-              <span class="sp-bid">30%</span>
-              <el-progress
-                :percentage="30"
-                width="100"
-                :show-text="false"
-              ></el-progress>
-              <span class="sp-ask">70%</span>
-            </div>
-            <div>
-              <el-table
-                :data="tableData2"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-              >
-                <el-table-column prop="d1" width="80" />
-                <el-table-column prop="d2" width="80" />
-                <el-table-column prop="d3" width="80" />
-                <el-table-column prop="d4" width="80" />
-              </el-table>
-            </div>
-            <div class="tab1-ts">
-              <el-form :model="form" label-width="120px">
-                <el-form-item label="Quantity">
-                  <el-input-number
-                    v-model="form.num"
-                    :step="1"
-                    @change="handleChange"
-                  />
-                </el-form-item>
-                <el-form-item label="Deposit required">
-                  <span>HK$10</span>
-                </el-form-item>
-                <el-form-item label="Stop surplus">
-                  <el-switch v-model="form.surplus" />
-                </el-form-item>
-                <el-form-item label="Stop loss">
-                  <el-switch v-model="form.loss" />
-                </el-form-item>
-                <el-form-item>
-                  <el-button
-                    type="primary"
-                    class="btn-trade"
-                    @click="onSubmitSell"
-                    >Buy</el-button
-                  >
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="Limit" name="second">Limit</el-tab-pane>
-        </el-tabs>
-      </div>
-    </el-drawer>
-  </div>
-  <div>
-    <!--    <iframe-->
-    <!--      style="width: 100%; height: 500px"-->
-    <!--      src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"-->
-    <!--    ></iframe>-->
+  <div class="popular">
+    <el-table :data="tableData" style="width: 100%" height="300" class="table1">
+      <el-table-column prop="d1" label="Financial tool" width="180" />
+      <el-table-column prop="d2" label="Change" width="180" />
+      <el-table-column prop="d3" label="Sell" />
+      <el-table-column>
+        <template #header> </template>
+        <el-button round size="small" @click="visible = true">Sell</el-button>
+      </el-table-column>
+      <el-table-column prop="d4" label="Buy" />
+      <el-table-column>
+        <template #default>
+          <el-button round size="small" @click="visible2 = true">Buy</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="d5" label="High/low" />
+      <el-table-column prop="d6" label="">
+        <el-icon v-model="starV" @click="starV = 1"><Star /></el-icon>
+      </el-table-column>
+    </el-table>
+    <div class="tableBox">
+      <el-drawer v-model="visible" :show-close="false" :modal="false">
+        <template #header="{ close, titleId, titleClass }">
+          <h4 :id="titleId" :class="titleClass" @click="close">
+            <el-icon><ArrowRight /></el-icon>
+          </h4>
+        </template>
+        <div class="Tabs">
+          <el-tabs
+            v-model="activeName"
+            class="demo-tabs"
+            @tab-click="handleClick"
+          >
+            <el-tab-pane label="Market" name="first">
+              <h1>Hong Kong HS50 Index</h1>
+              <div>
+                <el-row :gutter="16">
+                  <el-col :span="8"
+                    ><div class="grid-content ep-bg-purple">
+                      <span>Bid</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="8"
+                    ><div class="grid-content ep-bg-purple">
+                      <span>Ask</span>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+              <div class="line-progress">
+                <span class="sp-bid">30%</span>
+                <el-progress
+                  :percentage="30"
+                  width="100"
+                  :show-text="false"
+                ></el-progress>
+                <span class="sp-ask">70%</span>
+              </div>
+              <div>
+                <el-table
+                  :data="tableData2"
+                  style="width: 100%"
+                  :row-class-name="tableRowClassName"
+                >
+                  <el-table-column prop="d1" width="80" />
+                  <el-table-column prop="d2" width="80" />
+                  <el-table-column prop="d3" width="80" />
+                  <el-table-column prop="d4" width="80" />
+                </el-table>
+              </div>
+              <div class="tab1-ts">
+                <el-form :model="form" label-width="120px">
+                  <el-form-item label="Quantity">
+                    <el-input-number
+                      v-model="form.num"
+                      :step="1"
+                      @change="handleChange"
+                    />
+                  </el-form-item>
+                  <el-form-item label="Deposit required">
+                    <span>HK$10</span>
+                  </el-form-item>
+                  <el-form-item label="Stop surplus">
+                    <el-switch v-model="form.surplus" />
+                  </el-form-item>
+                  <el-form-item label="Stop loss">
+                    <el-switch v-model="form.loss" />
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button
+                      type="primary"
+                      class="btn-trade"
+                      @click="onSubmitSell"
+                      >Sell</el-button
+                    >
+                  </el-form-item>
+                </el-form>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="Limit" name="second">Limit</el-tab-pane>
+          </el-tabs>
+        </div>
+      </el-drawer>
+    </div>
+    <div class="tableBox">
+      <el-drawer v-model="visible2" :show-close="false" :modal="false">
+        <template #header="{ close, titleId, titleClass }">
+          <h4 :id="titleId" :class="titleClass" @click="close">
+            <el-icon><ArrowRight /></el-icon>
+          </h4>
+        </template>
+        <div class="Tabs">
+          <el-tabs
+            v-model="activeName"
+            class="demo-tabs"
+            @tab-click="handleClick"
+          >
+            <el-tab-pane label="Market" name="first">
+              <h1>Hong Kong HS50 Index</h1>
+              <div>
+                <el-row :gutter="16">
+                  <el-col :span="8"
+                    ><div class="grid-content ep-bg-purple">
+                      <span>Bid</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="8"
+                    ><div class="grid-content ep-bg-purple">
+                      <span>Ask</span>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+              <div class="line-progress">
+                <span class="sp-bid">30%</span>
+                <el-progress
+                  :percentage="30"
+                  width="100"
+                  :show-text="false"
+                ></el-progress>
+                <span class="sp-ask">70%</span>
+              </div>
+              <div>
+                <el-table
+                  :data="tableData2"
+                  style="width: 100%"
+                  :row-class-name="tableRowClassName"
+                >
+                  <el-table-column prop="d1" width="80" />
+                  <el-table-column prop="d2" width="80" />
+                  <el-table-column prop="d3" width="80" />
+                  <el-table-column prop="d4" width="80" />
+                </el-table>
+              </div>
+              <div class="tab1-ts">
+                <el-form :model="form" label-width="120px">
+                  <el-form-item label="Quantity">
+                    <el-input-number
+                      v-model="form.num"
+                      :step="1"
+                      @change="handleChange"
+                    />
+                  </el-form-item>
+                  <el-form-item label="Deposit required">
+                    <span>HK$10</span>
+                  </el-form-item>
+                  <el-form-item label="Stop surplus">
+                    <el-switch v-model="form.surplus" />
+                  </el-form-item>
+                  <el-form-item label="Stop loss">
+                    <el-switch v-model="form.loss" />
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button
+                      type="primary"
+                      class="btn-trade"
+                      @click="onSubmitSell"
+                      >Buy</el-button
+                    >
+                  </el-form-item>
+                </el-form>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="Limit" name="second">Limit</el-tab-pane>
+          </el-tabs>
+        </div>
+      </el-drawer>
+    </div>
+    <div>
+      <!--    <iframe-->
+      <!--      style="width: 100%; height: 500px"-->
+      <!--      src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"-->
+      <!--    ></iframe>-->
+    </div>
   </div>
 </template>
 
@@ -324,6 +326,10 @@ const onSubmitSell = () => {
 .table1 {
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.16);
   margin-top: 22px;
+}
+.popular {
+  width: 95%;
+  float: right;
 }
 .tableBox ::v-deep .el-drawer {
   .el-drawer__header {

@@ -69,7 +69,8 @@ console.log(userInfo);
 header {
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 95%;
+  float: right;
   height: 100px;
   background: white;
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.16);

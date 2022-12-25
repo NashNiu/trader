@@ -30,9 +30,14 @@
                   clearable
                 >
                   <template #append>
-                    <span style="cursor: pointer" @click="getCode"
-                      >获取验证码</span
+                    <button
+                      class="sendEMail"
+                      style="cursor: pointer"
+                      :disabled="isSend"
+                      @click="getCode"
                     >
+                      {{ getCodeInfo }}
+                    </button>
                   </template>
                 </el-input>
               </el-form-item>
@@ -103,15 +108,16 @@ import {
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const isSend = ref(false);
 const emit = defineEmits(['onQuery']);
 const formRef = ref();
 const activeName = ref('first');
 const handleClick = (tab, event) => {
   console.log(tab, event);
 };
-
+const tims = ref(30);
 const labelPosition = ref('left');
-
+const getCodeInfo = ref('获取验证码');
 const registerFrom = reactive({
   email: '',
   region: '',
@@ -121,14 +127,29 @@ const loginFrom = reactive({
   email: '',
   password: '',
 });
+const timsGO = () => {
+  tims.value--;
+  console.log(tims);
+  getCodeInfo.value = tims.value + 's';
+  if (tims.value > 0) {
+    setTimeout(timsGO, 1000);
+    isSend.value = true;
+  } else {
+    isSend.value = false;
+    getCodeInfo.value = '获取验证码';
+    tims.value = 30;
+  }
+};
 const getCode = () => {
   if (registerFrom.email) {
+    isSend.value = true;
     getCodeInterface(registerFrom.email).then((res) => {
       if (res.status == 200) {
         ElMessage({
           message: '验证码发送成功！',
           type: 'success',
         });
+        timsGO();
       } else {
         ElMessage.error('验证码获取失败！');
       }
@@ -291,6 +312,10 @@ const GOlogin = (username, password) => {
         font-weight: 600;
       }
     }
+  }
+  .sendEMail {
+    border: none;
+    padding: 0;
   }
 }
 </style>

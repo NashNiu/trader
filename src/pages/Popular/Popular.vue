@@ -205,7 +205,6 @@ const useSocketStore = socketStore();
 const liveData = computed(() => useSocketStore.liveData);
 const statisticData = computed(() => useSocketStore.statisticData);
 const activeName = ref('first');
-
 if (
   !useSocketStore.socket &&
   sessionStorage.getItem('account') &&
@@ -295,7 +294,25 @@ const onSubmitSell = () => {
   ElMessageBox.confirm(`Are you confirm to chose  ?`)
     .then(() => {
       console.log(2);
-      visible.value = false;
+      // visible.value = false;
+      // 市价下单
+      // useSocketStore.marketCreate({
+      //   sbl: 'DOTUSDT',
+      //   vol: 30000,
+      //   price: liveData.value?.['DOTUSDT']?.['bid'],
+      //   type: 0,
+      // });
+      // 挂单
+      // useSocketStore.positionCreate({
+      //   sbl: 'DOTUSDT',
+      //   vol: 100,
+      //   price: liveData.value?.['DOTUSDT']?.['bid'] * 0.8,
+      //   type: 2,
+      // });
+      // // 删除挂单
+      // useSocketStore.deleteHangingOrder(209);
+      // 平仓
+      useSocketStore.marketClose({ id: 217, vol: 10000 });
     })
     .catch(() => {
       // catch error

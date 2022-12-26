@@ -1,44 +1,57 @@
 <template>
-  <el-row class="tac">
-    <el-col :span="12">
-      <el-menu
-        active-text-color="#fff"
-        background-color="#0c3d93"
-        class="el-menu-vertical-demo"
-        text-color="#fff"
-        @open="handleOpen"
-        @close="handleClose"
-      >
-        <el-menu-item index="1">
+  <el-tabs :tab-position="tabPosition" class="demo-tabs">
+    <el-tab-pane label="User">
+      <template #label>
+        <span class="custom-tabs-label">
           <el-icon><Grid /></el-icon>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <el-icon><Handbag /></el-icon>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <el-icon><Paperclip /></el-icon>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><CreditCard /></el-icon>
-        </el-menu-item>
-      </el-menu>
-    </el-col>
-  </el-row>
+        </span>
+      </template>
+    </el-tab-pane>
+    <el-tab-pane label="Config">
+      <template #label>
+        <span class="custom-tabs-label">
+          <el-icon><Finished /></el-icon>
+        </span>
+      </template>
+    </el-tab-pane>
+    <el-tab-pane label="Role">
+      <template #label>
+        <span class="custom-tabs-label">
+          <el-icon><HomeFilled /></el-icon>
+        </span>
+      </template>
+    </el-tab-pane>
+    <el-tab-pane label="Task">
+      <template #label>
+        <span class="custom-tabs-label">
+          <el-icon><Wallet /></el-icon>
+        </span>
+      </template>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script setup>
-import {
-  Grid,
-  Handbag,
-  Paperclip,
-  CreditCard as IconMenu,
-} from '@element-plus/icons-vue';
+import { ref } from 'vue';
+import { Grid, Finished, HomeFilled, Wallet } from '@element-plus/icons-vue';
+const tabPosition = ref('left');
 </script>
 
 <style scoped>
-.tac {
-  width: 150px;
-  position: fixed;
-  left: 0;
+.demo-tabs {
+  background: #0c3d93;
+}
+.el-icon {
+  color: #fff;
+  width: 2em;
+  height: 2em;
+}
+.el-icon svg {
+  color: #fff;
+  width: 2em;
+  height: 2em;
+}
+.el-tabs__item:deep() {
+  margin-bottom: 30px !important;
 }
 </style>

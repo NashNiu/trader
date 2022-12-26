@@ -10,8 +10,10 @@
       </el-table-column>
       <el-table-column prop="d4" label="Buy" />
       <el-table-column>
-        <template #default>
-          <el-button round size="small" @click="visible2 = true">Buy</el-button>
+        <template #default="scope">
+          <el-button round size="small" @click="GoBuy(scope.row)"
+            >Buy</el-button
+          >
         </template>
       </el-table-column>
       <el-table-column prop="d5" label="High/low" />
@@ -27,13 +29,9 @@
           </h4>
         </template>
         <div class="Tabs">
-          <el-tabs
-            v-model="activeName"
-            class="demo-tabs"
-            @tab-click="handleClick"
-          >
-            <el-tab-pane label="Market" name="first">
-              <h1>Hong Kong HS50 Index</h1>
+          <el-tabs v-model="TabSell" class="demo-tabs" @tab-click="handleClick">
+            <el-tab-pane label="Market" name="activeSell">
+              <h1>{{ TabSell.name }}</h1>
               <div>
                 <el-row :gutter="16">
                   <el-col :span="8"
@@ -111,13 +109,9 @@
           </h4>
         </template>
         <div class="Tabs">
-          <el-tabs
-            v-model="activeName"
-            class="demo-tabs"
-            @tab-click="handleClick"
-          >
-            <el-tab-pane label="Market" name="first">
-              <h1>Hong Kong HS50 Index</h1>
+          <el-tabs v-model="TabBuy" class="demo-tabs" @tab-click="handleClick">
+            <el-tab-pane label="Market" name="activeBuy">
+              <h1>{{ TabBuy.name }}</h1>
               <div>
                 <el-row :gutter="16">
                   <el-col :span="8"
@@ -188,10 +182,10 @@
       </el-drawer>
     </div>
     <div>
-      <!--    <iframe-->
-      <!--      style="width: 100%; height: 500px"-->
-      <!--      src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"-->
-      <!--    ></iframe>-->
+      <!-- <iframe
+        style="width: 100%; height: 500px"
+        src="https://traderview.mcrare.com/klinechart/#/?name=BTCUSDT"
+      ></iframe> -->
     </div>
   </div>
 </template>
@@ -206,7 +200,13 @@ import { popularSymbols } from '@/assets/data/symbol.js';
 const useSocketStore = socketStore();
 const liveData = computed(() => useSocketStore.liveData);
 const statisticData = computed(() => useSocketStore.statisticData);
-const activeName = ref('first');
+const TabSell = reactive({
+  name: '123',
+});
+const TabBuy = reactive({
+  name: '123',
+});
+
 if (
   !useSocketStore.socket &&
   sessionStorage.getItem('account') &&
@@ -217,7 +217,11 @@ if (
     password: sessionStorage.getItem('password'),
   });
 }
-
+const GoBuy = (item) => {
+  visible2.value = true;
+  TabBuy.name = item.d1;
+  console.log(TabBuy.name);
+};
 const handleClick = () => {
   console.log(123);
 };

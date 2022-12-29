@@ -67,46 +67,67 @@ export default defineStore('socket', {
     // 处理socket消息
     handleMessage(res) {
       const data = JSON.parse(res.data);
-      if (data.cmd === 51001 || data.cmd === 10008) {
-        this.handleLiveData(data);
-      } else if (data.cmd === 51002) {
-        this.handleDeepQuotation(data);
-      } else if (data.cmd === 9999) {
-        this.sendHeartBeat();
-        this.getStatisticData();
-        this.getUserFunds();
-        this.getSblBasicData();
-        this.getSblLatestPrice();
-        // 这两条看情况获取
-        this.getHangingOrders();
-        this.getHoldingOrders();
-      } else if (data.cmd === 10002) {
-        // 产品基本信息
-        this.setSblBasicData(data);
-      } else if (data.cmd === 10004) {
-        // 高开低收数据
-        this.setStatisticData(data);
-      } else if (data.cmd === 10006) {
-        // 用户资金
-        this.setUserFunds(data);
-      } else if (data.cmd === 10012) {
-        // 持仓列表
-        this.setHoldingOrders(data?.data ?? []);
-      } else if (data.cmd === 10022) {
-        // 挂单列表
-        this.setHangingOrders(data?.data ?? []);
-      } else if (data.cmd === 10032) {
-        // 当前下单成功，订单信息
-        this.setCurrentOrderDetail(data);
-      } else if (data.cmd === 10034) {
-        // 删除挂单结果
-        this.handleDelHangingOrder(data);
-      } else if (data.cmd === 10036) {
-        // 挂单修改成功
-        this.hanldeUpdateHangingOrder(data);
-      } else if (data.cmd === 10038) {
-        // 修改持仓单成功
-        this.handleUpdateHoldingOrder(data);
+      // 如果有status 且 status 不为 0
+      const commonStore = useCommonStore();
+      if (data.status) {
+        commonStore.closeLoading();
+        ElMessage.error({
+          message: data.msg || 'error',
+        });
+      } else {
+        if (data.cmd === 51001 || data.cmd === 10008) {
+          this.handleLiveData(data);
+        } else if (data.cmd === 51002) {
+          this.handleDeepQuotation(data);
+        } else if (data.cmd === 9999) {
+          this.sendHeartBeat();
+          this.getStatisticData();
+          this.getUserFunds();
+          this.getSblBasicData();
+          this.getSblLatestPrice();
+          // 这两条看情况获取
+          this.getHangingOrders();
+          this.getHoldingOrders();
+        } else if (data.cmd === 10002) {
+          // 产品基本信息
+          this.setSblBasicData(data);
+        } else if (data.cmd === 10004) {
+          // 高开低收数据
+          this.setStatisticData(data);
+        } else if (data.cmd === 10006) {
+          // 用户资金
+          this.setUserFunds(data);
+        } else if (data.cmd === 10012) {
+          // 持仓列表
+          this.setHoldingOrders(data?.data ?? []);
+        } else if (data.cmd === 10022) {
+          // 挂单列表
+          this.setHangingOrders(data?.data ?? []);
+        } else if (data.cmd === 10032) {
+          // 当前下单成功，订单信息
+          this.setCurrentOrderDetail(data);
+        } else if (data.cmd === 10034) {
+          // 删除挂单结果
+          this.handleDelHangingOrder(data);
+        } else if (data.cmd === 10036) {
+          // 挂单修改成功
+          this.hanldeUpdateHangingOrder(data);
+        } else if (data.cmd === 10038) {
+          // 修改持仓单成功
+          this.handleUpdateHoldingOrder(data);
+        } else if (data.cmd === 9998) {
+          // 拒绝交易操作
+          commonStore.closeLoading();
+          ElMessage.error({
+            message: 'refuse',
+          });
+        } else if (data.cmd === 400) {
+          // 参数错误
+          commonStore.closeLoading();
+          ElMessage.error({
+            message: data.cmd,
+          });
+        }
       }
     },
     // 心跳
@@ -204,7 +225,7 @@ export default defineStore('socket', {
         sbl: sbl,
         act: 200,
         type,
-        vol: vol * 10000,
+        vol: Math.round(vol * 100) * 100,
         price,
         sl,
         tp,
@@ -213,8 +234,6 @@ export default defineStore('socket', {
     // 平仓
     marketClose({ id, vol }) {
       const order = this.holdingOrders.find((item) => item.position === id);
-      console.log(this.holdingOrders);
-      console.log(order);
       if (order) {
         this.sendSocketMsg({
           cmd: 10031,
@@ -233,7 +252,7 @@ export default defineStore('socket', {
         sbl: sbl,
         act: 201,
         type,
-        vol,
+        vol: Math.floor(vol),
         price,
         sl,
         tp,
@@ -242,7 +261,6 @@ export default defineStore('socket', {
     // 设置下单成功后订单信息
     setCurrentOrderDetail(data) {
       this.currentOrderDetail = data;
-      console.log(data);
       const commonStore = useCommonStore();
       commonStore.closeLoading();
       if (data.closed) {

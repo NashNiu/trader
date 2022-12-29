@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { symbolArr } from '@/assets/data/symbol.js';
 import { ElMessage } from 'element-plus';
+import { useCommonStore } from '@/store/index.js';
+
 export default defineStore('socket', {
   state: () => ({
     socket: null,
@@ -99,6 +101,12 @@ export default defineStore('socket', {
       } else if (data.cmd === 10034) {
         // 删除挂单结果
         this.handleDelHangingOrder(data);
+      } else if (data.cmd === 10036) {
+        // 挂单修改成功
+        this.hanldeUpdateHangingOrder(data);
+      } else if (data.cmd === 10038) {
+        // 修改持仓单成功
+        this.handleUpdateHoldingOrder(data);
       }
     },
     // 心跳
@@ -178,6 +186,7 @@ export default defineStore('socket', {
     },
     // 设置持仓数据
     setHoldingOrders(data) {
+      console.log(data);
       this.holdingOrders = data;
     },
     // 查询挂单
@@ -195,7 +204,7 @@ export default defineStore('socket', {
         sbl: sbl,
         act: 200,
         type,
-        vol,
+        vol: vol * 10000,
         price,
         sl,
         tp,
@@ -211,7 +220,7 @@ export default defineStore('socket', {
           cmd: 10031,
           act: 200,
           sbl: order.symbol,
-          vol: vol,
+          vol: vol * 10000 || order.vol,
           position: id,
           type: order.action === 1 ? 0 : 1,
         });
@@ -234,13 +243,18 @@ export default defineStore('socket', {
     setCurrentOrderDetail(data) {
       this.currentOrderDetail = data;
       console.log(data);
+      const commonStore = useCommonStore();
+      commonStore.closeLoading();
       if (data.closed) {
         // 平仓成功
         ElMessage.success({
-          message: '平仓成功',
+          message: 'close success',
         });
       } else {
         // 建仓成功
+        ElMessage.success({
+          message: 'create success',
+        });
       }
     },
     // 删除挂单
@@ -256,6 +270,30 @@ export default defineStore('socket', {
       } else {
         ElMessage.error({
           message: '挂单删除失败',
+        });
+      }
+    },
+    // 修改挂单
+    updateHangingOrder({ id, sl, tp, price }) {
+      this.sendSocketMsg({ cmd: 10035, sl, tp, price, ticket: id });
+    },
+    // 挂单修改结果
+    hanldeUpdateHangingOrder(data) {
+      if (data.status === 0) {
+        ElMessage.success({
+          message: '挂单修改成功',
+        });
+      }
+    },
+    // 修改持仓单
+    updateHoldingOrder({ id, sl, tp }) {
+      this.sendSocketMsg({ cmd: 10037, ticket: id, sl: sl, tp: tp });
+    },
+    // 修改持仓单结果
+    handleUpdateHoldingOrder(data) {
+      if (data.status === 0) {
+        ElMessage.success({
+          message: '订单修改成功',
         });
       }
     },

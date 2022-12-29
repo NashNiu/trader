@@ -1,0 +1,72 @@
+.title {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  background-color: #0c3d93;
+  .closeIcon {
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+}
+.contentBox {
+  box-sizing: border-box;
+  padding: 20px 15px;
+  position: relative;
+  height: calc(100% - 60px);
+  .type{
+
+  }
+  .symbolName{
+    margin-top: 10px;
+    font-size: 30px;
+    color: #0c3d93;
+  }
+  .price {
+    margin-top: 10px;
+    color: #078d5c;
+    font-size: 18px;
+  }
+  .time {
+    margin-top: 10px;
+  }
+  .orderInfoBox {
+    margin-top: 30px;
+    .infoItemBox{
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #eeeeee;
+      align-items: center;
+      height: 50px;
+      font-size: 16px;
+      .key{
+
+      }
+      .value{
+        color: #9f9f9f;
+      }
+    }
+  }
+  .btnContainer {
+    position: absolute;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 50px;
+    .btnBox {
+      width: 360px;
+      height: 59px;
+      background-color: #0c3d93;
+      border-radius: 29px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}

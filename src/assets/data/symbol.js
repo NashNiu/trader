@@ -68,4 +68,31 @@ export const popularSymbols = [
     name: 'SANDUSDT',
     displayName: 'SAND/USDT',
   },
+  {
+    name: 'LTCUSDT',
+    displayName: 'LTC/USDT',
+  },
+  {
+    name: 'AAVEUSDT',
+    displayName: 'AAVE/USDT',
+  },
+  {
+    name: 'UNIUSDT',
+    displayName: 'UNI/USDT',
+  },
+];
+
+export const goodsSymbols = [
+  {
+    name: 'US500',
+    displayName: 'US500',
+  },
+  {
+    name: 'US30',
+    displayName: 'US30',
+  },
+  {
+    name: 'NAS100',
+    displayName: 'NAS100',
+  },
 ];

@@ -80,6 +80,10 @@ export const popularSymbols = [
     name: 'UNIUSDT',
     displayName: 'UNI/USDT',
   },
+  {
+    name: 'ATOMUSDT',
+    displayName: 'ATOM/USDT',
+  },
 ];
 
 export const goodsSymbols = [

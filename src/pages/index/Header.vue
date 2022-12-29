@@ -25,21 +25,20 @@
           </ul>
         </div>
 
-        <LoginRegister v-if="centerDialogVisible" @onQuery="onQuery" />
+        <LoginRegister v-if="centerDialogVisible" @hide="hideDialog" />
       </div>
     </nav>
   </header>
 </template>
 <script setup>
-import LoginRegister from '../../components/loginRegister/login.vue';
+import LoginRegister from '../../components/common/login.vue';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 const router = useRouter();
-const onQuery = () => {
+const centerDialogVisible = ref(false);
+const hideDialog = () => {
   centerDialogVisible.value = false;
 };
-var centerDialogVisible = ref(false);
-
 const goTrade = () => {
   console.log(sessionStorage.getItem('token'));
   if (sessionStorage.getItem('token')) {

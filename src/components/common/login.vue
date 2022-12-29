@@ -104,12 +104,12 @@ import {
   getCodeInterface,
   registerInterface,
   loginInterface,
-} from '../../api/commonapi';
+} from '../../api/commonapi.js';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const isSend = ref(false);
-const emit = defineEmits(['onQuery']);
+const emit = defineEmits(['hide']);
 const formRef = ref();
 const activeName = ref('first');
 const handleClick = (tab, event) => {
@@ -203,7 +203,7 @@ const checkEmail = (rule, value, callback) => {
 const resetForm = (formEl) => {
   if (!formEl) return;
   formEl.resetFields();
-  emit('onQuery');
+  emit('hide');
 };
 // 登录表单提交
 const onSubmitLogin = () => {

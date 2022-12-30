@@ -21,6 +21,11 @@ const router = createRouter({
       component: () => import('@/pages/Order/index.vue'),
     },
     {
+      path: '/history',
+      name: 'History',
+      component: () => import('@/pages/History/index.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/pages/Error/NotFound.vue'),

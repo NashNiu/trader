@@ -15,7 +15,6 @@ export default defineStore('common', {
       }
     },
     changeActiveChartName(name) {
-      console.log(name);
       this.activeChartName = name;
     },
   },

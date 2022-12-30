@@ -7,11 +7,11 @@ const service = axios.create({
 // 请求拦截
 service.interceptors.request.use(
   (config) => {
-    // 请求前加一些需要的逻辑，如再请求头中加参数
-    // if (store.getters.token) {
-    //     config.headers['Authorization'] = getToken()
-    // }
-    //最终要返回这个配置
+    const token = sessionStorage.getItem('token');
+    console.log(token);
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

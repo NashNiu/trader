@@ -4,9 +4,9 @@
       <el-table-column prop="symbol" label="Type/Financial tool">
         <template #default="scope">
           <div>
-            <span>{{ scope.row.actionType }}</span>
+            <span class="orderType">{{ scope.row.actionType }}</span>
             <br />
-            <span>{{ scope.row.symbol }}</span>
+            <span class="symbolName">{{ scope.row.symbol }}</span>
           </div>
         </template>
       </el-table-column>
@@ -18,7 +18,13 @@
       </el-table-column>
       <el-table-column prop="change" label="Variety">
         <template #default="scope">
-          <span :class="scope.row.color">{{ scope.row.change }}</span>
+          <div class="varietyBox">
+            <span :class="scope.row.color">{{ scope.row.change }}</span>
+            <div class="closeBox" @click="openInfoDrawer(scope.row)">
+              <el-icon><Close /></el-icon>
+              <span>close</span>
+            </div>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="vol" label="Quantity" />
@@ -28,7 +34,9 @@
       <el-table-column prop="createTime" label="Opening time" />
       <el-table-column width="100">
         <template #default="scope">
-          <el-icon class="infoIcon" @click="openInfoDrawer(scope.row)"
+          <el-icon
+            class="infoIcon"
+            @click="openInfoDrawer({ ...scope.row, isInfo: true })"
             ><InfoFilled
           /></el-icon>
         </template>
@@ -112,6 +120,13 @@ const openInfoDrawer = (row) => {
   }
 }
 .orderTable {
+  .orderType {
+    font-size: 12px;
+  }
+  .symbolName {
+    font-size: 16px;
+    font-weight: bold;
+  }
   .infoIcon {
     cursor: pointer;
     font-size: 18px;
@@ -121,6 +136,23 @@ const openInfoDrawer = (row) => {
   }
   .green {
     color: #078d5c;
+  }
+  .varietyBox {
+    display: flex;
+    align-items: center;
+  }
+  .closeBox {
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    width: 60px;
+    border: 1px solid #0c3d93;
+    padding: 1px 4px;
+    align-items: center;
+    border-radius: 20px;
+    box-sizing: border-box;
+    color: #0c3d93;
+    cursor: pointer;
   }
 }
 </style>

@@ -51,7 +51,7 @@
           <span class="value">{{ drawerData.storage }}</span>
         </div>
       </div>
-      <div class="btnContainer">
+      <div class="btnContainer" v-if="!drawerData.isInfo">
         <div class="btnBox" @click="closePosition">Close Position</div>
       </div>
     </div>

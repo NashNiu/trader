@@ -18,6 +18,10 @@
         <el-icon><MessageBox /></el-icon>
         <template #title><span>Order List</span></template>
       </el-menu-item>
+      <el-menu-item index="/history">
+        <el-icon><Document /></el-icon>
+        <template #title><span>History Order</span></template>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

@@ -39,6 +39,7 @@
   font-size: 36px;
   margin-bottom: 60px;
   font-weight: bold;
+  text-align: center;
 }
 .cta-one ul {
   text-align: center;
@@ -56,8 +57,8 @@
 }
 .cta-one ul li p {
   color: #9b9b9b;
-  font-size: 16px;
-  line-height: 31px;
+  font-size: 14px;
+  line-height: 28px;
   width: 400px;
 }
 @media (min-width: 1200px) {

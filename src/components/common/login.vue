@@ -306,7 +306,7 @@ const GOlogin = (username, password) => {
         width: 50px;
       }
       .el-tabs__item {
-        padding: 0 60px;
+        padding: 0 96px;
         font-size: 18px;
         font-weight: 600;
       }

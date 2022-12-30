@@ -63,6 +63,7 @@
 }
 .service-one ul li h2 {
   font-size: 22px;
+  margin-bottom: 10px;
 }
 .service-one ul li p {
   color: #9b9b9b;

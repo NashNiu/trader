@@ -52,6 +52,7 @@
 }
 .cta-one ul li h2 {
   font-size: 22px;
+  margin: 20px 0;
 }
 .cta-one ul li p {
   color: #9b9b9b;

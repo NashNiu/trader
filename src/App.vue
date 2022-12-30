@@ -1,24 +1,13 @@
-<script setup>
-import Index from './pages/Index.vue';
-// import Trade from './pages/Trade.vue';
-</script>
-
 <template>
-  <Index />
-  <!-- <Trade /> -->
+  <el-config-provider>
+    <router-view></router-view>
+  </el-config-provider>
 </template>
-
-<style scoped>
+<script setup>
+import { ElConfigProvider } from 'element-plus';
+import 'element-plus/theme-chalk/el-loading.css';
+import 'element-plus/theme-chalk/el-message.css';
+</script>
+<style>
 @import './assets/css/reset.css';
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

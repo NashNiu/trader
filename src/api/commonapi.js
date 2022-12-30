@@ -27,7 +27,7 @@ export function getCodeInterface(data) {
   });
 }
 // 注册接口
-export function registerInterface(code,data) {
+export function registerInterface(code, data) {
   return request({
     url: '/api/users/user/reg/3/' + code,
     method: 'POST',
@@ -42,4 +42,3 @@ export function loginInterface(data) {
     data,
   });
 }
-

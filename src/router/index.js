@@ -6,24 +6,29 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/Index',
+      path: '/',
       name: 'Index',
-      component: () => import('../pages/Index.vue'),
+      component: () => import('@/pages/index/Index.vue'),
     },
     {
-      path: '/Trade',
+      path: '/trade',
       name: 'Trade',
-      component: () => import('../pages/Trade.vue'),
+      component: () => import('@/pages/Trade/index.vue'),
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../components/loginRegister/login.vue'),
+      path: '/order',
+      name: 'Order',
+      component: () => import('@/pages/Order/index.vue'),
     },
     {
-      path: '/Popular',
-      name: 'Popular',
-      component: () => import('../pages/Popular/Popular.vue'),
+      path: '/history',
+      name: 'History',
+      component: () => import('@/pages/History/index.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/pages/Error/NotFound.vue'),
     },
   ],
 });

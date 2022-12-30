@@ -20,29 +20,36 @@
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
-              <router-link to="/Popular">商户中心</router-link>
+              <span @click="goTrade" class="goTrade">商户中心</span>
             </li>
           </ul>
         </div>
-        <div class="right-side-box">
-          <a class="thm-btn header__cta-btn" href="#"><span @click="centerDialogVisible = !centerDialogVisible;">Login</span></a>
-        </div>
-        <div v-if="centerDialogVisible" class="positionBox">
-          <LoginRegister/>
-        </div>
+
+        <LoginRegister v-if="centerDialogVisible" @hide="hideDialog" />
       </div>
     </nav>
   </header>
 </template>
 <script setup>
-import LoginRegister from '../../components/loginRegister/login.vue';
+import LoginRegister from '../../components/common/login.vue';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-var centerDialogVisible = ref(false);
-if(!sessionStorage.getItem('token')){
-  centerDialogVisible = true;
-}
+const router = useRouter();
+const centerDialogVisible = ref(false);
+const hideDialog = () => {
+  centerDialogVisible.value = false;
+};
+const goTrade = () => {
+  if (sessionStorage.getItem('token')) {
+    router.push({
+      path: '/Trade',
+      query: {},
+    });
+  } else {
+    centerDialogVisible.value = true;
+  }
+};
 </script>
-
 
 <style scoped>
 .page-wrapper {
@@ -210,12 +217,8 @@ a:visited {
 .dialog-footer button:first-child {
   margin-right: 10px;
 }
-.positionBox{
-  width:480px;
-  height: 290px;
-  position: fixed;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+.goTrade {
+  cursor: pointer;
+  color: #ffffff;
 }
 </style>

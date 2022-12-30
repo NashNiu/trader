@@ -21,7 +21,7 @@
 
 <style scoped>
 .banner-one {
-  width: 1920px;
+  width: 100%;
   height: 780px;
   position: relative;
   background-image: url('../../assets/img/banner1.png');
@@ -69,6 +69,9 @@
   background-image: linear-gradient(180deg, #0c3d93 0%, #092b65 100%);
   border-radius: 50px;
   color: #fff;
+  margin-top: 30px;
+  display: block;
+  width: 75px;
 }
 .container {
   width: 100%;

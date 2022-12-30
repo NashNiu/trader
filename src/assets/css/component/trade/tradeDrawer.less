@@ -1,0 +1,96 @@
+.title {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  background-color: #0c3d93;
+  .closeIcon {
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+}
+.contentBox {
+  margin-top: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  .tabName {
+    font-size: 20px;
+  }
+  .symbolName {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 24px;
+    color: #0c3d93;
+  }
+  .price {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+  }
+  .inputNumberBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  .deepPriceBox {
+    margin-top: 20px;
+    .deepPriceTitle {
+      font-size: 20px;
+    }
+    .deepPriceItemBox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+      font-size: 14px;
+      padding: 5px;
+      &.up {
+        background: #e3fcf3;
+      }
+      &.down {
+        background: #ffebed;
+      }
+      .index {
+        margin-right:5px;
+        display: inline-block;
+        padding: 2px 4px;
+        background: #e34d59;
+        color: #ffffff;
+        border-radius: 4px;
+        font-size: 12px;
+        &.ask{
+          background: #078d5c;
+        }
+      }
+      .deepPrice {
+
+      }
+      .vol {
+
+      }
+    }
+  }
+  .btnContainer {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btnBox {
+      width: 390px;
+      height: 59px;
+      background-color: #0c3d93;
+      border-radius: 29px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}

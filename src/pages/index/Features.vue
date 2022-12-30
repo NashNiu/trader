@@ -68,7 +68,8 @@
 .service-one ul li p {
   color: #9b9b9b;
   font-size: 16px;
-  line-height: 19px;
+  line-height: 29px;
+  width: 285px;
 }
 @media (min-width: 1200px) {
   .container {

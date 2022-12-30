@@ -36,6 +36,44 @@
     justify-content: center;
     margin-top: 15px;
   }
+  .deepPriceBox {
+    margin-top: 20px;
+    .deepPriceTitle {
+      font-size: 20px;
+    }
+    .deepPriceItemBox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+      font-size: 14px;
+      padding: 5px;
+      &.up {
+        background: #e3fcf3;
+      }
+      &.down {
+        background: #ffebed;
+      }
+      .index {
+        margin-right:5px;
+        display: inline-block;
+        padding: 2px 4px;
+        background: #e34d59;
+        color: #ffffff;
+        border-radius: 4px;
+        font-size: 12px;
+        &.ask{
+          background: #078d5c;
+        }
+      }
+      .deepPrice {
+
+      }
+      .vol {
+
+      }
+    }
+  }
   .btnContainer {
     width: 100%;
     margin-top: 20px;

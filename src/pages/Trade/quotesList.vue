@@ -111,7 +111,6 @@ const openBuy = (row) => {
 };
 const rowDblClick = (row) => {
   commonStore.changeActiveChartName(row.mtName);
-  console.log(row);
 };
 // const onSubmitSell = () => {
 //   ElMessageBox.confirm(`Are you confirm to chose  ?`)

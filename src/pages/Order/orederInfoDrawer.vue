@@ -91,7 +91,6 @@ const closePosition = () => {
   const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
   commonStore.setLoadingInstance(instance);
 };
-console.log(props.drawerData);
 defineExpose({
   show,
 });

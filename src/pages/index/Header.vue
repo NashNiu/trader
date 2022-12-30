@@ -20,7 +20,7 @@
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
-              <router-link to="" @click="goTrade">商户中心</router-link>
+              <span @click="goTrade" class="goTrade">商户中心</span>
             </li>
           </ul>
         </div>
@@ -40,7 +40,6 @@ const hideDialog = () => {
   centerDialogVisible.value = false;
 };
 const goTrade = () => {
-  console.log(sessionStorage.getItem('token'));
   if (sessionStorage.getItem('token')) {
     router.push({
       path: '/Trade',
@@ -48,7 +47,6 @@ const goTrade = () => {
     });
   } else {
     centerDialogVisible.value = true;
-    console.log(centerDialogVisible.value);
   }
 };
 </script>
@@ -218,5 +216,9 @@ a:visited {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.goTrade {
+  cursor: pointer;
+  color: #ffffff;
 }
 </style>

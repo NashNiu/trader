@@ -213,7 +213,6 @@ const onSubmitLogin = () => {
       password: loginFrom.password,
       type: 3,
     }).then((res) => {
-      console.log(res);
       if (res.data.status == 0) {
         ElMessage({
           message: '登录成功！',

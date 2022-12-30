@@ -148,10 +148,16 @@
   color: #333;
 }
 .footer-widget__links li {
-  line-height: 1em;
+  line-height: 1.5em;
 }
 .site-footer__bottom {
   background-color: #fff9ff;
+}
+.footer-widget__contact {
+  margin: 10px 0;
+}
+.footer--widget {
+  line-height: 22px;
 }
 @media (min-width: 992px) {
   .col-lg-3 {

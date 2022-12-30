@@ -62,6 +62,7 @@
 .pricing-one ul li a {
   color: #0c3d93;
   font-weight: bold;
+  line-height: 35px;
 }
 .pricing-one {
   padding: 165px 0;

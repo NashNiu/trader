@@ -57,7 +57,8 @@
 .cta-one ul li p {
   color: #9b9b9b;
   font-size: 16px;
-  line-height: 19px;
+  line-height: 31px;
+  width: 400px;
 }
 @media (min-width: 1200px) {
   .container {

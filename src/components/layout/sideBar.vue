@@ -23,17 +23,20 @@
         <template #title><span>History Order</span></template>
       </el-menu-item>
     </el-menu>
+    <ProfileDrawer ref="profileDrawerRef" />
   </div>
 </template>
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
+import ProfileDrawer from './profileDrawer.vue';
 const router = useRouter();
 const route = useRoute();
 const activeIndex = ref(route.path);
+const profileDrawerRef = ref(null);
 const menuOpen = (index) => {
   if (index === '/index') {
-    console.log('index');
+    profileDrawerRef.value.show();
   } else {
     router.push(index);
   }

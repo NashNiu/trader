@@ -163,9 +163,22 @@ export default defineStore('socket', {
     },
     // 处理深度报价
     handleDeepQuotation(data) {
+      const oldData = this.deepQuotation[data.sbl];
+      let newData = data.items;
+      if (Array.isArray(oldData)) {
+        oldData.forEach((item, index) => {
+          if (newData[index].vol > item.vol) {
+            newData[index].change = 'up';
+          } else if (newData[index].vol < item.vol) {
+            newData[index].change = 'down';
+          } else {
+            newData[index].change = '';
+          }
+        });
+      }
       this.deepQuotation = {
         ...this.deepQuotation,
-        [data.sbl]: data.items,
+        [data.sbl]: newData,
       };
     },
     //获取产品配置信息
@@ -207,7 +220,6 @@ export default defineStore('socket', {
     },
     // 设置持仓数据
     setHoldingOrders(data) {
-      console.log(data);
       this.holdingOrders = data;
     },
     // 查询挂单

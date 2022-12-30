@@ -213,7 +213,6 @@ const onSubmitLogin = () => {
       password: loginFrom.password,
       type: 3,
     }).then((res) => {
-      console.log(res);
       if (res.data.status == 0) {
         ElMessage({
           message: '登录成功！',
@@ -307,7 +306,7 @@ const GOlogin = (username, password) => {
         width: 50px;
       }
       .el-tabs__item {
-        padding: 0 60px;
+        padding: 0 96px;
         font-size: 18px;
         font-weight: 600;
       }

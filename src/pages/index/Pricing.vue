@@ -47,6 +47,7 @@
   font-size: 36px;
   margin-bottom: 60px;
   font-weight: bold;
+  text-align: center;
 }
 .pricing-one ul {
   text-align: center;

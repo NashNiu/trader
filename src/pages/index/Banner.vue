@@ -35,6 +35,10 @@
   color: #fff;
   height: 100%;
 }
+.banner-one__content h1 {
+  font-size: 30px;
+  margin-bottom: 21px;
+}
 .banner-one .container {
   padding-top: 246px;
   padding-bottom: 230px;

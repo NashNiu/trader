@@ -59,8 +59,9 @@ export default defineStore('socket', {
       if (this.socket) {
         this.socket.close();
       }
+      //ws://192.168.137.113:9000/api/lp/auth/websocks/mt5sock
       const socketUrls = [
-        'ws://192.168.137.113:9000/api/lp/auth/websocks/mt5sock',
+        'wss://lp.mcgrp.com/wss/api/lp/auth/websocks/mt5sock',
       ];
       let urlIndex = 0;
       const urlProvider = () => socketUrls[urlIndex++ % socketUrls.length];

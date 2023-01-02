@@ -44,6 +44,7 @@
   font-size: 36px;
   margin-bottom: 60px;
   font-weight: bold;
+  text-align: center;
 }
 .service-one ul {
   text-align: center;
@@ -67,9 +68,9 @@
 }
 .service-one ul li p {
   color: #9b9b9b;
-  font-size: 16px;
-  line-height: 29px;
-  width: 285px;
+  font-size: 14px;
+  line-height: 28px;
+  width: 304px;
 }
 @media (min-width: 1200px) {
   .container {

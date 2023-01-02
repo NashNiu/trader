@@ -26,6 +26,11 @@ const router = createRouter({
       component: () => import('@/pages/History/index.vue'),
     },
     {
+      path: '/wallet',
+      name: 'Wallet',
+      component: () => import('@/pages/Wallet/index.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/pages/Error/NotFound.vue'),

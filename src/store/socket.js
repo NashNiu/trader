@@ -34,24 +34,6 @@ export default defineStore('socket', {
       );
       return state.userFunds?.balance + totalProfit;
     },
-    // profitOrders(state) {
-    //   return state.holdingOrders.map((item) => {
-    //     const cs = state.sblBasicData?.[item.symbol]?.contsize;
-    //     const liveData = state.liveData?.[item.symbol];
-    //     const profit = tools.calcProfit({
-    //       action: item.action,
-    //       openPrice: item.price,
-    //       cs,
-    //       lot: item.vol * 10000,
-    //       liveData,
-    //     });
-    //     console.log(profit);
-    //     return {
-    //       ...item,
-    //       profit,
-    //     };
-    //   });
-    // },
   },
   actions: {
     // 连接socket

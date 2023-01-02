@@ -45,7 +45,7 @@
                 <el-input
                   v-model="registerFrom.password"
                   type="password"
-                  placeholder="请输入密码"
+                  placeholder="密码必须同时包含大小写字母、数字、字符且大于8位"
                   clearable
                   show-password
                 />

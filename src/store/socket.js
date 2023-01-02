@@ -111,7 +111,7 @@ export default defineStore('socket', {
           this.handleDelHangingOrder(data);
         } else if (data.cmd === 10036) {
           // 挂单修改成功
-          this.hanldeUpdateHangingOrder(data);
+          this.handleUpdateHangingOrder(data);
         } else if (data.cmd === 10038) {
           // 修改持仓单成功
           this.handleUpdateHoldingOrder(data);
@@ -126,6 +126,12 @@ export default defineStore('socket', {
           commonStore.closeLoading();
           ElMessage.error({
             message: data.cmd,
+          });
+        } else {
+          // 其他未处理的信息
+          commonStore.closeLoading();
+          ElMessage.error({
+            message: data.msg || data.cmd || data.status || 'unknown error',
           });
         }
       }
@@ -308,7 +314,7 @@ export default defineStore('socket', {
       this.sendSocketMsg({ cmd: 10035, sl, tp, price, ticket: id });
     },
     // 挂单修改结果
-    hanldeUpdateHangingOrder(data) {
+    handleUpdateHangingOrder(data) {
       if (data.status === 0) {
         ElMessage.success({
           message: '挂单修改成功',

@@ -12,7 +12,7 @@
   </el-drawer>
 </template>
 <script setup>
-import { defineExpose, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import userImg from '@/assets/img/sidebar/user.png';
 const visible = ref(false);

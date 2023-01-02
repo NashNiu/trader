@@ -21,8 +21,8 @@
       <el-pagination
         layout="prev, pager, next"
         :page-size="pageSize"
-        @current-change="pageChange"
         :total="totalCount"
+        @current-change="pageChange"
       />
     </div>
   </div>
@@ -36,7 +36,7 @@ const loadingData = ref(false);
 const pageIndex = ref(1);
 const pageSize = ref(5);
 const totalCount = ref(0);
-// const currentPage = ref(1);
+
 const getTableData = async () => {
   loadingData.value = true;
   const res = await getHistoryOrder({

@@ -3,7 +3,8 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import { symbolArr } from '@/assets/data/symbol.js';
 import { ElMessage } from 'element-plus';
 import { useCommonStore } from '@/store/index.js';
-
+import { tools } from '@/utils/index.js';
+import dayjs from 'dayjs';
 export default defineStore('socket', {
   state: () => ({
     socket: null,
@@ -25,6 +26,33 @@ export default defineStore('socket', {
     // 当前下单成功后，订单信息
     currentOrderDetail: {},
   }),
+  getters: {
+    userNetWorth(state) {
+      const totalProfit = state.holdingOrders.reduce(
+        (pre, cur) => pre + cur.profit,
+        0
+      );
+      return state.userFunds?.balance + totalProfit;
+    },
+    // profitOrders(state) {
+    //   return state.holdingOrders.map((item) => {
+    //     const cs = state.sblBasicData?.[item.symbol]?.contsize;
+    //     const liveData = state.liveData?.[item.symbol];
+    //     const profit = tools.calcProfit({
+    //       action: item.action,
+    //       openPrice: item.price,
+    //       cs,
+    //       lot: item.vol * 10000,
+    //       liveData,
+    //     });
+    //     console.log(profit);
+    //     return {
+    //       ...item,
+    //       profit,
+    //     };
+    //   });
+    // },
+  },
   actions: {
     // 连接socket
     initSocket({ account, password }) {
@@ -76,7 +104,9 @@ export default defineStore('socket', {
         });
       } else {
         if (data.cmd === 51001 || data.cmd === 10008) {
-          this.handleLiveData(data);
+          if (data.sbl) {
+            this.handleLiveData(data);
+          }
         } else if (data.cmd === 51002) {
           this.handleDeepQuotation(data);
         } else if (data.cmd === 9999) {
@@ -99,7 +129,7 @@ export default defineStore('socket', {
           this.setUserFunds(data);
         } else if (data.cmd === 10012) {
           // 持仓列表
-          this.setHoldingOrders(data?.data ?? []);
+          this.handleHoldingOrders({ orderData: data?.data ?? [] });
         } else if (data.cmd === 10022) {
           // 挂单列表
           this.setHangingOrders(data?.data ?? []);
@@ -166,6 +196,8 @@ export default defineStore('socket', {
           utime: data.utime,
         },
       };
+      // 计算持仓浮动盈亏
+      this.handleHoldingOrders({ liveData: data });
     },
     // 处理深度报价
     handleDeepQuotation(data) {
@@ -225,8 +257,39 @@ export default defineStore('socket', {
       this.sendSocketMsg({ cmd: 10011 });
     },
     // 设置持仓数据
-    setHoldingOrders(data) {
-      this.holdingOrders = data;
+    handleHoldingOrders({ orderData, liveData }) {
+      if (orderData) {
+        this.holdingOrders = orderData.map((item) => {
+          return {
+            ...item,
+            actionType: item.action === 0 ? 'Buy' : 'Sell',
+            createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
+            lot: item.vol / 10000,
+            ...tools.calcOrderChange({
+              order: item,
+              liveData: this.liveData[item.symbol],
+              cs: this.sblBasicData[item.symbol]?.consize,
+            }),
+          };
+        });
+      }
+      if (liveData) {
+        const targetIndex = this.holdingOrders.findIndex(
+          (item) => item.symbol === liveData.sbl
+        );
+        if (targetIndex > -1) {
+          const pre = this.holdingOrders[targetIndex];
+          const target = {
+            ...pre,
+            ...tools.calcOrderChange({
+              order: pre,
+              liveData: this.liveData[pre.symbol],
+              cs: this.sblBasicData[pre.symbol]?.consize,
+            }),
+          };
+          this.holdingOrders.splice(targetIndex, 1, target);
+        }
+      }
     },
     // 查询挂单
     getHangingOrders() {

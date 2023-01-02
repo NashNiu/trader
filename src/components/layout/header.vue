@@ -17,7 +17,7 @@
           <span class="itemKey">Balance avaliable</span>
         </div>
         <div class="itemBox">
-          <span class="itemValue">${{ userFunds.equity }}</span>
+          <span class="itemValue">${{ netWorth.toFixed(2) }}</span>
           <span class="itemKey">Net worth</span>
         </div>
         <div class="itemBox">
@@ -38,6 +38,7 @@ import { useSocketStore } from '@/store/index.js';
 import { computed } from 'vue';
 const socketStore = useSocketStore();
 const userFunds = computed(() => socketStore.userFunds);
+const netWorth = computed(() => socketStore.userNetWorth);
 </script>
 
 <style scoped lang="less">

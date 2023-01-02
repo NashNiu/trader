@@ -1,4 +1,4 @@
-import request from '../utils/request';
+import { request } from '@/utils/index.js';
 
 /**
  * @param data请求接口传递的参数

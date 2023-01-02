@@ -23,7 +23,7 @@
             <h3 class="symbolName">{{ drawerData?.symbol }}</h3>
             <div class="price">current price: {{ currentPrice }}</div>
             <div class="inputNumberBox">
-              <InputNumber v-model="orderCount" />
+              <InputNumber v-model.number="orderCount" />
             </div>
             <div class="deepPriceBox">
               <div class="deepPriceTitle">

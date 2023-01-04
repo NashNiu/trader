@@ -56,16 +56,7 @@ import { computed, reactive, ref } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
 // import { tools } from '@/utils/index.js';
 const socketStore = useSocketStore();
-if (
-  !socketStore.socket &&
-  sessionStorage.getItem('account') &&
-  sessionStorage.getItem('password')
-) {
-  socketStore.initSocket({
-    account: sessionStorage.getItem('account'),
-    password: sessionStorage.getItem('password'),
-  });
-}
+
 const orderDrawerRef = ref(null);
 let drawerData = reactive({});
 const tableData = computed(() => socketStore.holdingOrders.map((item) => item));

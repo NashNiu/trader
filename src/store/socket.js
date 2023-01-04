@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { symbolArr } from '@/assets/data/symbol.js';
 import { ElMessage } from 'element-plus';
-import { useCommonStore } from '@/store/index.js';
+import { useCommonStore, useUserStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import dayjs from 'dayjs';
 export default defineStore('socket', {
@@ -37,7 +37,7 @@ export default defineStore('socket', {
   },
   actions: {
     // 连接socket
-    initSocket({ account, password }) {
+    initSocket() {
       if (this.socket) {
         this.socket.close();
       }
@@ -47,6 +47,7 @@ export default defineStore('socket', {
       ];
       let urlIndex = 0;
       const urlProvider = () => socketUrls[urlIndex++ % socketUrls.length];
+      const userStore = useUserStore();
       const options = {
         maxRetries: 1, //断开重连次数
       };
@@ -54,9 +55,9 @@ export default defineStore('socket', {
       this.socket.addEventListener('open', () => {
         this.sendSocketMsg({
           cmd: 10000,
-          login: account,
+          login: userStore.userInfo?.mtaccr,
           device: 1,
-          password: password,
+          password: localStorage.getItem('password'),
         });
       });
       this.socket.addEventListener('message', (res) => {

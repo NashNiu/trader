@@ -14,12 +14,13 @@ import SideBar from './sideBar.vue';
 import Header from './header.vue';
 import { useRouter } from 'vue-router';
 import { getUserInfoByToken, createUserWallet } from '@/api/user.js';
-import { useUserStore } from '@/store/index.js';
+import { useUserStore, useSocketStore } from '@/store/index.js';
 
 const router = useRouter();
 const token = localStorage.getItem('token');
 const password = localStorage.getItem('password');
 const userStore = useUserStore();
+const socketStore = useSocketStore();
 const createWallet = async () => {
   const res = await createUserWallet();
   if (res?.data?.status === 0) {
@@ -55,7 +56,10 @@ const checkToken = async () => {
     }
   }
 };
-checkToken();
+await checkToken();
+if (!socketStore.socket) {
+  socketStore.initSocket();
+}
 </script>
 <style lang="less" scoped>
 .container {

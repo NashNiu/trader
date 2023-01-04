@@ -31,6 +31,9 @@
 import { getHistoryOrder } from '@/api/historyOrder.js';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
+import { useUserStore } from '@/store/index.js';
+
+const userStore = useUserStore();
 const tableData = ref([]);
 const loadingData = ref(false);
 const pageIndex = ref(1);
@@ -43,7 +46,7 @@ const getTableData = async () => {
     pageIndex: pageIndex.value,
     commandType: 0,
     pageSize: pageSize.value,
-    login: sessionStorage.getItem('account'),
+    login: userStore.userInfo?.mtaccr,
     startTime: dayjs().subtract(30, 'day').format('YYYY-MM-DD HH:mm:ss'),
     endTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     sourceID: 53,

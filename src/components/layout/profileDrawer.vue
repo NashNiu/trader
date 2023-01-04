@@ -3,7 +3,7 @@
     <div class="titleBox">
       <img :src="userImg" alt="" />
       <div class="userBox">
-        <p>15291184453@163.com</p>
+        <p>{{ userInfo.email }}</p>
       </div>
     </div>
     <div class="mainBox">
@@ -12,16 +12,20 @@
   </el-drawer>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import userImg from '@/assets/img/sidebar/user.png';
+import { useUserStore } from '@/store/index.js';
+
+const userStore = useUserStore();
+const userInfo = computed(() => userStore.userInfo);
 const visible = ref(false);
 const router = useRouter();
 const show = () => {
   visible.value = true;
 };
 const logOut = () => {
-  sessionStorage.clear();
+  userStore.clearUserInfo();
   router.push('/');
 };
 defineExpose({

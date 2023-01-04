@@ -8,6 +8,7 @@
     :with-header="false"
     class="traderDrawerContainer"
     size="450"
+    destroy-on-close
   >
     <div class="title">
       <el-icon class="closeIcon" @click="close"><ArrowRightBold /></el-icon>
@@ -22,7 +23,7 @@
             <h3 class="symbolName">{{ drawerData?.symbol }}</h3>
             <div class="price">current price: {{ currentPrice }}</div>
             <div class="inputNumberBox">
-              <InputNumber v-model="orderCount" />
+              <InputNumber v-model.number="orderCount" />
             </div>
             <div class="deepPriceBox">
               <div class="deepPriceTitle">
@@ -85,13 +86,17 @@
   </el-drawer>
 </template>
 <script setup>
-import { ref, defineExpose, defineProps, computed } from 'vue';
+import { ref, defineProps, computed } from 'vue';
 import { useSocketStore, useCommonStore } from '@/store/index.js';
 import InputNumber from '@/components/common/inputNumber.vue';
 import { ElLoading } from 'element-plus';
 const props = defineProps({
   drawerData: {
     type: Object,
+    default: () => ({
+      type: 'buy',
+      symbol: '',
+    }),
   },
 });
 const socketStore = useSocketStore();

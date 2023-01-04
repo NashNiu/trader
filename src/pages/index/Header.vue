@@ -20,7 +20,7 @@
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
-              <span @click="goTrade" class="goTrade">商户中心</span>
+              <span class="goTrade" @click="goTrade">商户中心</span>
             </li>
           </ul>
         </div>
@@ -40,7 +40,7 @@ const hideDialog = () => {
   centerDialogVisible.value = false;
 };
 const goTrade = () => {
-  if (sessionStorage.getItem('token')) {
+  if (localStorage.getItem('token')) {
     router.push({
       path: '/Trade',
       query: {},

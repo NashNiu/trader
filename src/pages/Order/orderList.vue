@@ -10,7 +10,11 @@
           </div>
         </template>
       </el-table-column>
-      <!--    <el-table-column prop="symbol" label="Net contribution" />-->
+      <el-table-column prop="profit" label="Net contribution">
+        <template #default="scope">
+          <span :class="scope.row.color">{{ scope.row.profit }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="currentPrice" label="Present value">
         <template #default="scope">
           <span :class="scope.row.color">{{ scope.row.currentPrice }}</span>
@@ -27,7 +31,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="vol" label="Quantity" />
+      <el-table-column prop="lot" label="Quantity" />
       <!--    <el-table-column prop="symbol" label="Quota Stop" />-->
       <!--    <el-table-column prop="symbol" label="Adjustment" />-->
       <el-table-column prop="storage" label="Overnight Fee" />
@@ -48,50 +52,14 @@
 <script setup>
 import { useSocketStore } from '@/store/index.js';
 import { computed, reactive, ref } from 'vue';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import OrderDrawer from './orederInfoDrawer.vue';
+// import { tools } from '@/utils/index.js';
 const socketStore = useSocketStore();
-if (
-  !socketStore.socket &&
-  sessionStorage.getItem('account') &&
-  sessionStorage.getItem('password')
-) {
-  socketStore.initSocket({
-    account: sessionStorage.getItem('account'),
-    password: sessionStorage.getItem('password'),
-  });
-}
-const liveData = computed(() => socketStore.liveData);
+
 const orderDrawerRef = ref(null);
 let drawerData = reactive({});
-// const statisticData = computed(() => socketStore.statisticData);
-const tableData = computed(() =>
-  socketStore.holdingOrders.map((item) => {
-    const symbolLiveData = liveData.value[item.symbol];
-    const actionType = item.action === 0 ? 'Buy' : 'Sell';
-    const createTime = dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss');
-    const currentPrice =
-      item.action === 0 ? symbolLiveData?.ask : symbolLiveData?.bid;
-    const variety = (currentPrice - item.price) / item.price;
-    const change = `${(variety * 100).toFixed(4)}%`;
-    const color = () => {
-      if (item.action === 0) {
-        return variety > 0 ? 'green' : variety < 0 ? 'red' : '';
-      } else {
-        return variety > 0 ? 'red' : variety < 0 ? 'green' : '';
-      }
-    };
-    return {
-      ...item,
-      actionType,
-      createTime,
-      currentPrice,
-      vol: item.vol / 10000,
-      change,
-      color: color(),
-    };
-  })
-);
+const tableData = computed(() => socketStore.holdingOrders.map((item) => item));
 const openInfoDrawer = (row) => {
   drawerData = row;
   orderDrawerRef.value.show();
@@ -131,10 +99,10 @@ const openInfoDrawer = (row) => {
     cursor: pointer;
     font-size: 18px;
   }
-  .red {
+  .down {
     color: #e34d59;
   }
-  .green {
+  .up {
     color: #078d5c;
   }
   .varietyBox {

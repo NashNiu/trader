@@ -1,6 +1,6 @@
 <template>
   <div class="chartContainer">
-    <iframe :src="url" :key="Date.now()"></iframe>
+    <iframe :key="Date.now()" :src="url"></iframe>
   </div>
 </template>
 <script setup>

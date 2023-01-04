@@ -5,6 +5,7 @@ import path from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+
 // 获取当前时间戳
 const timeStamp = new Date().getTime();
 // https://vitejs.dev/config/
@@ -16,7 +17,13 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass',
+          directives: true,
+          version: '2.1.5',
+        }),
+      ],
     }),
   ],
   resolve: {
@@ -27,11 +34,19 @@ export default defineConfig({
       },
     ],
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/assets/css/element.index.scss" as *;`,
+      },
+    },
+  },
   server: {
     port: 3001,
     proxy: {
       '/apis': {
-        target: 'http://192.168.0.94:9000/',
+        // target: 'http://192.168.0.94:9000/',
+        target: 'http://192.168.137.135:9000/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/apis/, ''),
       },

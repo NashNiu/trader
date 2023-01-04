@@ -40,7 +40,7 @@ const hideDialog = () => {
   centerDialogVisible.value = false;
 };
 const goTrade = () => {
-  if (sessionStorage.getItem('token')) {
+  if (localStorage.getItem('token')) {
     router.push({
       path: '/Trade',
       query: {},

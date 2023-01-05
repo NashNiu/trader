@@ -113,7 +113,6 @@ const handleClick = (tab) => {
   nextTick(() => {
     let ele = document.getElementsByClassName('el-tabs__active-bar')[0];
     let distance = tab.index === 0 ? 0 : tab.index * 200 + 'px';
-    console.log(ele);
     ele.style.transform = 'translateX(' + distance + ')';
   });
 };
@@ -131,7 +130,6 @@ const loginFrom = reactive({
 });
 const timsGO = () => {
   tims.value--;
-  console.log(tims);
   getCodeInfo.value = tims.value + 's';
   if (tims.value > 0) {
     setTimeout(timsGO, 1000);
@@ -170,7 +168,6 @@ const onSubmitRegister = () => {
       email: registerFrom.email,
       password: registerFrom.password,
     }).then((res) => {
-      console.log(res);
       if (res.data.status === 0) {
         ElMessage({
           message: '注册成功！',
@@ -227,14 +224,12 @@ const rules = reactive({
 const GoLogin = (username, password) => {
   loginInterface({ username: username, password: password, type: 3 }).then(
     (res) => {
-      console.log(res);
       if (res.data.status === 0) {
         ElMessage({
           message: '登录成功！',
           type: 'success',
         });
         localStorage.setItem('token', res.data.token);
-        localStorage.setItem('password', password);
         router.push({
           path: '/Trade',
           query: {},

@@ -13,20 +13,17 @@
 </template>
 <script setup>
 import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import userImg from '@/assets/img/sidebar/user.png';
 import { useUserStore } from '@/store/index.js';
-
+import { tools } from '@/utils/index.js';
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);
 const visible = ref(false);
-const router = useRouter();
 const show = () => {
   visible.value = true;
 };
 const logOut = () => {
-  userStore.clearUserInfo();
-  router.push('/');
+  tools.clearAndLogout();
 };
 defineExpose({
   show,

@@ -1,4 +1,7 @@
 import axios from 'axios';
+// import router from '@/router/index.js';
+import { ElMessage } from 'element-plus';
+import { tools } from '@/utils/index.js';
 const service = axios.create({
   baseURL: '/apis',
   // withCredentials:true,//跨域请求时发送Cookie
@@ -22,22 +25,14 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     return response;
-    //response中包含响应的所有数据包括响应头，状态等
-    // const res = response.data;
-    // // 前后端约定的接口回来的数据格式，接口成功或接口失败，做一些逻辑处理再返回结果
-    // if (res.code !== 0) {
-    //   //最终都要返回结果
-    //   // return Promise.reject(new Error(res.msg || 'Error'));
-    //   return Promise.reject(new Error(res.msg || 'Error'));
-    // } else {
-    //   //最终都要返回结果
-    //   return res;
-    // }
   },
   (error) => {
-    return error.response;
-    // console.log('err' + error); // for debug
-    // return Promise.reject(error);
+    if (error.response.status === 401) {
+      ElMessage.error('Unauthorized');
+      tools.clearAndLogout();
+    } else {
+      return error;
+    }
   }
 );
 

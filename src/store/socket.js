@@ -57,7 +57,7 @@ export default defineStore('socket', {
           cmd: 10000,
           login: userStore.userInfo?.mtaccr,
           device: 1,
-          password: localStorage.getItem('password'),
+          password: userStore.userInfo?.password,
         });
       });
       this.socket.addEventListener('message', (res) => {

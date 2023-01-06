@@ -30,6 +30,9 @@ service.interceptors.response.use(
     if (error.response.status === 401) {
       ElMessage.error('Unauthorized');
       tools.clearAndLogout();
+    } else if (error.response.status === 500) {
+      ElMessage.error('Server Error');
+      return error;
     } else {
       return error;
     }

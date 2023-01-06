@@ -31,7 +31,8 @@
           <el-col :span="6">
             <el-input-number
               v-model="amount"
-              controls-position="right"
+              :min="0"
+              :controls="false"
               style="width: 95%"
             />
           </el-col>
@@ -53,7 +54,7 @@
             <el-input-number
               v-model="usdAmount"
               disabled
-              controls-position="right"
+              :controls="false"
               style="width: 95%"
             />
           </el-col>
@@ -68,6 +69,7 @@
               size="large"
               type="primary"
               :loading="submitLoading"
+              :disabled="submitDisabled"
               @click="submit"
               >Confirm Redemption</el-button
             >
@@ -100,6 +102,7 @@ const liveData = computed(
   () => socketStore.liveData[currentSymbol.value + 'USDT']
 );
 const amount = ref(0);
+const submitDisabled = computed(() => amount.value <= 0);
 const usdAmount = computed(() =>
   Number((amount.value * liveData.value?.ask).toFixed(2))
 );
@@ -110,6 +113,10 @@ const afterClose = () => {
   amount.value = 0;
 };
 const submit = async () => {
+  if (amount.value > props.walletInfo?.balance) {
+    ElMessage.error('insufficient balance');
+    return;
+  }
   const params = {
     vaultId: userStore.userInfo.fb,
     platName: 'LP',

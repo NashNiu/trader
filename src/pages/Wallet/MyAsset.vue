@@ -35,9 +35,7 @@ const socketStore = useSocketStore();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const totalProfit = computed(() => socketStore.userTotalProfit);
-const availableMargin = computed(() => {
-  return netWorth.value - userFunds.value?.margin;
-});
+const availableMargin = computed(() => socketStore.availableMargin);
 </script>
 <style scoped lang="less">
 .myAssetsContainer {

@@ -28,11 +28,17 @@ export default defineStore('socket', {
     currentOrderDetail: {},
   }),
   getters: {
+    // 浮动盈亏
     userTotalProfit(state) {
       return state.holdingOrders.reduce((pre, cur) => pre + cur.profit, 0);
     },
+    // 账户净值 = 余额 + 浮动盈亏
     userNetWorth(state) {
       return state.userFunds?.balance ?? 0 + this.userTotalProfit;
+    },
+    // 可用保证金 = 账户净值 - 占用保证金
+    availableMargin(state) {
+      return this.userNetWorth - state.userFunds?.margin || 0;
     },
   },
   actions: {

@@ -55,10 +55,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/lpapi/, ''),
       },
-      '/mt5wss': {
-        target: 'http://trader.lp.lan/mt5wss',
+      '/wss': {
+        target: 'http://trader.lp.lan/wss',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/mt5wss/, ''),
+        rewrite: (path) => path.replace(/^\/wss/, ''),
         ws: true,
       },
     },

@@ -23,7 +23,12 @@ const createWallet = async () => {
   const res = await createUserWallet();
   if (res?.data?.status === 0) {
     // userStore.updateUserWallets('56');
-    window.location.reload();
+    // window.location.reload();
+    const userInfoRes = await getUserInfoByToken();
+    if (userInfoRes?.data?.status === 0) {
+      const password = tools.decrypt(res.data?.data?.password);
+      userStore.setUserInfo({ ...res.data.data, password });
+    }
   }
 };
 

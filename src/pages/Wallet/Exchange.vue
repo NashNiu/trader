@@ -1,7 +1,13 @@
 <template>
-  <el-dialog v-model="visible" class="exchangeDialogContainer">
+  <el-dialog
+    v-model="visible"
+    class="exchangeDialogContainer"
+    width="800"
+    destroy-on-close
+    @closed="afterClose"
+  >
     <template #header>
-      <h3>Recharge Currency</h3>
+      <h3>Currency Exchange</h3>
     </template>
     <div class="contentBox">
       <el-space
@@ -11,34 +17,60 @@
         :size="30"
       >
         <el-row align="middle">
-          <el-col :span="8">
-            <p class="desc">Select the charging network</p>
+          <el-col :span="6">
+            <p class="desc">USDT/{{ currentSymbol }}</p>
           </el-col>
           <el-col :span="14">
-            <el-select style="width: 100%" />
+            <span>{{ liveData?.ask }}</span>
           </el-col>
         </el-row>
         <el-row align="middle">
+          <el-col :span="6">
+            <p class="desc">Exchange amount</p>
+          </el-col>
+          <el-col :span="6">
+            <el-input-number
+              v-model="amount"
+              controls-position="right"
+              style="width: 95%"
+            />
+          </el-col>
+          <el-col :span="2">
+            {{ currentSymbol }}
+          </el-col>
           <el-col :span="8">
-            <p class="desc">Copy the charging address</p>
+            <span
+              >Available balance {{ walletInfo?.balance }}
+              {{ currentSymbol }}</span
+            >
           </el-col>
-          <el-col :span="14">
-            <el-space>
-              <span>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
-              <el-icon class="copyIcon"
-                ><CopyDocument @click="copyAddress"
-              /></el-icon>
-            </el-space>
+        </el-row>
+        <el-row align="middle">
+          <el-col :span="6">
+            <p class="desc">convertible</p>
           </el-col>
+          <el-col :span="6">
+            <el-input-number
+              v-model="usdAmount"
+              disabled
+              controls-position="right"
+              style="width: 95%"
+            />
+          </el-col>
+          <el-col :span="2"> USDT </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10" :offset="8"> </el-col>
         </el-row>
         <el-row>
           <el-col :span="10" :offset="8">
-            <img class="qrImg" :src="qrcode" alt="qr code" />
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="10" :offset="8">
-            <el-button size="large" type="primary">Close</el-button>
+            <el-button
+              size="large"
+              type="primary"
+              :loading="submitLoading"
+              @click="submit"
+              >Confirm Redemption</el-button
+            >
           </el-col>
         </el-row>
       </el-space>
@@ -46,25 +78,54 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref } from 'vue';
-import { useClipboard } from '@vueuse/core';
+import { ref, computed } from 'vue';
+import { useSocketStore, useUserStore } from '@/store/index.js';
+import { createDeposit } from '@/api/user.js';
 import { ElMessage } from 'element-plus';
-import { useQRCode } from '@vueuse/integrations/useQRCode';
 
+const props = defineProps({
+  walletInfo: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+const socketStore = useSocketStore();
+const userStore = useUserStore();
 const visible = ref(false);
-const address = ref('bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh');
-const qrcode = useQRCode(address, { margin: 0 });
-const { isSupported, copy } = useClipboard();
-const copyAddress = () => {
-  if (isSupported) {
-    copy?.(address.value);
-    ElMessage.success('copy success');
-  } else {
-    ElMessage.error('Your browser does not support Clipboard API');
-  }
-};
+const submitLoading = ref(false);
+const currentSymbol = computed(() => {
+  return props.walletInfo.id?.replace('_TEST', '');
+});
+const liveData = computed(
+  () => socketStore.liveData[currentSymbol.value + 'USDT']
+);
+const amount = ref(0);
+const usdAmount = computed(() =>
+  Number((amount.value * liveData.value?.ask).toFixed(2))
+);
 const open = () => {
   visible.value = true;
+};
+const afterClose = () => {
+  amount.value = 0;
+};
+const submit = async () => {
+  const params = {
+    vaultId: userStore.userInfo.fb,
+    platName: 'LP',
+    assetId: props.walletInfo?.id,
+    amount: amount.value,
+    price: liveData.value?.ask,
+  };
+  submitLoading.value = true;
+  const res = await createDeposit(params);
+  if (res.data.status === 0) {
+    ElMessage.success('submit success');
+    visible.value = false;
+  } else {
+    ElMessage.error('submit error');
+  }
+  submitLoading.value = false;
 };
 defineExpose({
   open,

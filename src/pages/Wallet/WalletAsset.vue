@@ -3,53 +3,83 @@
     :body-style="{ padding: '0px', height: '100%' }"
     class="walletAssetContainer"
   >
-    <h3 class="title">Wallet Assets: $11111</h3>
+    <h3 class="title">Wallet Assets $ {{ walletsValue.toFixed(2) }}</h3>
     <div class="contentBox">
       <div v-for="item in walletData" :key="item.name" class="itemBox">
         <div class="iconBox">
           <SvgIcon icon-class="icon-bitcoin" size="50px" color="#f7931a" />
         </div>
         <div class="symbolBox">
-          <p class="symbol">{{ item.name }}</p>
+          <p class="symbol">{{ item.id }}</p>
           <p class="balance">Wallet Balance</p>
         </div>
-        <div class="balanceValue">{{ item.value }}</div>
+        <div class="balanceValue">{{ item.balance }}</div>
         <div class="operateBox">
           <SvgIcon
             class="card icon"
             icon-class="icon-creditcard"
             size="35px"
-            @click="openExchangeDialog"
+            @click="openRechargeDialog(item)"
           />
-          <SvgIcon class="dollar icon" icon-class="icon-dollar1" size="35px" />
+          <SvgIcon
+            class="dollar icon"
+            icon-class="icon-dollar1"
+            size="35px"
+            @click="openExchangeDialog(item)"
+          />
         </div>
       </div>
     </div>
-    <ExchangeDialog ref="exchangeDialogRef" />
+    <ExchangeDialog ref="exchangeDialogRef" :wallet-info="activeWalletInfo" />
+    <RechargeDialog ref="rechargeDialogRef" :wallet-info="activeWalletInfo" />
   </el-card>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import SvgIcon from '@/components/common/svgIcon.vue';
 import ExchangeDialog from './Exchange.vue';
+import RechargeDialog from './Recharge.vue';
+import { getWalletInfo } from '@/api/user.js';
+import { ElMessage } from 'element-plus';
+import { useUserStore, useSocketStore } from '@/store/index.js';
+const socketStore = useSocketStore();
+const userStore = useUserStore();
+const liveData = computed(() => socketStore.liveData);
 const exchangeDialogRef = ref(null);
-const openExchangeDialog = () => {
+const rechargeDialogRef = ref(null);
+const walletData = ref([]);
+const walletsValue = computed(() => {
+  return walletData.value.reduce((pre, cur) => {
+    const ask = liveData.value[cur?.id?.replace('_TEST', '') + 'USDT']?.ask;
+    let value = 0;
+    if (ask) {
+      value = ask * cur?.balance + pre;
+    } else {
+      value = pre;
+    }
+    userStore.setWalletAssets(value);
+    return value;
+  }, 0);
+});
+const activeWalletInfo = ref({});
+const openExchangeDialog = (data) => {
+  activeWalletInfo.value = data;
   exchangeDialogRef.value.open();
 };
-const walletData = [
-  {
-    name: 'BTC',
-    value: '0.0006515411',
-  },
-  {
-    name: 'ETH',
-    value: '0.33515411',
-  },
-  {
-    name: 'LTC',
-    value: '0.36515454411',
-  },
-];
+const openRechargeDialog = (data) => {
+  activeWalletInfo.value = data;
+  rechargeDialogRef.value.open();
+};
+
+const getWalletData = async () => {
+  const res = await getWalletInfo(userStore.userInfo?.fb);
+  if (res.data.status === 0) {
+    walletData.value = res.data.data;
+  } else {
+    ElMessage.error('GET WALLET INFO FAILED');
+  }
+};
+await getWalletData();
 </script>
 <style lang="less" scoped>
 .walletAssetContainer {

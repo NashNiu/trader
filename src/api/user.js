@@ -15,11 +15,20 @@ export function createUserWallet() {
   });
 }
 // 获取钱包信息
-
-// 获取钱包余额
-export function createDeposit() {
+export function getWalletInfo(vaultId) {
   return request({
-    url: '/api/users/wallet/myAssets?vaultId=23',
+    url: '/api/users/wallet/myAssets',
     method: 'GET',
+    params: {
+      vaultId,
+    },
+  });
+}
+// 入金
+export function createDeposit(data) {
+  return request({
+    url: '/api/users/wallet/createDeposit',
+    method: 'POST',
+    data,
   });
 }

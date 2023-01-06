@@ -22,7 +22,8 @@ const socketStore = useSocketStore();
 const createWallet = async () => {
   const res = await createUserWallet();
   if (res?.data?.status === 0) {
-    userStore.updateUserWallets('56');
+    // userStore.updateUserWallets('56');
+    window.location.reload();
   }
 };
 

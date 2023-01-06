@@ -1,29 +1,44 @@
 <template>
   <el-card class="myAssetsContainer" :body-style="{ padding: '0px' }">
     <h3 class="title">My Assets</h3>
-    <h3 class="estimated">Estimated total assets：$888888888</h3>
+    <h3 class="estimated">
+      Estimated total assets：$ {{ userStore.totalAssets }}
+    </h3>
     <div class="contentBox">
-      <div class="tradingBox">Trading account assets：$2222</div>
+      <div class="tradingBox">
+        Trading account assets：$ {{ userFunds.balance }}
+      </div>
       <div class="itemBox">
-        <p class="value">$22222</p>
+        <p class="value">$ {{ netWorth.toFixed(2) }}</p>
         <p class="key">Net Value</p>
       </div>
       <div class="itemBox">
-        <p class="value">$22222</p>
+        <p class="value">$ {{ userFunds.margin }}</p>
         <p class="key">Occupancy margin</p>
       </div>
       <div class="itemBox">
-        <p class="value">$22222</p>
+        <p class="value">$ {{ availableMargin.toFixed(2) }}</p>
         <p class="key">Available margin</p>
       </div>
       <div class="itemBox">
-        <p class="value">$22222</p>
+        <p class="value">$ {{ totalProfit.toFixed(2) }}</p>
         <p class="key">Position Profit and Loss</p>
       </div>
     </div>
   </el-card>
 </template>
-<script setup></script>
+<script setup>
+import { useSocketStore, useUserStore } from '@/store/index.js';
+import { computed } from 'vue';
+const userStore = useUserStore();
+const socketStore = useSocketStore();
+const userFunds = computed(() => socketStore.userFunds);
+const netWorth = computed(() => socketStore.userNetWorth);
+const totalProfit = computed(() => socketStore.userTotalProfit);
+const availableMargin = computed(() => {
+  return netWorth.value - userFunds.value?.margin;
+});
+</script>
 <style scoped lang="less">
 .myAssetsContainer {
   color: #0c3d93;

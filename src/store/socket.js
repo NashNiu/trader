@@ -63,8 +63,8 @@ export default defineStore('socket', {
         this.handleMessage(res);
       });
       this.socket.addEventListener('close', (e) => {
-        if (e.wasClean) {
-          this.socket.close();
+        if (!e.wasClean) {
+          this.socket?.close();
           this.closeSocket();
         }
       });

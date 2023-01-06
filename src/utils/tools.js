@@ -1,0 +1,58 @@
+import Router from '@/router/index.js';
+import { useSocketStore, useUserStore } from '@/store/index.js';
+import { configKey } from '@/config/index.js';
+import cryptoJS from 'crypto-js';
+// 计算持仓浮动盈亏 和 价格变化
+export function calcOrderChange({ order, liveData, cs }) {
+  let profit = 0;
+  let currentPrice = 0;
+  if (!order || !liveData || !cs) {
+    return {
+      profit,
+      currentPrice,
+      change: '0%',
+      color: '',
+    };
+  } else {
+    let color, variety;
+    if (order?.action === 0) {
+      profit = (order?.vol / 10000) * (liveData.bid - order?.price) * cs;
+      currentPrice = liveData?.bid;
+      variety = (currentPrice - order.price) / order.price;
+      color = variety > 0 ? 'up' : variety < 0 ? 'down' : '';
+    } else {
+      profit = (order?.vol / 10000) * (order?.price - liveData.ask) * cs;
+      currentPrice = liveData?.ask;
+      variety = (currentPrice - order.price) / order.price;
+      color = variety > 0 ? 'down' : variety < 0 ? 'up' : '';
+    }
+    const change = `${(variety * 100).toFixed(4)}%`;
+    return {
+      profit: Number(profit.toFixed(2)),
+      color,
+      currentPrice,
+      change,
+    };
+  }
+}
+
+// 清除登录信息，退出登录，跳到首页
+export function clearAndLogout() {
+  const userStore = useUserStore();
+  const socketStore = useSocketStore();
+  userStore.$reset();
+  socketStore.closeSocket();
+  socketStore.$reset();
+  localStorage.clear();
+  Router.push({ name: 'Index' }).then();
+}
+
+export function decrypt(data) {
+  const key = cryptoJS.enc.Utf8.parse(configKey.aesKey);
+  const decrypt = cryptoJS.AES.decrypt(data, key, {
+    iv: cryptoJS.enc.Utf8.parse(configKey.cbcIV),
+    mode: cryptoJS.mode.CBC,
+    padding: cryptoJS.pad.Pkcs7,
+  });
+  return cryptoJS.enc.Utf8.stringify(decrypt).toString();
+}

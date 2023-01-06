@@ -100,7 +100,7 @@ import {
   getCodeInterface,
   registerInterface,
   loginInterface,
-} from '../../api/commonapi.js';
+} from '@/api/commonapi.js';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { nextTick } from 'vue';
@@ -112,8 +112,7 @@ const activeName = ref('second');
 const handleClick = (tab) => {
   nextTick(() => {
     let ele = document.getElementsByClassName('el-tabs__active-bar')[0];
-    let distance = tab.index == 0 ? 0 : tab.index * 200 + 'px';
-    console.log(ele);
+    let distance = tab.index === 0 ? 0 : tab.index * 200 + 'px';
     ele.style.transform = 'translateX(' + distance + ')';
   });
 };
@@ -131,7 +130,6 @@ const loginFrom = reactive({
 });
 const timsGO = () => {
   tims.value--;
-  console.log(tims);
   getCodeInfo.value = tims.value + 's';
   if (tims.value > 0) {
     setTimeout(timsGO, 1000);
@@ -146,7 +144,7 @@ const getCode = () => {
   if (registerFrom.email) {
     isSend.value = true;
     getCodeInterface(registerFrom.email).then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         ElMessage({
           message: '验证码发送成功！',
           type: 'success',
@@ -170,13 +168,12 @@ const onSubmitRegister = () => {
       email: registerFrom.email,
       password: registerFrom.password,
     }).then((res) => {
-      console.log(res);
-      if (res.data.status == 0) {
+      if (res.data.status === 0) {
         ElMessage({
           message: '注册成功！',
           type: 'success',
         });
-        GOlogin(registerFrom.email, registerFrom.password);
+        GoLogin(registerFrom.email, registerFrom.password);
       } else {
         ElMessage.error(res.data.message);
       }
@@ -210,29 +207,7 @@ const resetForm = (formEl) => {
 // 登录表单提交
 const onSubmitLogin = () => {
   if (loginFrom.email && loginFrom.password) {
-    loginInterface({
-      username: loginFrom.email,
-      password: loginFrom.password,
-      type: 3,
-    }).then((res) => {
-      if (res.data.status == 0) {
-        ElMessage({
-          message: '登录成功！',
-          type: 'success',
-        });
-        sessionStorage.setItem('token', res.data.token);
-        sessionStorage.setItem('userid', res.data.userid);
-        sessionStorage.setItem('username', res.data.username);
-        sessionStorage.setItem('account', res.data.mtaccr);
-        sessionStorage.setItem('password', loginFrom.password);
-        router.push({
-          path: '/Trade',
-          query: {},
-        });
-      } else {
-        ElMessage.error('登录失败！');
-      }
-    });
+    GoLogin(loginFrom.email, loginFrom.password);
   } else {
     ElMessage({
       message: '请输入正确的邮箱和密码！',
@@ -246,18 +221,15 @@ const rules = reactive({
   region: [{ required: true, message: '请输入验证码！', trigger: 'blur' }],
   password: [{ required: true, message: '密码不能为空！', trigger: 'blur' }],
 });
-const GOlogin = (username, password) => {
+const GoLogin = (username, password) => {
   loginInterface({ username: username, password: password, type: 3 }).then(
     (res) => {
-      console.log(res);
-      if (res.data.status == 0) {
+      if (res.data.status === 0) {
         ElMessage({
           message: '登录成功！',
           type: 'success',
         });
-        sessionStorage.setItem('token', res.data.token);
-        sessionStorage.setItem('userid', res.data.userid);
-        sessionStorage.setItem('username', res.data.username);
+        localStorage.setItem('token', res.data.token);
         router.push({
           path: '/Trade',
           query: {},
@@ -287,7 +259,6 @@ const GOlogin = (username, password) => {
   left: 0;
   position: fixed;
   background: rgba(0, 0, 0, 0.4);
-  opacity: 0;
   -webkit-transition: all 300ms ease-in-out;
   -moz-transition: all 300ms ease-in-out;
   transition: all 300ms ease-in-out;
@@ -326,7 +297,7 @@ const GOlogin = (username, password) => {
     }
   }
   :deep(.el-tabs__header) {
-    margin: 0px 0 20px;
+    margin: 0 0 20px;
   }
   :deep(.el-input__inner) {
     background: #f4f4f4;

@@ -51,14 +51,14 @@
           <span class="value">{{ drawerData.storage }}</span>
         </div>
       </div>
-      <div class="btnContainer" v-if="!drawerData.isInfo">
+      <div v-if="!drawerData.isInfo" class="btnContainer">
         <div class="btnBox" @click="closePosition">Close Position</div>
       </div>
     </div>
   </el-drawer>
 </template>
 <script setup>
-import { computed, defineExpose, defineProps, ref } from 'vue';
+import { computed, defineProps, ref } from 'vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { ElLoading } from 'element-plus';
 const socketStore = useSocketStore();
@@ -66,6 +66,10 @@ const commonStore = useCommonStore();
 const props = defineProps({
   drawerData: {
     type: Object,
+    default: () => ({
+      type: 'buy',
+      symbol: '',
+    }),
   },
 });
 const currentSblData = computed(

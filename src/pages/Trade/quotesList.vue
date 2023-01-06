@@ -60,16 +60,6 @@ let drawerData = reactive({
   type: 'buy',
   symbol: '',
 });
-if (
-  !socketStore.socket &&
-  sessionStorage.getItem('account') &&
-  sessionStorage.getItem('password')
-) {
-  socketStore.initSocket({
-    account: sessionStorage.getItem('account'),
-    password: sessionStorage.getItem('password'),
-  });
-}
 
 const tableData = computed(() =>
   tradeStore.symbolTypeArr[tradeStore.activeType].map((item) => {

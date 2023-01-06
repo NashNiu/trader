@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import { request } from '@/utils/index.js';
 
 export function getHistoryOrder(data) {
   return request({

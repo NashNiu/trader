@@ -44,11 +44,22 @@ export default defineConfig({
   server: {
     port: 3001,
     proxy: {
-      '/apis': {
-        // target: 'http://192.168.0.94:9000/',
-        target: 'http://192.168.137.135:9000/',
+      // '/apis': {
+      //   // target: 'http://192.168.0.94:9000/',
+      //   target: 'http://192.168.137.135:9000/',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/apis/, ''),
+      // },
+      '/lpapi': {
+        target: 'http://trader.lp.lan/lpapi',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/apis/, ''),
+        rewrite: (path) => path.replace(/^\/lpapi/, ''),
+      },
+      '/mt5wss': {
+        target: 'http://trader.lp.lan/mt5wss',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/mt5wss/, ''),
+        ws: true,
       },
     },
   },

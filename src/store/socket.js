@@ -4,6 +4,7 @@ import { symbolArr } from '@/assets/data/symbol.js';
 import { ElMessage } from 'element-plus';
 import { useCommonStore, useUserStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
+import { configUrl } from '@/config/index.js';
 import dayjs from 'dayjs';
 export default defineStore('socket', {
   state: () => ({
@@ -41,9 +42,8 @@ export default defineStore('socket', {
         this.socket.close();
       }
       //ws://192.168.137.113:9000/api/lp/auth/websocks/mt5sock
-      const socketUrls = [
-        'wss://lp.mcgrp.com/wss/api/lp/auth/websocks/mt5sock',
-      ];
+      const protocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+      const socketUrls = [protocol + configUrl.socketUrl];
       let urlIndex = 0;
       const urlProvider = () => socketUrls[urlIndex++ % socketUrls.length];
       const userStore = useUserStore();

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { tools } from '@/utils/index.js';
 const service = axios.create({
-  baseURL: '/apis',
+  baseURL: '/lpapi',
   // withCredentials:true,//跨域请求时发送Cookie
   timeout: 10000, // 设置超时时间
 });

@@ -13,7 +13,7 @@
       </div>
       <div class="content-nav">
         <div class="itemBox">
-          <span class="itemValue">${{ userFunds.balance }}</span>
+          <span class="itemValue">${{ availableMargin?.toFixed(2) }}</span>
           <span class="itemKey">Balance avaliable</span>
         </div>
         <div class="itemBox">
@@ -21,7 +21,7 @@
           <span class="itemKey">Net worth</span>
         </div>
         <div class="itemBox">
-          <span class="itemValue">${{ userFunds.marginfree }}</span>
+          <span class="itemValue">${{ userFunds.margin }}</span>
           <span class="itemKey">Deposit for maintenance</span>
         </div>
         <div class="itemBox">
@@ -40,6 +40,7 @@ const socketStore = useSocketStore();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(() => socketStore.userTotalProfit);
+const availableMargin = computed(() => socketStore.availableMargin);
 </script>
 
 <style scoped lang="less">

@@ -43,7 +43,9 @@
         </el-row>
         <el-row>
           <el-col :span="10" :offset="8">
-            <el-button size="large" type="primary">Close</el-button>
+            <el-button size="large" type="primary" @click="close"
+              >Close</el-button
+            >
           </el-col>
         </el-row>
       </el-space>
@@ -76,6 +78,9 @@ const copyAddress = () => {
 };
 const open = () => {
   visible.value = true;
+};
+const close = () => {
+  visible.value = false;
 };
 defineExpose({
   open,

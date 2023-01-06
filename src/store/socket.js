@@ -27,12 +27,11 @@ export default defineStore('socket', {
     currentOrderDetail: {},
   }),
   getters: {
+    userTotalProfit(state) {
+      return state.holdingOrders.reduce((pre, cur) => pre + cur.profit, 0);
+    },
     userNetWorth(state) {
-      const totalProfit = state.holdingOrders.reduce(
-        (pre, cur) => pre + cur.profit,
-        0
-      );
-      return state.userFunds?.balance + totalProfit;
+      return state.userFunds?.balance ?? 0 + this.userTotalProfit;
     },
   },
   actions: {
@@ -382,6 +381,7 @@ export default defineStore('socket', {
     },
     // 断开socket
     closeSocket() {
+      this.socket?.close();
       this.socket = null;
     },
   },

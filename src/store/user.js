@@ -1,8 +1,19 @@
 import { defineStore } from 'pinia';
+import { useSocketStore } from '@/store/index.js';
+
 export default defineStore('user', {
   state: () => ({
     userInfo: {},
+    walletAssets: 0,
   }),
+  getters: {
+    totalAssets(state) {
+      const socketStore = useSocketStore();
+      return (
+        state.walletAssets + socketStore?.userFunds?.balance ?? 0
+      ).toFixed(2);
+    },
+  },
   actions: {
     setUserInfo(data) {
       this.userInfo = data;
@@ -16,6 +27,9 @@ export default defineStore('user', {
     clearUserInfo() {
       this.userInfo = {};
       localStorage.clear();
+    },
+    setWalletAssets(data) {
+      this.walletAssets = data;
     },
   },
 });

@@ -41,6 +41,7 @@ export function clearAndLogout() {
   const userStore = useUserStore();
   const socketStore = useSocketStore();
   userStore.$reset();
+  socketStore.closeSocket();
   socketStore.$reset();
   localStorage.clear();
   Router.push({ name: 'Index' }).then();

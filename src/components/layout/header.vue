@@ -25,7 +25,7 @@
           <span class="itemKey">Deposit for maintenance</span>
         </div>
         <div class="itemBox">
-          <span class="itemValue">${{ userFunds.margin }}</span>
+          <span class="itemValue">${{ profit.toFixed(2) }}</span>
           <span class="itemKey">Give good</span>
         </div>
       </div>
@@ -39,6 +39,7 @@ import { computed } from 'vue';
 const socketStore = useSocketStore();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
+const profit = computed(() => socketStore.userTotalProfit);
 </script>
 
 <style scoped lang="less">

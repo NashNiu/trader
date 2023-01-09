@@ -39,7 +39,7 @@ const activeType = computed(() => tradeStore.activeType);
       color: #0c3d93;
       cursor: pointer;
       transition: 0.3s;
-      font-size: 20px;
+      font-size: 16px;
       margin-top: 3px;
       &:hover,
       &.active {

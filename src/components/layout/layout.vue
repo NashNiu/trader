@@ -74,8 +74,8 @@ await checkToken();
     flex: 1;
     .contentBox {
       box-sizing: border-box;
-      padding: 15px 24px;
-      height: calc(100% - 80px);
+      padding: 15px 20px;
+      height: calc(100% - 68px);
     }
   }
 }

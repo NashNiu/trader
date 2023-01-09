@@ -1,3 +1,11 @@
+@font-face {
+	font-family: 'roboto-regular';
+	src: url("./font/Roboto-Regular-14.ttf") format('truetype');
+}
+@font-face {
+	font-family: 'roboto-bold';
+	src: url("./font/Roboto-Bold-3.ttf") format('truetype');
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -17,6 +25,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 body {
 	line-height: 1;
+	font-family: 'roboto-regular';
 }
 ol, ul {
 	list-style: none;
@@ -47,4 +56,7 @@ del {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+.bold {
+	font-family: 'roboto-bold';
 }

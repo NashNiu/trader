@@ -8,6 +8,9 @@
       @input="$emit('update:modelValue', $event.target.value)"
     />
     <el-icon class="icon" @click="plus"><CirclePlusFilled /></el-icon>
+    <div class="tips">
+      <slot name="tips"></slot>
+    </div>
   </div>
 </template>
 <script setup>
@@ -38,6 +41,7 @@ const minus = () => {
   align-items: center;
   border-bottom: 1px solid #c8c8c8;
   box-sizing: border-box;
+  position: relative;
   .input {
     border: none;
     flex: 1;
@@ -61,7 +65,7 @@ const minus = () => {
     }
   }
   &.small {
-    height: 50px;
+    height: 35px;
     .input {
       width: 200px;
       font-size: 22px;
@@ -69,6 +73,13 @@ const minus = () => {
     .icon {
       font-size: 20px;
     }
+  }
+  .tips {
+    width: 100%;
+    position: absolute;
+    bottom: -20px;
+    text-align: center;
+    font-size: 14px;
   }
 }
 </style>

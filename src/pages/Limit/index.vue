@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <el-card :body-style="{ height: '100%' }" class="orderListContainer">
-      <div>this is limit list</div>
+      <LimitList />
     </el-card>
     <el-card
       class="chatBox"
@@ -14,6 +14,7 @@
 <script setup>
 import Layout from '@/components/layout/layout.vue';
 import Chart from '@/components/common/tradeViewChart.vue';
+import LimitList from './limitList.vue';
 </script>
 <style lang="less" scoped>
 .orderListContainer {

@@ -286,17 +286,24 @@ export default defineStore('socket', {
     },
     // 设置挂单数据
     setHangingOrders(data) {
-      this.hangingOrders = data;
+      this.hangingOrders = data.map((item) => {
+        return {
+          ...item,
+          actionType: item.type === 2 ? 'Buy' : 'Sell',
+          createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
+          lot: item.vol / 10000,
+        };
+      });
     },
     // 市价买入卖出 type: 0 买入， 1 卖出  sl: 止损价， tp: 止盈价
-    marketCreate({ sbl, vol, price, type, sl, tp }) {
+    marketCreate({ sbl, vol, type, sl, tp }) {
       this.sendSocketMsg({
         cmd: 10031,
         sbl: sbl,
         act: 200,
         type,
         vol: Math.round(vol * 100) * 100,
-        price,
+        // price,
         sl,
         tp,
       });
@@ -322,7 +329,7 @@ export default defineStore('socket', {
         sbl: sbl,
         act: 201,
         type,
-        vol: Math.floor(vol),
+        vol: Math.round(vol * 100) * 100,
         price,
         sl,
         tp,

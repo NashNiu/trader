@@ -22,7 +22,12 @@
           <div>
             <h3 class="symbolName">{{ drawerData?.symbol }}</h3>
             <DeepPrice :symbol="drawerData?.symbol" />
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Quantity</span>
               </el-col>
@@ -30,15 +35,25 @@
                 <InputNumber v-model.number="orderCount" size="small" />
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Deposit required</span>
               </el-col>
-              <el-col :span="6">
-                <span>100000</span>
+              <el-col :span="16">
+                <p class="textRight">100000</p>
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Stop surplus</span>
               </el-col>
@@ -46,7 +61,12 @@
                 <el-switch />
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Stop loss</span>
               </el-col>
@@ -68,44 +88,66 @@
           <div>
             <h3 class="symbolName">{{ drawerData?.symbol }}</h3>
             <DeepPrice :symbol="drawerData?.symbol" />
-            <el-row :gutter="20" align="middle">
+            <el-row :gutter="20" align="middle" class="rowItemBox">
               <el-col :span="8">
                 <span>Price</span>
               </el-col>
               <el-col :span="16">
-                <InputNumber v-model.number="orderCount" size="small" />
+                <InputNumber v-model.number="limitPrice" size="small">
+                  <template #tips>
+                    <span>
+                      price
+                      {{ drawerData.type === 'buy' ? '≤' : '≥' }}{{ tipPrice }}
+                    </span>
+                  </template>
+                </InputNumber>
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle">
+            <el-row :gutter="20" align="middle" class="rowItemBox">
               <el-col :span="8">
                 <span>Quantity</span>
               </el-col>
               <el-col :span="16">
-                <InputNumber v-model.number="orderCount" size="small" />
+                <InputNumber v-model.number="limitCount" size="small" />
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Deposit required</span>
               </el-col>
-              <el-col :span="4">
-                <span>100000</span>
+              <el-col :span="16">
+                <p class="textRight">{{ limitMarginRequired }}</p>
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Stop surplus</span>
               </el-col>
               <el-col :span="4">
-                <el-switch />
+                <el-switch v-model="limitSpShow" />
               </el-col>
             </el-row>
-            <el-row :gutter="20" align="middle" justify="space-between">
+            <el-row
+              :gutter="20"
+              align="middle"
+              justify="space-between"
+              class="rowItemBox"
+            >
               <el-col :span="8">
                 <span>Stop loss</span>
               </el-col>
               <el-col :span="4">
-                <el-switch />
+                <el-switch v-model="limitSlShow" />
               </el-col>
             </el-row>
             <div class="btnContainer">
@@ -139,28 +181,51 @@ const commonStore = useCommonStore();
 const visible = ref(false);
 const activeTab = ref('Market');
 const orderCount = ref(1);
+const limitPrice = ref(0);
+const limitCount = ref(1);
+const limitSlShow = ref(false);
+const limitSpShow = ref(false);
+// const limitSlPrice = ref(0);
+// const limitSpPrice = ref(0);
+const currentSblBasicData = computed(
+  () => socketStore.sblBasicData[props.drawerData?.symbol] || {}
+);
 const currentSblData = computed(
   () => socketStore.liveData[props.drawerData?.symbol] || {}
 );
-const currentPrice = computed(() => {
+// 限价参考保证金
+const limitMarginRequired = computed(() =>
+  (
+    (currentSblBasicData.value.consize * limitCount.value * limitPrice.value) /
+    100
+  ).toFixed(2)
+);
+const tipPrice = computed(() => {
+  const a = currentSblData.value.ask;
+  const b = currentSblData.value.bid;
+  const s = currentSblBasicData.value.stopl;
+  const d = currentSblBasicData.value.digits;
   if (props.drawerData.type === 'buy') {
-    return currentSblData.value.ask;
+    return b ? (b - s * Math.pow(10, -d) * 10).toFixed(d) : 0;
   } else {
-    return currentSblData.value.bid;
+    return a ? (a + s * Math.pow(10, -d) * 10).toFixed(d) : 0;
   }
 });
 const show = () => {
   visible.value = true;
 };
+// 关闭弹窗
 const close = () => {
   visible.value = false;
   orderCount.value = 1;
+  limitPrice.value = 0;
 };
+// 市价下单
 const createOrder = () => {
   const params = {
     sbl: props.drawerData?.symbol,
     vol: orderCount.value,
-    price: currentPrice.value,
+    // price: currentPrice.value,
     type: props.drawerData?.type === 'buy' ? 0 : 1,
   };
   socketStore.marketCreate(params);
@@ -168,8 +233,19 @@ const createOrder = () => {
   const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
   commonStore.setLoadingInstance(instance);
 };
+// 限价挂单
 const createHangingOrder = () => {
   console.log('hang order');
+  const params = {
+    sbl: props.drawerData?.symbol,
+    vol: limitCount.value,
+    price: limitPrice.value,
+    type: props.drawerData?.type === 'buy' ? 2 : 3,
+  };
+  socketStore.positionCreate(params);
+  close();
+  const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
+  commonStore.setLoadingInstance(instance);
 };
 defineExpose({
   show,

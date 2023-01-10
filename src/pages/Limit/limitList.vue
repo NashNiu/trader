@@ -10,6 +10,27 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column label="Quantity">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.lot }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Price">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.price }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Stop loss">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.sl }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Stop profit">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.tp }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createTime" label="Opening time" />
     </el-table>
   </div>
 </template>

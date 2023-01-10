@@ -31,6 +31,11 @@ const router = createRouter({
       component: () => import('@/pages/Wallet/index.vue'),
     },
     {
+      path: '/limitList',
+      name: 'LimitList',
+      component: () => import('@/pages/Limit/index.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/pages/Error/NotFound.vue'),

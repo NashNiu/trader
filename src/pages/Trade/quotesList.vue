@@ -9,9 +9,9 @@
       <el-table-column prop="name" label="Financial tool" />
       <el-table-column prop="change" label="Change" width="180">
         <template #default="scope">
-          <span :class="`${scope.row.changeColor} bold`">{{
-            scope.row.change
-          }}</span>
+          <span :class="`${scope.row.changeColor} bold`">
+            {{ scope.row.change }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="change" label="Sell">

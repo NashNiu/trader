@@ -60,5 +60,15 @@ const minus = () => {
       font-size: 24px;
     }
   }
+  &.small {
+    height: 50px;
+    .input {
+      width: 200px;
+      font-size: 22px;
+    }
+    .icon {
+      font-size: 20px;
+    }
+  }
 }
 </style>

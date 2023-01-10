@@ -30,9 +30,9 @@
           <el-col :span="14">
             <el-space>
               <span>{{ walletInfo?.address }}</span>
-              <el-icon class="copyIcon"
-                ><CopyDocument @click="copyAddress"
-              /></el-icon>
+              <el-icon class="copyIcon">
+                <CopyDocument @click="copyAddress" />
+              </el-icon>
             </el-space>
           </el-col>
         </el-row>
@@ -43,9 +43,9 @@
         </el-row>
         <el-row>
           <el-col :span="10" :offset="8">
-            <el-button size="large" type="primary" @click="close"
-              >Close</el-button
-            >
+            <el-button size="large" type="primary" @click="close">
+              Close
+            </el-button>
           </el-col>
         </el-row>
       </el-space>

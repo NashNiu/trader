@@ -5,28 +5,28 @@
         <h1>技术和API文档</h1>
         <ul>
           <li>
-            <a href="/"
-              >移动客户端IOS&Android
-              <img src="../../assets/img/features/Vector.png" alt=""
-            /></a>
+            <a href="/">
+              移动客户端IOS&Android
+              <img src="../../assets/img/features/Vector.png" alt="" />
+            </a>
           </li>
           <li>
-            <a href="/"
-              >MT4/MT5橋對接
-              <img src="../../assets/img/features/Vector.png" alt=""
-            /></a>
+            <a href="/">
+              MT4/MT5橋對接
+              <img src="../../assets/img/features/Vector.png" alt="" />
+            </a>
           </li>
           <li>
-            <a href="/"
-              >ONEZERO和integrations對接
-              <img src="../../assets/img/features/Vector.png" alt=""
-            /></a>
+            <a href="/">
+              ONEZERO和integrations對接
+              <img src="../../assets/img/features/Vector.png" alt="" />
+            </a>
           </li>
           <li>
-            <a href="/"
-              >定制化服務
-              <img src="../../assets/img/features/Vector.png" alt=""
-            /></a>
+            <a href="/">
+              定制化服務
+              <img src="../../assets/img/features/Vector.png" alt="" />
+            </a>
           </li>
         </ul>
       </div>

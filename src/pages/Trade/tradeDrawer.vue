@@ -21,54 +21,39 @@
           </template>
           <div>
             <h3 class="symbolName">{{ drawerData?.symbol }}</h3>
-            <div class="price">current price: {{ currentPrice }}</div>
-            <div class="inputNumberBox">
-              <InputNumber v-model.number="orderCount" />
-            </div>
-            <div class="deepPriceBox">
-              <div class="deepPriceTitle">
-                <el-row :gutter="20">
-                  <el-col :span="12">
-                    <span>Bid</span>
-                  </el-col>
-                  <el-col :span="12">
-                    <span>Ask</span>
-                  </el-col>
-                </el-row>
-              </div>
-              <el-row :gutter="20">
-                <el-col :span="12">
-                  <div
-                    v-for="(item, index) in symbolDeepBid"
-                    :key="index"
-                    :class="`deepPriceItemBox ${item.change}`"
-                  >
-                    <span>
-                      <span class="index">{{ index + 1 }}</span>
-                      <span class="deepPrice">{{
-                        item.price.toFixed(symbolBasicData?.digits ?? 2)
-                      }}</span>
-                    </span>
-                    <span class="vol">{{ item.vol }}</span>
-                  </div>
-                </el-col>
-                <el-col :span="12">
-                  <div
-                    v-for="(item, index) in symbolDeepAsk"
-                    :key="index"
-                    :class="`deepPriceItemBox ${item.change}`"
-                  >
-                    <span>
-                      <span class="index ask">{{ index + 1 }}</span>
-                      <span class="deepPrice">{{
-                        item.price.toFixed(symbolBasicData?.digits ?? 2)
-                      }}</span>
-                    </span>
-                    <span class="vol">{{ item.vol }}</span>
-                  </div>
-                </el-col>
-              </el-row>
-            </div>
+            <DeepPrice :symbol="drawerData?.symbol" />
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Quantity</span>
+              </el-col>
+              <el-col :span="16">
+                <InputNumber v-model.number="orderCount" size="small" />
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Deposit required</span>
+              </el-col>
+              <el-col :span="6">
+                <span>100000</span>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Stop surplus</span>
+              </el-col>
+              <el-col :span="4">
+                <el-switch />
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Stop loss</span>
+              </el-col>
+              <el-col :span="4">
+                <el-switch />
+              </el-col>
+            </el-row>
             <div class="btnContainer">
               <div class="btnBox" @click="createOrder">
                 {{ drawerData.type === 'buy' ? 'Buy' : 'Sell' }}
@@ -76,11 +61,60 @@
             </div>
           </div>
         </el-tab-pane>
-        <!--        <el-tab-pane name="Limit">-->
-        <!--          <template #label>-->
-        <!--            <span class="tabName">Limit</span>-->
-        <!--          </template>-->
-        <!--        </el-tab-pane>-->
+        <el-tab-pane name="Limit">
+          <template #label>
+            <span class="tabName">Limit</span>
+          </template>
+          <div>
+            <h3 class="symbolName">{{ drawerData?.symbol }}</h3>
+            <DeepPrice :symbol="drawerData?.symbol" />
+            <el-row :gutter="20" align="middle">
+              <el-col :span="8">
+                <span>Price</span>
+              </el-col>
+              <el-col :span="16">
+                <InputNumber v-model.number="orderCount" size="small" />
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle">
+              <el-col :span="8">
+                <span>Quantity</span>
+              </el-col>
+              <el-col :span="16">
+                <InputNumber v-model.number="orderCount" size="small" />
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Deposit required</span>
+              </el-col>
+              <el-col :span="4">
+                <span>100000</span>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Stop surplus</span>
+              </el-col>
+              <el-col :span="4">
+                <el-switch />
+              </el-col>
+            </el-row>
+            <el-row :gutter="20" align="middle" justify="space-between">
+              <el-col :span="8">
+                <span>Stop loss</span>
+              </el-col>
+              <el-col :span="4">
+                <el-switch />
+              </el-col>
+            </el-row>
+            <div class="btnContainer">
+              <div class="btnBox" @click="createHangingOrder">
+                {{ drawerData.type === 'buy' ? 'Buy' : 'Sell' }}
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </el-drawer>
@@ -89,6 +123,7 @@
 import { ref, defineProps, computed } from 'vue';
 import { useSocketStore, useCommonStore } from '@/store/index.js';
 import InputNumber from '@/components/common/inputNumber.vue';
+import DeepPrice from './deepPrice.vue';
 import { ElLoading } from 'element-plus';
 const props = defineProps({
   drawerData: {
@@ -101,6 +136,9 @@ const props = defineProps({
 });
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
+const visible = ref(false);
+const activeTab = ref('Market');
+const orderCount = ref(1);
 const currentSblData = computed(
   () => socketStore.liveData[props.drawerData?.symbol] || {}
 );
@@ -111,26 +149,6 @@ const currentPrice = computed(() => {
     return currentSblData.value.bid;
   }
 });
-const symbolBasicData = computed(() => {
-  return socketStore.sblBasicData?.[props.drawerData?.symbol];
-});
-const symbolDeepAsk = computed(() => {
-  return (
-    socketStore.deepQuotation?.[props.drawerData?.symbol]?.filter(
-      (item) => item.type === 1
-    ) ?? []
-  );
-});
-const symbolDeepBid = computed(() => {
-  return (
-    socketStore.deepQuotation?.[props.drawerData?.symbol]?.filter(
-      (item) => item.type === 2
-    ) ?? []
-  );
-});
-const visible = ref(false);
-const activeTab = ref('Market');
-const orderCount = ref(1);
 const show = () => {
   visible.value = true;
 };
@@ -149,9 +167,9 @@ const createOrder = () => {
   close();
   const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
   commonStore.setLoadingInstance(instance);
-  // setTimeout(() => {
-  //   commonStore.closeLoading();
-  // }, 2000);
+};
+const createHangingOrder = () => {
+  console.log('hang order');
 };
 defineExpose({
   show,

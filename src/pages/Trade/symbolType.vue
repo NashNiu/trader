@@ -14,7 +14,7 @@
         :class="{ item: true, active: activeType === 'favorite' }"
         @click="setType('favorite')"
       >
-        My Favorite
+        My Collection
       </div>
       <div
         :class="{ item: true, active: activeType === 'goods' }"

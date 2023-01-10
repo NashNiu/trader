@@ -17,17 +17,17 @@
       </el-table-column>
       <el-table-column prop="currentPrice" label="Present value">
         <template #default="scope">
-          <span :class="`${scope.row.color} bold`">{{
-            scope.row.currentPrice
-          }}</span>
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.currentPrice }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="change" label="Variety">
         <template #default="scope">
           <div class="varietyBox">
-            <span :class="`${scope.row.color} bold`">{{
-              scope.row.change
-            }}</span>
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.change }}
+            </span>
             <div class="closeBox" @click="openInfoDrawer(scope.row)">
               <el-icon><Close /></el-icon>
               <span>close</span>
@@ -53,8 +53,9 @@
           <el-icon
             class="infoIcon"
             @click="openInfoDrawer({ ...scope.row, isInfo: true })"
-            ><InfoFilled
-          /></el-icon>
+          >
+            <InfoFilled />
+          </el-icon>
         </template>
       </el-table-column>
     </el-table>

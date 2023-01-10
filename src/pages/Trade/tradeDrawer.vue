@@ -95,7 +95,7 @@
               <el-col :span="16">
                 <InputNumber v-model.number="limitPrice" size="small">
                   <template #tips>
-                    <span>
+                    <span :class="{ error: !limitPriceValid }">
                       price
                       {{ drawerData.type === 'buy' ? '≤' : '≥' }}{{ tipPrice }}
                     </span>
@@ -211,8 +211,18 @@ const tipPrice = computed(() => {
     return a ? (a + s * Math.pow(10, -d) * 10).toFixed(d) : 0;
   }
 });
+const limitPriceValid = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return tipPrice.value >= limitPrice.value;
+  } else {
+    return limitPrice.value >= tipPrice.value;
+  }
+});
 const show = () => {
   visible.value = true;
+  setTimeout(() => {
+    limitPrice.value = Number(tipPrice.value);
+  }, 500);
 };
 // 关闭弹窗
 const close = () => {

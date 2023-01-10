@@ -118,6 +118,7 @@ const addToFavorite = (name) => {
   } else {
     favorites.value = [name];
   }
+  tradeStore.updateFavorite(name);
 };
 const unFavorite = (name) => {
   if (Array.isArray(favorites.value)) {
@@ -127,6 +128,7 @@ const unFavorite = (name) => {
   } else {
     favorites.value = [];
   }
+  tradeStore.updateFavorite(name);
 };
 const openSell = (row) => {
   drawerData = {

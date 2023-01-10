@@ -11,6 +11,12 @@
         Most popular
       </div>
       <div
+        :class="{ item: true, active: activeType === 'favorite' }"
+        @click="setType('favorite')"
+      >
+        My Favorite
+      </div>
+      <div
         :class="{ item: true, active: activeType === 'goods' }"
         @click="setType('goods')"
       >

@@ -2,7 +2,7 @@
   <header>
     <div class="header-content">
       <h1 class="content-logo">
-        <img src="/logo.png" />
+        <img src="/logo.png" alt="" />
       </h1>
 
       <div class="search-buy-login">
@@ -16,7 +16,7 @@
           <span class="itemValue">
             {{ userFundsVisible ? '$' + availableMargin?.toFixed(2) : ' *** ' }}
           </span>
-          <span class="itemKey">Balance avaliable</span>
+          <span class="itemKey">Balance available</span>
         </div>
         <div class="itemBox">
           <span class="itemValue">
@@ -26,7 +26,7 @@
         </div>
         <div class="itemBox">
           <span class="itemValue">
-            {{ userFundsVisible ? '$' + userFunds.margin : ' *** ' }}
+            {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
           </span>
           <span class="itemKey">Deposit for maintenance</span>
         </div>

@@ -1,10 +1,10 @@
 <template>
   <Layout>
     <el-row :gutter="10" class="rowContainer">
-      <el-col :span="4" class="symbolTypeContainer">
+      <el-col :span="3" class="symbolTypeContainer">
         <SymbolType />
       </el-col>
-      <el-col :span="20" class="quoteListBox">
+      <el-col :span="21" class="quoteListBox">
         <QuotesList />
       </el-col>
     </el-row>

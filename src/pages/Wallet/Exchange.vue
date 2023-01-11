@@ -40,10 +40,9 @@
             {{ currentSymbol }}
           </el-col>
           <el-col :span="8">
-            <span
-              >Available balance {{ walletInfo?.balance }}
-              {{ currentSymbol }}</span
-            >
+            <span>
+              Available balance {{ walletInfo?.balance }} {{ currentSymbol }}
+            </span>
           </el-col>
         </el-row>
         <el-row align="middle">
@@ -58,10 +57,10 @@
               style="width: 95%"
             />
           </el-col>
-          <el-col :span="2"> USDT </el-col>
+          <el-col :span="2">USDT</el-col>
         </el-row>
         <el-row>
-          <el-col :span="10" :offset="8"> </el-col>
+          <el-col :span="10" :offset="8"></el-col>
         </el-row>
         <el-row>
           <el-col :span="10" :offset="8">
@@ -71,8 +70,9 @@
               :loading="submitLoading"
               :disabled="submitDisabled"
               @click="submit"
-              >Confirm Redemption</el-button
             >
+              Confirm Redemption
+            </el-button>
           </el-col>
         </el-row>
       </el-space>

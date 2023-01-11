@@ -27,11 +27,13 @@ export function calcOrderChange({ order, liveData, cs }) {
       color = variety > 0 ? 'down' : variety < 0 ? 'up' : '';
     }
     const change = `${(variety * 100).toFixed(4)}%`;
+    const netValue = ((currentPrice * order.vol) / 10000).toFixed(2);
     return {
       profit: Number(profit.toFixed(2)),
       color,
       currentPrice,
       change,
+      netValue,
     };
   }
 }

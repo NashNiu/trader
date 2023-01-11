@@ -32,9 +32,9 @@
                 />
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSubmitLogin"
-                  >登录</el-button
-                >
+                <el-button type="primary" @click="onSubmitLogin">
+                  登录
+                </el-button>
                 <el-button @click="resetForm(formRef)">取消</el-button>
               </el-form-item>
             </el-form>
@@ -80,9 +80,9 @@
                 />
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSubmitRegister"
-                  >注册</el-button
-                >
+                <el-button type="primary" @click="onSubmitRegister">
+                  注册
+                </el-button>
                 <el-button @click="resetForm(formRef)">取消</el-button>
               </el-form-item>
             </el-form>

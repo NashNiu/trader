@@ -10,10 +10,10 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="OpenPrice" label="OpenPrice"> </el-table-column>
-      <el-table-column prop="ClosePrice" label="ClosePrice"> </el-table-column>
-      <el-table-column prop="Lot" label="Lot"> </el-table-column>
-      <el-table-column prop="Profit" label="Profit"> </el-table-column>
+      <el-table-column prop="OpenPrice" label="OpenPrice"></el-table-column>
+      <el-table-column prop="ClosePrice" label="ClosePrice"></el-table-column>
+      <el-table-column prop="Lot" label="Lot"></el-table-column>
+      <el-table-column prop="Profit" label="Profit"></el-table-column>
       <el-table-column prop="createTime" label="Opening time" />
       <el-table-column prop="closeTime" label="CloseTime" />
     </el-table>

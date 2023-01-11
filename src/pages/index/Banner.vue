@@ -10,8 +10,10 @@
                 我們的機構交易解決流动性方案在設計時考慮了机构和专业客户的交易和风险对冲需求，並且可以同时支持根據業務及客戶的需求制訂。通過獲得深度流動性、無與倫比的市場範圍和如MagicCompass這樣的世界領導者可以提供的卓越服務，最大化客戶的價值和效率。
               </p>
             </div>
-            <a href="#" class="banner-one__btn thm-btn"><span>聯繫我們</span></a
-            ><!-- /.thm-btn -->
+            <a href="#" class="banner-one__btn thm-btn">
+              <span>聯繫我們</span>
+            </a>
+            <!-- /.thm-btn -->
           </div>
         </div>
       </div>

@@ -8,42 +8,6 @@
       text-color="#ffffff"
       @select="menuOpen"
     >
-      <!--      <el-menu-item-->
-      <!--        index="/index"-->
-      <!--        :class="{ menuItemActive: activeIndex === '/index' }"-->
-      <!--      >-->
-      <!--        <el-icon><Grid /></el-icon>-->
-      <!--        <template #title><span>Profile</span></template>-->
-      <!--      </el-menu-item>-->
-      <!--      <el-menu-item-->
-      <!--        index="/trade"-->
-      <!--        :class="{ menuItemActive: activeIndex === '/trade' }"-->
-      <!--      >-->
-      <!--        <el-icon><DataLine /></el-icon>-->
-      <!--        <template #title><span>Trade</span></template>-->
-      <!--      </el-menu-item>-->
-      <!--      <el-menu-item-->
-      <!--        index="/order"-->
-      <!--        :class="{ menuItemActive: activeIndex === '/order' }"-->
-      <!--      >-->
-      <!--        <el-icon><MessageBox /></el-icon>-->
-      <!--        <template #title><span>Order List</span></template>-->
-      <!--      </el-menu-item>-->
-      <!--      <el-menu-item-->
-      <!--        index="/history"-->
-      <!--        :class="{ menuItemActive: activeIndex === '/history' }"-->
-      <!--      >-->
-      <!--        <el-icon><Document /></el-icon>-->
-      <!--        <template #title><span>History Order</span></template>-->
-      <!--      </el-menu-item>-->
-      <!--      <el-menu-item-->
-      <!--        index="/wallet"-->
-      <!--        :class="{ menuItemActive: activeIndex === '/wallet' }"-->
-      <!--      >-->
-      <!--        <el-icon><SvgIcon icon-class="icon-wallet" /></el-icon>-->
-      <!--        <template #title><span>Wallet</span></template>-->
-      <!--      </el-menu-item>-->
-
       <el-menu-item
         v-for="item in menuItemData"
         :key="item.index"
@@ -51,9 +15,9 @@
         :class="{ menuItemActive: activeIndex === item.index }"
       >
         <el-icon><SvgIcon :icon-class="item.icon" /></el-icon>
-        <template #title
-          ><span>{{ item.title }}</span></template
-        >
+        <template #title>
+          <span>{{ item.title }}</span>
+        </template>
       </el-menu-item>
     </el-menu>
     <ProfileDrawer ref="profileDrawerRef" />
@@ -82,6 +46,11 @@ const menuItemData = [
     index: '/order',
     icon: 'icon-cart',
     title: 'Order',
+  },
+  {
+    index: '/limitList',
+    icon: 'icon-unorderedlist',
+    title: 'limit list',
   },
   {
     index: '/history',

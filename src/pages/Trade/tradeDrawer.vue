@@ -45,33 +45,61 @@
                 <span>Deposit required</span>
               </el-col>
               <el-col :span="16">
-                <p class="textRight">100000</p>
+                <p class="textRight">{{ marginRequired }}</p>
               </el-col>
             </el-row>
             <el-row
               :gutter="20"
               align="middle"
               justify="space-between"
-              class="rowItemBox"
+              class="rowItemBox stopRow"
             >
-              <el-col :span="8">
+              <el-col :span="6">
                 <span>Stop surplus</span>
               </el-col>
+              <el-col v-if="spShow" :span="14">
+                <InputNumber v-model.number="spPrice" size="small">
+                  <template #tips>
+                    <el-space>
+                      <span>
+                        price
+                        {{ drawerData.type === 'buy' ? '≥' : '≤' }}
+                        {{ spScope }}
+                      </span>
+                      <span>Profit {{ spProfit }}</span>
+                    </el-space>
+                  </template>
+                </InputNumber>
+              </el-col>
               <el-col :span="4">
-                <el-switch />
+                <el-switch v-model="spShow" />
               </el-col>
             </el-row>
             <el-row
               :gutter="20"
               align="middle"
               justify="space-between"
-              class="rowItemBox"
+              class="rowItemBox stopRow"
             >
-              <el-col :span="8">
+              <el-col :span="6">
                 <span>Stop loss</span>
               </el-col>
+              <el-col v-if="slShow" :span="14">
+                <InputNumber v-model.number="slPrice" size="small">
+                  <template #tips>
+                    <el-space>
+                      <span>
+                        price
+                        {{ drawerData.type === 'buy' ? '≤' : '≥' }}
+                        {{ slScope }}
+                      </span>
+                      <span>Profit {{ slProfit }}</span>
+                    </el-space>
+                  </template>
+                </InputNumber>
+              </el-col>
               <el-col :span="4">
-                <el-switch />
+                <el-switch v-model="slShow" />
               </el-col>
             </el-row>
             <div class="btnContainer">
@@ -212,8 +240,16 @@ const commonStore = useCommonStore();
 const visible = ref(false);
 // tab
 const activeTab = ref('Market');
-// 现价手数
+// 市价手数
 const orderCount = ref(1);
+// 市价是否止盈
+const spShow = ref(false);
+// 市价是否止损
+const slShow = ref(false);
+// 市价止盈价格
+const spPrice = ref(0);
+// 市价止损价格
+const slPrice = ref(0);
 // 挂单价格
 const limitPrice = ref(0);
 // 挂单手数
@@ -234,6 +270,10 @@ const currentSblBasicData = computed(
 const currentSblData = computed(
   () => socketStore.liveData[props.drawerData?.symbol] || {}
 );
+// 实时ask
+const ask = computed(() => currentSblData.value.ask);
+// 实时bid
+const bid = computed(() => currentSblData.value.bid);
 // 精度
 const digit = computed(() => currentSblBasicData.value.digits);
 // 产品挂单距离
@@ -242,7 +282,81 @@ const stopl = computed(
 );
 // 杠杆
 const consize = computed(() => currentSblBasicData.value.consize);
-// 限价参考保证金
+// 市价参考保证金
+const marginRequired = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return (
+      (currentSblBasicData.value.consize *
+        orderCount.value *
+        currentSblData.value.bid) /
+      100
+    ).toFixed(2);
+  } else {
+    return (
+      (currentSblBasicData.value.consize *
+        orderCount.value *
+        currentSblData.value.ask) /
+      100
+    ).toFixed(2);
+  }
+});
+// 市价止盈范围
+const spScope = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return bid.value ? (bid.value + stopl.value).toFixed(digit.value) : 0;
+  } else {
+    return ask.value ? (ask.value - stopl.value).toFixed(digit.value) : 0;
+  }
+});
+// 市价止盈预计
+const spProfit = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return spPrice.value && bid.value
+      ? (
+          (spPrice.value - bid.value) *
+          orderCount.value *
+          consize.value
+        ).toFixed(digit.value)
+      : 0;
+  } else {
+    return spPrice.value && ask.value
+      ? (
+          (ask.value - spPrice.value) *
+          orderCount.value *
+          consize.value
+        ).toFixed(digit.value)
+      : 0;
+  }
+});
+// 市价止损范围
+const slScope = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return bid.value ? (bid.value - stopl.value).toFixed(digit.value) : 0;
+  } else {
+    return ask.value ? (ask.value + stopl.value).toFixed(digit.value) : 0;
+  }
+});
+// 市价止损预计
+const slProfit = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return slPrice.value && bid.value
+      ? (
+          (slPrice.value - bid.value) *
+          orderCount.value *
+          consize.value
+        ).toFixed(digit.value)
+      : 0;
+  } else {
+    return slPrice.value && ask.value
+      ? (
+          (ask.value - slPrice.value) *
+          orderCount.value *
+          consize.value
+        ).toFixed(digit.value)
+      : 0;
+  }
+});
+// 挂单参考保证金
 const limitMarginRequired = computed(() =>
   (
     (currentSblBasicData.value.consize * limitCount.value * limitPrice.value) /
@@ -353,9 +467,13 @@ const show = () => {
 // 关闭弹窗
 const close = () => {
   visible.value = false;
-  orderCount.value = 1;
-  limitPrice.value = 0;
   activeTab.value = 'Market';
+  orderCount.value = 1;
+  spShow.value = false;
+  slShow.value = false;
+  spPrice.value = 0;
+  slPrice.value = 0;
+  limitPrice.value = 0;
   limitCount.value = 0;
   limitSlShow.value = false;
   limitSpShow.value = false;
@@ -367,8 +485,9 @@ const createOrder = () => {
   const params = {
     sbl: props.drawerData?.symbol,
     vol: orderCount.value,
-    // price: currentPrice.value,
     type: props.drawerData?.type === 'buy' ? 0 : 1,
+    sl: slShow.value ? slPrice.value : undefined,
+    tp: spShow.value ? spPrice.value : undefined,
   };
   socketStore.marketCreate(params);
   close();

@@ -14,38 +14,38 @@
     <div class="contentBox">
       <p class="type">{{ drawerData.actionType }}</p>
       <h3 class="symbolName">{{ drawerData.symbol }}</h3>
-      <p class="price">{{ drawerData.price }}</p>
+      <p class="price">{{ drawerData.currentPrice }}</p>
       <p class="time">{{ drawerData.createTime }}</p>
       <div class="orderInfoBox">
         <div class="infoItemBox">
           <span class="key">Order Number</span>
           <span class="value">{{ drawerData.position }}</span>
         </div>
-        <!--        <div>-->
-        <!--          <span>Position profit and loss</span>-->
-        <!--          <span>{{drawerData.position}}</span>-->
-        <!--        </div>-->
+        <div class="infoItemBox">
+          <span class="key">Position profit and loss</span>
+          <span class="value">{{ drawerData.profit }}</span>
+        </div>
         <!--        <div>-->
         <!--          <span>Maintenance margin</span>-->
         <!--          <span>{{drawerData.position}}</span>-->
         <!--        </div>-->
         <div class="infoItemBox">
           <span class="key">Quantity</span>
-          <span class="value">{{ drawerData.vol }}</span>
+          <span class="value">{{ drawerData.lot }}</span>
         </div>
 
         <div class="infoItemBox">
           <span class="key">Current Price</span>
-          <span class="value">{{ currentPrice }}</span>
+          <span class="value">{{ drawerData.currentPrice }}</span>
         </div>
-        <!--        <div>-->
-        <!--          <span>Stop loss price</span>-->
-        <!--          <span>{{ drawerData.sl }}</span>-->
-        <!--        </div>-->
-        <!--        <div>-->
-        <!--          <span>Stop surplus price</span>-->
-        <!--          <span>{{ drawerData.tp }}</span>-->
-        <!--        </div>-->
+        <div class="infoItemBox">
+          <span class="key">Stop loss price</span>
+          <span class="value">{{ drawerData.sl }}</span>
+        </div>
+        <div class="infoItemBox">
+          <span class="key">Stop surplus price</span>
+          <span class="value">{{ drawerData.tp }}</span>
+        </div>
         <div class="infoItemBox">
           <span class="key">Overnight fee</span>
           <span class="value">{{ drawerData.storage }}</span>
@@ -58,7 +58,7 @@
   </el-drawer>
 </template>
 <script setup>
-import { computed, defineProps, ref } from 'vue';
+import { defineProps, ref } from 'vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { ElLoading } from 'element-plus';
 const socketStore = useSocketStore();
@@ -72,22 +72,14 @@ const props = defineProps({
     }),
   },
 });
-const currentSblData = computed(
-  () => socketStore.liveData[props.drawerData?.symbol] || {}
-);
-const currentPrice = computed(() => {
-  if (props.drawerData.action === 0) {
-    return currentSblData.value.ask;
-  } else {
-    return currentSblData.value.bid;
-  }
-});
+const emit = defineEmits(['close']);
 const visible = ref(false);
 const show = () => {
   visible.value = true;
 };
 const close = () => {
   visible.value = false;
+  emit('close');
 };
 const closePosition = () => {
   socketStore.marketClose({ id: props.drawerData.position });

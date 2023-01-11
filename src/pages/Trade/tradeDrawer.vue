@@ -7,7 +7,7 @@
     :close-on-press-escape="false"
     :with-header="false"
     class="traderDrawerContainer"
-    size="450"
+    size="500"
     destroy-on-close
   >
     <div class="title">
@@ -117,34 +117,40 @@
               justify="space-between"
               class="rowItemBox"
             >
-              <el-col :span="8">
+              <el-col :span="12">
                 <span>Deposit required</span>
               </el-col>
-              <el-col :span="16">
+              <el-col :span="12">
                 <p class="textRight">{{ limitMarginRequired }}</p>
               </el-col>
             </el-row>
             <el-row
-              :gutter="20"
+              :gutter="25"
               align="middle"
               justify="space-between"
-              class="rowItemBox"
+              class="rowItemBox stopRow"
             >
-              <el-col :span="8">
+              <el-col :span="6">
                 <span>Stop surplus</span>
+              </el-col>
+              <el-col :span="14" v-if="limitSpShow">
+                <InputNumber v-model.number="limitSpPrice" size="small" />
               </el-col>
               <el-col :span="4">
                 <el-switch v-model="limitSpShow" />
               </el-col>
             </el-row>
             <el-row
-              :gutter="20"
+              :gutter="25"
               align="middle"
               justify="space-between"
-              class="rowItemBox"
+              class="rowItemBox stopRow"
             >
-              <el-col :span="8">
+              <el-col :span="6">
                 <span>Stop loss</span>
+              </el-col>
+              <el-col :span="14" v-if="limitSlShow">
+                <InputNumber v-model.number="limitSlPrice" size="small" />
               </el-col>
               <el-col :span="4">
                 <el-switch v-model="limitSlShow" />
@@ -185,8 +191,8 @@ const limitPrice = ref(0);
 const limitCount = ref(1);
 const limitSlShow = ref(false);
 const limitSpShow = ref(false);
-// const limitSlPrice = ref(0);
-// const limitSpPrice = ref(0);
+const limitSlPrice = ref(0);
+const limitSpPrice = ref(0);
 const currentSblBasicData = computed(
   () => socketStore.sblBasicData[props.drawerData?.symbol] || {}
 );
@@ -229,6 +235,12 @@ const close = () => {
   visible.value = false;
   orderCount.value = 1;
   limitPrice.value = 0;
+  activeTab.value = 'Market';
+  limitCount.value = 0;
+  limitSlShow.value = false;
+  limitSpShow.value = false;
+  limitSlPrice.value = 0;
+  limitSpPrice.value = 0;
 };
 // 市价下单
 const createOrder = () => {

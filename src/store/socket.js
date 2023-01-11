@@ -358,13 +358,15 @@ export default defineStore('socket', {
     },
     // 挂单删除成功
     handleDelHangingOrder(data) {
+      const commonStore = useCommonStore();
+      commonStore.closeLoading();
       if (data.status === 0) {
         ElMessage.success({
-          message: '挂单删除成功',
+          message: 'delete success',
         });
       } else {
         ElMessage.error({
-          message: '挂单删除失败',
+          message: 'delete failed',
         });
       }
     },

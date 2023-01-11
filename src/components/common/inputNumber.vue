@@ -5,6 +5,9 @@
       type="number"
       class="input"
       :value="modelValue"
+      :step="0.0000000000001"
+      :min="-99999999999999"
+      :max="999999999999999999"
       @input="$emit('update:modelValue', $event.target.value)"
     />
     <el-icon class="icon" @click="plus"><CirclePlusFilled /></el-icon>

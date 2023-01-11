@@ -31,14 +31,42 @@
         </template>
       </el-table-column>
       <el-table-column prop="createTime" label="Opening time" />
+      <el-table-column>
+        <template #default="scope">
+          <el-space>
+            <el-icon class="pointer" :size="20"><Edit /></el-icon>
+            <el-popconfirm
+              width="220"
+              title="Are you sure to delete this?"
+              confirm-button-text="OK"
+              cancel-button-text="No, Thanks"
+              @confirm="deleteOrder(scope.row)"
+            >
+              <template #reference>
+                <el-icon class="pointer" color="red" :size="20">
+                  <Delete />
+                </el-icon>
+              </template>
+            </el-popconfirm>
+          </el-space>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 <script setup>
 import { computed } from 'vue';
-import { useSocketStore } from '@/store/index.js';
+import { useCommonStore, useSocketStore } from '@/store/index.js';
+import { ElLoading } from 'element-plus';
 const socketStore = useSocketStore();
+const commonStore = useCommonStore();
 const tableData = computed(() => socketStore.hangingOrders);
+const deleteOrder = (row) => {
+  socketStore.deleteHangingOrder(row.order);
+  const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
+  commonStore.setLoadingInstance(instance);
+  console.log(row);
+};
 </script>
 <style scoped lang="less">
 .limitTableBox {

@@ -50,7 +50,7 @@
   </el-drawer>
 </template>
 <script setup>
-import { ref, defineProps, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useSocketStore } from '@/store/index.js';
 import MarketTab from './marketTab.vue';
 import LimitTab from './limitTab.vue';

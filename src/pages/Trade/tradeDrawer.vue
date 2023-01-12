@@ -61,7 +61,7 @@
                 <InputNumber v-model.number="spPrice" size="small">
                   <template #tips>
                     <el-space>
-                      <span>
+                      <span :class="{ error: !spPriceValid }">
                         price
                         {{ drawerData.type === 'buy' ? '≥' : '≤' }}
                         {{ spScope }}
@@ -72,7 +72,7 @@
                 </InputNumber>
               </el-col>
               <el-col :span="4">
-                <el-switch v-model="spShow" />
+                <el-switch v-model="spShow" @change="spShowChange" />
               </el-col>
             </el-row>
             <el-row
@@ -88,7 +88,7 @@
                 <InputNumber v-model.number="slPrice" size="small">
                   <template #tips>
                     <el-space>
-                      <span>
+                      <span :class="{ error: !slPriceValid }">
                         price
                         {{ drawerData.type === 'buy' ? '≤' : '≥' }}
                         {{ slScope }}
@@ -99,7 +99,7 @@
                 </InputNumber>
               </el-col>
               <el-col :span="4">
-                <el-switch v-model="slShow" />
+                <el-switch v-model="slShow" @change="slShowChange" />
               </el-col>
             </el-row>
             <div class="btnContainer">
@@ -126,7 +126,7 @@
                     <el-space>
                       <span :class="{ error: !limitPriceValid }">
                         price{{ drawerData.type === 'buy' ? '≤' : '≥'
-                        }}{{ tipPrice }}
+                        }}{{ limitPriceScope }}
                       </span>
                     </el-space>
                   </template>
@@ -167,7 +167,7 @@
                 <InputNumber v-model.number="limitSpPrice" size="small">
                   <template #tips>
                     <el-space>
-                      <span>
+                      <span :class="{ error: !limitSpPriceValid }">
                         price
                         {{ drawerData.type === 'buy' ? '≥' : '≤' }}
                         {{ limitSpScope }}
@@ -194,7 +194,7 @@
                 <InputNumber v-model.number="limitSlPrice" size="small">
                   <template #tips>
                     <el-space>
-                      <span>
+                      <span :class="{ error: !limitSlPriceValid }">
                         price
                         {{ drawerData.type === 'buy' ? '≤' : '≥' }}
                         {{ limitSlScope }}
@@ -224,7 +224,7 @@ import { ref, defineProps, computed } from 'vue';
 import { useSocketStore, useCommonStore } from '@/store/index.js';
 import InputNumber from '@/components/common/inputNumber.vue';
 import DeepPrice from './deepPrice.vue';
-import { ElLoading } from 'element-plus';
+import { ElLoading, ElMessage } from 'element-plus';
 const props = defineProps({
   drawerData: {
     type: Object,
@@ -356,6 +356,34 @@ const slProfit = computed(() => {
       : 0;
   }
 });
+// 市价止盈开启关闭
+const spShowChange = (val) => {
+  if (val) {
+    spPrice.value = Number(spScope.value);
+  }
+};
+// 市价止损开启关闭
+const slShowChange = (val) => {
+  if (val) {
+    slPrice.value = Number(slScope.value);
+  }
+};
+// 市价止盈是否有效
+const spPriceValid = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return spPrice.value >= spScope.value;
+  } else {
+    return spPrice.value <= spScope.value;
+  }
+});
+// 市价止损是否有效
+const slPriceValid = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return slPrice.value <= slScope.value;
+  } else {
+    return slPrice.value >= slScope.value;
+  }
+});
 // 挂单参考保证金
 const limitMarginRequired = computed(() =>
   (
@@ -364,7 +392,7 @@ const limitMarginRequired = computed(() =>
   ).toFixed(2)
 );
 // 挂单价格参考
-const tipPrice = computed(() => {
+const limitPriceScope = computed(() => {
   const a = currentSblData.value.ask;
   const b = currentSblData.value.bid;
   if (props.drawerData.type === 'buy') {
@@ -376,9 +404,9 @@ const tipPrice = computed(() => {
 // 挂单价格是否有效
 const limitPriceValid = computed(() => {
   if (props.drawerData.type === 'buy') {
-    return tipPrice.value >= limitPrice.value;
+    return limitPriceScope.value >= limitPrice.value;
   } else {
-    return limitPrice.value >= tipPrice.value;
+    return limitPrice.value >= limitPriceScope.value;
   }
 });
 // 挂单止损范围
@@ -425,7 +453,7 @@ const limitSpScope = computed(() => {
       : 0;
   }
 });
-// 挂单止盈预计盈利
+// 挂单预计盈利
 const limitSpProfit = computed(() => {
   if (props.drawerData.type === 'buy') {
     return limitPrice.value && limitSpPrice.value
@@ -445,23 +473,39 @@ const limitSpProfit = computed(() => {
       : 0;
   }
 });
+// 挂单止损是否有效
+const limitSlPriceValid = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return limitSlPrice.value <= limitSlScope.value;
+  } else {
+    return limitSlPrice.value >= limitSlScope.value;
+  }
+});
+// 挂单止盈是否有效
+const limitSpPriceValid = computed(() => {
+  if (props.drawerData.type === 'buy') {
+    return limitSpPrice.value >= limitSpScope.value;
+  } else {
+    return limitSpPrice.value <= limitSpScope.value;
+  }
+});
 // 开启关闭挂单止盈
 const limitSpShowChange = (val) => {
   if (val) {
-    limitSpPrice.value = limitSpScope.value;
+    limitSpPrice.value = Number(limitSpScope.value);
   }
 };
 // 开启关闭挂单止损
 const limitSlShowChange = (val) => {
   if (val) {
-    limitSlPrice.value = limitSlScope.value;
+    limitSlPrice.value = Number(limitSlScope.value);
   }
 };
 // 开启弹窗
 const show = () => {
   visible.value = true;
   setTimeout(() => {
-    limitPrice.value = Number(tipPrice.value);
+    limitPrice.value = Number(limitPriceScope.value);
   }, 500);
 };
 // 关闭弹窗
@@ -482,6 +526,14 @@ const close = () => {
 };
 // 市价下单
 const createOrder = () => {
+  if (slShow.value && !slPriceValid.value) {
+    ElMessage.error('INVALID STOP LOSS PRICE');
+    return;
+  }
+  if (spShow.value && !spPriceValid.value) {
+    ElMessage.error('INVALID STOP PROFIT PRICE');
+    return;
+  }
   const params = {
     sbl: props.drawerData?.symbol,
     vol: orderCount.value,
@@ -496,6 +548,18 @@ const createOrder = () => {
 };
 // 限价挂单
 const createHangingOrder = () => {
+  if (!limitPriceValid.value) {
+    ElMessage.error('INVALID LIMIT PRICE');
+    return;
+  }
+  if (limitSpShow.value && !limitSpPriceValid.value) {
+    ElMessage.error('INVALID STOP PROFIT PRICE');
+    return;
+  }
+  if (limitSlShow.value && !limitSlPriceValid.value) {
+    ElMessage.error('INVALID STOP LOSS PRICE');
+    return;
+  }
   const params = {
     sbl: props.drawerData?.symbol,
     vol: limitCount.value,
@@ -520,6 +584,6 @@ defineExpose({
 .traderDrawerContainer {
   padding: 0;
   --el-drawer-padding-primary: 0;
-  --el-color-primary: #0c3d93;
+  //--el-color-primary: #0c3d93;
 }
 </style>

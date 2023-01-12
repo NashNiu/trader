@@ -24,6 +24,7 @@
             :symbol="drawerData?.symbol"
             :type="drawerData.type"
             :digit="digit"
+            :step="step"
             :stop-l="stopL"
             :con-size="conSize"
             @close="close"
@@ -38,6 +39,7 @@
             :symbol="drawerData?.symbol"
             :type="drawerData.type"
             :digit="digit"
+            :step="step"
             :stop-l="stopL"
             :con-size="conSize"
             @close="close"
@@ -76,6 +78,8 @@ const currentSblBasicData = computed(
 
 // 精度
 const digit = computed(() => currentSblBasicData.value.digits);
+// 每次加减多少
+const step = computed(() => Math.pow(10, -digit.value) * 100);
 // 产品挂单距离
 const stopL = computed(
   () => currentSblBasicData.value.stopl * Math.pow(10, -digit.value) * 10

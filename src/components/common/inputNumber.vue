@@ -4,10 +4,10 @@
     <input
       type="number"
       class="input"
-      :value="modelValue"
+      :value="inputValue"
       :step="0.0000000000001"
-      :min="-99999999999999"
-      :max="999999999999999999"
+      :min="-999999999999999"
+      :max="9999999999999999"
       @input="$emit('update:modelValue', $event.target.value)"
     />
     <el-icon class="icon" @click="plus"><CirclePlusFilled /></el-icon>
@@ -17,24 +17,49 @@
   </div>
 </template>
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 const props = defineProps({
   size: {
     type: String,
     default: 'large',
   },
   modelValue: {
+    type: [Number, String],
+    default: 1,
+  },
+  // 每次加减最小值
+  step: {
     type: Number,
     default: 1,
   },
+  // 保留几位小数
+  digit: {
+    type: Number,
+    default: 2,
+  },
 });
 const emit = defineEmits(['update:modelValue']);
-
+const inputValue = computed({
+  get() {
+    if (props.modelValue) {
+      return Number(props.modelValue);
+    } else {
+      return 0;
+    }
+  },
+  set() {},
+});
 const plus = () => {
-  emit('update:modelValue', props.modelValue + 1);
+  emit(
+    'update:modelValue',
+    Number((props.modelValue + props.step).toFixed(props.digit))
+  );
 };
 const minus = () => {
-  emit('update:modelValue', props.modelValue - 1);
+  emit(
+    'update:modelValue',
+    Number((props.modelValue - props.step).toFixed(props.digit))
+  );
 };
 </script>
 <style scoped lang="less">

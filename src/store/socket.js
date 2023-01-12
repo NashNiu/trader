@@ -144,7 +144,7 @@ export default defineStore('socket', {
           // 参数错误
           commonStore.closeLoading();
           ElMessage.error({
-            message: data.cmd,
+            message: 'params wrong',
           });
         } else {
           // 其他未处理的信息

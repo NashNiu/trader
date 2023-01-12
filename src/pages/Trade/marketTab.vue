@@ -12,7 +12,11 @@
         <span>Quantity</span>
       </el-col>
       <el-col :span="16">
-        <InputNumber v-model.number="orderCount" size="small" />
+        <InputNumber v-model.number="count" size="small" :step="0.01">
+          <template #tips>
+            <span :class="{ error: !countValid }">Quantity Range 0.01-5</span>
+          </template>
+        </InputNumber>
       </el-col>
     </el-row>
     <el-row
@@ -38,7 +42,12 @@
         <span>Stop surplus</span>
       </el-col>
       <el-col v-if="spShow" :span="14">
-        <InputNumber v-model.number="spPrice" size="small">
+        <InputNumber
+          v-model.number="spPrice"
+          size="small"
+          :step="step"
+          :digit="digit"
+        >
           <template #tips>
             <el-space>
               <span :class="{ error: !spPriceValid }">
@@ -65,7 +74,12 @@
         <span>Stop loss</span>
       </el-col>
       <el-col v-if="slShow" :span="14">
-        <InputNumber v-model.number="slPrice" size="small">
+        <InputNumber
+          v-model.number="slPrice"
+          size="small"
+          :step="step"
+          :digit="digit"
+        >
           <template #tips>
             <el-space>
               <span :class="{ error: !slPriceValid }">
@@ -108,6 +122,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  step: {
+    type: Number,
+    default: 1,
+  },
   stopL: {
     type: Number,
     default: 0,
@@ -121,7 +139,7 @@ const emit = defineEmits(['close']);
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 // 市价手数
-const orderCount = ref(1);
+const count = ref(0.01);
 // 市价是否止盈
 const spShow = ref(false);
 // 市价是否止损
@@ -141,9 +159,9 @@ const bid = computed(() => currentSblData.value.bid);
 // 市价参考保证金
 const marginRequired = computed(() => {
   if (props.type === 'buy') {
-    return ((props.conSize * orderCount.value * bid.value) / 100).toFixed(2);
+    return ((props.conSize * count.value * bid.value) / 100).toFixed(2);
   } else {
-    return ((props.conSize * orderCount.value * ask.value) / 100).toFixed(2);
+    return ((props.conSize * count.value * ask.value) / 100).toFixed(2);
   }
 });
 // 市价止盈范围
@@ -166,19 +184,15 @@ const slScope = computed(() => {
 const spProfit = computed(() => {
   if (props.type === 'buy') {
     return spPrice.value && bid.value
-      ? (
-          (spPrice.value - bid.value) *
-          orderCount.value *
-          props.conSize
-        ).toFixed(props.digit)
+      ? ((spPrice.value - bid.value) * count.value * props.conSize).toFixed(
+          props.digit
+        )
       : 0;
   } else {
     return spPrice.value && ask.value
-      ? (
-          (ask.value - spPrice.value) *
-          orderCount.value *
-          props.conSize
-        ).toFixed(props.digit)
+      ? ((ask.value - spPrice.value) * count.value * props.conSize).toFixed(
+          props.digit
+        )
       : 0;
   }
 });
@@ -186,19 +200,15 @@ const spProfit = computed(() => {
 const slProfit = computed(() => {
   if (props.type === 'buy') {
     return slPrice.value && bid.value
-      ? (
-          (slPrice.value - bid.value) *
-          orderCount.value *
-          props.conSize
-        ).toFixed(props.digit)
+      ? ((slPrice.value - bid.value) * count.value * props.conSize).toFixed(
+          props.digit
+        )
       : 0;
   } else {
     return slPrice.value && ask.value
-      ? (
-          (ask.value - slPrice.value) *
-          orderCount.value *
-          props.conSize
-        ).toFixed(props.digit)
+      ? ((ask.value - slPrice.value) * count.value * props.conSize).toFixed(
+          props.digit
+        )
       : 0;
   }
 });
@@ -230,9 +240,11 @@ const slPriceValid = computed(() => {
     return slPrice.value >= slScope.value;
   }
 });
+// 手数是否有效
+const countValid = computed(() => count.value >= 0.01 && count.value <= 5);
 // 重置数据
 const resetValue = () => {
-  orderCount.value = 1;
+  count.value = 0.01;
   spShow.value = false;
   slShow.value = false;
   spPrice.value = 0;
@@ -240,6 +252,10 @@ const resetValue = () => {
 };
 // 市价下单
 const createOrder = () => {
+  if (!countValid.value) {
+    ElMessage.error('INVALID Quantity');
+    return;
+  }
   if (slShow.value && !slPriceValid.value) {
     ElMessage.error('INVALID STOP LOSS PRICE');
     return;
@@ -250,7 +266,7 @@ const createOrder = () => {
   }
   const params = {
     sbl: props?.symbol,
-    vol: orderCount.value,
+    vol: count.value,
     type: props?.type === 'buy' ? 0 : 1,
     sl: slShow.value ? slPrice.value : undefined,
     tp: spShow.value ? spPrice.value : undefined,

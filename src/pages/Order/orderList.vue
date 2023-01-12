@@ -12,7 +12,9 @@
       </el-table-column>
       <el-table-column prop="profit" label="Net contribution">
         <template #default="scope">
-          <span :class="`${scope.row.color} bold`">{{ scope.row.profit }}</span>
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.netValue }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="currentPrice" label="Present value">
@@ -59,24 +61,34 @@
         </template>
       </el-table-column>
     </el-table>
-    <OrderDrawer ref="orderDrawerRef" :drawer-data="drawerData" />
+    <OrderDrawer
+      ref="orderDrawerRef"
+      :drawer-data="drawerData"
+      @close="closeDrawer"
+    />
   </div>
 </template>
 <script setup>
 import { useSocketStore } from '@/store/index.js';
-import { computed, reactive, ref } from 'vue';
-// import dayjs from 'dayjs';
+import { computed, ref } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
-// import { tools } from '@/utils/index.js';
 const socketStore = useSocketStore();
 
 const orderDrawerRef = ref(null);
-let drawerData = reactive({});
+const activeRowOrder = ref(-1);
+// let drawerData = reactive({});
 const tableData = computed(() => socketStore.holdingOrders.map((item) => item));
 const openInfoDrawer = (row) => {
-  drawerData = row;
+  activeRowOrder.value = row.position;
   orderDrawerRef.value.show();
 };
+const closeDrawer = () => {
+  console.log('i am close');
+  activeRowOrder.value = -1;
+};
+const drawerData = computed(() =>
+  tableData.value.find((item) => item.position === activeRowOrder.value)
+);
 </script>
 <style lang="less" scoped>
 .orderTableBox {

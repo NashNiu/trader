@@ -60,3 +60,6 @@ table {
 .bold {
 	font-family: 'roboto-bold';
 }
+.pointer {
+	cursor: pointer;
+}

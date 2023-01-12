@@ -38,6 +38,9 @@
                 <el-button @click="resetForm(formRef)">取消</el-button>
               </el-form-item>
             </el-form>
+            <div id="buttonDiv" @click="googleBtn">
+              <img :src="googleImg" class="googleImg" alt="" />
+            </div>
           </el-tab-pane>
           <el-tab-pane label="注册" name="first">
             <el-form
@@ -99,8 +102,10 @@ import { ref, reactive } from 'vue';
 import {
   getCodeInterface,
   registerInterface,
+  registerGoogleInterface,
   loginInterface,
 } from '@/api/commonapi.js';
+import googleImg from '@/assets/img/sidebar/google_icon.png';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { nextTick } from 'vue';
@@ -240,6 +245,67 @@ const GoLogin = (username, password) => {
     }
   );
 };
+//google登录
+const googleBtn = () => {
+  window?.google?.accounts?.id.initialize({
+    client_id:
+      '220895073527-03c9s50caos81us2sahvjpcpa7q11iu8.apps.googleusercontent.com',
+    callback: handleCredentialResponse,
+  });
+  window?.google?.accounts?.id.renderButton(
+    document.getElementById('buttonDiv'),
+    { theme: 'outline', size: 'large' } // customization attributes
+  );
+  window?.google?.accounts?.id.prompt(); // also display the One Tap dialog
+};
+const handleCredentialResponse = (response) => {
+  console.log('Encoded JWT ID token: ' + response.credential);
+  const responsePayload = JSON.parse(
+    decodeURIComponent(
+      encodeURI(window.atob(response.credential.split('.')[1]))
+    )
+  );
+  const googleSub = responsePayload.sub;
+  loginInterface({ username: googleSub, type: 1 }).then((res) => {
+    if (res.data.status === 0) {
+      ElMessage({
+        message: '登录成功！',
+        type: 'success',
+      });
+      localStorage.setItem('token', res.data.token);
+      router.push({
+        path: '/Trade',
+        query: {},
+      });
+    } else {
+      //ElMessage.error('登录失败！');
+      registerGoogleInterface({ gugeid: googleSub, password: 'www123' }).then(
+        (res) => {
+          if (res.data.status === 0) {
+            ElMessage({
+              message: '注册成功！',
+              type: 'success',
+            });
+            loginInterface({ username: googleSub, type: 1 }).then((res) => {
+              if (res.data.status === 0) {
+                ElMessage({
+                  message: '登录成功！',
+                  type: 'success',
+                });
+                localStorage.setItem('token', res.data.token);
+                router.push({
+                  path: '/Trade',
+                  query: {},
+                });
+              }
+            });
+          }
+        }
+      );
+    }
+  });
+  console.log(responsePayload);
+};
 </script>
 
 <style scoped lang="less">
@@ -331,6 +397,15 @@ const GoLogin = (username, password) => {
     background: #0c3d93 !important;
     color: #fff;
     margin-right: 10px;
+  }
+  #buttonDiv {
+    width: 50px;
+    height: 200px;
+    .googleImg {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
   }
 }
 </style>

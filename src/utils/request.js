@@ -5,7 +5,7 @@ import { tools } from '@/utils/index.js';
 const service = axios.create({
   baseURL: '/lpapi',
   // withCredentials:true,//跨域请求时发送Cookie
-  timeout: 10000, // 设置超时时间
+  timeout: 15000, // 设置超时时间 ms
 });
 // 请求拦截
 service.interceptors.request.use(
@@ -27,13 +27,18 @@ service.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       ElMessage.error('Unauthorized');
       tools.clearAndLogout();
-    } else if (error.response.status === 500) {
+    } else if (error?.response?.status === 500) {
       ElMessage.error('Server Error');
       return error;
+    } else if (error?.code === 'ECONNABORTED') {
+      ElMessage.error(error?.message || 'request timeout');
+      return error;
     } else {
+      console.log(error);
+      console.log(error.response);
       return error;
     }
   }

@@ -1,6 +1,11 @@
 import Router from '@/router/index.js';
-import { useSocketStore, useUserStore } from '@/store/index.js';
-import { configKey } from '@/config/index.js';
+import {
+  useSocketStore,
+  useUserStore,
+  useTradeStore,
+  useCommonStore,
+} from '@/store/index.js';
+import { configConst, configKey } from '@/config/index.js';
 import cryptoJS from 'crypto-js';
 // 计算持仓浮动盈亏 和 价格变化
 export function calcOrderChange({ order, liveData, cs }) {
@@ -38,14 +43,18 @@ export function calcOrderChange({ order, liveData, cs }) {
   }
 }
 
-// 清除登录信息，退出登录，跳到首页
+// 清除登录信息，清除store信息，退出登录，跳到首页
 export function clearAndLogout() {
   const userStore = useUserStore();
   const socketStore = useSocketStore();
+  const tradeStore = useTradeStore();
+  const commonStore = useCommonStore();
   userStore.$reset();
   socketStore.closeSocket();
   socketStore.$reset();
-  localStorage.clear();
+  tradeStore.$reset();
+  commonStore.$reset();
+  localStorage.removeItem(configConst.token);
   Router.push({ name: 'Index' }).then();
 }
 

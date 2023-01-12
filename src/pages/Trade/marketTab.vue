@@ -1,0 +1,269 @@
+<template>
+  <div>
+    <h3 class="symbolName">{{ symbol }}</h3>
+    <DeepPrice :symbol="symbol" />
+    <el-row
+      :gutter="20"
+      align="middle"
+      justify="space-between"
+      class="rowItemBox"
+    >
+      <el-col :span="8">
+        <span>Quantity</span>
+      </el-col>
+      <el-col :span="16">
+        <InputNumber v-model.number="orderCount" size="small" />
+      </el-col>
+    </el-row>
+    <el-row
+      :gutter="20"
+      align="middle"
+      justify="space-between"
+      class="rowItemBox"
+    >
+      <el-col :span="8">
+        <span>Deposit required</span>
+      </el-col>
+      <el-col :span="16">
+        <p class="textRight">{{ marginRequired }}</p>
+      </el-col>
+    </el-row>
+    <el-row
+      :gutter="20"
+      align="middle"
+      justify="space-between"
+      class="rowItemBox stopRow"
+    >
+      <el-col :span="6">
+        <span>Stop surplus</span>
+      </el-col>
+      <el-col v-if="spShow" :span="14">
+        <InputNumber v-model.number="spPrice" size="small">
+          <template #tips>
+            <el-space>
+              <span :class="{ error: !spPriceValid }">
+                price
+                {{ type === 'buy' ? '≥' : '≤' }}
+                {{ spScope }}
+              </span>
+              <span>Profit {{ spProfit }}</span>
+            </el-space>
+          </template>
+        </InputNumber>
+      </el-col>
+      <el-col :span="4">
+        <el-switch v-model="spShow" @change="spShowChange" />
+      </el-col>
+    </el-row>
+    <el-row
+      :gutter="20"
+      align="middle"
+      justify="space-between"
+      class="rowItemBox stopRow"
+    >
+      <el-col :span="6">
+        <span>Stop loss</span>
+      </el-col>
+      <el-col v-if="slShow" :span="14">
+        <InputNumber v-model.number="slPrice" size="small">
+          <template #tips>
+            <el-space>
+              <span :class="{ error: !slPriceValid }">
+                price
+                {{ type === 'buy' ? '≤' : '≥' }}
+                {{ slScope }}
+              </span>
+              <span>Profit {{ slProfit }}</span>
+            </el-space>
+          </template>
+        </InputNumber>
+      </el-col>
+      <el-col :span="4">
+        <el-switch v-model="slShow" @change="slShowChange" />
+      </el-col>
+    </el-row>
+    <div class="btnContainer">
+      <div class="btnBox" @click="createOrder">
+        {{ type === 'buy' ? 'Buy' : 'Sell' }}
+      </div>
+    </div>
+  </div>
+</template>
+<script setup>
+import InputNumber from '@/components/common/inputNumber.vue';
+import DeepPrice from './deepPrice.vue';
+import { useCommonStore, useSocketStore } from '@/store/index.js';
+import { computed, ref } from 'vue';
+import { ElLoading, ElMessage } from 'element-plus';
+const props = defineProps({
+  type: {
+    type: String,
+    default: 'buy',
+  },
+  symbol: {
+    type: String,
+    default: '',
+  },
+  digit: {
+    type: Number,
+    default: 0,
+  },
+  stopL: {
+    type: Number,
+    default: 0,
+  },
+  conSize: {
+    type: Number,
+    default: 0,
+  },
+});
+const emit = defineEmits(['close']);
+const socketStore = useSocketStore();
+const commonStore = useCommonStore();
+// 市价手数
+const orderCount = ref(1);
+// 市价是否止盈
+const spShow = ref(false);
+// 市价是否止损
+const slShow = ref(false);
+// 市价止盈价格
+const spPrice = ref(0);
+// 市价止损价格
+const slPrice = ref(0);
+// 产品实时报价
+const currentSblData = computed(
+  () => socketStore.liveData[props?.symbol] || {}
+);
+// 实时ask
+const ask = computed(() => currentSblData.value.ask);
+// 实时bid
+const bid = computed(() => currentSblData.value.bid);
+// 市价参考保证金
+const marginRequired = computed(() => {
+  if (props.type === 'buy') {
+    return ((props.conSize * orderCount.value * bid.value) / 100).toFixed(2);
+  } else {
+    return ((props.conSize * orderCount.value * ask.value) / 100).toFixed(2);
+  }
+});
+// 市价止盈范围
+const spScope = computed(() => {
+  if (props.type === 'buy') {
+    return bid.value ? (bid.value + props.stopL).toFixed(props.digit) : 0;
+  } else {
+    return ask.value ? (ask.value - props.stopL).toFixed(props.digit) : 0;
+  }
+});
+// 市价止损范围
+const slScope = computed(() => {
+  if (props.type === 'buy') {
+    return bid.value ? (bid.value - props.stopL).toFixed(props.digit) : 0;
+  } else {
+    return ask.value ? (ask.value + props.stopL).toFixed(props.digit) : 0;
+  }
+});
+// 市价止盈预计
+const spProfit = computed(() => {
+  if (props.type === 'buy') {
+    return spPrice.value && bid.value
+      ? (
+          (spPrice.value - bid.value) *
+          orderCount.value *
+          props.conSize
+        ).toFixed(props.digit)
+      : 0;
+  } else {
+    return spPrice.value && ask.value
+      ? (
+          (ask.value - spPrice.value) *
+          orderCount.value *
+          props.conSize
+        ).toFixed(props.digit)
+      : 0;
+  }
+});
+// 市价止损预计
+const slProfit = computed(() => {
+  if (props.type === 'buy') {
+    return slPrice.value && bid.value
+      ? (
+          (slPrice.value - bid.value) *
+          orderCount.value *
+          props.conSize
+        ).toFixed(props.digit)
+      : 0;
+  } else {
+    return slPrice.value && ask.value
+      ? (
+          (ask.value - slPrice.value) *
+          orderCount.value *
+          props.conSize
+        ).toFixed(props.digit)
+      : 0;
+  }
+});
+// 市价止盈开启关闭
+const spShowChange = (val) => {
+  if (val) {
+    spPrice.value = Number(spScope.value);
+  }
+};
+// 市价止损开启关闭
+const slShowChange = (val) => {
+  if (val) {
+    slPrice.value = Number(slScope.value);
+  }
+};
+// 市价止盈是否有效
+const spPriceValid = computed(() => {
+  if (props.type === 'buy') {
+    return spPrice.value >= spScope.value;
+  } else {
+    return spPrice.value <= spScope.value;
+  }
+});
+// 市价止损是否有效
+const slPriceValid = computed(() => {
+  if (props.type === 'buy') {
+    return slPrice.value <= slScope.value;
+  } else {
+    return slPrice.value >= slScope.value;
+  }
+});
+// 重置数据
+const resetValue = () => {
+  orderCount.value = 1;
+  spShow.value = false;
+  slShow.value = false;
+  spPrice.value = 0;
+  slPrice.value = 0;
+};
+// 市价下单
+const createOrder = () => {
+  if (slShow.value && !slPriceValid.value) {
+    ElMessage.error('INVALID STOP LOSS PRICE');
+    return;
+  }
+  if (spShow.value && !spPriceValid.value) {
+    ElMessage.error('INVALID STOP PROFIT PRICE');
+    return;
+  }
+  const params = {
+    sbl: props?.symbol,
+    vol: orderCount.value,
+    type: props?.type === 'buy' ? 0 : 1,
+    sl: slShow.value ? slPrice.value : undefined,
+    tp: spShow.value ? spPrice.value : undefined,
+  };
+  socketStore.marketCreate(params);
+  emit('close');
+  const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
+  commonStore.setLoadingInstance(instance);
+};
+defineExpose({
+  resetValue,
+});
+</script>
+<style scoped lang="less">
+@import '@/assets/css/component/trade/tradeDrawer.less';
+</style>

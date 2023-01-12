@@ -38,7 +38,8 @@
                 <el-button @click="resetForm(formRef)">取消</el-button>
               </el-form-item>
             </el-form>
-            <div id="buttonDiv" @click="googleBtn">
+            <div class="line"></div>
+            <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
               <img :src="googleImg" class="googleImg" alt="" />
             </div>
           </el-tab-pane>
@@ -166,6 +167,7 @@ const getCode = () => {
     });
   }
 };
+
 // 注册表单提交
 const onSubmitRegister = () => {
   if (registerFrom.email && registerFrom.region && registerFrom.password) {
@@ -240,20 +242,21 @@ const GoLogin = (username, password) => {
           query: {},
         });
       } else {
-        ElMessage.error('登录失败！');
+        ElMessage.error(res.data.message);
       }
     }
   );
 };
 //google登录
 const googleBtn = () => {
+  console.log(2333);
   window?.google?.accounts?.id.initialize({
     client_id:
       '220895073527-03c9s50caos81us2sahvjpcpa7q11iu8.apps.googleusercontent.com',
     callback: handleCredentialResponse,
   });
   window?.google?.accounts?.id.renderButton(
-    document.getElementById('buttonDiv'),
+    document.getElementById('g_id_signin'),
     { theme: 'outline', size: 'large' } // customization attributes
   );
   window?.google?.accounts?.id.prompt(); // also display the One Tap dialog
@@ -279,8 +282,12 @@ const handleCredentialResponse = (response) => {
       });
     } else {
       //ElMessage.error('登录失败！');
-      registerGoogleInterface({ gugeid: googleSub, password: 'www123' }).then(
-        (res) => {
+      if (res.data.status === -1) {
+        const RandomWord = '@Qwer' + Math.random().toString(36).slice(2, 6);
+        registerGoogleInterface({
+          gugeid: googleSub,
+          password: RandomWord,
+        }).then((res) => {
           if (res.data.status === 0) {
             ElMessage({
               message: '注册成功！',
@@ -300,12 +307,13 @@ const handleCredentialResponse = (response) => {
               }
             });
           }
-        }
-      );
+        });
+      }
     }
   });
   console.log(responsePayload);
 };
+googleBtn();
 </script>
 
 <style scoped lang="less">
@@ -398,7 +406,7 @@ const handleCredentialResponse = (response) => {
     color: #fff;
     margin-right: 10px;
   }
-  #buttonDiv {
+  #g_id_signin {
     width: 50px;
     height: 200px;
     .googleImg {

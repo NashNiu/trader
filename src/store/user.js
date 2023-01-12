@@ -25,10 +25,6 @@ export default defineStore('user', {
         fb: data,
       };
     },
-    clearUserInfo() {
-      this.userInfo = {};
-      localStorage.clear();
-    },
     setWalletAssets(data) {
       this.walletAssets = data;
     },

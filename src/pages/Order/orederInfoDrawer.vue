@@ -58,7 +58,7 @@
   </el-drawer>
 </template>
 <script setup>
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { ElLoading } from 'element-plus';
 const socketStore = useSocketStore();

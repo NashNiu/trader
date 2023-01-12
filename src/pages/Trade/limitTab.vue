@@ -7,7 +7,12 @@
         <span>Price</span>
       </el-col>
       <el-col :span="16">
-        <InputNumber v-model.number="limitPrice" size="small">
+        <InputNumber
+          v-model.number="limitPrice"
+          size="small"
+          :step="step"
+          :digit="digit"
+        >
           <template #tips>
             <el-space>
               <span :class="{ error: !limitPriceValid }">
@@ -23,7 +28,11 @@
         <span>Quantity</span>
       </el-col>
       <el-col :span="16">
-        <InputNumber v-model.number="limitCount" size="small" />
+        <InputNumber v-model.number="count" size="small" :step="0.01">
+          <template #tips>
+            <span :class="{ error: !countValid }">Quantity Range 0.01-5</span>
+          </template>
+        </InputNumber>
       </el-col>
     </el-row>
     <el-row
@@ -49,7 +58,12 @@
         <span>Stop surplus</span>
       </el-col>
       <el-col v-if="limitSpShow" :span="14">
-        <InputNumber v-model.number="limitSpPrice" size="small">
+        <InputNumber
+          v-model.number="limitSpPrice"
+          size="small"
+          :step="step"
+          :digit="digit"
+        >
           <template #tips>
             <el-space>
               <span :class="{ error: !limitSpPriceValid }">
@@ -76,7 +90,12 @@
         <span>Stop loss</span>
       </el-col>
       <el-col v-if="limitSlShow" :span="14">
-        <InputNumber v-model.number="limitSlPrice" size="small">
+        <InputNumber
+          v-model.number="limitSlPrice"
+          size="small"
+          :step="step"
+          :digit="digit"
+        >
           <template #tips>
             <el-space>
               <span :class="{ error: !limitSlPriceValid }">
@@ -119,6 +138,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  step: {
+    type: Number,
+    default: 1,
+  },
   stopL: {
     type: Number,
     default: 0,
@@ -135,7 +158,7 @@ const commonStore = useCommonStore();
 // 挂单价格
 const limitPrice = ref(0);
 // 挂单手数
-const limitCount = ref(1);
+const count = ref(0.01);
 // 是否止损
 const limitSlShow = ref(false);
 // 是否止盈
@@ -155,7 +178,7 @@ const bid = computed(() => currentSblData.value.bid);
 
 // 挂单参考保证金
 const limitMarginRequired = computed(() =>
-  ((props.conSize * limitCount.value * limitPrice.value) / 100).toFixed(2)
+  ((props.conSize * count.value * limitPrice.value) / 100).toFixed(2)
 );
 // 挂单价格范围
 const limitPriceScope = computed(() => {
@@ -191,7 +214,7 @@ const limitSlProfit = computed(() => {
     return limitPrice.value && limitSlPrice.value
       ? (
           (limitSlPrice.value - limitPrice.value) *
-          limitCount.value *
+          count.value *
           props.conSize
         ).toFixed(props.digit)
       : 0;
@@ -199,7 +222,7 @@ const limitSlProfit = computed(() => {
     return limitPrice.value && limitSlPrice.value
       ? (
           (limitPrice.value - limitSlPrice.value) *
-          limitCount.value *
+          count.value *
           props.conSize
         ).toFixed(props.digit)
       : 0;
@@ -223,7 +246,7 @@ const limitSpProfit = computed(() => {
     return limitPrice.value && limitSpPrice.value
       ? (
           (limitSpPrice.value - limitPrice.value) *
-          limitCount.value *
+          count.value *
           props.conSize
         ).toFixed(props.digit)
       : 0;
@@ -231,7 +254,7 @@ const limitSpProfit = computed(() => {
     return limitPrice.value && limitSpPrice.value
       ? (
           (limitPrice.value - limitSpPrice.value) *
-          limitCount.value *
+          count.value *
           props.conSize
         ).toFixed(props.digit)
       : 0;
@@ -269,10 +292,12 @@ const limitSlShowChange = (val) => {
 const initValue = () => {
   limitPrice.value = Number(limitPriceScope.value);
 };
+// 手数是否有效
+const countValid = computed(() => count.value >= 0.01 && count.value <= 5);
 // 重置数据
 const resetValue = () => {
   limitPrice.value = 0;
-  limitCount.value = 0;
+  count.value = 0.01;
   limitSlShow.value = false;
   limitSpShow.value = false;
   limitSlPrice.value = 0;
@@ -280,6 +305,10 @@ const resetValue = () => {
 };
 // 限价挂单
 const createHangingOrder = () => {
+  if (!countValid.value) {
+    ElMessage.error('INVALID Quantity');
+    return;
+  }
   if (!limitPriceValid.value) {
     ElMessage.error('INVALID LIMIT PRICE');
     return;
@@ -294,7 +323,7 @@ const createHangingOrder = () => {
   }
   const params = {
     sbl: props.symbol,
-    vol: limitCount.value,
+    vol: count.value,
     price: limitPrice.value,
     type: props?.type === 'buy' ? 2 : 3,
     sl: limitSlShow.value ? limitSlPrice.value : undefined,

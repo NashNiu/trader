@@ -14,7 +14,7 @@
           <p class="symbol">{{ item.id }}</p>
           <p class="balance">Wallet Balance</p>
         </div>
-        <div class="balanceValue">{{ item.balance }}</div>
+        <div class="balanceValue">{{ Number(item?.total)?.toFixed(6) }}</div>
         <div class="operateBox">
           <SvgIcon
             class="card icon"
@@ -54,7 +54,7 @@ const walletsValue = computed(() => {
     const ask = liveData.value[cur?.id?.split('_TEST')[0] + 'USDT']?.ask;
     let value = 0;
     if (ask) {
-      value = ask * cur?.balance + pre;
+      value = ask * cur?.total + pre;
     } else {
       value = pre;
     }

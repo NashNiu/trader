@@ -66,7 +66,7 @@ const props = defineProps({
 const visible = ref(false);
 const address = computed(() => props.walletInfo?.address);
 const qrcode = useQRCode(address, { margin: 0 });
-const { isSupported, copy } = useClipboard({ source: address });
+const { isSupported, copy } = useClipboard({ source: address, legacy: true });
 
 const copyAddress = () => {
   if (isSupported) {

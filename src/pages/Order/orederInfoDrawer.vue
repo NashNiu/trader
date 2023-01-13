@@ -14,7 +14,7 @@
     <div class="contentBox">
       <p class="type">{{ drawerData.actionType }}</p>
       <h3 class="symbolName">{{ drawerData.symbol }}</h3>
-      <p class="price">{{ drawerData.currentPrice }}</p>
+      <p class="price">{{ drawerData.price }}</p>
       <p class="time">{{ drawerData.createTime }}</p>
       <div class="orderInfoBox">
         <div class="infoItemBox">

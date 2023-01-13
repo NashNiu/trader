@@ -15,56 +15,31 @@ const router = createRouter({
       children: [
         {
           path: 'trade',
-          name: 'Trade1',
+          name: 'Trade',
           component: () => import('@/pages/Trade/index.vue'),
         },
         {
           path: 'order',
-          name: 'Order1',
+          name: 'Order',
           component: () => import('@/pages/Order/index.vue'),
         },
         {
           path: 'history',
-          name: 'History1',
+          name: 'History',
           component: () => import('@/pages/History/index.vue'),
         },
         {
           path: 'limit',
-          name: 'Limit1',
+          name: 'Limit',
           component: () => import('@/pages/Limit/index.vue'),
         },
         {
           path: 'wallet',
-          name: 'Wallet1',
+          name: 'Wallet',
           meta: { hideChart: true },
           component: () => import('@/pages/Wallet/index.vue'),
         },
       ],
-    },
-    {
-      path: '/trade',
-      name: 'Trade',
-      component: () => import('@/pages/Trade/index.vue'),
-    },
-    {
-      path: '/order',
-      name: 'Order',
-      component: () => import('@/pages/Order/index.vue'),
-    },
-    {
-      path: '/history',
-      name: 'History',
-      component: () => import('@/pages/History/index.vue'),
-    },
-    {
-      path: '/wallet',
-      name: 'Wallet',
-      component: () => import('@/pages/Wallet/index.vue'),
-    },
-    {
-      path: '/limitList',
-      name: 'LimitList',
-      component: () => import('@/pages/Limit/index.vue'),
     },
     {
       path: '/:pathMatch(.*)*',

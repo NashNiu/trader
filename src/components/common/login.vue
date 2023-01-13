@@ -277,7 +277,7 @@ const handleCredentialResponse = (response) => {
       });
       localStorage.setItem('token', res.data.token);
       router.push({
-        path: '/Trade',
+        path: '/t/trade',
         query: {},
       });
     } else {
@@ -301,7 +301,7 @@ const handleCredentialResponse = (response) => {
                 });
                 localStorage.setItem('token', res.data.token);
                 router.push({
-                  path: '/Trade',
+                  path: '/t/trade',
                   query: {},
                 });
               }

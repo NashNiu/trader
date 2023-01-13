@@ -70,7 +70,7 @@ const { isSupported, copy } = useClipboard();
 
 const copyAddress = () => {
   if (isSupported) {
-    copy?.(props.walletInfo?.address);
+    copy?.(address.value);
     ElMessage.success('copy success');
   } else {
     ElMessage.error('Your browser does not support Clipboard API');

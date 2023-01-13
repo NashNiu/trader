@@ -231,7 +231,7 @@ const GoLogin = (username, password) => {
         });
         localStorage.setItem('token', res.data.token);
         router.push({
-          path: '/Trade',
+          path: '/t/trade',
           query: {},
         });
       } else {

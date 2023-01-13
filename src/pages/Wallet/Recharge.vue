@@ -66,11 +66,11 @@ const props = defineProps({
 const visible = ref(false);
 const address = computed(() => props.walletInfo?.address);
 const qrcode = useQRCode(address, { margin: 0 });
-const { isSupported, copy } = useClipboard();
+const { isSupported, copy } = useClipboard({ source: address });
 
 const copyAddress = () => {
   if (isSupported) {
-    copy?.(address.value);
+    copy?.();
     ElMessage.success('copy success');
   } else {
     ElMessage.error('Your browser does not support Clipboard API');

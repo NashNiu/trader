@@ -10,10 +10,26 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="OpenPrice" label="OpenPrice"> </el-table-column>
-      <el-table-column prop="ClosePrice" label="ClosePrice"> </el-table-column>
-      <el-table-column prop="Lot" label="Lot"> </el-table-column>
-      <el-table-column prop="Profit" label="Profit"> </el-table-column>
+      <el-table-column prop="OpenPrice" label="OpenPrice">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.OpenPrice }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="ClosePrice" label="ClosePrice">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.ClosePrice }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="Lot" label="Lot">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.Lot }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="Profit" label="Profit">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.Profit }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="createTime" label="Opening time" />
       <el-table-column prop="closeTime" label="CloseTime" />
     </el-table>
@@ -97,6 +113,13 @@ const pageChange = (page) => {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+  }
+  .orderType {
+    font-size: 12px;
+  }
+  .symbolName {
+    font-size: 16px;
+    font-weight: bold;
   }
 }
 </style>

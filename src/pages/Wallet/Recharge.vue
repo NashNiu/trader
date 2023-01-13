@@ -30,9 +30,9 @@
           <el-col :span="14">
             <el-space>
               <span>{{ walletInfo?.address }}</span>
-              <el-icon class="copyIcon"
-                ><CopyDocument @click="copyAddress"
-              /></el-icon>
+              <el-icon class="copyIcon">
+                <CopyDocument @click="copyAddress" />
+              </el-icon>
             </el-space>
           </el-col>
         </el-row>
@@ -43,9 +43,9 @@
         </el-row>
         <el-row>
           <el-col :span="10" :offset="8">
-            <el-button size="large" type="primary" @click="close"
-              >Close</el-button
-            >
+            <el-button size="large" type="primary" @click="close">
+              Close
+            </el-button>
           </el-col>
         </el-row>
       </el-space>
@@ -66,11 +66,11 @@ const props = defineProps({
 const visible = ref(false);
 const address = computed(() => props.walletInfo?.address);
 const qrcode = useQRCode(address, { margin: 0 });
-const { isSupported, copy } = useClipboard();
+const { isSupported, copy } = useClipboard({ source: address, legacy: true });
 
 const copyAddress = () => {
   if (isSupported) {
-    copy?.(props.walletInfo?.address);
+    copy?.();
     ElMessage.success('copy success');
   } else {
     ElMessage.error('Your browser does not support Clipboard API');

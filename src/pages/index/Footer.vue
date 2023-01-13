@@ -85,9 +85,9 @@
       <!-- /.site-footer__bottom -->
     </footer>
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top"
-      ><i class="fa fa-angle-up"></i
-    ></a>
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
   </div>
 </template>
 

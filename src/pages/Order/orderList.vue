@@ -12,18 +12,38 @@
       </el-table-column>
       <el-table-column prop="profit" label="Net contribution">
         <template #default="scope">
-          <span :class="scope.row.color">{{ scope.row.profit }}</span>
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.netValue }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Profit">
+        <template #default="scope">
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.profit }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Open Price">
+        <template #default="scope">
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.price }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="currentPrice" label="Present value">
         <template #default="scope">
-          <span :class="scope.row.color">{{ scope.row.currentPrice }}</span>
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.currentPrice }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="change" label="Variety">
         <template #default="scope">
           <div class="varietyBox">
-            <span :class="scope.row.color">{{ scope.row.change }}</span>
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.change }}
+            </span>
             <div class="closeBox" @click="openInfoDrawer(scope.row)">
               <el-icon><Close /></el-icon>
               <span>close</span>
@@ -31,39 +51,58 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="lot" label="Quantity" />
+      <el-table-column prop="lot" label="Quantity">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.lot }}</span>
+        </template>
+      </el-table-column>
       <!--    <el-table-column prop="symbol" label="Quota Stop" />-->
       <!--    <el-table-column prop="symbol" label="Adjustment" />-->
-      <el-table-column prop="storage" label="Overnight Fee" />
+      <el-table-column prop="storage" label="Overnight Fee">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.storage }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="createTime" label="Opening time" />
       <el-table-column width="100">
         <template #default="scope">
           <el-icon
             class="infoIcon"
             @click="openInfoDrawer({ ...scope.row, isInfo: true })"
-            ><InfoFilled
-          /></el-icon>
+          >
+            <InfoFilled />
+          </el-icon>
         </template>
       </el-table-column>
     </el-table>
-    <OrderDrawer ref="orderDrawerRef" :drawer-data="drawerData" />
+    <OrderDrawer
+      ref="orderDrawerRef"
+      :drawer-data="drawerData"
+      @close="closeDrawer"
+    />
   </div>
 </template>
 <script setup>
 import { useSocketStore } from '@/store/index.js';
-import { computed, reactive, ref } from 'vue';
-// import dayjs from 'dayjs';
+import { computed, ref } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
-// import { tools } from '@/utils/index.js';
 const socketStore = useSocketStore();
 
 const orderDrawerRef = ref(null);
-let drawerData = reactive({});
+const activeRowOrder = ref(-1);
+// let drawerData = reactive({});
 const tableData = computed(() => socketStore.holdingOrders.map((item) => item));
 const openInfoDrawer = (row) => {
-  drawerData = row;
+  activeRowOrder.value = row.position;
   orderDrawerRef.value.show();
 };
+const closeDrawer = () => {
+  console.log('i am close');
+  activeRowOrder.value = -1;
+};
+const drawerData = computed(() =>
+  tableData.value.find((item) => item.position === activeRowOrder.value)
+);
 </script>
 <style lang="less" scoped>
 .orderTableBox {

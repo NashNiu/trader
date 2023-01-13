@@ -1,8 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import Layout from '@/components/layout/layout.vue';
 const router = createRouter({
-  // 内部提供了 history 模式的实现
-  // createWebHistory路由模式路径不带#号(生产环境下不能直接访问项目，需要nginx转发)
-  // createWebHashHistory路由模式路径带#号
   history: createWebHashHistory(),
   routes: [
     {
@@ -11,24 +9,37 @@ const router = createRouter({
       component: () => import('@/pages/index/Index.vue'),
     },
     {
-      path: '/trade',
-      name: 'Trade',
-      component: () => import('@/pages/Trade/index.vue'),
-    },
-    {
-      path: '/order',
-      name: 'Order',
-      component: () => import('@/pages/Order/index.vue'),
-    },
-    {
-      path: '/history',
-      name: 'History',
-      component: () => import('@/pages/History/index.vue'),
-    },
-    {
-      path: '/wallet',
-      name: 'Wallet',
-      component: () => import('@/pages/Wallet/index.vue'),
+      path: '/t',
+      name: 'layout',
+      component: Layout,
+      children: [
+        {
+          path: 'trade',
+          name: 'Trade',
+          component: () => import('@/pages/Trade/index.vue'),
+        },
+        {
+          path: 'order',
+          name: 'Order',
+          component: () => import('@/pages/Order/index.vue'),
+        },
+        {
+          path: 'history',
+          name: 'History',
+          component: () => import('@/pages/History/index.vue'),
+        },
+        {
+          path: 'limit',
+          name: 'Limit',
+          component: () => import('@/pages/Limit/index.vue'),
+        },
+        {
+          path: 'wallet',
+          name: 'Wallet',
+          meta: { hideChart: true },
+          component: () => import('@/pages/Wallet/index.vue'),
+        },
+      ],
     },
     {
       path: '/:pathMatch(.*)*',

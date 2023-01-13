@@ -2,7 +2,7 @@
   <header>
     <div class="header-content">
       <h1 class="content-logo">
-        <img src="/logo.png" />
+        <img src="/logo.png" alt="" />
       </h1>
 
       <div class="search-buy-login">
@@ -13,20 +13,40 @@
       </div>
       <div class="content-nav">
         <div class="itemBox">
-          <span class="itemValue">${{ availableMargin?.toFixed(2) }}</span>
-          <span class="itemKey">Balance avaliable</span>
+          <span class="itemValue">
+            {{ userFundsVisible ? '$' + availableMargin?.toFixed(2) : ' *** ' }}
+          </span>
+          <span class="itemKey">Balance available</span>
         </div>
         <div class="itemBox">
-          <span class="itemValue">${{ netWorth.toFixed(2) }}</span>
+          <span class="itemValue">
+            {{ userFundsVisible ? '$' + netWorth.toFixed(2) : ' *** ' }}
+          </span>
           <span class="itemKey">Net worth</span>
         </div>
         <div class="itemBox">
-          <span class="itemValue">${{ userFunds.margin }}</span>
+          <span class="itemValue">
+            {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
+          </span>
           <span class="itemKey">Deposit for maintenance</span>
         </div>
         <div class="itemBox">
-          <span class="itemValue">${{ profit.toFixed(2) }}</span>
+          <span class="itemValue">
+            {{ userFundsVisible ? '$' + profit.toFixed(2) : ' *** ' }}
+          </span>
           <span class="itemKey">Give good</span>
+        </div>
+        <div class="itemBox">
+          <template v-if="userFundsVisible">
+            <el-icon class="view" @click="setFundsVisible(false)">
+              <View />
+            </el-icon>
+          </template>
+          <template v-else>
+            <el-icon class="view" @click="setFundsVisible(true)">
+              <Hide />
+            </el-icon>
+          </template>
         </div>
       </div>
     </div>
@@ -34,13 +54,18 @@
 </template>
 <script setup>
 import { Search } from '@element-plus/icons-vue';
-import { useSocketStore } from '@/store/index.js';
+import { useSocketStore, useUserStore } from '@/store/index.js';
 import { computed } from 'vue';
 const socketStore = useSocketStore();
+const userStore = useUserStore();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(() => socketStore.userTotalProfit);
 const availableMargin = computed(() => socketStore.availableMargin);
+const userFundsVisible = computed(() => userStore.userFundsVisible);
+const setFundsVisible = (visible) => {
+  userStore.setUserFundsVisible(visible);
+};
 </script>
 
 <style scoped lang="less">
@@ -48,7 +73,7 @@ header {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 80px;
+  height: 68px;
   background: white;
   box-shadow: 0 5px 6px rgba(0, 0, 0, 0.16);
   opacity: 1;
@@ -56,12 +81,12 @@ header {
 .header-content {
   display: flex;
   justify-content: normal;
+  height: 100%;
   /*width: 1500px;*/
 }
 .content-logo {
   width: 160px;
   height: 55px;
-  margin: 10px 0;
   cursor: pointer;
   margin-right: 100px;
   margin-left: 100px;
@@ -71,7 +96,7 @@ header {
 }
 .content-nav {
   /*width: 800px;*/
-  height: 75px;
+  height: 100%;
   display: flex;
   align-items: center;
   .itemBox {
@@ -82,11 +107,16 @@ header {
     .itemValue {
       font-size: 22px;
       color: #000000;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      font-family: 'roboto-bold';
     }
     .itemKey {
       font-size: 16px;
       color: #666666;
+    }
+    .view {
+      font-size: 24px;
+      cursor: pointer;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <el-card class="quotesListContainer">
+  <el-card class="quotesListContainer" :body-style="{ padding: '0px' }">
     <el-table
       :data="tableData"
       row-class-name="tableRow"
@@ -9,12 +9,16 @@
       <el-table-column prop="name" label="Financial tool" />
       <el-table-column prop="change" label="Change" width="180">
         <template #default="scope">
-          <span :class="scope.row.changeColor">{{ scope.row.change }}</span>
+          <span :class="`${scope.row.changeColor} bold`">
+            {{ scope.row.change }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="change" label="Sell">
         <template #default="scope">
-          <span :class="scope.row.changeColor">{{ scope.row.sell }}</span>
+          <span :class="`${scope.row.changeColor} bold`">
+            {{ scope.row.sell }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column>
@@ -24,7 +28,9 @@
       </el-table-column>
       <el-table-column prop="change" label="Buy">
         <template #default="scope">
-          <span :class="scope.row.changeColor">{{ scope.row.buy }}</span>
+          <span :class="`${scope.row.changeColor} bold`">
+            {{ scope.row.buy }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column>
@@ -32,9 +38,26 @@
           <div class="operateBtn" @click="openBuy(scope.row)">Buy</div>
         </template>
       </el-table-column>
-      <el-table-column prop="highLow" label="High/low" />
-      <el-table-column prop="d6" label="">
-        <el-icon><Star /></el-icon>
+      <el-table-column prop="highLow" label="High/low">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.highLow }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="star" label="">
+        <template #default="scope">
+          <el-icon
+            v-if="favorites?.includes(scope.row.mtName)"
+            class="star"
+            color="#ffe345"
+            :size="28"
+            @click="unFavorite(scope.row.mtName)"
+          >
+            <StarFilled />
+          </el-icon>
+          <el-icon v-else class="star" @click="addToFavorite(scope.row.mtName)">
+            <Star />
+          </el-icon>
+        </template>
       </el-table-column>
     </el-table>
     <TradeDrawer ref="tradeDrawer" :drawer-data="drawerData" />
@@ -48,6 +71,8 @@ import {
   useTradeStore,
   useCommonStore,
 } from '@/store/index.js';
+import { useStorage } from '@vueuse/core';
+import { configConst } from '@/config/index.js';
 import TradeDrawer from './tradeDrawer.vue';
 
 const socketStore = useSocketStore();
@@ -84,7 +109,27 @@ const tableData = computed(() =>
     };
   })
 );
+const favorites = useStorage(configConst.favorites, [], localStorage);
 
+const addToFavorite = (name) => {
+  if (Array.isArray(favorites.value)) {
+    const t = new Set(favorites.value).add(name);
+    favorites.value = Array.from(t);
+  } else {
+    favorites.value = [name];
+  }
+  tradeStore.updateFavorite(name);
+};
+const unFavorite = (name) => {
+  if (Array.isArray(favorites.value)) {
+    const t = new Set(favorites.value);
+    t.delete(name);
+    favorites.value = Array.from(t);
+  } else {
+    favorites.value = [];
+  }
+  tradeStore.updateFavorite(name);
+};
 const openSell = (row) => {
   drawerData = {
     type: 'sell',
@@ -170,12 +215,26 @@ const rowDblClick = (row) => {
   .green {
     color: #078d5c;
   }
+  .star {
+    cursor: pointer;
+    font-size: 26px;
+  }
 }
 </style>
 <style lang="less">
 .quotesListContainer {
+  .el-table {
+    th {
+      &.el-table__cell {
+        background-color: #f8f8f8;
+      }
+    }
+  }
   .headerRow {
     color: #0c3d93;
+    font-family: 'roboto-bold';
+    height: 44px;
+    background-color: #f8f8f8;
   }
   .tableRow {
     height: 60px;

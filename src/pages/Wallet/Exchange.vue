@@ -40,10 +40,10 @@
             {{ currentSymbol }}
           </el-col>
           <el-col :span="8">
-            <span
-              >Available balance {{ walletInfo?.balance }}
-              {{ currentSymbol }}</span
-            >
+            <span>
+              Available balance {{ Number(walletInfo?.total).toFixed(6) }}
+              {{ currentSymbol }}
+            </span>
           </el-col>
         </el-row>
         <el-row align="middle">
@@ -58,10 +58,10 @@
               style="width: 95%"
             />
           </el-col>
-          <el-col :span="2"> USDT </el-col>
+          <el-col :span="2">USDT</el-col>
         </el-row>
         <el-row>
-          <el-col :span="10" :offset="8"> </el-col>
+          <el-col :span="10" :offset="8"></el-col>
         </el-row>
         <el-row>
           <el-col :span="10" :offset="8">
@@ -71,8 +71,9 @@
               :loading="submitLoading"
               :disabled="submitDisabled"
               @click="submit"
-              >Confirm Redemption</el-button
             >
+              Confirm Redemption
+            </el-button>
           </el-col>
         </el-row>
       </el-space>
@@ -96,7 +97,7 @@ const userStore = useUserStore();
 const visible = ref(false);
 const submitLoading = ref(false);
 const currentSymbol = computed(() => {
-  return props.walletInfo.id?.replace('_TEST', '');
+  return props.walletInfo.id?.split('_TEST')[0];
 });
 const liveData = computed(
   () => socketStore.liveData[currentSymbol.value + 'USDT']
@@ -113,7 +114,7 @@ const afterClose = () => {
   amount.value = 0;
 };
 const submit = async () => {
-  if (amount.value > props.walletInfo?.balance) {
+  if (amount.value > props.walletInfo?.total) {
     ElMessage.error('insufficient balance');
     return;
   }

@@ -1,17 +1,31 @@
 import { defineStore } from 'pinia';
-import { popularSymbols, goodsSymbols } from '@/assets/data/symbol.js';
+import { configSymbols } from '@/config/index.js';
 
 export default defineStore('trade', {
   state: () => ({
     activeType: 'popular',
     symbolTypeArr: {
-      popular: popularSymbols,
-      goods: goodsSymbols,
+      popular: configSymbols.popularSymbols,
+      goods: configSymbols.goodsSymbols,
+      favorite: configSymbols.favoriteSymbols,
     },
   }),
   actions: {
     setSymbolType(type) {
       this.activeType = type;
+    },
+    updateFavorite(data) {
+      const target = configSymbols.symbolArr.find((item) => item.name === data);
+      if (target) {
+        const existedIndex = this.symbolTypeArr.favorite.findIndex(
+          (item) => item.name === data
+        );
+        if (existedIndex > -1) {
+          this.symbolTypeArr.favorite.splice(existedIndex, 1);
+        } else {
+          this.symbolTypeArr.favorite.push(target);
+        }
+      }
     },
   },
 });

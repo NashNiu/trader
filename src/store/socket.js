@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import { symbolArr } from '@/assets/data/symbol.js';
+import { configSymbols } from '@/config/index.js';
 import { ElMessage } from 'element-plus';
 import { useCommonStore, useUserStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
@@ -34,11 +34,11 @@ export default defineStore('socket', {
     },
     // 账户净值 = 余额 + 浮动盈亏
     userNetWorth(state) {
-      return state.userFunds?.balance ?? 0 + this.userTotalProfit;
+      return (this.userTotalProfit || 0) + (state.userFunds?.balance || 0);
     },
     // 可用保证金 = 账户净值 - 占用保证金
     availableMargin(state) {
-      return this.userNetWorth - state.userFunds?.margin || 0;
+      return (this.userNetWorth || 0) - (state.userFunds?.margin || 0);
     },
   },
   actions: {
@@ -144,7 +144,7 @@ export default defineStore('socket', {
           // 参数错误
           commonStore.closeLoading();
           ElMessage.error({
-            message: data.cmd,
+            message: 'params wrong',
           });
         } else {
           // 其他未处理的信息
@@ -170,7 +170,7 @@ export default defineStore('socket', {
     },
     // 获取产品最近报价
     getSblLatestPrice() {
-      symbolArr.forEach((item) => {
+      configSymbols.symbolArr.forEach((item) => {
         this.sendSocketMsg({ cmd: 10007, sbl: item.name });
       });
     },
@@ -210,7 +210,7 @@ export default defineStore('socket', {
     },
     //获取产品配置信息
     getSblBasicData() {
-      symbolArr.forEach((item) => {
+      configSymbols.symbolArr.forEach((item) => {
         this.sendSocketMsg({ cmd: 10001, sbl: item.name });
       });
     },
@@ -222,7 +222,7 @@ export default defineStore('socket', {
     },
     // 获取产品高开低收数据
     getStatisticData() {
-      symbolArr.forEach((item) => {
+      configSymbols.symbolArr.forEach((item) => {
         this.sendSocketMsg({ cmd: 10003, sbl: item.name });
       });
     },
@@ -286,17 +286,24 @@ export default defineStore('socket', {
     },
     // 设置挂单数据
     setHangingOrders(data) {
-      this.hangingOrders = data;
+      this.hangingOrders = data.map((item) => {
+        return {
+          ...item,
+          actionType: item.type === 2 ? 'Buy' : 'Sell',
+          createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
+          lot: item.vol / 10000,
+        };
+      });
     },
     // 市价买入卖出 type: 0 买入， 1 卖出  sl: 止损价， tp: 止盈价
-    marketCreate({ sbl, vol, price, type, sl, tp }) {
+    marketCreate({ sbl, vol, type, sl, tp }) {
       this.sendSocketMsg({
         cmd: 10031,
         sbl: sbl,
         act: 200,
         type,
         vol: Math.round(vol * 100) * 100,
-        price,
+        // price,
         sl,
         tp,
       });
@@ -322,7 +329,7 @@ export default defineStore('socket', {
         sbl: sbl,
         act: 201,
         type,
-        vol: Math.floor(vol),
+        vol: Math.round(vol * 100) * 100,
         price,
         sl,
         tp,
@@ -351,13 +358,15 @@ export default defineStore('socket', {
     },
     // 挂单删除成功
     handleDelHangingOrder(data) {
+      const commonStore = useCommonStore();
+      commonStore.closeLoading();
       if (data.status === 0) {
         ElMessage.success({
-          message: '挂单删除成功',
+          message: 'delete success',
         });
       } else {
         ElMessage.error({
-          message: '挂单删除失败',
+          message: 'delete failed',
         });
       }
     },

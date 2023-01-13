@@ -11,6 +11,12 @@
         Most popular
       </div>
       <div
+        :class="{ item: true, active: activeType === 'favorite' }"
+        @click="setType('favorite')"
+      >
+        My Collection
+      </div>
+      <div
         :class="{ item: true, active: activeType === 'goods' }"
         @click="setType('goods')"
       >
@@ -39,7 +45,7 @@ const activeType = computed(() => tradeStore.activeType);
       color: #0c3d93;
       cursor: pointer;
       transition: 0.3s;
-      font-size: 20px;
+      font-size: 16px;
       margin-top: 3px;
       &:hover,
       &.active {

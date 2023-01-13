@@ -5,6 +5,7 @@ export default defineStore('user', {
   state: () => ({
     userInfo: {},
     walletAssets: 0,
+    userFundsVisible: true,
   }),
   getters: {
     totalAssets(state) {
@@ -24,12 +25,11 @@ export default defineStore('user', {
         fb: data,
       };
     },
-    clearUserInfo() {
-      this.userInfo = {};
-      localStorage.clear();
-    },
     setWalletAssets(data) {
       this.walletAssets = data;
+    },
+    setUserFundsVisible(data) {
+      this.userFundsVisible = data;
     },
   },
 });

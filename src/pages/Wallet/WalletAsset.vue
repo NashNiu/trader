@@ -2,6 +2,7 @@
   <el-card
     :body-style="{ padding: '0px', height: '100%' }"
     class="walletAssetContainer"
+    v-loading="loadingData"
   >
     <h3 class="title">Wallet Assets $ {{ walletsValue.toFixed(2) }}</h3>
     <div class="contentBox">
@@ -13,7 +14,7 @@
           <p class="symbol">{{ item.id }}</p>
           <p class="balance">Wallet Balance</p>
         </div>
-        <div class="balanceValue">{{ item.balance }}</div>
+        <div class="balanceValue">{{ Number(item?.total)?.toFixed(6) }}</div>
         <div class="operateBox">
           <SvgIcon
             class="card icon"
@@ -50,10 +51,10 @@ const rechargeDialogRef = ref(null);
 const walletData = ref([]);
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
-    const ask = liveData.value[cur?.id?.replace('_TEST', '') + 'USDT']?.ask;
+    const ask = liveData.value[cur?.id?.split('_TEST')[0] + 'USDT']?.ask;
     let value = 0;
     if (ask) {
-      value = ask * cur?.balance + pre;
+      value = ask * cur?.total + pre;
     } else {
       value = pre;
     }
@@ -62,6 +63,7 @@ const walletsValue = computed(() => {
   }, 0);
 });
 const activeWalletInfo = ref({});
+const loadingData = ref(true);
 const openExchangeDialog = (data) => {
   activeWalletInfo.value = data;
   exchangeDialogRef.value.open();
@@ -72,14 +74,16 @@ const openRechargeDialog = (data) => {
 };
 
 const getWalletData = async () => {
+  loadingData.value = true;
   const res = await getWalletInfo(userStore.userInfo?.fb);
+  loadingData.value = false;
   if (res.data.status === 0) {
     walletData.value = res.data.data;
   } else {
     ElMessage.error('GET WALLET INFO FAILED');
   }
 };
-await getWalletData();
+getWalletData();
 </script>
 <style lang="less" scoped>
 .walletAssetContainer {

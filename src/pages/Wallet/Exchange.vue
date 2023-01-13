@@ -41,7 +41,8 @@
           </el-col>
           <el-col :span="8">
             <span>
-              Available balance {{ walletInfo?.balance }} {{ currentSymbol }}
+              Available balance {{ Number(walletInfo?.total).toFixed(6) }}
+              {{ currentSymbol }}
             </span>
           </el-col>
         </el-row>
@@ -113,7 +114,7 @@ const afterClose = () => {
   amount.value = 0;
 };
 const submit = async () => {
-  if (amount.value > props.walletInfo?.balance) {
+  if (amount.value > props.walletInfo?.total) {
     ElMessage.error('insufficient balance');
     return;
   }

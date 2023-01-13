@@ -17,6 +17,20 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="Profit">
+        <template #default="scope">
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.profit }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Open Price">
+        <template #default="scope">
+          <span :class="`${scope.row.color} bold`">
+            {{ scope.row.price }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="currentPrice" label="Present value">
         <template #default="scope">
           <span :class="`${scope.row.color} bold`">

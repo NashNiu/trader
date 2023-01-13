@@ -96,7 +96,7 @@ const userStore = useUserStore();
 const visible = ref(false);
 const submitLoading = ref(false);
 const currentSymbol = computed(() => {
-  return props.walletInfo.id?.replace('_TEST', '');
+  return props.walletInfo.id?.split('_TEST')[0];
 });
 const liveData = computed(
   () => socketStore.liveData[currentSymbol.value + 'USDT']

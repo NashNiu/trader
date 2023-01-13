@@ -38,6 +38,10 @@
                 <el-button @click="resetForm(formRef)">取消</el-button>
               </el-form-item>
             </el-form>
+            <div class="line"></div>
+            <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
+              <img :src="googleImg" class="googleImg" alt="" />
+            </div>
           </el-tab-pane>
           <el-tab-pane label="注册" name="first">
             <el-form
@@ -99,8 +103,10 @@ import { ref, reactive } from 'vue';
 import {
   getCodeInterface,
   registerInterface,
+  registerGoogleInterface,
   loginInterface,
 } from '@/api/commonapi.js';
+import googleImg from '@/assets/img/sidebar/google_icon.png';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { nextTick } from 'vue';
@@ -161,6 +167,7 @@ const getCode = () => {
     });
   }
 };
+
 // 注册表单提交
 const onSubmitRegister = () => {
   if (registerFrom.email && registerFrom.region && registerFrom.password) {
@@ -231,15 +238,82 @@ const GoLogin = (username, password) => {
         });
         localStorage.setItem('token', res.data.token);
         router.push({
-          path: '/Trade',
+          path: '/t/trade',
           query: {},
         });
       } else {
-        ElMessage.error('登录失败！');
+        ElMessage.error(res.data.message);
       }
     }
   );
 };
+//google登录
+const googleBtn = () => {
+  console.log(2333);
+  window?.google?.accounts?.id.initialize({
+    client_id:
+      '220895073527-03c9s50caos81us2sahvjpcpa7q11iu8.apps.googleusercontent.com',
+    callback: handleCredentialResponse,
+  });
+  window?.google?.accounts?.id.renderButton(
+    document.getElementById('g_id_signin'),
+    { theme: 'outline', size: 'large' } // customization attributes
+  );
+  window?.google?.accounts?.id.prompt(); // also display the One Tap dialog
+};
+const handleCredentialResponse = (response) => {
+  console.log('Encoded JWT ID token: ' + response.credential);
+  const responsePayload = JSON.parse(
+    decodeURIComponent(
+      encodeURI(window.atob(response.credential.split('.')[1]))
+    )
+  );
+  const googleSub = responsePayload.sub;
+  loginInterface({ username: googleSub, type: 1 }).then((res) => {
+    if (res.data.status === 0) {
+      ElMessage({
+        message: '登录成功！',
+        type: 'success',
+      });
+      localStorage.setItem('token', res.data.token);
+      router.push({
+        path: '/Trade',
+        query: {},
+      });
+    } else {
+      //ElMessage.error('登录失败！');
+      if (res.data.status === -1) {
+        const RandomWord = '@Qwer' + Math.random().toString(36).slice(2, 6);
+        registerGoogleInterface({
+          gugeid: googleSub,
+          password: RandomWord,
+        }).then((res) => {
+          if (res.data.status === 0) {
+            ElMessage({
+              message: '注册成功！',
+              type: 'success',
+            });
+            loginInterface({ username: googleSub, type: 1 }).then((res) => {
+              if (res.data.status === 0) {
+                ElMessage({
+                  message: '登录成功！',
+                  type: 'success',
+                });
+                localStorage.setItem('token', res.data.token);
+                router.push({
+                  path: '/Trade',
+                  query: {},
+                });
+              }
+            });
+          }
+        });
+      }
+    }
+  });
+  console.log(responsePayload);
+};
+googleBtn();
 </script>
 
 <style scoped lang="less">
@@ -331,6 +405,15 @@ const GoLogin = (username, password) => {
     background: #0c3d93 !important;
     color: #fff;
     margin-right: 10px;
+  }
+  #g_id_signin {
+    width: 50px;
+    height: 200px;
+    .googleImg {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
   }
 }
 </style>

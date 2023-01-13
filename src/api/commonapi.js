@@ -34,6 +34,14 @@ export function registerInterface(code, data) {
     data,
   });
 }
+// google注册接口
+export function registerGoogleInterface(data) {
+  return request({
+    url: '/api/users/user/reg/1/0',
+    method: 'POST',
+    data,
+  });
+}
 // 登录接口
 export function loginInterface(data) {
   return request({

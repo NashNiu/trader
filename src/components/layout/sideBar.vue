@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import ProfileDrawer from './profileDrawer.vue';
 const router = useRouter();
 const route = useRoute();
@@ -38,27 +38,27 @@ const menuItemData = [
     title: 'Profile',
   },
   {
-    index: '/trade',
+    index: '/t/trade',
     icon: 'icon-chart',
     title: 'Trade',
   },
   {
-    index: '/order',
+    index: '/t/order',
     icon: 'icon-cart',
     title: 'Order',
   },
   {
-    index: '/limitList',
+    index: '/t/limit',
     icon: 'icon-unorderedlist',
     title: 'limit list',
   },
   {
-    index: '/history',
+    index: '/t/history',
     icon: 'icon-history',
     title: 'History',
   },
   {
-    index: '/wallet',
+    index: '/t/wallet',
     icon: 'icon-wallet',
     title: 'Wallet',
   },
@@ -70,6 +70,12 @@ const menuOpen = (index) => {
     router.push(index);
   }
 };
+watch(
+  () => router.currentRoute.value,
+  (nv) => {
+    activeIndex.value = nv.path;
+  }
+);
 </script>
 <style lang="less">
 .sideBarBox {

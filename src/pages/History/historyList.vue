@@ -20,7 +20,7 @@
           <span class="bold">{{ scope.row.ClosePrice }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="Lot" label="Lot">
+      <el-table-column prop="Lot" label="Quantity">
         <template #default="scope">
           <span class="bold">{{ scope.row.Lot }}</span>
         </template>

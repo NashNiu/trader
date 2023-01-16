@@ -77,6 +77,12 @@ const minus = () => {
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
     }
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
   }
   .icon {
     color: #0c3d93;

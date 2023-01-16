@@ -4,12 +4,14 @@
     class="exchangeDialogContainer"
     width="800"
     destroy-on-close
+    :before-close="beforeClose"
     @closed="afterClose"
+    @open="onOpen"
   >
     <template #header>
       <h3>Currency Exchange</h3>
     </template>
-    <div class="contentBox">
+    <div v-loading="getDataLoading" class="contentBox">
       <el-space
         direction="vertical"
         :fill="true"
@@ -18,10 +20,10 @@
       >
         <el-row align="middle">
           <el-col :span="6">
-            <p class="desc">USDT/{{ currentSymbol }}</p>
+            <p class="desc">{{ walletInfo?.mtName }}</p>
           </el-col>
           <el-col :span="14">
-            <span>{{ liveData?.ask }}</span>
+            <span>{{ orderData?.price }}</span>
           </el-col>
         </el-row>
         <el-row align="middle">
@@ -37,12 +39,12 @@
             />
           </el-col>
           <el-col :span="2">
-            {{ currentSymbol }}
+            {{ walletInfo?.mtName?.split('USDT')[0] }}
           </el-col>
           <el-col :span="8">
             <span>
               Available balance {{ Number(walletInfo?.total).toFixed(6) }}
-              {{ currentSymbol }}
+              {{ walletInfo?.mtName?.split('USDT')[0] }}
             </span>
           </el-col>
         </el-row>
@@ -82,9 +84,9 @@
 </template>
 <script setup>
 import { ref, computed } from 'vue';
-import { useSocketStore, useUserStore } from '@/store/index.js';
-import { createDeposit } from '@/api/user.js';
-import { ElMessage } from 'element-plus';
+import { useUserStore } from '@/store/index.js';
+import { userApi } from '@/api/index.js';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 const props = defineProps({
   walletInfo: {
@@ -92,41 +94,68 @@ const props = defineProps({
     default: () => ({}),
   },
 });
-const socketStore = useSocketStore();
+// const socketStore = useSocketStore();
 const userStore = useUserStore();
 const visible = ref(false);
 const submitLoading = ref(false);
-const currentSymbol = computed(() => {
-  return props.walletInfo.id?.split('_TEST')[0];
-});
-const liveData = computed(
-  () => socketStore.liveData[currentSymbol.value + 'USDT']
-);
+const getDataLoading = ref(false);
+const closeByTimer = ref(false);
+const orderData = ref({});
+// const liveData = computed(() => socketStore.liveData[props.walletInfo?.mtName]);
 const amount = ref(0);
 const submitDisabled = computed(() => amount.value <= 0);
 const usdAmount = computed(() =>
-  Number((amount.value * liveData.value?.ask).toFixed(2))
+  Number((amount.value * orderData.value?.price).toFixed(2))
 );
+
+const getData = async () => {
+  getDataLoading.value = true;
+  const res = await userApi.depositBefore({
+    vaultId: userStore.userInfo.fb,
+    platName: 'LP',
+    assetId: props.walletInfo.id,
+  });
+  getDataLoading.value = false;
+  if (res.data.status === 0) {
+    orderData.value = res.data.data;
+  }
+};
 const open = () => {
   visible.value = true;
 };
+const onOpen = () => {
+  getData();
+};
+const beforeClose = (done) => {
+  done();
+  // if (closeByTimer.value) {
+  //   done();
+  // } else {
+  //   ElMessageBox.confirm('Are you sure to close this dialog')
+  //     .then(() => done())
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+};
 const afterClose = () => {
   amount.value = 0;
+  closeByTimer.value = false;
+  getDataLoading.value = false;
+  submitLoading.value = false;
 };
+
 const submit = async () => {
   if (amount.value > props.walletInfo?.total) {
     ElMessage.error('insufficient balance');
     return;
   }
   const params = {
-    vaultId: userStore.userInfo.fb,
-    platName: 'LP',
-    assetId: props.walletInfo?.id,
+    id: orderData.value.id,
     amount: amount.value,
-    price: liveData.value?.ask,
   };
   submitLoading.value = true;
-  const res = await createDeposit(params);
+  const res = await userApi.confirmDeposit(params);
   if (res.data.status === 0) {
     ElMessage.success('submit success');
     visible.value = false;

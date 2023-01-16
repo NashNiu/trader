@@ -1,12 +1,17 @@
 <template>
   <el-card
+    v-loading="loadingData"
     :body-style="{ padding: '0px', height: '100%' }"
     class="walletAssetContainer"
-    v-loading="loadingData"
   >
     <h3 class="title">Wallet Assets $ {{ walletsValue.toFixed(2) }}</h3>
     <div class="contentBox">
-      <div v-for="item in walletData" :key="item.name" class="itemBox">
+      <div
+        v-for="item in walletData"
+        :key="item.name"
+        v-loading="item.loading"
+        class="itemBox"
+      >
         <div class="iconBox">
           <SvgIcon icon-class="icon-bitcoin" size="50px" color="#f7931a" />
         </div>
@@ -14,7 +19,12 @@
           <p class="symbol">{{ item.id }}</p>
           <p class="balance">Wallet Balance</p>
         </div>
-        <div class="balanceValue">{{ Number(item?.total)?.toFixed(6) }}</div>
+        <div class="balanceValue">
+          <span>{{ Number(item?.total)?.toFixed(6) }}</span>
+          <el-icon class="refreshIcon" @click="refreshBalance(item)">
+            <Refresh />
+          </el-icon>
+        </div>
         <div class="operateBox">
           <SvgIcon
             class="card icon"
@@ -40,7 +50,7 @@ import { computed, ref } from 'vue';
 import SvgIcon from '@/components/common/svgIcon.vue';
 import ExchangeDialog from './Exchange.vue';
 import RechargeDialog from './Recharge.vue';
-import { getWalletInfo } from '@/api/user.js';
+import { userApi } from '@/api';
 import { ElMessage } from 'element-plus';
 import { useUserStore, useSocketStore } from '@/store/index.js';
 const socketStore = useSocketStore();
@@ -51,8 +61,8 @@ const rechargeDialogRef = ref(null);
 const walletData = ref([]);
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
-    const ask = liveData.value[cur?.id?.split('_TEST')[0] + 'USDT']?.ask;
-    let value = 0;
+    const ask = liveData.value[cur?.mtName]?.ask;
+    let value;
     if (ask) {
       value = ask * cur?.total + pre;
     } else {
@@ -72,13 +82,39 @@ const openRechargeDialog = (data) => {
   activeWalletInfo.value = data;
   rechargeDialogRef.value.open();
 };
-
+const refreshBalance = async (item) => {
+  item.loading = true;
+  const res = await userApi.refreshAssetBalance(
+    userStore.userInfo?.fb,
+    item.id
+  );
+  if (res.data.status === 0) {
+    const res2 = await userApi.getAssetBalance(userStore.userInfo?.fb, item.id);
+    if (res2.data.status === 0) {
+      const index = walletData.value.findIndex((li) => li.id === item.id);
+      if (index > -1) {
+        walletData.value[index] = {
+          ...walletData.value[index],
+          loading: false,
+          ...res.data.data,
+        };
+      }
+    }
+  }
+};
 const getWalletData = async () => {
   loadingData.value = true;
-  const res = await getWalletInfo(userStore.userInfo?.fb);
+  const res = await userApi.getWalletInfo(userStore.userInfo?.fb);
   loadingData.value = false;
   if (res.data.status === 0) {
-    walletData.value = res.data.data;
+    const dataArr = res.data.data;
+    for (const item of dataArr) {
+      const nameRes = await userApi.getSymbolName(item.id);
+      if (nameRes.data.status === 0) {
+        item.mtName = nameRes.data.data;
+      }
+    }
+    walletData.value = dataArr;
   } else {
     ElMessage.error('GET WALLET INFO FAILED');
   }
@@ -146,7 +182,12 @@ getWalletData();
       .balanceValue {
         align-self: flex-end;
         margin-left: 50px;
-        width: 150px;
+        width: 160px;
+      }
+      .refreshIcon {
+        margin-left: 15px;
+        cursor: pointer;
+        font-size: 20px;
       }
       .operateBox {
         margin-left: 20px;

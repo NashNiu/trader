@@ -33,6 +33,7 @@
       ],
       "rules": {
         "vue/multi-word-component-names": "off",
+        "no-unused-vars": "warn",
         "linebreak-style": [
           0,
           "error",

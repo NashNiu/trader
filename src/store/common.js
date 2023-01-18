@@ -3,8 +3,16 @@ import { defineStore } from 'pinia';
 export default defineStore('common', {
   state: () => ({
     loadingInstance: null,
-    activeChartName: 'ETHUSDT',
+    chartData: {
+      id: 'BTC/USDT',
+      symbol: 'BTCUSDT',
+    },
   }),
+  getters: {
+    chartDataAvailable(state) {
+      return state.chartData?.id && state.chartData?.symbol;
+    },
+  },
   actions: {
     setLoadingInstance(payload) {
       this.loadingInstance = payload;
@@ -14,8 +22,8 @@ export default defineStore('common', {
         this.loadingInstance.close();
       }
     },
-    changeActiveChartName(name) {
-      this.activeChartName = name;
+    changeChartData(data) {
+      this.chartData = data;
     },
   },
 });

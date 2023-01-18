@@ -63,3 +63,9 @@ table {
 .pointer {
 	cursor: pointer;
 }
+
+tr.headerRow{
+	color: #0c3d93;
+	font-family: 'roboto-bold';
+	height: 44px;
+}

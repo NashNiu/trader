@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="{ height: '100%' }" class="orderListContainer">
+  <el-card body-style="height:100%;padding:0px" class="orderListContainer">
     <OrderList />
   </el-card>
 </template>

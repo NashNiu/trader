@@ -67,3 +67,20 @@ export function decrypt(data) {
   });
   return cryptoJS.enc.Utf8.stringify(decrypt).toString();
 }
+
+// 列表数据变化的时候，切换图表
+export function updateChartByList(listData, idKey, symbolKey) {
+  const commonStore = useCommonStore();
+  const chartData = commonStore.chartData;
+  if (listData.length) {
+    const firstData = listData[0];
+    if (firstData[idKey] !== chartData.id) {
+      commonStore.changeChartData({
+        symbol: firstData[symbolKey],
+        id: firstData[idKey],
+      });
+    }
+  } else {
+    commonStore.changeChartData({});
+  }
+}

@@ -1,7 +1,14 @@
 <template>
   <div class="historyTableBox">
-    <el-table v-loading="loadingData" :data="tableData" class="orderTable">
-      <el-table-column prop="symbol" label="Type/Financial tool">
+    <el-table
+      v-loading="loadingData"
+      :data="tableData"
+      header-row-class-name="headerRow"
+      :row-class-name="rowClassName"
+      class="orderTable"
+      @row-dblclick="rowDblClick"
+    >
+      <el-table-column prop="symbol" label="Type/Financia l tool">
         <template #default="scope">
           <div>
             <span class="orderType">{{ scope.row.Command }}</span>
@@ -45,17 +52,18 @@
 </template>
 <script setup>
 import { getHistoryOrder } from '@/api/historyOrder.js';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import dayjs from 'dayjs';
-import { useUserStore } from '@/store/index.js';
+import { useCommonStore, useUserStore } from '@/store/index.js';
 
+const commonStore = useCommonStore();
 const userStore = useUserStore();
 const tableData = ref([]);
 const loadingData = ref(false);
 const pageIndex = ref(1);
 const pageSize = ref(5);
 const totalCount = ref(0);
-
+const chartData = computed(() => commonStore.chartData);
 const getTableData = async () => {
   loadingData.value = true;
   const res = await getHistoryOrder({
@@ -81,11 +89,39 @@ const getTableData = async () => {
     totalCount.value = res.data.data.TotalCount;
   }
 };
-getTableData();
+
 const pageChange = (page) => {
   pageIndex.value = page;
   getTableData();
 };
+const rowClassName = ({ row }) => {
+  if (row.OrderId === chartData.value.id) {
+    return 'active tableRow';
+  } else {
+    return 'tableRow';
+  }
+};
+const rowDblClick = (row) => {
+  commonStore.changeChartData({ symbol: row.Symbol, id: row.OrderId });
+};
+const initChart = () => {
+  if (tableData.value.length) {
+    const firstData = tableData.value[0];
+    if (chartData.value.symbol !== firstData.Symbol) {
+      commonStore.changeChartData({
+        symbol: firstData.Symbol,
+        id: firstData.OrderId,
+      });
+    }
+  } else {
+    commonStore.changeChartData({});
+  }
+};
+onMounted(async () => {
+  await getTableData();
+  initChart();
+  console.log('history mounted');
+});
 </script>
 <style lang="less" scoped>
 .historyTableBox {
@@ -120,6 +156,16 @@ const pageChange = (page) => {
   .symbolName {
     font-size: 16px;
     font-weight: bold;
+  }
+}
+</style>
+<style lang="less">
+.historyTableBox {
+  .tableRow {
+    height: 60px;
+    &.active {
+      background-color: #d1d8e0;
+    }
   }
 }
 </style>

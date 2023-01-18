@@ -8,9 +8,9 @@ import { configUrl } from '@/config/index.js';
 import { useCommonStore } from '@/store/index.js';
 import { computed } from 'vue';
 const commonStore = useCommonStore();
-const activeChartName = computed(() => commonStore.activeChartName);
+const activeChartName = computed(() => commonStore.chartData);
 const url = computed(
-  () => `${configUrl.chartUrl}?name=${activeChartName.value}`
+  () => `${configUrl.chartUrl}?name=${activeChartName.value?.symbol}`
 );
 </script>
 <style scoped lang="less">

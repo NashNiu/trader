@@ -1,8 +1,8 @@
 <template>
-  <el-card class="quotesListContainer" :body-style="{ padding: '0px' }">
+  <el-card class="quotesListContainer" body-style="padding: 0px">
     <el-table
       :data="tableData"
-      row-class-name="tableRow"
+      :row-class-name="rowClassName"
       header-row-class-name="headerRow"
       @row-dblclick="rowDblClick"
     >
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue';
+import { ref, computed, reactive, watch, onMounted } from 'vue';
 import {
   useSocketStore,
   useTradeStore,
@@ -74,20 +74,23 @@ import {
 import { useStorage } from '@vueuse/core';
 import { configConst } from '@/config/index.js';
 import TradeDrawer from './tradeDrawer.vue';
-
+import { tools } from '@/utils';
 const socketStore = useSocketStore();
 const tradeStore = useTradeStore();
 const commonStore = useCommonStore();
 const liveData = computed(() => socketStore.liveData);
 const statisticData = computed(() => socketStore.statisticData);
+const chartData = computed(() => commonStore.chartData);
 const tradeDrawer = ref(null);
 let drawerData = reactive({
   type: 'buy',
   symbol: '',
 });
-
+const tableSymbolList = computed(
+  () => tradeStore.symbolTypeArr[tradeStore.activeType]
+);
 const tableData = computed(() =>
-  tradeStore.symbolTypeArr[tradeStore.activeType].map((item) => {
+  tableSymbolList.value.map((item) => {
     const symbolData = statisticData.value?.[item.name];
     const ask = liveData.value?.[item.name]?.['bid'] ?? '0.00';
     const high =
@@ -109,6 +112,13 @@ const tableData = computed(() =>
     };
   })
 );
+const rowClassName = ({ row }) => {
+  if (row.name === chartData.value.id) {
+    return 'active tableRow';
+  } else {
+    return 'tableRow';
+  }
+};
 const favorites = useStorage(configConst.favorites, [], localStorage);
 
 const addToFavorite = (name) => {
@@ -145,36 +155,21 @@ const openBuy = (row) => {
   tradeDrawer.value.show();
 };
 const rowDblClick = (row) => {
-  commonStore.changeActiveChartName(row.mtName);
+  commonStore.changeChartData({ symbol: row.mtName, id: row.name });
 };
-// const onSubmitSell = () => {
-//   ElMessageBox.confirm(`Are you confirm to chose  ?`)
-//     .then(() => {
-//       console.log(2);
-//       // visible.value = false;
-//       // 市价下单
-//       // useSocketStore.marketCreate({
-//       //   sbl: 'DOTUSDT',
-//       //   vol: 30000,
-//       //   price: liveData.value?.['DOTUSDT']?.['bid'],
-//       //   type: 0,
-//       // });
-//       // 挂单
-//       // useSocketStore.positionCreate({
-//       //   sbl: 'DOTUSDT',
-//       //   vol: 100,
-//       //   price: liveData.value?.['DOTUSDT']?.['bid'] * 0.8,
-//       //   type: 2,
-//       // });
-//       // // 删除挂单
-//       // useSocketStore.deleteHangingOrder(209);
-//       // 平仓
-//       useSocketStore.marketClose({ id: 217, vol: 10000 });
-//     })
-//     .catch(() => {
-//       // catch error
-//     });
-// };
+watch(
+  tableSymbolList,
+  (nv) => {
+    tools.updateChartByList(nv, 'displayName', 'name');
+  },
+  { deep: true }
+);
+const initChart = () => {
+  tools.updateChartByList(tableSymbolList.value, 'displayName', 'name');
+};
+onMounted(async () => {
+  initChart();
+});
 </script>
 
 <style scoped lang="less">
@@ -223,21 +218,11 @@ const rowDblClick = (row) => {
 </style>
 <style lang="less">
 .quotesListContainer {
-  .el-table {
-    th {
-      &.el-table__cell {
-        background-color: #f8f8f8;
-      }
-    }
-  }
-  .headerRow {
-    color: #0c3d93;
-    font-family: 'roboto-bold';
-    height: 44px;
-    background-color: #f8f8f8;
-  }
   .tableRow {
     height: 60px;
+    &.active {
+      background-color: #d1d8e0;
+    }
   }
 }
 </style>

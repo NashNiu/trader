@@ -1,9 +1,7 @@
 <template>
-  <Suspense>
-    <el-config-provider>
-      <router-view></router-view>
-    </el-config-provider>
-  </Suspense>
+  <el-config-provider>
+    <router-view></router-view>
+  </el-config-provider>
 </template>
 <script setup>
 import { ElConfigProvider } from 'element-plus';

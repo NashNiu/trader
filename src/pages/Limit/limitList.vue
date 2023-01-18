@@ -1,6 +1,12 @@
 <template>
   <div class="limitTableBox">
-    <el-table class="limitTable" :data="tableData">
+    <el-table
+      class="limitTable"
+      :data="tableData"
+      header-row-class-name="headerRow"
+      :row-class-name="rowClassName"
+      @row-dblclick="rowDblClick"
+    >
       <el-table-column prop="symbol" label="Type/Financial tool">
         <template #default="scope">
           <div>
@@ -55,18 +61,38 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { ElLoading } from 'element-plus';
+import { tools } from '@/utils';
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const tableData = computed(() => socketStore.hangingOrders);
+const chartData = computed(() => commonStore.chartData);
 const deleteOrder = (row) => {
   socketStore.deleteHangingOrder(row.order);
   const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
   commonStore.setLoadingInstance(instance);
-  console.log(row);
 };
+const rowClassName = ({ row }) => {
+  if (row.order === chartData.value.id) {
+    return 'active tableRow';
+  } else {
+    return 'tableRow';
+  }
+};
+const rowDblClick = (row) => {
+  commonStore.changeChartData({ symbol: row.symbol, id: row.order });
+};
+watch(tableData, (nv) => {
+  tools.updateChartByList(nv, 'order', 'symbol');
+});
+const initChart = () => {
+  tools.updateChartByList(tableData.value, 'order', 'symbol');
+};
+onMounted(() => {
+  initChart();
+});
 </script>
 <style scoped lang="less">
 .limitTableBox {
@@ -88,6 +114,16 @@ const deleteOrder = (row) => {
   }
   &::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.1);
+  }
+}
+</style>
+<style lang="less">
+.limitTableBox {
+  .tableRow {
+    height: 60px;
+    &.active {
+      background-color: #d1d8e0;
+    }
   }
 }
 </style>

@@ -20,7 +20,7 @@ export default defineStore('socket', {
     sblBasicData: {},
     // 用户资金
     userFunds: {},
-    // 持仓列表信息
+    // 原始持仓列表信息
     holdingOrders: [],
     // 挂单列表信息
     hangingOrders: [],
@@ -29,8 +29,11 @@ export default defineStore('socket', {
   }),
   getters: {
     // 浮动盈亏
-    userTotalProfit(state) {
-      return state.holdingOrders.reduce((pre, cur) => pre + cur.profit, 0);
+    userTotalProfit() {
+      return this.holdingOrdersWithPrice.reduce(
+        (pre, cur) => pre + cur.profit,
+        0
+      );
     },
     // 账户净值 = 余额 + 浮动盈亏
     userNetWorth(state) {
@@ -40,6 +43,22 @@ export default defineStore('socket', {
     availableMargin(state) {
       return (this.userNetWorth || 0) - (state.userFunds?.margin || 0);
     },
+    // 持仓列表 价格浮动
+    holdingOrdersWithPrice(state) {
+      return state.holdingOrders.map((item) => {
+        return {
+          ...item,
+          actionType: item.action === 0 ? 'Buy' : 'Sell',
+          createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
+          lot: item.vol / 10000,
+          ...tools.calcOrderChange({
+            order: item,
+            liveData: state.liveData[item.symbol],
+            cs: state.sblBasicData[item.symbol]?.consize,
+          }),
+        };
+      });
+    },
   },
   actions: {
     // 连接socket
@@ -47,7 +66,6 @@ export default defineStore('socket', {
       if (this.socket) {
         this.socket.close();
       }
-      //ws://192.168.137.113:9000/api/lp/auth/websocks/mt5sock
       const protocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
       const socketUrls = [protocol + configUrl.socketUrl];
       let urlIndex = 0;
@@ -118,7 +136,7 @@ export default defineStore('socket', {
           this.setUserFunds(data);
         } else if (data.cmd === 10012) {
           // 持仓列表
-          this.handleHoldingOrders({ orderData: data?.data ?? [] });
+          this.handleHoldingOrders(data?.data ?? []);
         } else if (data.cmd === 10022) {
           // 挂单列表
           this.setHangingOrders(data?.data ?? []);
@@ -185,8 +203,6 @@ export default defineStore('socket', {
           utime: data.utime,
         },
       };
-      // 计算持仓浮动盈亏
-      this.handleHoldingOrders({ liveData: data });
     },
     // 处理深度报价
     handleDeepQuotation(data) {
@@ -246,39 +262,8 @@ export default defineStore('socket', {
       this.sendSocketMsg({ cmd: 10011 });
     },
     // 设置持仓数据
-    handleHoldingOrders({ orderData, liveData }) {
-      if (orderData) {
-        this.holdingOrders = orderData.map((item) => {
-          return {
-            ...item,
-            actionType: item.action === 0 ? 'Buy' : 'Sell',
-            createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
-            lot: item.vol / 10000,
-            ...tools.calcOrderChange({
-              order: item,
-              liveData: this.liveData[item.symbol],
-              cs: this.sblBasicData[item.symbol]?.consize,
-            }),
-          };
-        });
-      }
-      if (liveData) {
-        const targetIndex = this.holdingOrders.findIndex(
-          (item) => item.symbol === liveData.sbl
-        );
-        if (targetIndex > -1) {
-          const pre = this.holdingOrders[targetIndex];
-          const target = {
-            ...pre,
-            ...tools.calcOrderChange({
-              order: pre,
-              liveData: this.liveData[pre.symbol],
-              cs: this.sblBasicData[pre.symbol]?.consize,
-            }),
-          };
-          this.holdingOrders.splice(targetIndex, 1, target);
-        }
-      }
+    handleHoldingOrders(data) {
+      this.holdingOrders = data;
     },
     // 查询挂单
     getHangingOrders() {

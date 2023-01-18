@@ -1,6 +1,12 @@
 <template>
   <div class="orderTableBox">
-    <el-table :data="tableData" class="orderTable">
+    <el-table
+      :data="tableData"
+      class="orderTable"
+      header-row-class-name="headerRow"
+      :row-class-name="rowClassName"
+      @row-dblclick="rowDblClick"
+    >
       <el-table-column prop="symbol" label="Type/Financial tool">
         <template #default="scope">
           <div>
@@ -17,7 +23,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="Profit">
+      <el-table-column label="Profit" width="110">
         <template #default="scope">
           <span :class="`${scope.row.color} bold`">
             {{ scope.row.profit }}
@@ -38,7 +44,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="change" label="Variety">
+      <el-table-column prop="change" label="Variety" width="170">
         <template #default="scope">
           <div class="varietyBox">
             <span :class="`${scope.row.color} bold`">
@@ -83,26 +89,47 @@
   </div>
 </template>
 <script setup>
-import { useSocketStore } from '@/store/index.js';
-import { computed, ref } from 'vue';
+import { useSocketStore, useCommonStore } from '@/store/index.js';
+import { computed, ref, onMounted, watch } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
-const socketStore = useSocketStore();
+import { tools } from '@/utils';
 
+const socketStore = useSocketStore();
+const commonStore = useCommonStore();
 const orderDrawerRef = ref(null);
 const activeRowOrder = ref(-1);
-// let drawerData = reactive({});
-const tableData = computed(() => socketStore.holdingOrders.map((item) => item));
+const chartData = computed(() => commonStore.chartData);
+const holdingOrders = computed(() => socketStore.holdingOrders);
+const tableData = computed(() => socketStore.holdingOrdersWithPrice);
 const openInfoDrawer = (row) => {
   activeRowOrder.value = row.position;
   orderDrawerRef.value.show();
 };
 const closeDrawer = () => {
-  console.log('i am close');
   activeRowOrder.value = -1;
 };
 const drawerData = computed(() =>
   tableData.value.find((item) => item.position === activeRowOrder.value)
 );
+const rowClassName = ({ row }) => {
+  if (row.symbol === chartData.value.symbol) {
+    return 'active tableRow';
+  } else {
+    return 'tableRow';
+  }
+};
+const rowDblClick = (row) => {
+  commonStore.changeChartData({ symbol: row.symbol, id: row.position });
+};
+watch(holdingOrders, (nv) => {
+  tools.updateChartByList(nv, 'position', 'symbol');
+});
+const initChart = () => {
+  tools.updateChartByList(tableData.value, 'position', 'symbol');
+};
+onMounted(async () => {
+  initChart();
+});
 </script>
 <style lang="less" scoped>
 .orderTableBox {
@@ -160,6 +187,16 @@ const drawerData = computed(() =>
     box-sizing: border-box;
     color: #0c3d93;
     cursor: pointer;
+  }
+}
+</style>
+<style lang="less">
+.orderTableBox {
+  .tableRow {
+    height: 60px;
+    &.active {
+      background-color: #d1d8e0;
+    }
   }
 }
 </style>

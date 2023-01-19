@@ -62,8 +62,6 @@
           <span class="bold">{{ scope.row.lot }}</span>
         </template>
       </el-table-column>
-      <!--    <el-table-column prop="symbol" label="Quota Stop" />-->
-      <!--    <el-table-column prop="symbol" label="Adjustment" />-->
       <el-table-column prop="storage" label="Overnight Fee">
         <template #default="scope">
           <span class="bold">{{ scope.row.storage }}</span>
@@ -81,6 +79,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row class="sumBox" align="middle">
+      <el-col :offset="4" :span="6">
+        <div>
+          <span :class="profitColor">
+            Total Profit ${{ totalProfit?.toFixed(2) || '0' }}
+          </span>
+        </div>
+      </el-col>
+      <el-col :offset="5" :span="6">
+        <div>
+          <span :class="feeColor">
+            Total Fee ${{ totalFee?.toFixed(2) || '0' }}
+          </span>
+        </div>
+      </el-col>
+    </el-row>
     <OrderDrawer
       ref="orderDrawerRef"
       :drawer-data="drawerData"
@@ -100,6 +114,10 @@ const orderDrawerRef = ref(null);
 const activeRowOrder = ref(-1);
 const chartData = computed(() => commonStore.chartData);
 const holdingOrders = computed(() => socketStore.holdingOrders);
+const totalProfit = computed(() => socketStore.userTotalProfit);
+const totalFee = computed(() => socketStore.totalOverNightFee);
+const profitColor = computed(() => (totalProfit.value <= 0 ? 'red' : 'green'));
+const feeColor = computed(() => (totalFee.value > 0 ? 'green' : 'red'));
 const tableData = computed(() => socketStore.holdingOrdersWithPrice);
 const openInfoDrawer = (row) => {
   activeRowOrder.value = row.position;
@@ -134,7 +152,13 @@ onMounted(async () => {
 <style lang="less" scoped>
 .orderTableBox {
   height: 100%;
-  overflow: scroll;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.orderTable {
+  flex: 1;
+  overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 3px;
   }
@@ -152,8 +176,6 @@ onMounted(async () => {
   &::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.1);
   }
-}
-.orderTable {
   .orderType {
     font-size: 12px;
   }
@@ -187,6 +209,17 @@ onMounted(async () => {
     box-sizing: border-box;
     color: #0c3d93;
     cursor: pointer;
+  }
+}
+.sumBox {
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+  .green {
+    color: #008a58;
+  }
+  .red {
+    color: #e14753;
   }
 }
 </style>

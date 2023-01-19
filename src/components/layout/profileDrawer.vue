@@ -3,7 +3,7 @@
     <div class="titleBox">
       <img :src="userImg" alt="" />
       <div class="userBox">
-        <p>{{ userInfo.email }}</p>
+        <p>{{ userInfo.mtaccr }}</p>
       </div>
     </div>
     <div class="mainBox">

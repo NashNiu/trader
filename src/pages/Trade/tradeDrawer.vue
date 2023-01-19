@@ -91,7 +91,6 @@ const conSize = computed(() => currentSblBasicData.value.consize);
 const show = () => {
   visible.value = true;
   setTimeout(() => {
-    // limitPrice.value = Number(limitPriceScope.value);
     limitTabRef.value?.initValue();
   }, 500);
 };

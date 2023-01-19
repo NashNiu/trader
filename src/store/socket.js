@@ -28,12 +28,16 @@ export default defineStore('socket', {
     currentOrderDetail: {},
   }),
   getters: {
-    // 浮动盈亏
+    // 持仓浮动盈亏
     userTotalProfit() {
       return this.holdingOrdersWithPrice.reduce(
         (pre, cur) => pre + cur.profit,
         0
       );
+    },
+    // 持仓总过夜费
+    totalOverNightFee(state) {
+      return state.holdingOrders.reduce((pre, cur) => pre + cur.storage, 0);
     },
     // 账户净值 = 余额 + 浮动盈亏
     userNetWorth(state) {

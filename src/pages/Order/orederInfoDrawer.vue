@@ -25,10 +25,6 @@
           <span class="key">Position profit and loss</span>
           <span class="value">{{ drawerData.profit }}</span>
         </div>
-        <!--        <div>-->
-        <!--          <span>Maintenance margin</span>-->
-        <!--          <span>{{drawerData.position}}</span>-->
-        <!--        </div>-->
         <div class="infoItemBox">
           <span class="key">Quantity</span>
           <span class="value">{{ drawerData.lot }}</span>

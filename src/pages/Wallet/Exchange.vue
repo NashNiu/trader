@@ -86,7 +86,7 @@
 import { ref, computed } from 'vue';
 import { useUserStore } from '@/store/index.js';
 import { userApi } from '@/api/index.js';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 
 const props = defineProps({
   walletInfo: {
@@ -94,14 +94,12 @@ const props = defineProps({
     default: () => ({}),
   },
 });
-// const socketStore = useSocketStore();
 const userStore = useUserStore();
 const visible = ref(false);
 const submitLoading = ref(false);
 const getDataLoading = ref(false);
 const closeByTimer = ref(false);
 const orderData = ref({});
-// const liveData = computed(() => socketStore.liveData[props.walletInfo?.mtName]);
 const amount = ref(0);
 const submitDisabled = computed(() => amount.value <= 0);
 const usdAmount = computed(() =>
@@ -128,15 +126,6 @@ const onOpen = () => {
 };
 const beforeClose = (done) => {
   done();
-  // if (closeByTimer.value) {
-  //   done();
-  // } else {
-  //   ElMessageBox.confirm('Are you sure to close this dialog')
-  //     .then(() => done())
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
 };
 const afterClose = () => {
   amount.value = 0;

@@ -40,7 +40,6 @@
       <el-table-column>
         <template #default="scope">
           <el-space>
-            <!--            <el-icon class="pointer" :size="20"><Edit /></el-icon>-->
             <el-popconfirm
               width="220"
               title="Are you sure to delete this?"

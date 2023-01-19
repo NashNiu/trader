@@ -28,13 +28,13 @@
           <span class="itemValue">
             {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
           </span>
-          <span class="itemKey">Deposit for maintenance</span>
+          <span class="itemKey">Occupancy margin</span>
         </div>
         <div class="itemBox">
           <span class="itemValue">
             {{ userFundsVisible ? '$' + profit.toFixed(2) : ' *** ' }}
           </span>
-          <span class="itemKey">Give good</span>
+          <span class="itemKey">Profit</span>
         </div>
         <div class="itemBox">
           <template v-if="userFundsVisible">
@@ -82,14 +82,15 @@ header {
   display: flex;
   justify-content: normal;
   height: 100%;
+  align-items: center;
   /*width: 1500px;*/
 }
 .content-logo {
   width: 160px;
-  height: 55px;
+  height: 50px;
   cursor: pointer;
   margin-right: 100px;
-  margin-left: 100px;
+  margin-left: 60px;
 }
 .content-logo img {
   height: 100%;
@@ -130,15 +131,15 @@ header {
 .content-search {
   display: flex;
   align-items: center;
-  padding: 5px 10px;
-  width: 200px;
+  padding: 3px 5px;
+  width: 250px;
   height: 35px;
   border-radius: 8px;
   background: #f0f2f4;
 }
 .content-search input {
   padding: 0 10px;
-  width: 150px;
+  width: 200px;
   height: 40px;
   border: 0;
   border-radius: 8px;

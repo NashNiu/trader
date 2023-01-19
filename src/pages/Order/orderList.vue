@@ -1,80 +1,101 @@
 <template>
   <div class="orderTableBox">
-    <el-table :data="tableData" class="orderTable">
-      <el-table-column prop="symbol" label="Type/Financial tool">
-        <template #default="scope">
-          <div>
-            <span class="orderType">{{ scope.row.actionType }}</span>
-            <br />
-            <span class="symbolName">{{ scope.row.symbol }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="profit" label="Net contribution">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.netValue }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Profit">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.profit }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Open Price">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.price }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="currentPrice" label="Present value">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.currentPrice }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="change" label="Variety">
-        <template #default="scope">
-          <div class="varietyBox">
-            <span :class="`${scope.row.color} bold`">
-              {{ scope.row.change }}
-            </span>
-            <div class="closeBox" @click="openInfoDrawer(scope.row)">
-              <el-icon><Close /></el-icon>
-              <span>close</span>
+    <div class="orderTable">
+      <el-table
+        :data="tableData"
+        header-row-class-name="headerRow"
+        :row-class-name="rowClassName"
+        @row-dblclick="rowDblClick"
+      >
+        <el-table-column prop="symbol" label="Type/Financial tool">
+          <template #default="scope">
+            <div>
+              <span class="orderType">{{ scope.row.actionType }}</span>
+              <br />
+              <span class="symbolName">{{ scope.row.symbol }}</span>
             </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="lot" label="Quantity">
-        <template #default="scope">
-          <span class="bold">{{ scope.row.lot }}</span>
-        </template>
-      </el-table-column>
-      <!--    <el-table-column prop="symbol" label="Quota Stop" />-->
-      <!--    <el-table-column prop="symbol" label="Adjustment" />-->
-      <el-table-column prop="storage" label="Overnight Fee">
-        <template #default="scope">
-          <span class="bold">{{ scope.row.storage }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="createTime" label="Opening time" />
-      <el-table-column width="100">
-        <template #default="scope">
-          <el-icon
-            class="infoIcon"
-            @click="openInfoDrawer({ ...scope.row, isInfo: true })"
-          >
-            <InfoFilled />
-          </el-icon>
-        </template>
-      </el-table-column>
-    </el-table>
+          </template>
+        </el-table-column>
+        <el-table-column prop="profit" label="Net contribution">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.netValue }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Profit" width="110">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.profit }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Open Price">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.price }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="currentPrice" label="Present value">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.currentPrice }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="change" label="Variety" width="170">
+          <template #default="scope">
+            <div class="varietyBox">
+              <span :class="`${scope.row.color} bold`">
+                {{ scope.row.change }}
+              </span>
+              <div class="closeBox" @click="openInfoDrawer(scope.row)">
+                <el-icon><Close /></el-icon>
+                <span>close</span>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="lot" label="Quantity">
+          <template #default="scope">
+            <span class="bold">{{ scope.row.lot }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="storage" label="Overnight Fee">
+          <template #default="scope">
+            <span class="bold">{{ scope.row.storage }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="Opening time" />
+        <el-table-column width="100">
+          <template #default="scope">
+            <el-icon
+              class="infoIcon"
+              @click="openInfoDrawer({ ...scope.row, isInfo: true })"
+            >
+              <InfoFilled />
+            </el-icon>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <el-row class="sumBox" align="middle">
+      <el-col :offset="4" :span="6">
+        <div>
+          <span :class="profitColor">
+            Total Profit ${{ totalProfit?.toFixed(2) || '0' }}
+          </span>
+        </div>
+      </el-col>
+      <el-col :offset="5" :span="6">
+        <div>
+          <span :class="feeColor">
+            Total Fee ${{ totalFee?.toFixed(2) || '0' }}
+          </span>
+        </div>
+      </el-col>
+    </el-row>
     <OrderDrawer
       ref="orderDrawerRef"
       :drawer-data="drawerData"
@@ -83,31 +104,62 @@
   </div>
 </template>
 <script setup>
-import { useSocketStore } from '@/store/index.js';
-import { computed, ref } from 'vue';
+import { useSocketStore, useCommonStore } from '@/store/index.js';
+import { computed, ref, onMounted, watch } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
-const socketStore = useSocketStore();
+import { tools } from '@/utils';
 
+const socketStore = useSocketStore();
+const commonStore = useCommonStore();
 const orderDrawerRef = ref(null);
 const activeRowOrder = ref(-1);
-// let drawerData = reactive({});
-const tableData = computed(() => socketStore.holdingOrders.map((item) => item));
+const chartData = computed(() => commonStore.chartData);
+const holdingOrders = computed(() => socketStore.holdingOrders);
+const totalProfit = computed(() => socketStore.userTotalProfit);
+const totalFee = computed(() => socketStore.totalOverNightFee);
+const profitColor = computed(() => (totalProfit.value <= 0 ? 'red' : 'green'));
+const feeColor = computed(() => (totalFee.value > 0 ? 'green' : 'red'));
+const tableData = computed(() => socketStore.holdingOrdersWithPrice);
 const openInfoDrawer = (row) => {
   activeRowOrder.value = row.position;
   orderDrawerRef.value.show();
 };
 const closeDrawer = () => {
-  console.log('i am close');
   activeRowOrder.value = -1;
 };
 const drawerData = computed(() =>
   tableData.value.find((item) => item.position === activeRowOrder.value)
 );
+const rowClassName = ({ row }) => {
+  if (row.symbol === chartData.value.symbol) {
+    return 'active tableRow';
+  } else {
+    return 'tableRow';
+  }
+};
+const rowDblClick = (row) => {
+  commonStore.changeChartData({ symbol: row.symbol, id: row.position });
+};
+watch(holdingOrders, (nv) => {
+  tools.updateChartByList(nv, 'position', 'symbol');
+});
+const initChart = () => {
+  tools.updateChartByList(tableData.value, 'position', 'symbol');
+};
+onMounted(async () => {
+  initChart();
+});
 </script>
 <style lang="less" scoped>
 .orderTableBox {
   height: 100%;
-  overflow: scroll;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.orderTable {
+  flex: 1;
+  overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 3px;
   }
@@ -125,8 +177,6 @@ const drawerData = computed(() =>
   &::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.1);
   }
-}
-.orderTable {
   .orderType {
     font-size: 12px;
   }
@@ -160,6 +210,27 @@ const drawerData = computed(() =>
     box-sizing: border-box;
     color: #0c3d93;
     cursor: pointer;
+  }
+}
+.sumBox {
+  font-size: 20px;
+  font-weight: bold;
+  height: 50px;
+  .green {
+    color: #008a58;
+  }
+  .red {
+    color: #e14753;
+  }
+}
+</style>
+<style lang="less">
+.orderTableBox {
+  .tableRow {
+    height: 60px;
+    &.active {
+      background-color: #d1d8e0;
+    }
   }
 }
 </style>

@@ -10,7 +10,7 @@
       </div>
       <div class="itemBox">
         <p class="value">$ {{ netWorth.toFixed(2) }}</p>
-        <p class="key">Net Value</p>
+        <p class="key">Net worth</p>
       </div>
       <div class="itemBox">
         <p class="value">$ {{ userFunds.margin }}</p>
@@ -18,11 +18,11 @@
       </div>
       <div class="itemBox">
         <p class="value">$ {{ availableMargin.toFixed(2) }}</p>
-        <p class="key">Available margin</p>
+        <p class="key">Balance available</p>
       </div>
       <div class="itemBox">
         <p class="value">$ {{ totalProfit.toFixed(2) }}</p>
-        <p class="key">Position Profit and Loss</p>
+        <p class="key">Profit</p>
       </div>
     </div>
   </el-card>

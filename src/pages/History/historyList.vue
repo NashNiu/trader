@@ -1,7 +1,14 @@
 <template>
   <div class="historyTableBox">
-    <el-table v-loading="loadingData" :data="tableData" class="orderTable">
-      <el-table-column prop="symbol" label="Type/Financial tool">
+    <el-table
+      v-loading="loadingData"
+      :data="tableData"
+      header-row-class-name="headerRow"
+      :row-class-name="rowClassName"
+      class="orderTable"
+      @row-dblclick="rowDblClick"
+    >
+      <el-table-column prop="symbol" label="Type/Financia l tool">
         <template #default="scope">
           <div>
             <span class="orderType">{{ scope.row.Command }}</span>
@@ -33,29 +40,55 @@
       <el-table-column prop="createTime" label="Opening time" />
       <el-table-column prop="closeTime" label="CloseTime" />
     </el-table>
-    <div class="paginationBox">
-      <el-pagination
-        layout="prev, pager, next"
-        :page-size="pageSize"
-        :total="totalCount"
-        @current-change="pageChange"
-      />
-    </div>
+    <el-row v-if="!loadingData" align="middle">
+      <el-col :span="8" :offset="4">
+        <div class="sumBox">
+          <div :class="profitColor">
+            <span class="desc">Total Profit:</span>
+            <span class="value bold">${{ totalProfit }}</span>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="10" class="footBox">
+        <el-pagination
+          layout="prev, pager, next"
+          :page-size="pageSize"
+          :total="totalCount"
+          @current-change="pageChange"
+        />
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script setup>
 import { getHistoryOrder } from '@/api/historyOrder.js';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import dayjs from 'dayjs';
-import { useUserStore } from '@/store/index.js';
+import { useCommonStore, useUserStore } from '@/store/index.js';
 
+const commonStore = useCommonStore();
 const userStore = useUserStore();
-const tableData = ref([]);
+
 const loadingData = ref(false);
 const pageIndex = ref(1);
 const pageSize = ref(5);
-const totalCount = ref(0);
-
+const historyData = ref({});
+const chartData = computed(() => commonStore.chartData);
+const totalCount = computed(() => historyData.value?.TotalCount ?? 0);
+const totalProfit = computed(() => historyData.value?.SumProfit ?? 0);
+const profitColor = computed(() => (totalProfit.value > 0 ? 'green' : 'red'));
+const tableData = computed(
+  () =>
+    historyData.value?.Data?.map((item) => {
+      const createTime = dayjs(item.OpenTime).format('YYYY-MM-DD HH:mm:ss');
+      const closeTime = dayjs(item.CloseTime).format('YYYY-MM-DD HH:mm:ss');
+      return {
+        ...item,
+        createTime,
+        closeTime,
+      };
+    }) ?? []
+);
 const getTableData = async () => {
   loadingData.value = true;
   const res = await getHistoryOrder({
@@ -69,34 +102,54 @@ const getTableData = async () => {
   });
   loadingData.value = false;
   if (res.data.data.IsSuccess) {
-    tableData.value = res.data.data.Data.map((item) => {
-      const createTime = dayjs(item.OpenTime).format('YYYY-MM-DD HH:mm:ss');
-      const closeTime = dayjs(item.CloseTime).format('YYYY-MM-DD HH:mm:ss');
-      return {
-        ...item,
-        createTime,
-        closeTime,
-      };
-    });
-    totalCount.value = res.data.data.TotalCount;
+    historyData.value = res.data.data;
   }
 };
-getTableData();
+
 const pageChange = (page) => {
   pageIndex.value = page;
   getTableData();
 };
+const rowClassName = ({ row }) => {
+  if (row.OrderId === chartData.value.id) {
+    return 'active tableRow';
+  } else {
+    return 'tableRow';
+  }
+};
+const rowDblClick = (row) => {
+  commonStore.changeChartData({ symbol: row.Symbol, id: row.OrderId });
+};
+const initChart = () => {
+  if (tableData.value.length) {
+    const firstData = tableData.value[0];
+    if (chartData.value.symbol !== firstData.Symbol) {
+      commonStore.changeChartData({
+        symbol: firstData.Symbol,
+        id: firstData.OrderId,
+      });
+    }
+  } else {
+    commonStore.changeChartData({});
+  }
+};
+onMounted(async () => {
+  await getTableData();
+  initChart();
+});
 </script>
 <style lang="less" scoped>
 .historyTableBox {
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   &::-webkit-scrollbar {
     width: 3px;
   }
   /* 滚动槽 */
   &::-webkit-scrollbar-track {
-    //-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
   }
   /* 滚动条滑块 */
@@ -108,11 +161,24 @@ const pageChange = (page) => {
   &::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.1);
   }
-  .paginationBox {
+  .footBox {
     margin-top: 10px;
     width: 100%;
     display: flex;
     justify-content: flex-end;
+  }
+  .sumBox {
+    font-size: 20px;
+    font-weight: bold;
+    .desc {
+      margin-right: 5px;
+    }
+    .red {
+      color: #e14753;
+    }
+    .green {
+      color: #008a58;
+    }
   }
   .orderType {
     font-size: 12px;
@@ -120,6 +186,16 @@ const pageChange = (page) => {
   .symbolName {
     font-size: 16px;
     font-weight: bold;
+  }
+}
+</style>
+<style lang="less">
+.historyTableBox {
+  .tableRow {
+    height: 60px;
+    &.active {
+      background-color: #d1d8e0;
+    }
   }
 }
 </style>

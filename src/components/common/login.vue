@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import {
   getCodeInterface,
   registerInterface,
@@ -249,7 +249,6 @@ const GoLogin = (username, password) => {
 };
 //google登录
 const googleBtn = () => {
-  console.log(2333);
   window?.google?.accounts?.id.initialize({
     client_id:
       '220895073527-03c9s50caos81us2sahvjpcpa7q11iu8.apps.googleusercontent.com',
@@ -262,7 +261,6 @@ const googleBtn = () => {
   window?.google?.accounts?.id.prompt(); // also display the One Tap dialog
 };
 const handleCredentialResponse = (response) => {
-  console.log('Encoded JWT ID token: ' + response.credential);
   const responsePayload = JSON.parse(
     decodeURIComponent(
       encodeURI(window.atob(response.credential.split('.')[1]))
@@ -311,9 +309,11 @@ const handleCredentialResponse = (response) => {
       }
     }
   });
-  console.log(responsePayload);
 };
-googleBtn();
+// googleBtn();
+onMounted(() => {
+  googleBtn();
+});
 </script>
 
 <style scoped lang="less">

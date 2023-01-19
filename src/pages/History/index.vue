@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="{ height: '100%' }" class="historyListContainer">
+  <el-card body-style="height:100%;padding:0px" class="historyListContainer">
     <HistoryList />
   </el-card>
 </template>

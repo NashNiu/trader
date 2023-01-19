@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import {
   getCodeInterface,
   registerInterface,
@@ -310,7 +310,10 @@ const handleCredentialResponse = (response) => {
     }
   });
 };
-googleBtn();
+// googleBtn();
+onMounted(() => {
+  googleBtn();
+});
 </script>
 
 <style scoped lang="less">

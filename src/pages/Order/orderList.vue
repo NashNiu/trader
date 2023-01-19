@@ -1,84 +1,85 @@
 <template>
   <div class="orderTableBox">
-    <el-table
-      :data="tableData"
-      class="orderTable"
-      header-row-class-name="headerRow"
-      :row-class-name="rowClassName"
-      @row-dblclick="rowDblClick"
-    >
-      <el-table-column prop="symbol" label="Type/Financial tool">
-        <template #default="scope">
-          <div>
-            <span class="orderType">{{ scope.row.actionType }}</span>
-            <br />
-            <span class="symbolName">{{ scope.row.symbol }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="profit" label="Net contribution">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.netValue }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Profit" width="110">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.profit }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Open Price">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.price }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="currentPrice" label="Present value">
-        <template #default="scope">
-          <span :class="`${scope.row.color} bold`">
-            {{ scope.row.currentPrice }}
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="change" label="Variety" width="170">
-        <template #default="scope">
-          <div class="varietyBox">
-            <span :class="`${scope.row.color} bold`">
-              {{ scope.row.change }}
-            </span>
-            <div class="closeBox" @click="openInfoDrawer(scope.row)">
-              <el-icon><Close /></el-icon>
-              <span>close</span>
+    <div class="orderTable">
+      <el-table
+        :data="tableData"
+        header-row-class-name="headerRow"
+        :row-class-name="rowClassName"
+        @row-dblclick="rowDblClick"
+      >
+        <el-table-column prop="symbol" label="Type/Financial tool">
+          <template #default="scope">
+            <div>
+              <span class="orderType">{{ scope.row.actionType }}</span>
+              <br />
+              <span class="symbolName">{{ scope.row.symbol }}</span>
             </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="lot" label="Quantity">
-        <template #default="scope">
-          <span class="bold">{{ scope.row.lot }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="storage" label="Overnight Fee">
-        <template #default="scope">
-          <span class="bold">{{ scope.row.storage }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="createTime" label="Opening time" />
-      <el-table-column width="100">
-        <template #default="scope">
-          <el-icon
-            class="infoIcon"
-            @click="openInfoDrawer({ ...scope.row, isInfo: true })"
-          >
-            <InfoFilled />
-          </el-icon>
-        </template>
-      </el-table-column>
-    </el-table>
+          </template>
+        </el-table-column>
+        <el-table-column prop="profit" label="Net contribution">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.netValue }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Profit" width="110">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.profit }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Open Price">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.price }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="currentPrice" label="Present value">
+          <template #default="scope">
+            <span :class="`${scope.row.color} bold`">
+              {{ scope.row.currentPrice }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="change" label="Variety" width="170">
+          <template #default="scope">
+            <div class="varietyBox">
+              <span :class="`${scope.row.color} bold`">
+                {{ scope.row.change }}
+              </span>
+              <div class="closeBox" @click="openInfoDrawer(scope.row)">
+                <el-icon><Close /></el-icon>
+                <span>close</span>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="lot" label="Quantity">
+          <template #default="scope">
+            <span class="bold">{{ scope.row.lot }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="storage" label="Overnight Fee">
+          <template #default="scope">
+            <span class="bold">{{ scope.row.storage }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="Opening time" />
+        <el-table-column width="100">
+          <template #default="scope">
+            <el-icon
+              class="infoIcon"
+              @click="openInfoDrawer({ ...scope.row, isInfo: true })"
+            >
+              <InfoFilled />
+            </el-icon>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <el-row class="sumBox" align="middle">
       <el-col :offset="4" :span="6">
         <div>

@@ -38,7 +38,11 @@
                 <el-button @click="resetForm(formRef)">取消</el-button>
               </el-form-item>
             </el-form>
-            <div class="line"></div>
+            <div class="line">
+              <p class="title">
+                <span>或通过以下方式继续</span>
+              </p>
+            </div>
             <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
               <img :src="googleImg" class="googleImg" alt="" />
             </div>
@@ -406,9 +410,26 @@ onMounted(() => {
     color: #fff;
     margin-right: 10px;
   }
+  .line {
+    margin-bottom: 38px;
+    .title {
+      margin-bottom: 10px;
+      color: var(--placeholdColor);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+    }
+    .title::before,
+    .title::after {
+      background: #e9ebf2;
+      content: '';
+      flex: 1;
+      height: 1px;
+    }
+  }
   #g_id_signin {
-    width: 50px;
-    height: 200px;
+    width: 220px;
     .googleImg {
       width: 50px;
       height: 50px;

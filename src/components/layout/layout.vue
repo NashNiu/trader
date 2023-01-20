@@ -49,11 +49,13 @@ const checkingToken = ref(false);
 const createWallet = async () => {
   const res = await createUserWallet();
   if (res?.data?.status === 0) {
-    const userInfoRes = await getUserInfoByToken();
-    if (userInfoRes?.data?.status === 0) {
-      const password = tools.decrypt(res.data?.data?.password);
-      userStore.setUserInfo({ ...res.data.data, password });
-    }
+    //修改创建钱包逻辑
+    // const userInfoRes = await getUserInfoByToken();
+    // if (userInfoRes?.data?.status === 0) {
+    //   const password = tools.decrypt(res.data?.data?.password);
+    //   userStore.setUserInfo({ ...res.data.data, password });
+    // }
+    await checkToken();
   }
 };
 const showChart = computed(

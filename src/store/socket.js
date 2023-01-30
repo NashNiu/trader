@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { configSymbols } from '@/config/index.js';
 import { ElMessage } from 'element-plus';
-import { useCommonStore, useUserStore } from '@/store/index.js';
+import { useCommonStore, useUserStore, useChartStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { configUrl } from '@/config/index.js';
 import dayjs from 'dayjs';
@@ -207,6 +207,13 @@ export default defineStore('socket', {
           utime: data.utime,
         },
       };
+      const chartStore = useChartStore();
+      chartStore.updateLiveData({
+        n: data.sbl,
+        b: data.bid,
+        a: data.ask,
+        t: data.utime - 8 * 60 * 60,
+      });
     },
     // 处理深度报价
     handleDeepQuotation(data) {

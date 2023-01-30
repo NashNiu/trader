@@ -19,6 +19,7 @@
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.7",
     "element-plus": "^2.2.26",
+    "number-precision": "^1.6.0",
     "pinia": "^2.0.28",
     "qrcode": "^1.5.1",
     "reconnecting-websocket": "^4.4.0",
@@ -26,6 +27,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "@vitejs/plugin-vue": "^4.0.0",
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.5.0",
@@ -41,6 +43,7 @@
     "vue-eslint-parser": "^9.1.0"
   },
   "eslintIgnore": [
-    "src/assets/css/iconfont.js"
+    "src/assets/css/iconfont.js",
+    "public/charting_library/static"
   ]
 }

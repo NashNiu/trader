@@ -36,7 +36,7 @@ import { useRouter } from 'vue-router';
 import { computed, ref, onBeforeMount } from 'vue';
 import SideBar from './sideBar.vue';
 import Header from './header.vue';
-import Chart from '@/components/common/tradeViewChart.vue';
+import Chart from '@/components/common/tradeViewChart/index.vue';
 import { getUserInfoByToken, createUserWallet } from '@/api/user.js';
 import { useUserStore, useSocketStore, useCommonStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';

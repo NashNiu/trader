@@ -23,7 +23,9 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-          <div class="operateBtn" @click="openSell(scope.row)">Sell</div>
+          <div class="operateBtn" @click="openSell(scope.row)">
+            {{ t('trade.sell') }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="change" label="Buy">
@@ -75,6 +77,8 @@ import { useStorage } from '@vueuse/core';
 import { configConst } from '@/config/index.js';
 import TradeDrawer from './tradeDrawer.vue';
 import { tools } from '@/utils';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const tradeStore = useTradeStore();
 const commonStore = useCommonStore();

@@ -100,7 +100,7 @@ export const popularSymbols = symbolArr.filter((item) => item.isPopular);
 export const goodsSymbols = symbolArr.filter((item) => item.type === 2);
 
 export const favoriteSymbols = symbolArr.filter((item) => {
-  const localFavorites = localStorage.getItem(configConst.favorites);
+  const localFavorites = localStorage.getItem(configConst.FAVORITES);
   if (localFavorites) {
     try {
       const favorites = JSON.parse(localFavorites);

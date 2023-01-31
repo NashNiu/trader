@@ -5,7 +5,9 @@
       <div class="main">
         <Header />
         <div class="contentBox">
+          <div v-if="showShadow" ref="shadowRef" class="shadow"></div>
           <el-card
+            id="contentContainer"
             :class="`contentContainer ${showChart ? '' : 'full'}`"
             :body-style="{
               height: '100%',
@@ -15,6 +17,7 @@
           >
             <router-view />
           </el-card>
+          <div ref="resizeRef" class="resize"></div>
           <el-card
             v-if="showChart"
             class="chatBox"
@@ -40,21 +43,24 @@ import Chart from '@/components/common/tradeViewChart/index.vue';
 import { getUserInfoByToken, createUserWallet } from '@/api/user.js';
 import { useUserStore, useSocketStore, useCommonStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
+import { useEventListener, useStorage } from '@vueuse/core';
+import { configConst } from '@/config/index.js';
+
 const router = useRouter();
-const token = localStorage.getItem('token');
+const token = localStorage.getItem(configConst.TOKEN);
 const userStore = useUserStore();
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const checkingToken = ref(false);
+const resizeRef = ref(null);
+const rawHeight = ref(0);
+const contentHeight = useStorage(configConst.LCH, '400px');
+const startY = ref(0);
+const shadowRef = ref();
+const showShadow = ref(false);
 const createWallet = async () => {
   const res = await createUserWallet();
   if (res?.data?.status === 0) {
-    //修改创建钱包逻辑
-    // const userInfoRes = await getUserInfoByToken();
-    // if (userInfoRes?.data?.status === 0) {
-    //   const password = tools.decrypt(res.data?.data?.password);
-    //   userStore.setUserInfo({ ...res.data.data, password });
-    // }
     await checkToken();
   }
 };
@@ -101,6 +107,21 @@ const checkToken = async () => {
 onBeforeMount(async () => {
   await checkToken();
 });
+useEventListener(resizeRef, 'mousedown', (e) => {
+  showShadow.value = true;
+  startY.value = e.clientY;
+  rawHeight.value = document.getElementById('contentContainer').offsetHeight;
+});
+useEventListener(shadowRef, 'mousemove', (e) => {
+  const endY = e?.clientY;
+  contentHeight.value = rawHeight.value + endY - startY.value + 'px';
+});
+useEventListener(shadowRef, 'mouseup', () => {
+  showShadow.value = false;
+});
+useEventListener(shadowRef, 'mouseleave', () => {
+  showShadow.value = false;
+});
 </script>
 <style lang="less" scoped>
 .container {
@@ -115,16 +136,36 @@ onBeforeMount(async () => {
       height: calc(100% - 68px);
       display: flex;
       flex-direction: column;
+      position: relative;
+      .shadow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        cursor: ns-resize;
+      }
       .contentContainer {
-        height: 440px;
-        margin-bottom: 10px;
+        height: v-bind(contentHeight);
+        min-height: 200px;
+        //margin-bottom: 10px;
         overflow: hidden;
         &.full {
           height: 100%;
         }
       }
+      .resize {
+        //position: absolute;
+        //bottom: -5px;
+        width: 100%;
+        height: 10px;
+        align-self: center;
+        background-color: transparent;
+        //background-color: #0a8415;
+        cursor: ns-resize;
+      }
       .chatBox {
         flex: 1;
+        position: relative;
       }
     }
   }

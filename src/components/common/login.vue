@@ -114,6 +114,8 @@ import googleImg from '@/assets/img/sidebar/google_icon.png';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { nextTick } from 'vue';
+import { configConst } from '@/config/index.js';
+
 const router = useRouter();
 const isSend = ref(false);
 const emit = defineEmits(['hide']);
@@ -240,7 +242,7 @@ const GoLogin = (username, password) => {
           message: '登录成功！',
           type: 'success',
         });
-        localStorage.setItem('token', res.data.token);
+        localStorage.setItem(configConst.TOKEN, res.data.token);
         router.push({
           path: '/t/trade',
           query: {},
@@ -277,7 +279,7 @@ const handleCredentialResponse = (response) => {
         message: '登录成功！',
         type: 'success',
       });
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem(configConst.TOKEN, res.data.token);
       router.push({
         path: '/t/trade',
         query: {},
@@ -301,7 +303,7 @@ const handleCredentialResponse = (response) => {
                   message: '登录成功！',
                   type: 'success',
                 });
-                localStorage.setItem('token', res.data.token);
+                localStorage.setItem(configConst.TOKEN, res.data.token);
                 router.push({
                   path: '/t/trade',
                   query: {},

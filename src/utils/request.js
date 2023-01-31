@@ -2,6 +2,8 @@ import axios from 'axios';
 // import router from '@/router/index.js';
 import { ElMessage } from 'element-plus';
 import { tools } from '@/utils/index.js';
+import { configConst } from '@/config/index.js';
+
 const service = axios.create({
   baseURL: '/lpapi',
   // withCredentials:true,//跨域请求时发送Cookie
@@ -10,7 +12,7 @@ const service = axios.create({
 // 请求拦截
 service.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(configConst.TOKEN);
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

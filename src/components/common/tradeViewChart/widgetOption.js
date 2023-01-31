@@ -25,7 +25,7 @@ const widgetOptions = (params) => {
       // 'volume_force_overlay',
       // 'header_resolutions', // 时间
       // 'header_chart_type',  // 图表类型
-      'header_indicators', // 指标
+      // 'header_indicators', // 指标
       // 'left_toolbar', //左侧工具栏
       // IsPC()?'':'use_localstorage_for_settings',
       // 'use_localstorage_for_settings',

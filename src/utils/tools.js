@@ -54,7 +54,7 @@ export function clearAndLogout() {
   socketStore.$reset();
   tradeStore.$reset();
   commonStore.$reset();
-  localStorage.removeItem(configConst.token);
+  localStorage.removeItem(configConst.TOKEN);
   Router.push({ name: 'Index' }).then();
 }
 

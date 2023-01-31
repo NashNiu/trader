@@ -1,6 +1,6 @@
 # LP TRADER
 
-<img src="https://img.shields.io/badge/node-16.13.1-success">
+<img src="https://img.shields.io/badge/node-16.13.1-success" alt="node 16.13.1">
 
 ### 装包
 `npm install`

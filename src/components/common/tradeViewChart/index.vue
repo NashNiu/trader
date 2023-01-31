@@ -107,15 +107,15 @@ const initChart = () => {
     chartStore.setWidget(tvWidget);
     tvWidget.onChartReady(() => {
       // 创建指标
-      changeStudy(mainStudies.value[0], 'main');
-      changeStudy(viceStudies.value[0], 'vice');
+      // changeStudy(mainStudies.value[0], 'main');
+      // changeStudy(viceStudies.value[0], 'vice');
     });
     tvWidget.headerReady().then(() => {
       // js隐藏工具栏
       if (!tvWidget.hideAllDrawingTools().value()) {
         tvWidget.activeChart().executeActionById('drawingToolbarAction');
       }
-      createStudyBtn();
+      // createStudyBtn();
     });
   }
 };

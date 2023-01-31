@@ -119,7 +119,7 @@ const rowClassName = ({ row }) => {
     return 'tableRow';
   }
 };
-const favorites = useStorage(configConst.favorites, [], localStorage);
+const favorites = useStorage(configConst.FAVORITES, [], localStorage);
 
 const addToFavorite = (name) => {
   if (Array.isArray(favorites.value)) {

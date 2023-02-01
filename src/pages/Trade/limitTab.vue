@@ -4,7 +4,7 @@
     <DeepPrice :symbol="symbol" />
     <el-row :gutter="20" align="middle" class="rowItemBox">
       <el-col :span="8">
-        <span>Price</span>
+        <span>{{ t('common.price') }}</span>
       </el-col>
       <el-col :span="16">
         <InputNumber
@@ -16,7 +16,8 @@
           <template #tips>
             <el-space>
               <span :class="{ error: !limitPriceValid }">
-                price{{ type === 'buy' ? '≤' : '≥' }}{{ limitPriceScope }}
+                {{ t('common.price') }}{{ type === 'buy' ? '≤' : '≥'
+                }}{{ limitPriceScope }}
               </span>
             </el-space>
           </template>
@@ -25,12 +26,14 @@
     </el-row>
     <el-row :gutter="20" align="middle" class="rowItemBox">
       <el-col :span="8">
-        <span>Quantity</span>
+        <span>{{ t('common.quantity') }}</span>
       </el-col>
       <el-col :span="16">
         <InputNumber v-model.number="count" size="small" :step="0.01">
           <template #tips>
-            <span :class="{ error: !countValid }">Quantity Range 0.01-5</span>
+            <span :class="{ error: !countValid }">
+              {{ t('trade.quantityRange') }} 0.01-5
+            </span>
           </template>
         </InputNumber>
       </el-col>
@@ -42,7 +45,7 @@
       class="rowItemBox"
     >
       <el-col :span="12">
-        <span>Deposit required</span>
+        <span>{{ t('trade.depositRequired') }}</span>
       </el-col>
       <el-col :span="12">
         <p class="textRight">{{ limitMarginRequired }}</p>
@@ -55,7 +58,7 @@
       class="rowItemBox stopRow"
     >
       <el-col :span="6">
-        <span>Stop surplus</span>
+        <span>{{ t('trade.stopSurplus') }}</span>
       </el-col>
       <el-col v-if="limitSpShow" :span="14">
         <InputNumber
@@ -67,11 +70,11 @@
           <template #tips>
             <el-space>
               <span :class="{ error: !limitSpPriceValid }">
-                price
+                {{ t('common.price') }}
                 {{ type === 'buy' ? '≥' : '≤' }}
                 {{ limitSpScope }}
               </span>
-              <span>Profit {{ limitSpProfit }}</span>
+              <span>{{ t('common.profit') }} {{ limitSpProfit }}</span>
             </el-space>
           </template>
         </InputNumber>
@@ -87,7 +90,7 @@
       class="rowItemBox stopRow"
     >
       <el-col :span="6">
-        <span>Stop loss</span>
+        <span>{{ t('trade.stopLoss') }}</span>
       </el-col>
       <el-col v-if="limitSlShow" :span="14">
         <InputNumber
@@ -99,11 +102,11 @@
           <template #tips>
             <el-space>
               <span :class="{ error: !limitSlPriceValid }">
-                price
+                {{ t('common.price') }}
                 {{ type === 'buy' ? '≤' : '≥' }}
                 {{ limitSlScope }}
               </span>
-              <span>Profit {{ limitSlProfit }}</span>
+              <span>{{ t('common.profit') }} {{ limitSlProfit }}</span>
             </el-space>
           </template>
         </InputNumber>
@@ -114,7 +117,7 @@
     </el-row>
     <div class="btnContainer">
       <div class="btnBox" @click="createHangingOrder">
-        {{ type === 'buy' ? 'Buy' : 'Sell' }}
+        {{ type === 'buy' ? t('common.buy') : t('common.sell') }}
       </div>
     </div>
   </div>
@@ -125,6 +128,8 @@ import DeepPrice from './deepPrice.vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { computed, ref } from 'vue';
 import { ElLoading, ElMessage } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const props = defineProps({
   type: {
     type: String,

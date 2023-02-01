@@ -8,7 +8,10 @@
       class="orderTable"
       @row-dblclick="rowDblClick"
     >
-      <el-table-column prop="symbol" label="Type/Financia l tool">
+      <el-table-column
+        prop="symbol"
+        :label="t('common.type') + '/' + t('common.financialTool')"
+      >
         <template #default="scope">
           <div>
             <span class="orderType">{{ scope.row.Command }}</span>
@@ -17,34 +20,34 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="OpenPrice" label="OpenPrice">
+      <el-table-column prop="OpenPrice" :label="t('common.openPrice')">
         <template #default="scope">
           <span class="bold">{{ scope.row.OpenPrice }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ClosePrice" label="ClosePrice">
+      <el-table-column prop="ClosePrice" :label="t('common.closePrice')">
         <template #default="scope">
           <span class="bold">{{ scope.row.ClosePrice }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="Lot" label="Quantity">
+      <el-table-column prop="Lot" :label="t('common.quantity')">
         <template #default="scope">
           <span class="bold">{{ scope.row.Lot }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="Profit" label="Profit">
+      <el-table-column prop="Profit" :label="t('common.profit')">
         <template #default="scope">
           <span class="bold">{{ scope.row.Profit }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="Opening time" />
-      <el-table-column prop="closeTime" label="CloseTime" />
+      <el-table-column prop="createTime" :label="t('common.openingTime')" />
+      <el-table-column prop="closeTime" :label="t('common.closeTime')" />
     </el-table>
     <el-row v-if="!loadingData" align="middle">
       <el-col :span="8" :offset="4">
         <div class="sumBox">
           <div :class="profitColor">
-            <span class="desc">Total Profit:</span>
+            <span class="desc">{{ t('common.totalProfit') }}:</span>
             <span class="value bold">${{ totalProfit }}</span>
           </div>
         </div>
@@ -65,7 +68,9 @@ import { getHistoryOrder } from '@/api/historyOrder.js';
 import { ref, onMounted, computed } from 'vue';
 import dayjs from 'dayjs';
 import { useCommonStore, useUserStore } from '@/store/index.js';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const commonStore = useCommonStore();
 const userStore = useUserStore();
 

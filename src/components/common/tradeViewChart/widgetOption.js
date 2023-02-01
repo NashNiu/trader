@@ -8,7 +8,7 @@ const widgetOptions = (params) => {
     symbol: params.symbol,
     datafeed: new DataFeedBase(),
     interval: '1', // 默认周期  1/5/15/30/60/240-> 1/5/15/30/60/240分钟  D->一天   W->一周   M->一月
-    locale: 'en',
+    locale: params.locale,
     container_id: 'tv_chart_container',
     library_path: './charting_library/',
     custom_css_url: './customCommon.css',

@@ -7,7 +7,10 @@
         :row-class-name="rowClassName"
         @row-dblclick="rowDblClick"
       >
-        <el-table-column prop="symbol" label="Type/Financial tool">
+        <el-table-column
+          prop="symbol"
+          :label="t('common.type') + '/' + t('common.financialTool')"
+        >
           <template #default="scope">
             <div>
               <span class="orderType">{{ scope.row.actionType }}</span>
@@ -16,35 +19,35 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="profit" label="Net contribution">
+        <el-table-column prop="profit" :label="t('order.currentValue')">
           <template #default="scope">
             <span :class="`${scope.row.color} bold`">
               {{ scope.row.netValue }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="Profit" width="110">
+        <el-table-column :label="t('common.profit')" width="110">
           <template #default="scope">
             <span :class="`${scope.row.color} bold`">
               {{ scope.row.profit }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="Open Price">
+        <el-table-column :label="t('order.openPrice')">
           <template #default="scope">
             <span :class="`${scope.row.color} bold`">
               {{ scope.row.price }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="currentPrice" label="Present value">
+        <el-table-column prop="currentPrice" :label="t('common.currentPrice')">
           <template #default="scope">
             <span :class="`${scope.row.color} bold`">
               {{ scope.row.currentPrice }}
             </span>
           </template>
         </el-table-column>
-        <el-table-column prop="change" label="Variety" width="170">
+        <el-table-column prop="change" :label="t('order.variety')" width="170">
           <template #default="scope">
             <div class="varietyBox">
               <span :class="`${scope.row.color} bold`">
@@ -52,22 +55,22 @@
               </span>
               <div class="closeBox" @click="openInfoDrawer(scope.row)">
                 <el-icon><Close /></el-icon>
-                <span>close</span>
+                <span>{{ t('order.close') }}</span>
               </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="lot" label="Quantity">
+        <el-table-column prop="lot" :label="t('common.quantity')">
           <template #default="scope">
             <span class="bold">{{ scope.row.lot }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="storage" label="Overnight Fee">
+        <el-table-column prop="storage" :label="t('common.overnightFee')">
           <template #default="scope">
             <span class="bold">{{ scope.row.storage }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="Opening time" />
+        <el-table-column prop="createTime" :label="t('common.openingTime')" />
         <el-table-column width="100">
           <template #default="scope">
             <el-icon
@@ -84,14 +87,14 @@
       <el-col :offset="4" :span="6">
         <div>
           <span :class="profitColor">
-            Total Profit ${{ totalProfit?.toFixed(2) || '0' }}
+            {{ t('common.totalProfit') }} ${{ totalProfit?.toFixed(2) || '0' }}
           </span>
         </div>
       </el-col>
       <el-col :offset="5" :span="6">
         <div>
           <span :class="feeColor">
-            Total Fee ${{ totalFee?.toFixed(2) || '0' }}
+            {{ t('order.totalFee') }} ${{ totalFee?.toFixed(2) || '0' }}
           </span>
         </div>
       </el-col>
@@ -108,7 +111,9 @@ import { useSocketStore, useCommonStore } from '@/store/index.js';
 import { computed, ref, onMounted, watch } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
 import { tools } from '@/utils';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const orderDrawerRef = ref(null);
@@ -131,7 +136,7 @@ const drawerData = computed(() =>
   tableData.value.find((item) => item.position === activeRowOrder.value)
 );
 const rowClassName = ({ row }) => {
-  if (row.symbol === chartData.value.symbol) {
+  if (row.position === chartData.value.id) {
     return 'active tableRow';
   } else {
     return 'tableRow';

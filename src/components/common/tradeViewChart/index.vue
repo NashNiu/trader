@@ -43,6 +43,9 @@ import { useCommonStore, useChartStore } from '@/store/index.js';
 import Widget from './chart_library.min.js';
 import { computed, onMounted, ref, watch } from 'vue';
 import widgetOption from './widgetOption';
+import { useI18n } from 'vue-i18n';
+import { chartLocal } from '@/lib/i18n/index.js';
+const { locale } = useI18n();
 const commonStore = useCommonStore();
 const chartStore = useChartStore();
 const activeChartName = computed(() => commonStore.chartData);
@@ -102,6 +105,7 @@ const initChart = () => {
   if (activeChartName.value.symbol) {
     const widgetOptions = widgetOption({
       symbol: activeChartName.value.symbol,
+      locale: chartLocal[locale.value] || 'en',
     });
     const tvWidget = new Widget(widgetOptions);
     chartStore.setWidget(tvWidget);

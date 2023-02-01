@@ -17,7 +17,7 @@
       <el-tabs v-model="activeTab" stretch>
         <el-tab-pane name="Market">
           <template #label>
-            <span class="tabName">Market</span>
+            <span class="tabName">{{ t('trade.market') }}</span>
           </template>
           <MarketTab
             ref="marketTabRef"
@@ -32,7 +32,7 @@
         </el-tab-pane>
         <el-tab-pane name="Limit">
           <template #label>
-            <span class="tabName">Limit</span>
+            <span class="tabName">{{ t('trade.limit') }}</span>
           </template>
           <limit-tab
             ref="limitTabRef"
@@ -54,6 +54,8 @@ import { ref, computed } from 'vue';
 import { useSocketStore } from '@/store/index.js';
 import MarketTab from './marketTab.vue';
 import LimitTab from './limitTab.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const props = defineProps({
   drawerData: {
     type: Object,

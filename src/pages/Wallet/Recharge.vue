@@ -6,7 +6,7 @@
     destroy-on-close
   >
     <template #header>
-      <h3>Recharge Currency</h3>
+      <h3>{{ t('wallet.rechargeCurrency') }}</h3>
     </template>
     <div class="contentBox">
       <el-space
@@ -17,7 +17,7 @@
       >
         <el-row align="middle">
           <el-col :span="8">
-            <p class="desc">Wallet</p>
+            <p class="desc">{{ t('wallet.wallet') }}</p>
           </el-col>
           <el-col :span="14">
             {{ walletInfo?.id }}
@@ -25,7 +25,7 @@
         </el-row>
         <el-row align="middle">
           <el-col :span="8">
-            <p class="desc">Copy the charging address</p>
+            <p class="desc">{{ t('wallet.copyAddress') }}</p>
           </el-col>
           <el-col :span="14">
             <el-space>
@@ -44,7 +44,7 @@
         <el-row>
           <el-col :span="10" :offset="8">
             <el-button size="large" type="primary" @click="close">
-              Close
+              {{ t('common.close') }}
             </el-button>
           </el-col>
         </el-row>
@@ -57,6 +57,9 @@ import { computed, ref } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import { ElMessage } from 'element-plus';
 import { useQRCode } from '@vueuse/integrations/useQRCode';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const props = defineProps({
   walletInfo: {
     type: Object,
@@ -71,7 +74,7 @@ const { isSupported, copy } = useClipboard({ source: address, legacy: true });
 const copyAddress = () => {
   if (isSupported) {
     copy?.();
-    ElMessage.success('copy success');
+    ElMessage.success(t?.('common.copySuccess'));
   } else {
     ElMessage.error('Your browser does not support Clipboard API');
   }

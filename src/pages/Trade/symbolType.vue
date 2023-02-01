@@ -8,19 +8,19 @@
         :class="{ item: true, active: activeType === 'popular' }"
         @click="setType('popular')"
       >
-        Most popular
+        {{ t('trade.popular') }}
       </div>
       <div
         :class="{ item: true, active: activeType === 'favorite' }"
         @click="setType('favorite')"
       >
-        My Collection
+        {{ t('trade.favorite') }}
       </div>
       <div
         :class="{ item: true, active: activeType === 'goods' }"
         @click="setType('goods')"
       >
-        All commodity futures
+        {{ t('trade.commodity') }}
       </div>
     </div>
   </el-card>
@@ -28,7 +28,8 @@
 <script setup>
 import { useTradeStore } from '@/store/index.js';
 import { computed } from 'vue';
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const tradeStore = useTradeStore();
 const setType = tradeStore.setSymbolType;
 const activeType = computed(() => tradeStore.activeType);

@@ -6,15 +6,15 @@
       header-row-class-name="headerRow"
       @row-dblclick="rowDblClick"
     >
-      <el-table-column prop="name" label="Financial tool" />
-      <el-table-column prop="change" label="Change" width="180">
+      <el-table-column prop="name" :label="t('common.financialTool')" />
+      <el-table-column prop="change" :label="t('trade.change')" width="180">
         <template #default="scope">
           <span :class="`${scope.row.changeColor} bold`">
             {{ scope.row.change }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="change" label="Sell">
+      <el-table-column prop="change" :label="t('common.sell')">
         <template #default="scope">
           <span :class="`${scope.row.changeColor} bold`">
             {{ scope.row.sell }}
@@ -24,11 +24,11 @@
       <el-table-column>
         <template #default="scope">
           <div class="operateBtn" @click="openSell(scope.row)">
-            {{ t('trade.sell') }}
+            {{ t('common.sell') }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="change" label="Buy">
+      <el-table-column prop="change" :label="t('common.buy')">
         <template #default="scope">
           <span :class="`${scope.row.changeColor} bold`">
             {{ scope.row.buy }}
@@ -37,10 +37,12 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-          <div class="operateBtn" @click="openBuy(scope.row)">Buy</div>
+          <div class="operateBtn" @click="openBuy(scope.row)">
+            {{ t('common.buy') }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column prop="highLow" label="High/low">
+      <el-table-column prop="highLow" :label="t('trade.highLow')">
         <template #default="scope">
           <span class="bold">{{ scope.row.highLow }}</span>
         </template>

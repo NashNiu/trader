@@ -3,10 +3,10 @@
     <div class="deepPriceTitle">
       <el-row :gutter="20">
         <el-col :span="12">
-          <span>Bid</span>
+          <span>{{ t('trade.bid') }}</span>
         </el-col>
         <el-col :span="12">
-          <span>Ask</span>
+          <span>{{ t('trade.ask') }}</span>
         </el-col>
       </el-row>
     </div>
@@ -47,6 +47,8 @@
 <script setup>
 import { computed } from 'vue';
 import { useSocketStore } from '@/store/index.js';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const props = defineProps({
   symbol: {
     type: String,

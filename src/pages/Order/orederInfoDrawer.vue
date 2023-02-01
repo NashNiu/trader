@@ -18,37 +18,39 @@
       <p class="time">{{ drawerData.createTime }}</p>
       <div class="orderInfoBox">
         <div class="infoItemBox">
-          <span class="key">Order Number</span>
+          <span class="key">{{ t('order.orderNumber') }}</span>
           <span class="value">{{ drawerData.position }}</span>
         </div>
         <div class="infoItemBox">
-          <span class="key">Position profit and loss</span>
+          <span class="key">{{ t('common.profit') }}</span>
           <span class="value">{{ drawerData.profit }}</span>
         </div>
         <div class="infoItemBox">
-          <span class="key">Quantity</span>
+          <span class="key">{{ t('common.quantity') }}</span>
           <span class="value">{{ drawerData.lot }}</span>
         </div>
 
         <div class="infoItemBox">
-          <span class="key">Current Price</span>
+          <span class="key">{{ t('common.currentPrice') }}</span>
           <span class="value">{{ drawerData.currentPrice }}</span>
         </div>
         <div class="infoItemBox">
-          <span class="key">Stop loss price</span>
+          <span class="key">{{ t('common.stopLossPrice') }}</span>
           <span class="value">{{ drawerData.sl }}</span>
         </div>
         <div class="infoItemBox">
-          <span class="key">Stop surplus price</span>
+          <span class="key">{{ t('common.stopSurplusPrice') }}</span>
           <span class="value">{{ drawerData.tp }}</span>
         </div>
         <div class="infoItemBox">
-          <span class="key">Overnight fee</span>
+          <span class="key">{{ t('common.overnightFee') }}</span>
           <span class="value">{{ drawerData.storage }}</span>
         </div>
       </div>
       <div v-if="!drawerData.isInfo" class="btnContainer">
-        <div class="btnBox" @click="closePosition">Close Position</div>
+        <div class="btnBox" @click="closePosition">
+          {{ t('order.closePosition') }}
+        </div>
       </div>
     </div>
   </el-drawer>
@@ -57,6 +59,9 @@
 import { ref } from 'vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { ElLoading } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const props = defineProps({

@@ -9,7 +9,7 @@
     @open="onOpen"
   >
     <template #header>
-      <h3>Currency Exchange</h3>
+      <h3>{{ t('wallet.currencyExchange') }}</h3>
     </template>
     <div v-loading="getDataLoading" class="contentBox">
       <el-space
@@ -19,7 +19,7 @@
         :size="30"
       >
         <el-row align="middle">
-          <el-col :span="6">
+          <el-col :span="8">
             <p class="desc">{{ walletInfo?.mtName }}</p>
           </el-col>
           <el-col :span="14">
@@ -27,8 +27,8 @@
           </el-col>
         </el-row>
         <el-row align="middle">
-          <el-col :span="6">
-            <p class="desc">Exchange amount</p>
+          <el-col :span="8">
+            <p class="desc">{{ t('wallet.exchangeAmount') }}</p>
           </el-col>
           <el-col :span="6">
             <el-input-number
@@ -43,14 +43,15 @@
           </el-col>
           <el-col :span="8">
             <span>
-              Available balance {{ Number(walletInfo?.total).toFixed(6) }}
+              {{ t('common.balance') }}
+              {{ Number(walletInfo?.total).toFixed(6) }}
               {{ walletInfo?.mtName?.split('USDT')[0] }}
             </span>
           </el-col>
         </el-row>
         <el-row align="middle">
-          <el-col :span="6">
-            <p class="desc">convertible</p>
+          <el-col :span="8">
+            <p class="desc">{{ t('wallet.convert') }}</p>
           </el-col>
           <el-col :span="6">
             <el-input-number
@@ -74,7 +75,7 @@
               :disabled="submitDisabled"
               @click="submit"
             >
-              Confirm Redemption
+              {{ t('common.confirm') }}
             </el-button>
           </el-col>
         </el-row>
@@ -87,7 +88,9 @@ import { ref, computed } from 'vue';
 import { useUserStore } from '@/store/index.js';
 import { userApi } from '@/api/index.js';
 import { ElMessage } from 'element-plus';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const props = defineProps({
   walletInfo: {
     type: Object,
@@ -136,7 +139,7 @@ const afterClose = () => {
 
 const submit = async () => {
   if (amount.value > props.walletInfo?.total) {
-    ElMessage.error('insufficient balance');
+    ElMessage.error(t?.('common.insufficientBalance'));
     return;
   }
   const params = {
@@ -146,10 +149,10 @@ const submit = async () => {
   submitLoading.value = true;
   const res = await userApi.confirmDeposit(params);
   if (res.data.status === 0) {
-    ElMessage.success('submit success');
+    ElMessage.success(t?.('common.success'));
     visible.value = false;
   } else {
-    ElMessage.error('submit error');
+    ElMessage.error(t?.('common.failed'));
   }
   submitLoading.value = false;
 };

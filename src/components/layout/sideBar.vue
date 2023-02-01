@@ -27,6 +27,8 @@
 import { useRouter, useRoute } from 'vue-router';
 import { ref, watch } from 'vue';
 import ProfileDrawer from './profileDrawer.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const activeIndex = ref(route.path);
@@ -35,32 +37,32 @@ const menuItemData = [
   {
     index: '/index',
     icon: 'icon-menu',
-    title: 'Profile',
+    title: t?.('menu.profile'),
   },
   {
     index: '/t/trade',
     icon: 'icon-chart',
-    title: 'Trade',
+    title: t?.('menu.trade'),
   },
   {
     index: '/t/order',
     icon: 'icon-cart',
-    title: 'Order',
+    title: t?.('menu.order'),
   },
   {
     index: '/t/limit',
     icon: 'icon-unorderedlist',
-    title: 'limit list',
+    title: t?.('menu.limit'),
   },
   {
     index: '/t/history',
     icon: 'icon-history',
-    title: 'History',
+    title: t?.('menu.history'),
   },
   {
     index: '/t/wallet',
     icon: 'icon-wallet',
-    title: 'Wallet',
+    title: t?.('menu.wallet'),
   },
 ];
 const menuOpen = (index) => {
@@ -88,6 +90,9 @@ watch(
       box-sizing: border-box;
       border-left: 6px solid #ffffff;
     }
+  }
+  .el-menu-item.is-active {
+    color: #fff;
   }
 }
 </style>

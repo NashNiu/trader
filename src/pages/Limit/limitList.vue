@@ -7,7 +7,10 @@
       :row-class-name="rowClassName"
       @row-dblclick="rowDblClick"
     >
-      <el-table-column prop="symbol" label="Type/Financial tool">
+      <el-table-column
+        prop="symbol"
+        :label="t('common.type') + '/' + t('common.financialTool')"
+      >
         <template #default="scope">
           <div>
             <span class="orderType">{{ scope.row.actionType }}</span>
@@ -16,35 +19,35 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Quantity">
+      <el-table-column :label="t('common.quantity')">
         <template #default="scope">
           <span class="bold">{{ scope.row.lot }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Price">
+      <el-table-column :label="t('common.price')">
         <template #default="scope">
           <span class="bold">{{ scope.row.price }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Stop loss">
+      <el-table-column :label="t('common.stopLossPrice')">
         <template #default="scope">
           <span class="bold">{{ scope.row.sl }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Stop profit">
+      <el-table-column :label="t('common.stopSurplusPrice')">
         <template #default="scope">
           <span class="bold">{{ scope.row.tp }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="Opening time" />
+      <el-table-column prop="createTime" :label="t('common.openingTime')" />
       <el-table-column>
         <template #default="scope">
           <el-space>
             <el-popconfirm
               width="220"
-              title="Are you sure to delete this?"
-              confirm-button-text="OK"
-              cancel-button-text="No, Thanks"
+              :title="t('common.deleteConfirm')"
+              :confirm-button-text="t('common.confirm')"
+              :cancel-button-text="t('common.cancel')"
               @confirm="deleteOrder(scope.row)"
             >
               <template #reference>
@@ -64,6 +67,9 @@ import { computed, onMounted, watch } from 'vue';
 import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { ElLoading } from 'element-plus';
 import { tools } from '@/utils';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const tableData = computed(() => socketStore.hangingOrders);

@@ -4,7 +4,10 @@
     :body-style="{ padding: '0px', height: '100%' }"
     class="walletAssetContainer"
   >
-    <h3 class="title">Wallet Assets $ {{ walletsValue.toFixed(2) }}</h3>
+    <h3 class="title">
+      {{ t('wallet.walletAssets') }} $
+      {{ walletsValue.toFixed(2) }}
+    </h3>
     <div class="contentBox">
       <div
         v-for="item in walletData"
@@ -17,7 +20,9 @@
         </div>
         <div class="symbolBox">
           <p class="symbol">{{ item.id }}</p>
-          <p class="balance">Wallet Balance</p>
+          <p class="balance">
+            {{ t('wallet.wallet') }}{{ t('common.balance') }}
+          </p>
         </div>
         <div class="balanceValue">
           <span>{{ Number(item?.total)?.toFixed(6) }}</span>
@@ -53,6 +58,9 @@ import RechargeDialog from './Recharge.vue';
 import { userApi } from '@/api';
 import { ElMessage } from 'element-plus';
 import { useUserStore, useSocketStore } from '@/store/index.js';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
 const liveData = computed(() => socketStore.liveData);

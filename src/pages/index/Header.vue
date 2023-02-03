@@ -20,7 +20,20 @@
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
-              <span class="goTrade" @click="goTrade">商户中心</span>
+              <span class="goTrade" @click="goTrade">
+                {{ t('index.goTrade') }}
+              </span>
+              <span class="goLanguage">
+                <el-dropdown @command="changeLanguage">
+                  <span class="language">{{ t('common.language') }}</span>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item command="cn">简体中文</el-dropdown-item>
+                      <el-dropdown-item command="en">English</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </span>
             </li>
           </ul>
         </div>
@@ -33,11 +46,19 @@
 <script setup>
 import LoginRegister from '../../components/common/login.vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
+import { configConst } from '@/config/index.js';
+const { t, locale } = useI18n();
 const router = useRouter();
 const centerDialogVisible = ref(false);
 const hideDialog = () => {
   centerDialogVisible.value = false;
+};
+const changeLanguage = (command) => {
+  localStorage.setItem(configConst.LANGUAGE, command);
+  locale.value = command;
+  location.reload();
 };
 const goTrade = () => {
   if (localStorage.getItem('token')) {
@@ -220,5 +241,13 @@ a:visited {
 .goTrade {
   cursor: pointer;
   color: #ffffff;
+}
+.goLanguage {
+  cursor: pointer;
+  color: #ffffff;
+  margin-left: 30px;
+}
+.language {
+  color: #fff;
 }
 </style>

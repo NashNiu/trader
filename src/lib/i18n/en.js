@@ -79,5 +79,67 @@ export default {
   user: {
     logout: 'Logout',
   },
-  login: {},
+  login: {
+    login: 'Login',
+    reg: 'Register',
+    emailadress: 'email adress',
+    pPassword: 'Please enter password',
+    cancal: 'cancal',
+    orP: 'Or continue in the following ways',
+    pEmail: 'Please enter the email address',
+    pExa: 'Please enter the verification code',
+    pLeight:
+      'The password must contain uppercase and lowercase letters, digits, and characters and be longer than eight characters',
+    code: 'Get code',
+    codeSuccess: 'Code Success！',
+    codefail: 'Code Fail!',
+    regSuccess: 'Register success!',
+    tips: 'Please enter the correct email address, password, and verification code!',
+    emailBlank: 'The mailbox cannot be empty',
+    emailRight: 'Please enter the correct email format',
+    passwordBlank: 'The password cannot be empty!',
+    loginSuccess: 'Login success',
+  },
+  index: {
+    goTrade: 'Center',
+    bannerh1: 'Liquidity provider',
+    banner:
+      'Our institutional trading Resolution liquidity solutions are designed with the trading and risk hedging needs of institutional and professional clients in mind, and can be designed to enable access to deep liquidity based on both business and client needs The unparalleled market reach and superior service that a world leader such as MagicCompass can provide maximize customer value and efficiency',
+    chatLink: 'Contact us',
+    featuresh1: 'Product-side download',
+    featuresH21: 'API & Trading software',
+    featuresH22: 'MT4 bridge and software provider',
+    featuresH23: 'Support for Mainstream Bridge',
+    featuresP1:
+      'Designed for partners with their own technology, our API provides pricing data and execution across DMA and OTC products. Use apis to access our overall product suite and connect to your own front end.',
+    featuresP2:
+      'Your platform server will connect to a list of liquidity providers. Whether you use MT4/MT5 or another proprietary platform, we work with all major software vendors to ensure seamless integration.',
+    featuresP3:
+      'We support connectivity solutions from leading tripartite bridge companies ONEZERO and Integrations to provide professional organization clients with a variety of options for IT system connectivity. Expand our LP services into emerging assets.',
+    callToh1: 'Our advantage',
+    callToh21: "The world's top partners",
+    callToh22: 'A trusted counterparty',
+    callToP1:
+      'Access to multiple deep liquidity pools and better prices through close partnerships with top global banks. With the Intelligent Order Transfer System (SOR) and algorithmic trading technology, you will be able to connect stock orders to major exchanges and key MTF multilateral trading venues, and foreign exchange orders to investment banking and non-banking sources.',
+    callToP2:
+      'Trusted counterparty: Magic Compass Group has a global distribution of subsidiary platforms with offices and offices around the world. The business scope covers Western Europe, North America, South America and Southeast Asia. Magic Compass Group has been leading industry change for 20 years and is a highly respected and top liquidity provider in the world.',
+    PricingH1: 'Technical and API documentation',
+    PricingP1: 'Mobile client IOS&Android',
+    PricingP2: 'MT4/MT5 bridge docking',
+    PricingP3: 'ONEZERO connects to integrations',
+    PricingP4: 'Customized service',
+    partner: 'Your reliable investment partner',
+    link: 'Links',
+    t1: 'Core Values',
+    t2: 'Products & Services',
+    t3: 'Brands & Licenses',
+    t4: 'Milestone',
+    t5: 'Partners',
+    t6: 'News',
+    t7: 'Career',
+    t8: 'Contact',
+    about: 'About Us',
+    aboutp:
+      'Magic Compass Group (Magic Compass Holdings Limited) is the ultimate holding company of Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd and Magic Compass Investments Limited. Registered address: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin Islands. ',
+  },
 };

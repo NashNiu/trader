@@ -2,23 +2,20 @@
   <section class="cta-one">
     <div class="container">
       <div class="block-title text-center">
-        <h1>我们的优势</h1>
+        <h1>{{ t('index.callToh1') }}</h1>
         <ul>
           <li>
             <img src="../../assets/img/features/icon4.png" alt="" />
-            <h2>全球頂級的合作夥伴</h2>
+            <h2>{{ t('index.callToh21') }}</h2>
             <p>
-              憑藉著與全球一線銀行的緊密合作關係，為您接入多个深层流動性池和更优的价格。通過智能買賣盤轉送系統（SOR）和算法交易技術，您將能夠為股票定單接通主要交易所和重要MTF多邊交易場所，為外匯定單接入投資銀行和非銀行來源。
+              {{ t('index.callToP1') }}
             </p>
           </li>
           <li>
             <img src="../../assets/img/features/icon5.png" alt="" />
-            <h2>備受信賴的交易對手</h2>
+            <h2>{{ t('index.callToh22') }}</h2>
             <p>
-              備受信賴的交易對手：Magic Compass
-              Group旗下子公司平台分佈全球，在全球各地設立有辦公室和辦事處。業務拓展範圍覆蓋西歐、北美、南美洲和東南亞地區。
-              Magic Compass
-              Group誕生20年來持續引領行業變革，是全球備受尊敬的頂級流動性提供商。
+              {{ t('index.callToP2') }}
             </p>
           </li>
         </ul>
@@ -28,7 +25,10 @@
     <!-- /.container -->
   </section>
 </template>
-
+<script setup>
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+</script>
 <style scoped>
 .cta-one {
   padding: 165px 0;

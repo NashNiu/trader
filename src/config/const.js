@@ -1,4 +1,6 @@
 export default {
-  token: 'token',
-  favorites: 'favoriteSymbols',
+  TOKEN: 'token',
+  FAVORITES: 'favoriteSymbols',
+  LCH: 'layoutContentHeight',
+  LANGUAGE: 'language',
 };

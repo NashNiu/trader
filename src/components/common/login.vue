@@ -8,7 +8,7 @@
           class="demo-tabs"
           @tab-click="handleClick"
         >
-          <el-tab-pane label="登录" name="second">
+          <el-tab-pane :label="t('login.login')" name="second">
             <el-form
               ref="formRef"
               :label-position="labelPosition"
@@ -18,7 +18,7 @@
               <el-form-item prop="email">
                 <el-input
                   v-model="loginFrom.email"
-                  placeholder="邮箱地址"
+                  :placeholder="t('login.emailadress')"
                   clearable
                 />
               </el-form-item>
@@ -26,28 +26,30 @@
                 <el-input
                   v-model="loginFrom.password"
                   type="password"
-                  placeholder="请输入密码"
+                  :placeholder="t('login.pPassword')"
                   clearable
                   show-password
                 />
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onSubmitLogin">
-                  登录
+                  {{ t('login.login') }}
                 </el-button>
-                <el-button @click="resetForm(formRef)">取消</el-button>
+                <el-button @click="resetForm(formRef)">
+                  {{ t('login.cancal') }}
+                </el-button>
               </el-form-item>
             </el-form>
             <div class="line">
               <p class="title">
-                <span>或通过以下方式继续</span>
+                <span>{{ t('login.orP') }}</span>
               </p>
             </div>
             <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
               <img :src="googleImg" class="googleImg" alt="" />
             </div>
           </el-tab-pane>
-          <el-tab-pane label="注册" name="first">
+          <el-tab-pane :label="t('login.reg')" name="first">
             <el-form
               :label-position="labelPosition"
               :model="registerFrom"
@@ -56,14 +58,14 @@
               <el-form-item prop="email">
                 <el-input
                   v-model="registerFrom.email"
-                  placeholder="请输入邮箱地址"
+                  :placeholder="t('login.pEmail')"
                   clearable
                 />
               </el-form-item>
               <el-form-item prop="region">
                 <el-input
                   v-model="registerFrom.region"
-                  placeholder="请输入验证码"
+                  :placeholder="t('login.pExa')"
                   clearable
                 >
                   <template #append>
@@ -82,16 +84,18 @@
                 <el-input
                   v-model="registerFrom.password"
                   type="password"
-                  placeholder="密码必须同时包含大小写字母、数字、字符且大于8位"
+                  :placeholder="t('login.pLeight')"
                   clearable
                   show-password
                 />
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onSubmitRegister">
-                  注册
+                  {{ t('login.reg') }}
                 </el-button>
-                <el-button @click="resetForm(formRef)">取消</el-button>
+                <el-button @click="resetForm(formRef)">
+                  {{ t('login.cancal') }}
+                </el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -110,10 +114,13 @@ import {
   registerGoogleInterface,
   loginInterface,
 } from '@/api/commonapi.js';
+import { useI18n } from 'vue-i18n';
 import googleImg from '@/assets/img/sidebar/google_icon.png';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { nextTick } from 'vue';
+import { configConst } from '@/config/index.js';
+const { t } = useI18n();
 const router = useRouter();
 const isSend = ref(false);
 const emit = defineEmits(['hide']);
@@ -128,7 +135,7 @@ const handleClick = (tab) => {
 };
 const tims = ref(30);
 const labelPosition = ref('left');
-const getCodeInfo = ref('获取验证码');
+const getCodeInfo = ref(t('login.code'));
 const registerFrom = reactive({
   email: '',
   region: '',
@@ -146,7 +153,7 @@ const timsGO = () => {
     isSend.value = true;
   } else {
     isSend.value = false;
-    getCodeInfo.value = '获取验证码';
+    getCodeInfo.value = t('login.code');
     tims.value = 30;
   }
 };
@@ -156,17 +163,17 @@ const getCode = () => {
     getCodeInterface(registerFrom.email).then((res) => {
       if (res.status === 200) {
         ElMessage({
-          message: '验证码发送成功！',
+          message: t('login.codeSuccess'),
           type: 'success',
         });
         timsGO();
       } else {
-        ElMessage.error('验证码获取失败！');
+        ElMessage.error(t('login.codefail'));
       }
     });
   } else {
     ElMessage({
-      message: '请输入邮箱！',
+      message: t('login.pEmail'),
       type: 'warning',
     });
   }
@@ -181,7 +188,7 @@ const onSubmitRegister = () => {
     }).then((res) => {
       if (res.data.status === 0) {
         ElMessage({
-          message: '注册成功！',
+          message: t('login.regSuccess'),
           type: 'success',
         });
         GoLogin(registerFrom.email, registerFrom.password);
@@ -191,7 +198,7 @@ const onSubmitRegister = () => {
     });
   } else {
     ElMessage({
-      message: '请输入正确的邮箱、密码、验证码！',
+      message: t('login.tips'),
       type: 'warning',
     });
   }
@@ -200,13 +207,13 @@ const onSubmitRegister = () => {
 const checkEmail = (rule, value, callback) => {
   const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
   if (!value) {
-    return callback(new Error('邮箱不能为空'));
+    return callback(new Error(t('login.emailBlank')));
   }
   setTimeout(() => {
     if (mailReg.test(value)) {
       callback();
     } else {
-      callback(new Error('请输入正确的邮箱格式'));
+      callback(new Error(t('login.emailRight')));
     }
   }, 100);
 };
@@ -221,7 +228,7 @@ const onSubmitLogin = () => {
     GoLogin(loginFrom.email, loginFrom.password);
   } else {
     ElMessage({
-      message: '请输入正确的邮箱和密码！',
+      message: t('login.tips'),
       type: 'warning',
     });
   }
@@ -229,24 +236,26 @@ const onSubmitLogin = () => {
 // 表单验证
 const rules = reactive({
   email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
-  region: [{ required: true, message: '请输入验证码！', trigger: 'blur' }],
-  password: [{ required: true, message: '密码不能为空！', trigger: 'blur' }],
+  region: [{ required: true, message: t('login.pExa'), trigger: 'blur' }],
+  password: [
+    { required: true, message: t('login.passwordBlank'), trigger: 'blur' },
+  ],
 });
 const GoLogin = (username, password) => {
   loginInterface({ username: username, password: password, type: 3 }).then(
     (res) => {
       if (res.data.status === 0) {
         ElMessage({
-          message: '登录成功！',
+          message: t('login.loginSuccess'),
           type: 'success',
         });
-        localStorage.setItem('token', res.data.token);
+        localStorage.setItem(configConst.TOKEN, res.data.token);
         router.push({
           path: '/t/trade',
           query: {},
         });
       } else {
-        ElMessage.error(res.data.message);
+        ElMessage.error(t('login.loginFail'));
       }
     }
   );
@@ -274,10 +283,10 @@ const handleCredentialResponse = (response) => {
   loginInterface({ username: googleSub, type: 1 }).then((res) => {
     if (res.data.status === 0) {
       ElMessage({
-        message: '登录成功！',
+        message: t('login.loginSuccess'),
         type: 'success',
       });
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem(configConst.TOKEN, res.data.token);
       router.push({
         path: '/t/trade',
         query: {},
@@ -292,16 +301,16 @@ const handleCredentialResponse = (response) => {
         }).then((res) => {
           if (res.data.status === 0) {
             ElMessage({
-              message: '注册成功！',
+              message: t('login.regSuccess'),
               type: 'success',
             });
             loginInterface({ username: googleSub, type: 1 }).then((res) => {
               if (res.data.status === 0) {
                 ElMessage({
-                  message: '登录成功！',
+                  message: t('login.loginSuccess'),
                   type: 'success',
                 });
-                localStorage.setItem('token', res.data.token);
+                localStorage.setItem(configConst.TOKEN, res.data.token);
                 router.push({
                   path: '/t/trade',
                   query: {},

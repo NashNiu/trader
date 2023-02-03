@@ -1,28 +1,28 @@
 <template>
   <el-card class="myAssetsContainer" :body-style="{ padding: '0px' }">
-    <h3 class="title">My Assets</h3>
+    <h3 class="title">{{ t('wallet.myAssets') }}</h3>
     <h3 class="estimated">
-      Estimated total assets：$ {{ userStore.totalAssets }}
+      {{ t('wallet.estimatedTotalAssets') }}：$ {{ userStore.totalAssets }}
     </h3>
     <div class="contentBox">
       <div class="tradingBox">
-        Trading account assets：$ {{ userFunds.balance }}
+        {{ t('wallet.tradingAccountAssets') }}：$ {{ userFunds.balance }}
       </div>
       <div class="itemBox">
         <p class="value">$ {{ netWorth.toFixed(2) }}</p>
-        <p class="key">Net worth</p>
+        <p class="key">{{ t('common.netWorth') }}</p>
       </div>
       <div class="itemBox">
         <p class="value">$ {{ userFunds.margin }}</p>
-        <p class="key">Occupancy margin</p>
+        <p class="key">{{ t('common.occupy') }}</p>
       </div>
       <div class="itemBox">
         <p class="value">$ {{ availableMargin.toFixed(2) }}</p>
-        <p class="key">Balance available</p>
+        <p class="key">{{ t('common.balance') }}</p>
       </div>
       <div class="itemBox">
         <p class="value">$ {{ totalProfit.toFixed(2) }}</p>
-        <p class="key">Profit</p>
+        <p class="key">{{ t('common.profit') }}</p>
       </div>
     </div>
   </el-card>
@@ -30,6 +30,9 @@
 <script setup>
 import { useSocketStore, useUserStore } from '@/store/index.js';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const userStore = useUserStore();
 const socketStore = useSocketStore();
 const userFunds = computed(() => socketStore.userFunds);

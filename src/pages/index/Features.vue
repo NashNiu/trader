@@ -2,29 +2,27 @@
   <section id="features" class="service-one">
     <div class="container">
       <div class="block-title text-center">
-        <h1>产品端下载</h1>
+        <h1>{{ t('index.featuresh1') }}</h1>
         <ul>
           <li>
             <img src="../../assets/img/features/icon1.png" alt="" />
-            <h2>API和交易軟件</h2>
+            <h2>{{ t('index.featuresH21') }}</h2>
             <p>
-              我們的 API 專為擁有自己技術的合作夥伴設計，提供橫跨 DMA 和 OTC
-              產品的定價數據和執行。 使用 API
-              訪問我們的整體產品套件，連接到您自己的前端。
+              {{ t('index.featuresP1') }}
             </p>
           </li>
           <li>
             <img src="../../assets/img/features/icon2.png" alt="" />
-            <h2>MT4橋接和軟件提供商</h2>
+            <h2>{{ t('index.featuresH22') }}</h2>
             <p>
-              您的平台服務器將連接到一些列流動性提供商。無論您使用MT4/MT5還是其他專屬平台，我們與所有主要軟體供應商合作以確保無縫整合。
+              {{ t('index.featuresP2') }}
             </p>
           </li>
           <li>
             <img src="../../assets/img/features/icon3.png" alt="" />
-            <h2>對主流橋公司的支持</h2>
+            <h2>{{ t('index.featuresH23') }}</h2>
             <p>
-              我們支持主流三方橋公司ONEZERO和Integrations提供的對接方案，為專業機構客戶提供在IT系統對接中的多樣化選擇。使我們的LP服務拓展到新興資產領域。
+              {{ t('index.featuresP3') }}
             </p>
           </li>
         </ul>
@@ -34,7 +32,10 @@
     <!-- /.container -->
   </section>
 </template>
-
+<script setup>
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+</script>
 <style scoped>
 .service-one {
   padding-bottom: 90px;

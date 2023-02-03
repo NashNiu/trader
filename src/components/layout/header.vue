@@ -7,7 +7,7 @@
 
       <div class="search-buy-login">
         <div class="content-search">
-          <input type="text" placeholder="search" />
+          <input type="text" :placeholder="t('common.search')" />
           <el-icon><Search /></el-icon>
         </div>
       </div>
@@ -16,25 +16,25 @@
           <span class="itemValue">
             {{ userFundsVisible ? '$' + availableMargin?.toFixed(2) : ' *** ' }}
           </span>
-          <span class="itemKey">Balance available</span>
+          <span class="itemKey">{{ t('common.balance') }}</span>
         </div>
         <div class="itemBox">
           <span class="itemValue">
             {{ userFundsVisible ? '$' + netWorth.toFixed(2) : ' *** ' }}
           </span>
-          <span class="itemKey">Net worth</span>
+          <span class="itemKey">{{ t('common.netWorth') }}</span>
         </div>
         <div class="itemBox">
           <span class="itemValue">
             {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
           </span>
-          <span class="itemKey">Occupancy margin</span>
+          <span class="itemKey">{{ t('common.occupy') }}</span>
         </div>
         <div class="itemBox">
           <span class="itemValue">
             {{ userFundsVisible ? '$' + profit.toFixed(2) : ' *** ' }}
           </span>
-          <span class="itemKey">Profit</span>
+          <span class="itemKey">{{ t('common.profit') }}</span>
         </div>
         <div class="itemBox">
           <template v-if="userFundsVisible">
@@ -56,6 +56,8 @@
 import { Search } from '@element-plus/icons-vue';
 import { useSocketStore, useUserStore } from '@/store/index.js';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
 const userFunds = computed(() => socketStore.userFunds);

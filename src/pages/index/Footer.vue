@@ -13,7 +13,7 @@
                   class="footer-widget__logo"
                 />
                 <p class="footer-widget__contact">
-                  Your reliable investment partner
+                  {{ t('index.partner') }}
                 </p>
                 <!-- /.footer-widget__contact -->
                 <p class="footer-widget__contact">
@@ -33,17 +33,33 @@
             <div
               class="col-12 col-sm-4 col-md-6 col-lg-2 footer--widget widget-links"
             >
-              <h3 class="footer-widget__title">Links</h3>
+              <h3 class="footer-widget__title">{{ t('index.link') }}</h3>
               <!-- /.footer-widget__title -->
               <ul class="footer-widget__links list-unstyled">
-                <li><a href="#">Core Values</a></li>
-                <li><a href="#">Products & Services</a></li>
-                <li><a href="#">Brands & Licenses</a></li>
-                <li><a href="#">Milestone</a></li>
-                <li><a href="#">Partners</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Career</a></li>
-                <li><a href="#">Contact</a></li>
+                <li>
+                  <a href="#">{{ t('index.t1') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t2') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t3') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t4') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t5') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t6') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t7') }}</a>
+                </li>
+                <li>
+                  <a href="#">{{ t('index.t8') }}</a>
+                </li>
               </ul>
               <!-- /.footer-widget__links -->
             </div>
@@ -51,7 +67,7 @@
             <div
               class="col-12 col-sm-8 col-md-6 col-lg-7 footer--widget widget-links widget-links-inline"
             >
-              <h3 class="footer-widget__title">About Us</h3>
+              <h3 class="footer-widget__title">{{ t('index.about') }}</h3>
               <!-- /.footer-widget__title -->
               <p>
                 Magic Compass Group (Magic Compass Holdings Limited) is the
@@ -90,7 +106,10 @@
     </a>
   </div>
 </template>
-
+<script setup>
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+</script>
 <style scoped>
 .site-footer {
   position: relative;

@@ -2,29 +2,29 @@
   <section id="pricing" class="pricing-one">
     <div class="container">
       <div class="block-title text-center">
-        <h1>技术和API文档</h1>
+        <h1>{{ t('index.PricingH1') }}</h1>
         <ul>
           <li>
             <a href="/">
-              移动客户端IOS&Android
+              {{ t('index.PricingP1') }}
               <img src="../../assets/img/features/Vector.png" alt="" />
             </a>
           </li>
           <li>
             <a href="/">
-              MT4/MT5橋對接
+              {{ t('index.PricingP2') }}
               <img src="../../assets/img/features/Vector.png" alt="" />
             </a>
           </li>
           <li>
             <a href="/">
-              ONEZERO和integrations對接
+              {{ t('index.PricingP3') }}
               <img src="../../assets/img/features/Vector.png" alt="" />
             </a>
           </li>
           <li>
             <a href="/">
-              定制化服務
+              {{ t('index.PricingP4') }}
               <img src="../../assets/img/features/Vector.png" alt="" />
             </a>
           </li>
@@ -35,7 +35,10 @@
     <!-- /.container -->
   </section>
 </template>
-
+<script setup>
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+</script>
 <style scoped>
 @media (min-width: 1200px) {
   .container {

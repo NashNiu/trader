@@ -2,10 +2,11 @@ import { defineStore } from 'pinia';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { configSymbols } from '@/config/index.js';
 import { ElMessage } from 'element-plus';
-import { useCommonStore, useUserStore } from '@/store/index.js';
+import { useCommonStore, useUserStore, useChartStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { configUrl } from '@/config/index.js';
 import dayjs from 'dayjs';
+import i18n from '@/lib/i18n';
 export default defineStore('socket', {
   state: () => ({
     socket: null,
@@ -52,7 +53,10 @@ export default defineStore('socket', {
       return state.holdingOrders.map((item) => {
         return {
           ...item,
-          actionType: item.action === 0 ? 'Buy' : 'Sell',
+          actionType:
+            item.action === 0
+              ? i18n.global.t('common.buy')
+              : i18n.global.t('common.sell'),
           createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
           lot: item.vol / 10000,
           ...tools.calcOrderChange({
@@ -207,6 +211,13 @@ export default defineStore('socket', {
           utime: data.utime,
         },
       };
+      const chartStore = useChartStore();
+      chartStore.updateLiveData({
+        n: data.sbl,
+        b: data.bid,
+        a: data.ask,
+        t: data.utime - 8 * 60 * 60,
+      });
     },
     // 处理深度报价
     handleDeepQuotation(data) {
@@ -278,7 +289,10 @@ export default defineStore('socket', {
       this.hangingOrders = data.map((item) => {
         return {
           ...item,
-          actionType: item.type === 2 ? 'Buy' : 'Sell',
+          actionType:
+            item.type === 2
+              ? i18n.global.t('common.buy')
+              : i18n.global.t('common.sell'),
           createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
           lot: item.vol / 10000,
         };
@@ -332,12 +346,12 @@ export default defineStore('socket', {
       if (data.closed) {
         // 平仓成功
         ElMessage.success({
-          message: 'close success',
+          message: i18n.global.t('common.operateSuccess'),
         });
       } else {
         // 建仓成功
         ElMessage.success({
-          message: 'create success',
+          message: i18n.global.t('common.operateSuccess'),
         });
       }
     },
@@ -351,11 +365,11 @@ export default defineStore('socket', {
       commonStore.closeLoading();
       if (data.status === 0) {
         ElMessage.success({
-          message: 'delete success',
+          message: i18n.global.t('common.operateSuccess'),
         });
       } else {
         ElMessage.error({
-          message: 'delete failed',
+          message: i18n.global.t('common.operateFailed'),
         });
       }
     },
@@ -367,7 +381,7 @@ export default defineStore('socket', {
     handleUpdateHangingOrder(data) {
       if (data.status === 0) {
         ElMessage.success({
-          message: '挂单修改成功',
+          message: i18n.global.t('common.operateSuccess'),
         });
       }
     },
@@ -379,7 +393,7 @@ export default defineStore('socket', {
     handleUpdateHoldingOrder(data) {
       if (data.status === 0) {
         ElMessage.success({
-          message: '订单修改成功',
+          message: i18n.global.t('common.operateSuccess'),
         });
       }
     },

@@ -6,15 +6,15 @@
       header-row-class-name="headerRow"
       @row-dblclick="rowDblClick"
     >
-      <el-table-column prop="name" label="Financial tool" />
-      <el-table-column prop="change" label="Change" width="180">
+      <el-table-column prop="name" :label="t('common.financialTool')" />
+      <el-table-column prop="change" :label="t('trade.change')" width="180">
         <template #default="scope">
           <span :class="`${scope.row.changeColor} bold`">
             {{ scope.row.change }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="change" label="Sell">
+      <el-table-column prop="change" :label="t('common.sell')">
         <template #default="scope">
           <span :class="`${scope.row.changeColor} bold`">
             {{ scope.row.sell }}
@@ -23,10 +23,12 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-          <div class="operateBtn" @click="openSell(scope.row)">Sell</div>
+          <div class="operateBtn" @click="openSell(scope.row)">
+            {{ t('common.sell') }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column prop="change" label="Buy">
+      <el-table-column prop="change" :label="t('common.buy')">
         <template #default="scope">
           <span :class="`${scope.row.changeColor} bold`">
             {{ scope.row.buy }}
@@ -35,10 +37,12 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-          <div class="operateBtn" @click="openBuy(scope.row)">Buy</div>
+          <div class="operateBtn" @click="openBuy(scope.row)">
+            {{ t('common.buy') }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column prop="highLow" label="High/low">
+      <el-table-column prop="highLow" :label="t('trade.highLow')">
         <template #default="scope">
           <span class="bold">{{ scope.row.highLow }}</span>
         </template>
@@ -75,6 +79,8 @@ import { useStorage } from '@vueuse/core';
 import { configConst } from '@/config/index.js';
 import TradeDrawer from './tradeDrawer.vue';
 import { tools } from '@/utils';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const socketStore = useSocketStore();
 const tradeStore = useTradeStore();
 const commonStore = useCommonStore();
@@ -119,7 +125,7 @@ const rowClassName = ({ row }) => {
     return 'tableRow';
   }
 };
-const favorites = useStorage(configConst.favorites, [], localStorage);
+const favorites = useStorage(configConst.FAVORITES, [], localStorage);
 
 const addToFavorite = (name) => {
   if (Array.isArray(favorites.value)) {

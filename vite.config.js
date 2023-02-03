@@ -61,6 +61,11 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/wss/, ''),
         ws: true,
       },
+      '/kline': {
+        target: 'https://mckline.zzsmgs55.com:9443',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/kline/, ''),
+      },
     },
   },
   // 打包配置
@@ -85,5 +90,8 @@ export default defineConfig({
         assetFileNames: `assets/[name].${timeStamp}.[ext]`,
       },
     },
+  },
+  optimizeDeps: {
+    include: ['@/components/common/tradeViewChart/charting_library.min.js'],
   },
 });

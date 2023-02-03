@@ -99,6 +99,7 @@ export default {
     emailRight: '请输入正确的邮箱格式',
     passwordBlank: '密码不能为空！',
     loginSuccess: '登录成功',
+    loginFail: '登录失败',
   },
   index: {
     goTrade: '商户中心',

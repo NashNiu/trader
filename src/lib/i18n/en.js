@@ -99,6 +99,7 @@ export default {
     emailRight: 'Please enter the correct email format',
     passwordBlank: 'The password cannot be empty!',
     loginSuccess: 'Login success',
+    loginFail: 'Login fail',
   },
   index: {
     goTrade: 'Center',

@@ -255,7 +255,7 @@ const GoLogin = (username, password) => {
           query: {},
         });
       } else {
-        ElMessage.error(res.data.message);
+        ElMessage.error(t('login.loginFail'));
       }
     }
   );

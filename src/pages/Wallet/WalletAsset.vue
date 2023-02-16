@@ -31,30 +31,44 @@
           </el-icon>
         </div>
         <div class="operateBox">
-          <SvgIcon
-            class="card icon"
-            icon-class="icon-creditcard"
-            size="35px"
-            @click="openRechargeDialog(item)"
-          />
-          <SvgIcon
-            class="dollar icon"
-            icon-class="icon-dollar1"
-            size="35px"
-            @click="openExchangeDialog(item)"
-          />
+          <el-tooltip :content="t('wallet.rechargeCurrency')" placement="top">
+            <img
+              src="@/assets/img/cashIn.png"
+              class="operateItem"
+              alt="cashIn"
+              @click="openRechargeDialog(item)"
+            />
+          </el-tooltip>
+          <el-tooltip :content="t('wallet.currencyExchange')" placement="top">
+            <img
+              src="@/assets/img/exchange.png"
+              class="operateItem"
+              alt="exchange"
+              @click="openExchangeDialog(item)"
+            />
+          </el-tooltip>
+          <el-tooltip :content="t('wallet.cashOut')" placement="top">
+            <img
+              src="@/assets/img/cashOut.png"
+              class="operateItem"
+              alt="cashOut"
+              @click="openTransferOutDialog(item)"
+            />
+          </el-tooltip>
         </div>
       </div>
     </div>
     <ExchangeDialog ref="exchangeDialogRef" :wallet-info="activeWalletInfo" />
     <RechargeDialog ref="rechargeDialogRef" :wallet-info="activeWalletInfo" />
+    <TransferOutDialog ref="transferDialogRef" />
   </el-card>
 </template>
 <script setup>
 import { computed, ref } from 'vue';
 import SvgIcon from '@/components/common/svgIcon.vue';
-import ExchangeDialog from './Exchange.vue';
-import RechargeDialog from './Recharge.vue';
+import ExchangeDialog from './component/Exchange.vue';
+import RechargeDialog from './component/Recharge.vue';
+import TransferOutDialog from './component/TransferOut.vue';
 import { userApi } from '@/api';
 import { ElMessage } from 'element-plus';
 import { useUserStore, useSocketStore } from '@/store/index.js';
@@ -66,6 +80,7 @@ const userStore = useUserStore();
 const liveData = computed(() => socketStore.liveData);
 const exchangeDialogRef = ref(null);
 const rechargeDialogRef = ref(null);
+const transferDialogRef = ref();
 const walletData = ref([]);
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
@@ -89,6 +104,10 @@ const openExchangeDialog = (data) => {
 const openRechargeDialog = (data) => {
   activeWalletInfo.value = data;
   rechargeDialogRef.value.open();
+};
+const openTransferOutDialog = (data) => {
+  activeWalletInfo.value = data;
+  transferDialogRef.value?.open();
 };
 const refreshBalance = async (item) => {
   item.loading = true;
@@ -200,6 +219,10 @@ getWalletData();
       .operateBox {
         margin-left: 20px;
         font-size: 30px;
+        .operateItem {
+          margin-right: 20px;
+          cursor: pointer;
+        }
         .icon {
           cursor: pointer;
           &.card {

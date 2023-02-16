@@ -2,7 +2,12 @@
   <el-card class="myAssetsContainer" :body-style="{ padding: '0px' }">
     <h3 class="title">{{ t('wallet.myAssets') }}</h3>
     <h3 class="estimated">
-      {{ t('wallet.estimatedTotalAssets') }}：$ {{ userStore.totalAssets }}
+      <span>
+        {{ t('wallet.estimatedTotalAssets') }}：$ {{ userStore.totalAssets }}
+      </span>
+      <el-button type="primary" size="large" @click="openCashDialog">
+        {{ t('wallet.cashOut') }}
+      </el-button>
     </h3>
     <div class="contentBox">
       <div class="tradingBox">
@@ -25,13 +30,14 @@
         <p class="key">{{ t('common.profit') }}</p>
       </div>
     </div>
+    <CashDialog ref="cashDialogRef" />
   </el-card>
 </template>
 <script setup>
 import { useSocketStore, useUserStore } from '@/store/index.js';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
+import CashDialog from './component/CashOut.vue';
 const { t } = useI18n();
 const userStore = useUserStore();
 const socketStore = useSocketStore();
@@ -39,6 +45,10 @@ const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const totalProfit = computed(() => socketStore.userTotalProfit);
 const availableMargin = computed(() => socketStore.availableMargin);
+const cashDialogRef = ref();
+const openCashDialog = () => {
+  cashDialogRef.value?.open();
+};
 </script>
 <style scoped lang="less">
 .myAssetsContainer {
@@ -58,7 +68,8 @@ const availableMargin = computed(() => socketStore.availableMargin);
     height: 73px;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding: 0 20px;
+    justify-content: space-between;
   }
   .contentBox {
     height: 100px;

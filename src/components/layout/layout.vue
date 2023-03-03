@@ -17,7 +17,7 @@
           >
             <router-view />
           </el-card>
-          <div ref="resizeRef" class="resize"></div>
+          <div v-if="showChart" ref="resizeRef" class="resize"></div>
           <el-card
             v-if="showChart"
             class="chatBox"

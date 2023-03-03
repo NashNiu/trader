@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    v-loading="loadingData"
-    :body-style="{ padding: '0px', height: '100%' }"
-    class="walletAssetContainer"
-  >
+  <div v-loading="loadingData" class="walletAssetContainer">
     <h3 class="title">
       {{ t('wallet.walletAssets') }} $
       {{ walletsValue.toFixed(2) }}
@@ -31,30 +27,47 @@
           </el-icon>
         </div>
         <div class="operateBox">
-          <SvgIcon
-            class="card icon"
-            icon-class="icon-creditcard"
-            size="35px"
-            @click="openRechargeDialog(item)"
-          />
-          <SvgIcon
-            class="dollar icon"
-            icon-class="icon-dollar1"
-            size="35px"
-            @click="openExchangeDialog(item)"
-          />
+          <el-tooltip :content="t('wallet.rechargeCurrency')" placement="top">
+            <img
+              src="@/assets/img/cashIn.png"
+              class="operateItem"
+              alt="cashIn"
+              @click="openRechargeDialog(item)"
+            />
+          </el-tooltip>
+          <el-tooltip :content="t('wallet.currencyExchange')" placement="top">
+            <img
+              src="@/assets/img/exchange.png"
+              class="operateItem"
+              alt="exchange"
+              @click="openExchangeDialog(item)"
+            />
+          </el-tooltip>
+          <el-tooltip :content="t('wallet.cashOut')" placement="top">
+            <img
+              src="@/assets/img/cashOut.png"
+              class="operateItem"
+              alt="cashOut"
+              @click="openTransferOutDialog(item)"
+            />
+          </el-tooltip>
         </div>
       </div>
     </div>
     <ExchangeDialog ref="exchangeDialogRef" :wallet-info="activeWalletInfo" />
     <RechargeDialog ref="rechargeDialogRef" :wallet-info="activeWalletInfo" />
-  </el-card>
+    <TransferOutDialog
+      ref="transferDialogRef"
+      :wallet-info="activeWalletInfo"
+    />
+  </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import SvgIcon from '@/components/common/svgIcon.vue';
-import ExchangeDialog from './Exchange.vue';
-import RechargeDialog from './Recharge.vue';
+import ExchangeDialog from './component/Exchange.vue';
+import RechargeDialog from './component/Recharge.vue';
+import TransferOutDialog from './component/TransferOut.vue';
 import { userApi } from '@/api';
 import { ElMessage } from 'element-plus';
 import { useUserStore, useSocketStore } from '@/store/index.js';
@@ -66,7 +79,9 @@ const userStore = useUserStore();
 const liveData = computed(() => socketStore.liveData);
 const exchangeDialogRef = ref(null);
 const rechargeDialogRef = ref(null);
+const transferDialogRef = ref();
 const walletData = ref([]);
+
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
     const ask = liveData.value[cur?.mtName]?.ask;
@@ -89,6 +104,10 @@ const openExchangeDialog = (data) => {
 const openRechargeDialog = (data) => {
   activeWalletInfo.value = data;
   rechargeDialogRef.value.open();
+};
+const openTransferOutDialog = (data) => {
+  activeWalletInfo.value = data;
+  transferDialogRef.value?.open();
 };
 const refreshBalance = async (item) => {
   item.loading = true;
@@ -123,30 +142,36 @@ const getWalletData = async () => {
       }
     }
     walletData.value = dataArr;
+    userStore.setUserAssetsArr(
+      dataArr?.map((item) => ({ assetId: item.id, mtName: item.mtName }))
+    );
   } else {
     ElMessage.error('GET WALLET INFO FAILED');
   }
 };
-getWalletData();
+onMounted(() => {
+  getWalletData();
+});
 </script>
 <style lang="less" scoped>
 .walletAssetContainer {
-  height: 520px;
+  //height: 520px;
+  flex: 1;
   overflow: hidden;
   color: #0c3d93;
   margin-top: 10px;
   .title {
-    height: 60px;
+    height: 40px;
     display: flex;
     align-items: center;
-    background-color: #f8f8f8;
+    //background-color: #f8f8f8;
     font-size: 20px;
-    padding-left: 15px;
+    padding-left: 5px;
   }
   .contentBox {
-    padding: 0 15px;
+    padding: 0;
     box-sizing: border-box;
-    height: calc(100% - 60px);
+    height: calc(100% - 40px);
     overflow: scroll;
     &::-webkit-scrollbar {
       width: 3px;
@@ -170,7 +195,7 @@ getWalletData();
       background-color: #eef2f7;
       display: flex;
       align-items: center;
-      margin-top: 15px;
+      margin-bottom: 15px;
       padding: 20px;
       box-sizing: border-box;
       .symbolBox {
@@ -200,6 +225,10 @@ getWalletData();
       .operateBox {
         margin-left: 20px;
         font-size: 30px;
+        .operateItem {
+          margin-right: 20px;
+          cursor: pointer;
+        }
         .icon {
           cursor: pointer;
           &.card {

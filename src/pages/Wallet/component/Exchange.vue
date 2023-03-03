@@ -119,6 +119,9 @@ const getData = async () => {
   getDataLoading.value = false;
   if (res.data.status === 0) {
     orderData.value = res.data.data;
+  } else {
+    ElMessage.error(t?.('common.operateFailed'));
+    visible.value = false;
   }
 };
 const open = () => {

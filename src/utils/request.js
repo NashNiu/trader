@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { tools } from '@/utils/index.js';
 import { configConst } from '@/config/index.js';
-
+import i18n from '@/lib/i18n';
 const service = axios.create({
   baseURL: '/lpapi',
   // withCredentials:true,//跨域请求时发送Cookie
@@ -30,7 +30,7 @@ service.interceptors.response.use(
   },
   (error) => {
     if (error?.response?.status === 401) {
-      ElMessage.error('Unauthorized');
+      ElMessage.error(i18n.global.t('common.unauthorized'));
       tools.clearAndLogout();
     } else if (error?.response?.status === 500) {
       ElMessage.error('Server Error');

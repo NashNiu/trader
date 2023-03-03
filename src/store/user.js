@@ -6,6 +6,7 @@ export default defineStore('user', {
     userInfo: {},
     walletAssets: 0,
     userFundsVisible: true,
+    userAssetsArr: [], // 客户的数字货币类型
   }),
   getters: {
     totalAssets(state) {
@@ -30,6 +31,9 @@ export default defineStore('user', {
     },
     setUserFundsVisible(data) {
       this.userFundsVisible = data;
+    },
+    setUserAssetsArr(data) {
+      this.userAssetsArr = data;
     },
   },
 });

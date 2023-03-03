@@ -161,22 +161,22 @@ const changeStudy = (study, type) => {
   study.action();
 };
 // 创建头部指标按钮
-const createStudyBtn = () => {
-  const button = tvWidget.value?.createButton?.();
-  button.setAttribute('title', 'Indicators');
-  button.innerHTML = `<span id="indicatorBtn">Indicators</span>`;
-  button.addEventListener('click', (e) => {
-    const container = document.getElementById('tv_chart_container');
-    const containerLeft = container.offsetLeft;
-    const containerTop = container.offsetTop;
-    const rectObj = e.target?.parentNode?.parentNode?.getBoundingClientRect();
-    indicatorsStyle.value = {
-      left: containerLeft + rectObj.left + 'px',
-      top: containerTop + rectObj.bottom + 'px',
-    };
-    indicatorModal.value = !indicatorModal.value;
-  });
-};
+// const createStudyBtn = () => {
+//   const button = tvWidget.value?.createButton?.();
+//   button.setAttribute('title', 'Indicators');
+//   button.innerHTML = `<span id="indicatorBtn">Indicators</span>`;
+//   button.addEventListener('click', (e) => {
+//     const container = document.getElementById('tv_chart_container');
+//     const containerLeft = container.offsetLeft;
+//     const containerTop = container.offsetTop;
+//     const rectObj = e.target?.parentNode?.parentNode?.getBoundingClientRect();
+//     indicatorsStyle.value = {
+//       left: containerLeft + rectObj.left + 'px',
+//       top: containerTop + rectObj.bottom + 'px',
+//     };
+//     indicatorModal.value = !indicatorModal.value;
+//   });
+// };
 
 // 监听产品改变，切换图表
 watch(activeChartName, (nv) => {

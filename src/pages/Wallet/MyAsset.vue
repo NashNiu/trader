@@ -1,6 +1,5 @@
 <template>
-  <el-card class="myAssetsContainer" :body-style="{ padding: '0px' }">
-    <h3 class="title">{{ t('wallet.myAssets') }}</h3>
+  <div class="myAssetsContainer">
     <h3 class="estimated">
       <span>
         {{ t('wallet.estimatedTotalAssets') }}：$ {{ userStore.totalAssets }}
@@ -31,7 +30,7 @@
       </div>
     </div>
     <CashDialog ref="cashDialogRef" />
-  </el-card>
+  </div>
 </template>
 <script setup>
 import { useSocketStore, useUserStore } from '@/store/index.js';
@@ -53,17 +52,8 @@ const openCashDialog = () => {
 <style scoped lang="less">
 .myAssetsContainer {
   color: #0c3d93;
-  .title {
-    background-color: #f8f8f8;
-    font-size: 20px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    box-sizing: border-box;
-  }
   .estimated {
-    margin: 20px;
+    margin: 0;
     background-color: #eef2f7;
     height: 73px;
     display: flex;
@@ -73,7 +63,7 @@ const openCashDialog = () => {
   }
   .contentBox {
     height: 100px;
-    margin: 0 20px 20px 20px;
+    margin: 20px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;

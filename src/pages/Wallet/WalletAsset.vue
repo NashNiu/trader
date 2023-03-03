@@ -1,9 +1,5 @@
 <template>
-  <el-card
-    v-loading="loadingData"
-    :body-style="{ padding: '0px', height: '100%' }"
-    class="walletAssetContainer"
-  >
+  <div v-loading="loadingData" class="walletAssetContainer">
     <h3 class="title">
       {{ t('wallet.walletAssets') }} $
       {{ walletsValue.toFixed(2) }}
@@ -60,11 +56,14 @@
     </div>
     <ExchangeDialog ref="exchangeDialogRef" :wallet-info="activeWalletInfo" />
     <RechargeDialog ref="rechargeDialogRef" :wallet-info="activeWalletInfo" />
-    <TransferOutDialog ref="transferDialogRef" />
-  </el-card>
+    <TransferOutDialog
+      ref="transferDialogRef"
+      :wallet-info="activeWalletInfo"
+    />
+  </div>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import SvgIcon from '@/components/common/svgIcon.vue';
 import ExchangeDialog from './component/Exchange.vue';
 import RechargeDialog from './component/Recharge.vue';
@@ -82,6 +81,7 @@ const exchangeDialogRef = ref(null);
 const rechargeDialogRef = ref(null);
 const transferDialogRef = ref();
 const walletData = ref([]);
+
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
     const ask = liveData.value[cur?.mtName]?.ask;
@@ -142,30 +142,36 @@ const getWalletData = async () => {
       }
     }
     walletData.value = dataArr;
+    userStore.setUserAssetsArr(
+      dataArr?.map((item) => ({ assetId: item.id, mtName: item.mtName }))
+    );
   } else {
     ElMessage.error('GET WALLET INFO FAILED');
   }
 };
-getWalletData();
+onMounted(() => {
+  getWalletData();
+});
 </script>
 <style lang="less" scoped>
 .walletAssetContainer {
-  height: 520px;
+  //height: 520px;
+  flex: 1;
   overflow: hidden;
   color: #0c3d93;
   margin-top: 10px;
   .title {
-    height: 60px;
+    height: 40px;
     display: flex;
     align-items: center;
-    background-color: #f8f8f8;
+    //background-color: #f8f8f8;
     font-size: 20px;
-    padding-left: 15px;
+    padding-left: 5px;
   }
   .contentBox {
-    padding: 0 15px;
+    padding: 0;
     box-sizing: border-box;
-    height: calc(100% - 60px);
+    height: calc(100% - 40px);
     overflow: scroll;
     &::-webkit-scrollbar {
       width: 3px;
@@ -189,7 +195,7 @@ getWalletData();
       background-color: #eef2f7;
       display: flex;
       align-items: center;
-      margin-top: 15px;
+      margin-bottom: 15px;
       padding: 20px;
       box-sizing: border-box;
       .symbolBox {

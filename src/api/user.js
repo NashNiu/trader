@@ -34,11 +34,6 @@ export function createDeposit(data) {
 }
 
 // 入金前查询报价
-// {
-//      "vaultId": "43",
-//     "platName": "LP",
-//     "assetId": "USDCNH"
-// }
 export function depositBefore(data) {
   return request({
     url: '/api/users/wallet/depositBeforeInfo',
@@ -48,10 +43,6 @@ export function depositBefore(data) {
 }
 
 // 确认入金
-// {
-//   "id": 33,
-//     "amount": 0.03
-// }
 export function confirmDeposit(data) {
   return request({
     url: '/api/users/wallet/ackDeposit',
@@ -91,5 +82,89 @@ export function refreshAssetBalance(vaultId, assetId) {
       assetId,
       vaultId,
     },
+  });
+}
+// 获取入金列表
+export function getDepositList(page = 0) {
+  return request({
+    url: '/api/users/wallet/getMtDepositList',
+    method: 'POST',
+    data: {
+      page,
+      size: 10,
+    },
+  });
+}
+// 获取出金列表
+export function getWithdrawList(page = 0) {
+  return request({
+    url: '/api/users/wallet/getMtWithdrawList',
+    method: 'POST',
+    data: {
+      page,
+      size: 10,
+    },
+  });
+}
+// 获取钱包转出列表
+export function getWalletOutList(page = 0) {
+  return request({
+    url: '/api/users/digitalWallet/getWithdrawList',
+    method: 'POST',
+    data: {
+      page,
+      size: 10,
+    },
+  });
+}
+
+// MT出金前查询报价
+export function withdrawBefore(data) {
+  return request({
+    url: '/api/users/wallet/withdrawBeforeInfo',
+    method: 'POST',
+    data: data,
+  });
+}
+// mt 确认出金
+export function withdrawConfirm(data) {
+  return request({
+    url: '/api/users/wallet/ackWithdraw',
+    method: 'POST',
+    data,
+  });
+}
+
+// 获取矿工费
+export function getTransferFee(data) {
+  return request({
+    url: '/api/users/wallet/estimateFee',
+    method: 'POST',
+    data,
+  });
+}
+// 钱包出金
+export function walletWithdraw(data) {
+  return request({
+    url: '/api/users/digitalWallet/createWithdraw',
+    method: 'POST',
+    data,
+  });
+}
+// 取消MT出金
+export function cancelMtWithdraw(params) {
+  return request({
+    url: '/api/users/wallet/cancelWithdraw',
+    method: 'GET',
+    params,
+  });
+}
+
+// 取消钱包出金
+export function cancelWalletWithdraw(params) {
+  return request({
+    url: '/api/users/digitalWallet/cancelWithdraw',
+    method: 'GET',
+    params,
   });
 }

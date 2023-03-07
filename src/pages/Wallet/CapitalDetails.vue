@@ -1,6 +1,16 @@
 <template>
   <el-tabs v-model="activeTab" @tab-change="tabChange">
-    <el-tab-pane :label="t('wallet.depositDetail')" name="deposit">
+    <el-tab-pane name="deposit">
+      <template #label>
+        <span>{{ t('wallet.depositDetail') }}</span>
+        <el-icon
+          v-if="activeTab === 'deposit'"
+          style="margin-left: 10px"
+          @click="reloadDepositData"
+        >
+          <Refresh />
+        </el-icon>
+      </template>
       <el-table
         v-loading="depositLoading"
         :data="depositData"
@@ -53,7 +63,17 @@
         </el-col>
       </el-row>
     </el-tab-pane>
-    <el-tab-pane :label="t('wallet.cashDetails')" name="withdraw">
+    <el-tab-pane name="withdraw">
+      <template #label>
+        <span>{{ t('wallet.cashDetails') }}</span>
+        <el-icon
+          v-if="activeTab === 'withdraw'"
+          style="margin-left: 10px"
+          @click="reloadWithdrawData"
+        >
+          <Refresh />
+        </el-icon>
+      </template>
       <el-table
         v-loading="withdrawLoading"
         :data="withdrawData"
@@ -76,6 +96,7 @@
         <el-table-column prop="price" :label="t('wallet.withdrawExchange')" />
         <el-table-column prop="amount" :label="t('wallet.withdrawAmount')" />
         <el-table-column
+          show-overflow-tooltip
           prop="externaladdress"
           :label="t('wallet.withdrawAddress')"
         />
@@ -111,7 +132,17 @@
         </el-col>
       </el-row>
     </el-tab-pane>
-    <el-tab-pane :label="t('wallet.outDetails')" name="transferOut">
+    <el-tab-pane name="transferOut">
+      <template #label>
+        <span>{{ t('wallet.outDetails') }}</span>
+        <el-icon
+          v-if="activeTab === 'transferOut'"
+          style="margin-left: 10px"
+          @click="reloadTransferOutData"
+        >
+          <Refresh />
+        </el-icon>
+      </template>
       <el-table
         v-loading="transferOutLoading"
         :data="transferOutData"
@@ -135,6 +166,7 @@
           :label="t('wallet.transferOutQuantity')"
         />
         <el-table-column
+          show-overflow-tooltip
           prop="externaladdress"
           :label="t('wallet.receiveAddress')"
         />
@@ -321,12 +353,21 @@ const cancelWithdraw = (id) => {
 };
 const tabChange = (tab) => {
   if (tab === 'deposit') {
-    getDepositData(depositPageInfo.value.page - 1);
+    reloadDepositData();
   } else if (tab === 'withdraw') {
-    getWithdrawData(withdrawPageInfo.value.page - 1);
+    reloadWithdrawData();
   } else if (tab === 'transferOut') {
-    getTransferOutData(transferOutPageInfo.value.page - 1);
+    reloadTransferOutData();
   }
+};
+const reloadDepositData = () => {
+  getDepositData(depositPageInfo.value.page - 1);
+};
+const reloadWithdrawData = () => {
+  getWithdrawData(withdrawPageInfo.value.page - 1);
+};
+const reloadTransferOutData = () => {
+  getTransferOutData(transferOutPageInfo.value.page - 1);
 };
 onMounted(() => {
   getDepositData();

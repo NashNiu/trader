@@ -29,14 +29,15 @@ import { useUserStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { useI18n } from 'vue-i18n';
 import { configConst } from '@/config/index.js';
-
+// import { commonApi } from '@/api';
 const { t, locale } = useI18n();
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);
 const visible = ref(false);
-const changeLanguage = (command) => {
+const changeLanguage = async (command) => {
   localStorage.setItem(configConst.LANGUAGE, command);
   locale.value = command;
+  // await commonApi.setLanguage(command);
   location.reload();
 };
 const show = () => {

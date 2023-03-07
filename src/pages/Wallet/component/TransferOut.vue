@@ -107,7 +107,6 @@ const getTransferFee = async () => {
     if (res.data.status === 0) {
       transferFee.value = res.data.data?.low?.networkFee ?? 0;
     }
-    console.log(res);
   }
 };
 const transferOut = async () => {
@@ -123,14 +122,14 @@ const transferOut = async () => {
     transferLoading.value = true;
     const res = await userApi.walletWithdraw(params);
     if (!res.data.status) {
-      ElMessage.success('提交成功');
+      ElMessage.success(t('common.operateSuccess'));
       visible.value = false;
     } else {
-      ElMessage.error(res.data.message || '提交失败');
+      ElMessage.error(res.data.message || t('common.operateFailed'));
       transferLoading.value = false;
     }
   } else {
-    ElMessage.error('请输入合适的数量和地址');
+    ElMessage.error(t('wallet.amountOrAddressWrong'));
   }
 };
 defineExpose({

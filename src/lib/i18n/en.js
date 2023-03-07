@@ -128,6 +128,7 @@ export default {
     underReview: 'Under Review',
     withdrawFail: 'Withdraw Fail',
     withdrawSuccess: 'Withdraw Success',
+    amountOrAddressWrong: 'Please enter appropriate quantity and address',
   },
   user: {
     logout: 'Logout',

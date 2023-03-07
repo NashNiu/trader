@@ -128,6 +128,7 @@ export default {
     underReview: '审核中',
     withdrawFail: '出金失败',
     withdrawSuccess: '出金成功',
+    amountOrAddressWrong: '请输入合适的数量和地址',
   },
   user: {
     logout: '登出',

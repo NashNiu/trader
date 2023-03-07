@@ -83,7 +83,7 @@ export default {
     transferOutQuantity: 'Transfer-out quantity',
     receiveAddress: 'Receiving address',
     minerFee: "Miner's fee",
-    transferOut: 'Transfer-out',
+    transferOut: 'Transfer Out',
     cashOutOfAccount: 'Cash out of trading account',
     paymentMethod: 'Payment method',
     giveMoneyToMyWallet: 'Give money to my wallet',

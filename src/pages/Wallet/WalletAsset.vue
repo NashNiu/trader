@@ -43,7 +43,7 @@
               @click="openExchangeDialog(item)"
             />
           </el-tooltip>
-          <el-tooltip :content="t('wallet.cashOut')" placement="top">
+          <el-tooltip :content="t('wallet.transferOut')" placement="top">
             <img
               src="@/assets/img/cashOut.png"
               class="operateItem"

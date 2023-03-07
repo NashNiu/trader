@@ -196,8 +196,8 @@ const transferOutPageInfo = ref({ page: 1, total: 0 });
 const depositStatusOptions = {
   [1]: t('wallet.transferred'),
   [2]: t('wallet.noTransfer'),
-  [3]: t('wallet.depositSuccess'),
-  [4]: t('wallet.depositFail'),
+  [3]: t('wallet.depositFail'),
+  [4]: t('wallet.depositSuccess'),
 };
 const withdrawStatusOptions = {
   [1]: t('wallet.toBeReviewed'),

@@ -14,6 +14,35 @@
             <el-dropdown-menu>
               <el-dropdown-item command="cn">简体中文</el-dropdown-item>
               <el-dropdown-item command="en">English</el-dropdown-item>
+              <el-dropdown-item command="bg">Bulgaria</el-dropdown-item>
+              <el-dropdown-item command="af">Holland</el-dropdown-item>
+              <el-dropdown-item command="cs">Česká republika</el-dropdown-item>
+              <el-dropdown-item command="da">
+                Kongeriget Danmark
+              </el-dropdown-item>
+              <el-dropdown-item command="de">German</el-dropdown-item>
+              <el-dropdown-item command="el">Greece</el-dropdown-item>
+              <el-dropdown-item command="es">Spain</el-dropdown-item>
+              <el-dropdown-item command="et">Estonia</el-dropdown-item>
+              <el-dropdown-item command="fi">Finland</el-dropdown-item>
+              <el-dropdown-item command="fr">France</el-dropdown-item>
+              <el-dropdown-item command="hu">Hungary</el-dropdown-item>
+              <el-dropdown-item command="id">Indonesia</el-dropdown-item>
+              <el-dropdown-item command="it">Italy</el-dropdown-item>
+              <el-dropdown-item command="ja">Japan</el-dropdown-item>
+              <el-dropdown-item command="ko">Korean</el-dropdown-item>
+              <el-dropdown-item command="lt">Lithuania</el-dropdown-item>
+              <el-dropdown-item command="lv">Latvia</el-dropdown-item>
+              <el-dropdown-item command="no">Norway</el-dropdown-item>
+              <el-dropdown-item command="pl">Poland</el-dropdown-item>
+              <el-dropdown-item command="pt">Portugal</el-dropdown-item>
+              <el-dropdown-item command="ro">Romania</el-dropdown-item>
+              <el-dropdown-item command="ru">Russia</el-dropdown-item>
+              <el-dropdown-item command="sk">Slovakia</el-dropdown-item>
+              <el-dropdown-item command="sl">Slovenia</el-dropdown-item>
+              <el-dropdown-item command="sv">Sweden</el-dropdown-item>
+              <el-dropdown-item command="tr">Türkiye</el-dropdown-item>
+              <el-dropdown-item command="uk">Ukraine</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -80,5 +109,10 @@ defineExpose({
       font-weight: bold;
     }
   }
+}
+.el-dropdown-menu {
+  overflow: scroll;
+  max-height: 200px;
+  overflow-x: hidden;
 }
 </style>

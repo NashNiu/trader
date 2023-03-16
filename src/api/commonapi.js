@@ -19,6 +19,12 @@ export function setInfo(data) {
     data,
   });
 }
+export function setLanguage(lan) {
+  return request({
+    url: '/api/users/user/updateLanguage?language=' + lan,
+    method: 'get',
+  });
+}
 // 获取验证码接口
 export function getCodeInterface(data) {
   return request({

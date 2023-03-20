@@ -14,11 +14,11 @@ export default {
     profit: 'Прибуток',
     balance: 'Доступно',
     netWorth: 'Власний капітал',
-    occupy: 'M.Margin',
-    search: 'search',
-    type: 'Type',
-    openingTime: 'openTime',
-    closeTime: 'closeTime',
+    occupy: 'M.Маржа',
+    search: 'пошук',
+    type: 'Тип',
+    openingTime: 'відкритий час',
+    closeTime: 'закрити час',
     confirm: 'підтвердити',
     cancel: 'скасувати',
     deleteConfirm: 'підтвердити видалення цього рядка?',
@@ -36,11 +36,11 @@ export default {
   },
   menu: {
     profile: 'Меню',
-    trade: 'Trade',
+    trade: 'Торгівля',
     order: 'Відкриті позиції',
     limit: 'Ордера',
     history: 'Закриті позиції',
-    wallet: 'Assets',
+    wallet: 'Активи',
   },
   trade: {
     change: 'Змінити',
@@ -60,7 +60,7 @@ export default {
   order: {
     currentValue: 'поточна Вартість',
     openPrice: 'відкрита Ціна',
-    variety: 'Change',
+    variety: 'Зміна',
     totalFee: 'Загальна комісія',
     orderNumber: 'Номер ордера',
     closePosition: 'Закрити позицію',
@@ -131,7 +131,7 @@ export default {
   },
 
   user: {
-    logout: 'Logout',
+    logout: 'Вийти',
   },
   login: {
     login: 'Вхід',
@@ -180,7 +180,7 @@ export default {
       'Надійний контрагент: Magic Compass Group має глобальну мережу дочірніх платформ з офісами та представництвами по всьому світу. Сфера діяльності охоплює Західну Європу, Північну Америку, Південну Америку та Південно-Східну Азію. Magic Compass Group очолює зміни в індустрії протягом 20 років і є дуже шанованим і провідним постачальником ліквідності у світі',
     PricingH1: 'Технічна та API документація',
     PricingP1: 'Мобільний клієнт IOS&Android',
-    PricingP2: 'MT4/MT5 bridge docking',
+    PricingP2: 'Док-станція MT4/MT5',
     PricingP3: 'Підключення ONEZERO до інтеграцій',
     PricingP4: 'Індивідуальний сервіс',
     partner: 'Ваш надійний інвестиційний партнер',
@@ -188,13 +188,13 @@ export default {
     t1: 'Основні цінності',
     t2: 'Продукти та послуги',
     t3: 'Бренди та ліцензії',
-    t4: 'Milestone',
+    t4: 'Віха',
     t5: 'Партнери',
     t6: 'Новини',
     t7: "Кар'єра",
     t8: 'Контакти',
     about: 'Про нас',
     aboutp:
-      'Magic Compass Group (Magic Compass Holdings Limited) є головною холдинговою компанією Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd та Magic Compass Investments Limited. Юридична адреса: Центр корпоративних послуг Cistra, Вікхемс-Кей II, Роуд-Таун, Тортола, VG1110, Британські Віргінські острови.',
+      'Magic Compass Group (Magic Compass Holdings Limited) є головною холдинговою компанією Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd та Magic Compass Investments Limited. Юридична адреса: Центр корпоративних послуг Cistra, Вікхемс-Кей II, Роуд-Таун, Тортола, VG1110, Британські Віргінські острови. ',
   },
 };

@@ -6,7 +6,7 @@
       header-row-class-name="headerRow"
       :row-class-name="rowClassName"
       class="orderTable"
-      @row-dblclick="rowDblClick"
+      @row-click="rowDblClick"
     >
       <el-table-column
         prop="symbol"
@@ -198,6 +198,7 @@ onMounted(async () => {
 .historyTableBox {
   .tableRow {
     height: 60px;
+    cursor: pointer;
     &.active {
       background-color: #d1d8e0;
     }

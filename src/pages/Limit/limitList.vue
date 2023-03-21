@@ -5,7 +5,7 @@
       :data="tableData"
       header-row-class-name="headerRow"
       :row-class-name="rowClassName"
-      @row-dblclick="rowDblClick"
+      @row-click="rowDblClick"
     >
       <el-table-column
         prop="symbol"
@@ -51,7 +51,7 @@
               @confirm="deleteOrder(scope.row)"
             >
               <template #reference>
-                <el-icon class="pointer" color="red" :size="20">
+                <el-icon class="pointer" color="red" :size="20" @click.stop>
                   <Delete />
                 </el-icon>
               </template>
@@ -126,6 +126,7 @@ onMounted(() => {
 .limitTableBox {
   .tableRow {
     height: 60px;
+    cursor: pointer;
     &.active {
       background-color: #d1d8e0;
     }

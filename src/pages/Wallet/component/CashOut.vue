@@ -92,6 +92,17 @@ const currentCurrency = computed(() => {
     return '';
   }
 });
+const currentAddress = computed(() => {
+  if (formData.value.currency) {
+    return (
+      userAssetsArr.value.find(
+        (item) => item.assetId === formData.value.currency
+      )?.address ?? ''
+    );
+  } else {
+    return '';
+  }
+});
 const confirmDisabled = computed(() => {
   if (
     !formData.value.currency ||
@@ -119,9 +130,10 @@ const confirmOut = async () => {
     id: orderId.value,
     amount: transferAmount.value,
     ToExternal: toExternal ? 1 : 0,
-    externalAddress: toExternal ? formData.value.externalAddress : undefined,
+    externalAddress: toExternal
+      ? formData.value.externalAddress
+      : currentAddress.value,
   };
-  console.log(params);
   submitting.value = true;
   const res = await userApi.withdrawConfirm(params);
   submitting.value = false;

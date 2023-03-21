@@ -143,7 +143,11 @@ const getWalletData = async () => {
     }
     walletData.value = dataArr;
     userStore.setUserAssetsArr(
-      dataArr?.map((item) => ({ assetId: item.id, mtName: item.mtName }))
+      dataArr?.map((item) => ({
+        assetId: item.id,
+        mtName: item.mtName,
+        address: item.address,
+      }))
     );
   } else {
     ElMessage.error('GET WALLET INFO FAILED');

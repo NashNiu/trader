@@ -1,4 +1,4 @@
 node_modules
 dist
 src/assets/css/iconfont.js
-public/charting_library/static
+public/charting_library

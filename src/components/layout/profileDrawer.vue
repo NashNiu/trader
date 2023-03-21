@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="visible" direction="ltr" size="400">
+  <el-drawer v-model="visible" direction="ltr" size="350">
     <div class="titleBox">
       <img :src="userImg" alt="" />
       <div class="userBox">
@@ -7,53 +7,44 @@
       </div>
     </div>
     <div class="mainBox">
-      <p class="item">
-        <el-dropdown @command="changeLanguage">
-          <span class="language">{{ t('common.language') }}</span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item command="cn">简体中文</el-dropdown-item>
-              <el-dropdown-item command="en">English</el-dropdown-item>
-              <el-dropdown-item command="bg">Bulgaria</el-dropdown-item>
-              <el-dropdown-item command="af">Holland</el-dropdown-item>
-              <el-dropdown-item command="cs">Česká republika</el-dropdown-item>
-              <el-dropdown-item command="da">
-                Kongeriget Danmark
-              </el-dropdown-item>
-              <el-dropdown-item command="de">German</el-dropdown-item>
-              <el-dropdown-item command="el">Greece</el-dropdown-item>
-              <el-dropdown-item command="es">Spain</el-dropdown-item>
-              <el-dropdown-item command="et">Estonia</el-dropdown-item>
-              <el-dropdown-item command="fi">Finland</el-dropdown-item>
-              <el-dropdown-item command="fr">France</el-dropdown-item>
-              <el-dropdown-item command="hu">Hungary</el-dropdown-item>
-              <el-dropdown-item command="id">Indonesia</el-dropdown-item>
-              <el-dropdown-item command="it">Italy</el-dropdown-item>
-              <el-dropdown-item command="ja">Japan</el-dropdown-item>
-              <el-dropdown-item command="ko">Korean</el-dropdown-item>
-              <el-dropdown-item command="lt">Lithuania</el-dropdown-item>
-              <el-dropdown-item command="lv">Latvia</el-dropdown-item>
-              <el-dropdown-item command="no">Norway</el-dropdown-item>
-              <el-dropdown-item command="pl">Poland</el-dropdown-item>
-              <el-dropdown-item command="pt">Portugal</el-dropdown-item>
-              <el-dropdown-item command="ro">Romania</el-dropdown-item>
-              <el-dropdown-item command="ru">Russia</el-dropdown-item>
-              <el-dropdown-item command="sk">Slovakia</el-dropdown-item>
-              <el-dropdown-item command="sl">Slovenia</el-dropdown-item>
-              <el-dropdown-item command="sv">Sweden</el-dropdown-item>
-              <el-dropdown-item command="tr">Türkiye</el-dropdown-item>
-              <el-dropdown-item command="uk">Ukraine</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </p>
-      <p class="item" @click="logOut">{{ t('user.logout') }}</p>
+      <div class="item" @click="toggleLanguage">
+        <p class="title">
+          <img :src="enImg" alt="" />
+          <span>{{ t('common.language') }}</span>
+        </p>
+        <span>
+          <img :src="showLanguage ? upImg : downImg" alt="" />
+        </span>
+      </div>
+      <div v-if="showLanguage" class="contentBox">
+        <el-scrollbar height="200px">
+          <p
+            v-for="item in languageArr"
+            :key="item.value"
+            :class="`contentItem ${locale === item.value ? 'active' : ''}`"
+            @click="changeLanguage(item.value)"
+          >
+            {{ item.label }}
+          </p>
+        </el-scrollbar>
+      </div>
+      <div class="item" @click="logOut">
+        <p class="title">
+          <img :src="logoutImg" alt="" />
+          <span>{{ t('user.logout') }}</span>
+        </p>
+        <span></span>
+      </div>
     </div>
   </el-drawer>
 </template>
 <script setup>
 import { computed, ref } from 'vue';
-import userImg from '@/assets/img/sidebar/user.png';
+import userImg from '@/assets/img/sidebar/user1.png';
+import downImg from '@/assets/img/sidebar/down.png';
+import upImg from '@/assets/img/sidebar/up.png';
+import logoutImg from '@/assets/img/sidebar/logout.png';
+import enImg from '@/assets/img/sidebar/en.png';
 import { useUserStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { useI18n } from 'vue-i18n';
@@ -63,6 +54,128 @@ const { t, locale } = useI18n();
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);
 const visible = ref(false);
+const showLanguage = ref(false);
+const languageArr = [
+  {
+    value: 'cn',
+    label: '简体中文',
+  },
+  {
+    value: 'en',
+    label: 'English',
+  },
+  {
+    value: 'bg',
+    label: 'Bulgaria',
+  },
+  {
+    value: 'af',
+    label: 'Holland',
+  },
+  {
+    value: 'cs',
+    label: 'Česká republika',
+  },
+  {
+    value: 'da',
+    label: 'Kongeriget Danmark',
+  },
+  {
+    value: 'de',
+    label: 'German',
+  },
+  {
+    value: 'el',
+    label: 'Greece',
+  },
+  {
+    value: 'es',
+    label: 'Spain',
+  },
+  {
+    value: 'et',
+    label: 'Estonia',
+  },
+  {
+    value: 'fi',
+    label: 'Finland',
+  },
+  {
+    value: 'fr',
+    label: 'France',
+  },
+  {
+    value: 'hu',
+    label: 'Hungary',
+  },
+  {
+    value: 'id',
+    label: 'Indonesia',
+  },
+  {
+    value: 'it',
+    label: 'Italy',
+  },
+  {
+    value: 'ja',
+    label: 'Japan',
+  },
+  {
+    value: 'ko',
+    label: 'Korean',
+  },
+  {
+    value: 'lt',
+    label: 'Lithuania',
+  },
+  {
+    value: 'lv',
+    label: 'Latvia',
+  },
+  {
+    value: 'no',
+    label: 'Norway',
+  },
+  {
+    value: 'pl',
+    label: 'Poland',
+  },
+  {
+    value: 'pt',
+    label: 'Portugal',
+  },
+  {
+    value: 'ro',
+    label: 'Romania',
+  },
+  {
+    value: 'ru',
+    label: 'Russia',
+  },
+  {
+    value: 'sk',
+    label: 'Slovakia',
+  },
+  {
+    value: 'sl',
+    label: 'Slovenia',
+  },
+  {
+    value: 'sv',
+    label: 'Sweden',
+  },
+  {
+    value: 'tr',
+    label: 'Türkiye',
+  },
+  {
+    value: 'uk',
+    label: 'Ukraine',
+  },
+];
+const toggleLanguage = () => {
+  showLanguage.value = !showLanguage.value;
+};
 const changeLanguage = async (command) => {
   localStorage.setItem(configConst.LANGUAGE, command);
   locale.value = command;
@@ -82,32 +195,65 @@ defineExpose({
 <style lang="less" scoped>
 .titleBox {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
   img {
-    margin-right: 15px;
+    margin-bottom: 10px;
+    width: 50px;
   }
   .userBox {
     font-size: 20px;
-    color: #0c3d93;
+    color: #000000;
   }
 }
 .mainBox {
   padding-left: 20px;
-  margin-top: 30px;
+  margin-top: 50px;
   .item {
-    color: #0c3d93;
-    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333333;
+    font-size: 18px;
     cursor: pointer;
-    font-weight: bold;
+    //font-weight: bold;
     margin-top: 20px;
+    .title {
+      display: flex;
+      align-items: center;
+      font-family: 'Microsoft YaHei', '微软雅黑';
+      img {
+        margin-right: 5px;
+        //width: 20px;
+      }
+    }
     .language {
       color: #0c3d93;
       font-size: 20px;
       cursor: pointer;
       font-weight: bold;
+    }
+  }
+  .contentBox {
+    padding: 10px 0;
+    margin-top: 20px;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    //max-height: 200px;
+    //overflow-y: scroll;
+    .contentItem {
+      height: 34px;
+      line-height: 34px;
+      color: #333333;
+      padding-left: 10px;
+      cursor: pointer;
+      &.active {
+        background-color: #0c3d93;
+        color: #ffffff;
+      }
     }
   }
 }

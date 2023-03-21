@@ -4,7 +4,7 @@
       :data="tableData"
       :row-class-name="rowClassName"
       header-row-class-name="headerRow"
-      @row-dblclick="rowDblClick"
+      @row-click="rowDblClick"
     >
       <el-table-column prop="name" :label="t('common.financialTool')" />
       <el-table-column prop="change" :label="t('trade.change')" width="180">
@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-          <div class="operateBtn" @click="openSell(scope.row)">
+          <div class="operateBtn" @click.stop="openSell(scope.row)">
             {{ t('common.sell') }}
           </div>
         </template>
@@ -37,7 +37,7 @@
       </el-table-column>
       <el-table-column>
         <template #default="scope">
-          <div class="operateBtn" @click="openBuy(scope.row)">
+          <div class="operateBtn" @click.stop="openBuy(scope.row)">
             {{ t('common.buy') }}
           </div>
         </template>
@@ -54,11 +54,15 @@
             class="star"
             color="#ffe345"
             :size="28"
-            @click="unFavorite(scope.row.mtName)"
+            @click.stop="unFavorite(scope.row.mtName)"
           >
             <StarFilled />
           </el-icon>
-          <el-icon v-else class="star" @click="addToFavorite(scope.row.mtName)">
+          <el-icon
+            v-else
+            class="star"
+            @click.stop="addToFavorite(scope.row.mtName)"
+          >
             <Star />
           </el-icon>
         </template>
@@ -226,6 +230,7 @@ onMounted(async () => {
 .quotesListContainer {
   .tableRow {
     height: 60px;
+    cursor: pointer;
     &.active {
       background-color: #d1d8e0;
     }

@@ -82,7 +82,7 @@ export default {
     transferOutCurrency: 'Overfør ut valuta',
     transferOutQuantity: 'Overfør ut mengde',
     receiveAddress: 'Mottaksadresse',
-    minerFee: "Gebyr for gruvearbeider",
+    minerFee: 'Gebyr for gruvearbeider',
     transferOut: 'Overføring ut',
     cashOutOfAccount: 'Utbetaling fra handelskonto',
     paymentMethod: 'Betalingsmåte',
@@ -103,7 +103,7 @@ export default {
     depositTime: 'Søknadstidspunkt for innskudd',
     cashDepositCurrency: 'Kontant innskuddsvaluta',
     amountOfDeposit: 'Innskuddsbeløp',
-    depositExchangeRate: "Valutakurs for innskudd",
+    depositExchangeRate: 'Valutakurs for innskudd',
     depositUsdAmount: 'Usd for innskudd',
     goldDepositStatus: 'Gullinnskuddets status',
     competeTime: 'Fullført tid',
@@ -130,7 +130,7 @@ export default {
     withdrawSuccess: 'Tilbaketrekk suksess',
   },
 
- user: {
+  user: {
     logout: 'Logg ut',
   },
   login: {
@@ -141,9 +141,9 @@ export default {
     cancal: 'avbryt',
     orP: 'Eller fortsett på følgende måter',
     pEmail: 'Vennligst skriv inn e-postadressen',
-    pExa: "Vennligst skriv inn bekreftelseskoden",
+    pExa: 'Vennligst skriv inn bekreftelseskoden',
     pLeight:
-      "Passordet må inneholde store og små bokstaver, sifre og tegn og være lengre enn åtte tegn", 
+      'Passordet må inneholde store og små bokstaver, sifre og tegn og være lengre enn åtte tegn',
     code: 'Hent kode',
     codeSuccess: 'Kode vellykket!',
     codefail: 'Kode mislykket!',
@@ -166,35 +166,35 @@ export default {
     featuresH22: 'MT4-bro og programvareleverandør',
     featuresH23: 'Støtte for Mainstream Bridge',
     featuresP1:
-      "API-et vårt er utviklet for partnere med egen teknologi, og gir prisdata og utførelse på tvers av DMA- og OTC-produkter. Bruk apier for å få tilgang til vår samlede produktpakke og koble til din egen frontend.",
+      'API-et vårt er utviklet for partnere med egen teknologi, og gir prisdata og utførelse på tvers av DMA- og OTC-produkter. Bruk apier for å få tilgang til vår samlede produktpakke og koble til din egen frontend.',
     featuresP2:
-      "Plattformserveren din vil koble seg til en liste over likviditetsleverandører. Enten du bruker MT4/MT5 eller en annen proprietær plattform, samarbeider vi med alle større programvareleverandører for å sikre sømløs integrasjon.",
+      'Plattformserveren din vil koble seg til en liste over likviditetsleverandører. Enten du bruker MT4/MT5 eller en annen proprietær plattform, samarbeider vi med alle større programvareleverandører for å sikre sømløs integrasjon.',
     featuresP3:
       'Vi støtter tilkoblingsløsninger fra ledende treparts broselskaper ONEZERO og Integrations for å gi profesjonelle organisasjonskunder en rekke alternativer for IT-systemtilkobling.". Utvide våre LP-tjenester til nye eiendeler.',
-    callToh1: "Vår fordel",
-    callToh21: "Verdens beste partnere",
-    callToh22: "En pålitelig motpart",
+    callToh1: 'Vår fordel',
+    callToh21: 'Verdens beste partnere',
+    callToh22: 'En pålitelig motpart',
     callToP1:
       'Tilgang til flere dype likviditetspooler og bedre priser gjennom tette partnerskap med de beste globale bankene". Med Intelligent Order Transfer System (SOR) og algoritmisk handelsteknologi vil du kunne koble aksjeordrer til store børser og viktige multilaterale handelsplasser, og valutaordrer til investeringsbanker og andre kilder.',
     callToP2:
-      "Pålitelig motpart: Magic Compass Group har en global distribusjon av datterselskapsplattformer med kontorer og kontorer over hele verden. Forretningsomfanget dekker Vest-Europa, Nord-Amerika, Sør-Amerika og Sørøst-Asia. Magic Compass Group har ledet an i endringer i bransjen i 20 år og er en høyt respektert og ledende likviditetsleverandør i verden.",
-    PricingH1: "Teknisk dokumentasjon og API-dokumentasjon",
+      'Pålitelig motpart: Magic Compass Group har en global distribusjon av datterselskapsplattformer med kontorer og kontorer over hele verden. Forretningsomfanget dekker Vest-Europa, Nord-Amerika, Sør-Amerika og Sørøst-Asia. Magic Compass Group har ledet an i endringer i bransjen i 20 år og er en høyt respektert og ledende likviditetsleverandør i verden.',
+    PricingH1: 'Teknisk dokumentasjon og API-dokumentasjon',
     PricingP1: 'Mobil klient IOS&Android',
     PricingP2: 'MT4/MT5-brodokking',
     PricingP3: 'ONEZERO kobles til integrasjoner',
     PricingP4: 'Tilpasset tjeneste',
     partner: 'Din pålitelige investeringspartner',
-    link: "Koblinger",
+    link: 'Koblinger',
     t1: 'Kjerneverdier',
-    t2: "Produkter og tjenester",
-    t3: "Varemerker og lisenser",
-    t4: "Milepæl",
-    t5: "Partnere",
-    t6: "Nyheter",
-    t7: "Karriere",
-    t8: "Kontakt",
+    t2: 'Produkter og tjenester',
+    t3: 'Varemerker og lisenser',
+    t4: 'Milepæl',
+    t5: 'Partnere',
+    t6: 'Nyheter',
+    t7: 'Karriere',
+    t8: 'Kontakt',
     about: 'Om oss',
     aboutp:
-      "Magic Compass Group (Magic Compass Holdings Limited) er det ultimate holdingselskapet til Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd og Magic Compass Investments Limited.". Registrert adresse: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, De britiske jomfruøyene. ',
+      'Magic Compass Group (Magic Compass Holdings Limited) er det ultimate holdingselskapet til Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd og Magic Compass Investments Limited. Registrert adresse: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, De britiske jomfruøyene. ',
   },
-}; 
+};

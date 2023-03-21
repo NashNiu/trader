@@ -130,7 +130,7 @@ export default {
     withdrawSuccess: 'Nosto onnistui',
   },
 
-  wallet: {
+  user: {
     logout: 'Kirjautua ulos',
   },
   login: {

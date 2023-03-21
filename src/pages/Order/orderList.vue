@@ -5,7 +5,7 @@
         :data="tableData"
         header-row-class-name="headerRow"
         :row-class-name="rowClassName"
-        @row-dblclick="rowDblClick"
+        @row-click="rowDblClick"
       >
         <el-table-column
           prop="symbol"
@@ -53,7 +53,7 @@
               <span :class="`${scope.row.color} bold`">
                 {{ scope.row.change }}
               </span>
-              <div class="closeBox" @click="openInfoDrawer(scope.row)">
+              <div class="closeBox" @click.stop="openInfoDrawer(scope.row)">
                 <el-icon><Close /></el-icon>
                 <span>{{ t('order.close') }}</span>
               </div>
@@ -75,7 +75,7 @@
           <template #default="scope">
             <el-icon
               class="infoIcon"
-              @click="openInfoDrawer({ ...scope.row, isInfo: true })"
+              @click.stop="openInfoDrawer({ ...scope.row, isInfo: true })"
             >
               <InfoFilled />
             </el-icon>
@@ -233,6 +233,7 @@ onMounted(async () => {
 .orderTableBox {
   .tableRow {
     height: 60px;
+    cursor: pointer;
     &.active {
       background-color: #d1d8e0;
     }

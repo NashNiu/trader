@@ -19,6 +19,9 @@
           <span>{{ item.title }}</span>
         </template>
       </el-menu-item>
+      <div class="sideBarOther">
+        <Img :src="HelpImg" class="otherItem" @click="clickHelp" />
+      </div>
     </el-menu>
     <ProfileDrawer ref="profileDrawerRef" />
   </div>
@@ -28,6 +31,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { ref, watch } from 'vue';
 import ProfileDrawer from './profileDrawer.vue';
 import { useI18n } from 'vue-i18n';
+import HelpImg from '@/assets/img/sidebar/help.png';
+import { configUrl } from '@/config';
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
@@ -72,6 +77,9 @@ const menuOpen = (index) => {
     router.push(index);
   }
 };
+const clickHelp = () => {
+  window.open(configUrl.helpUrl);
+};
 watch(
   () => router.currentRoute.value,
   (nv) => {
@@ -89,6 +97,17 @@ watch(
       color: #ffffff;
       box-sizing: border-box;
       border-left: 6px solid #ffffff;
+    }
+    .sideBarOther {
+      width: 100%;
+      position: absolute;
+      top: 85%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .otherItem {
+        cursor: pointer;
+      }
     }
   }
   .el-menu-item.is-active {

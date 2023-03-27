@@ -55,7 +55,11 @@ export default {
     stopLoss: 'close at loss',
     favorite: 'My Favorite',
     popular: 'All  Popular',
-    commodity: 'All Commodity',
+    commodity: 'Commodity',
+    index: 'Index',
+    stock: 'Stock',
+    forex: 'Forex',
+    cryptocurrency: 'Crypto Currency',
   },
   order: {
     currentValue: 'current Value',

@@ -55,7 +55,11 @@ export default {
     stopLoss: '止损',
     favorite: '收藏',
     popular: '热门',
-    commodity: '商品',
+    commodity: 'Commodity',
+    index: '指数',
+    stock: '股票',
+    forex: '外汇',
+    cryptocurrency: '加密货币',
   },
   order: {
     currentValue: '现值',

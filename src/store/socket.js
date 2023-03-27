@@ -7,6 +7,7 @@ import { tools } from '@/utils/index.js';
 import { configUrl } from '@/config/index.js';
 import dayjs from 'dayjs';
 import i18n from '@/lib/i18n';
+import { promiseTimeout } from '@vueuse/core';
 export default defineStore('socket', {
   state: () => ({
     socket: null,
@@ -195,10 +196,11 @@ export default defineStore('socket', {
       }
     },
     // 获取产品最近报价
-    getSblLatestPrice() {
-      configSymbols.symbolArr.forEach((item) => {
+    async getSblLatestPrice() {
+      for (const item of configSymbols.symbolArr) {
+        await promiseTimeout(20);
         this.sendSocketMsg({ cmd: 10007, sbl: item.name });
-      });
+      }
     },
     // 处理实时数据
     handleLiveData(data) {
@@ -240,10 +242,11 @@ export default defineStore('socket', {
       };
     },
     //获取产品配置信息
-    getSblBasicData() {
-      configSymbols.symbolArr.forEach((item) => {
+    async getSblBasicData() {
+      for (const item of configSymbols.symbolArr) {
+        await promiseTimeout(20);
         this.sendSocketMsg({ cmd: 10001, sbl: item.name });
-      });
+      }
     },
     setSblBasicData(data) {
       this.sblBasicData = {
@@ -252,10 +255,11 @@ export default defineStore('socket', {
       };
     },
     // 获取产品高开低收数据
-    getStatisticData() {
-      configSymbols.symbolArr.forEach((item) => {
+    async getStatisticData() {
+      for (const item of configSymbols.symbolArr) {
+        await promiseTimeout(20);
         this.sendSocketMsg({ cmd: 10003, sbl: item.name });
-      });
+      }
     },
     // 产品高开低收数据
     setStatisticData(data) {

@@ -197,4 +197,11 @@ export default {
     aboutp:
       "Magic Compass Group (Magic Compass Holdings Limited), Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd ve Magic Compass Investments Limited'in nihai holding şirketidir. Kayıtlı adres: Cistra Kurumsal Hizmetler Merkezi, Wickhams Cay II, Road Town, Tortola, VG1110, Britanya Virjin Adaları. ",
   },
+  symbol: {
+    Crypto: 'Kripto',
+    Forex: 'Forex',
+    Commodity: 'Emtia',
+    Index: 'Dizin',
+    Stock: 'Stoklamak',
+  },
 };

@@ -55,11 +55,7 @@ export default {
     stopLoss: '止损',
     favorite: '收藏',
     popular: '热门',
-    commodity: 'Commodity',
-    index: '指数',
-    stock: '股票',
-    forex: '外汇',
-    cryptocurrency: '加密货币',
+    commodity: '商品',
   },
   order: {
     currentValue: '现值',
@@ -197,6 +193,15 @@ export default {
     t7: '职业生涯',
     t8: '联系',
     about: '关于我们',
-    aboutp: '',
+    aboutp:
+      'Magic Compass集团（Magic Compass Holdings Limited）是Magic Compass Ltd、Magic Compass Securities Limited、Magic Compass Financial Services OÜ、Magic Compass International Capital Ltd和Magic Compass Investments Limited的最终控股公司。注册地址。Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin Islands.',
+  },
+
+  symbol: {
+    Crypto: '数字货币',
+    Forex: '外汇',
+    Commodity: '商品',
+    Index: '指数',
+    Stock: '股票',
   },
 };

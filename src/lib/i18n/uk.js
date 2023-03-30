@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) є головною холдинговою компанією Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd та Magic Compass Investments Limited. Юридична адреса: Центр корпоративних послуг Cistra, Вікхемс-Кей II, Роуд-Таун, Тортола, VG1110, Британські Віргінські острови. ',
   },
+  symbol: {
+    Crypto: 'Крипто',
+    Forex: 'Форекс',
+    Commodity: 'товарний',
+    Index: 'Індекс',
+    Stock: 'Запас',
+  },
 };

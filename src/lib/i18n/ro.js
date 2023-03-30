@@ -198,4 +198,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) este holdingul suprem al Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd și Magic Compass Investments Limited. Adresa de înregistrare: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Insulele Virgine Britanice. ',
   },
+  symbol: {
+    Crypto: 'Cripto',
+    Forex: 'Forex',
+    Commodity: 'Marfă',
+    Index: 'Index',
+    Stock: 'Stoc',
+  },
 };

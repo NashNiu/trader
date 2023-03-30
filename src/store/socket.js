@@ -176,9 +176,9 @@ export default defineStore('socket', {
         } else {
           // 其他未处理的信息
           commonStore.closeLoading();
-          ElMessage.error({
-            message: data.msg || data.cmd || data.status || 'unknown error',
-          });
+          // ElMessage.error({
+          //   message: data.msg || data.cmd || data.status || 'unknown error',
+          // });
         }
       }
     },

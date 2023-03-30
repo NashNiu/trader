@@ -20,25 +20,25 @@
         :class="{ item: true, active: activeType === 'cryptocurrency' }"
         @click="setType('cryptocurrency')"
       >
-        {{ t('trade.cryptocurrency') }}
+        {{ t('symbol.Crypto') }}
       </div>
       <div
         :class="{ item: true, active: activeType === 'forex' }"
         @click="setType('forex')"
       >
-        {{ t('trade.forex') }}
+        {{ t('symbol.Forex') }}
       </div>
       <div
         :class="{ item: true, active: activeType === 'commodity' }"
         @click="setType('commodity')"
       >
-        {{ t('trade.commodity') }}
+        {{ t('symbol.Commodity') }}
       </div>
       <div
         :class="{ item: true, active: activeType === 'index' }"
         @click="setType('index')"
       >
-        {{ t('trade.index') }}
+        {{ t('symbol.Index') }}
       </div>
       <!--      <div-->
       <!--        :class="{ item: true, active: activeType === 'stock' }"-->

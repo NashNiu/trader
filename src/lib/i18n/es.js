@@ -176,7 +176,7 @@ export default {
     callToh21: 'Los mejores socios del mundo',
     callToh22: 'Una contraparte de confianza',
     callToP1:
-      "Acceso a múltiples y profundos pools de liquidez y mejores precios gracias a la estrecha colaboración con los principales bancos mundiales'. Con el Sistema Inteligente de Transferencia de Órdenes (SOR) y la tecnología de negociación algorítmica, podrá conectar órdenes de acciones a las principales bolsas y a los principales centros de negociación multilateral MTF, y órdenes de divisas a fuentes bancarias y no bancarias de inversión",
+      'Acceso a múltiples y profundos pools de liquidez y mejores precios gracias a la estrecha colaboración con los principales bancos mundiales. Con el Sistema Inteligente de Transferencia de Órdenes (SOR) y la tecnología de negociación algorítmica, podrá conectar órdenes de acciones a las principales bolsas y a los principales centros de negociación multilateral MTF, y órdenes de divisas a fuentes bancarias y no bancarias de inversión',
     callToP2:
       'Contraparte de confianza: Magic Compass Group cuenta con una distribución global de plataformas subsidiarias con oficinas y delegaciones en todo el mundo. El ámbito de negocio abarca Europa Occidental, Norteamérica, Sudamérica y el Sudeste Asiático. Magic Compass Group lleva 20 años liderando el cambio en el sector y es un proveedor de liquidez muy respetado y uno de los principales del mundo',
     PricingH1: 'Documentación técnica y API',
@@ -197,5 +197,12 @@ export default {
     about: 'Sobre nosotros',
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) es la sociedad de cartera última de Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd y Magic Compass Investments Limited. Domicilio social: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Islas Vírgenes Británicas. ',
+  },
+  symbol: {
+    Crypto: 'Cripto',
+    Forex: 'Divisas',
+    Commodity: 'Producto',
+    Index: 'Índice',
+    Stock: 'Existencias',
   },
 };

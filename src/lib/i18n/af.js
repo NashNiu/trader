@@ -169,7 +169,7 @@ export default {
     featuresP2:
       'Uw platformserver maakt verbinding met een lijst van liquiditeitsaanbieders. Of u nu MT4/MT5 of een ander eigen platform gebruikt, wij werken samen met alle grote softwareleveranciers om een naadloze integratie te garanderen.',
     featuresP3:
-      "Wij ondersteunen connectiviteitsoplossingen van toonaangevende tripartiete bridgebedrijven ONEZERO en Integrations om professionele organisatieklanten een verscheidenheid aan opties voor IT-systeemconnectiviteit te bieden.' breiden onze LP-diensten uit naar opkomende activa.",
+      'Wij ondersteunen connectiviteitsoplossingen van toonaangevende tripartiete bridgebedrijven ONEZERO en Integrations om professionele organisatieklanten een verscheidenheid aan opties voor IT-systeemconnectiviteit te bieden. breiden onze LP-diensten uit naar opkomende activa.',
     callToh1: 'Ons voordeel',
     callToh21: 'De beste partners ter wereld.',
     callToh22: 'Een vertrouwde tegenpartij',
@@ -195,5 +195,13 @@ export default {
     about: 'Over ons',
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) is de verloren houdstermaatschappij van Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd en Magic Compass Investments Limited. geregistreerd adres: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Britse Maagdeneilanden. ',
+  },
+
+  symbol: {
+    Crypto: 'Cryptovaluta',
+    Forex: 'Forex',
+    Commodity: 'Product',
+    Index: 'Inhoudsopgave',
+    Stock: 'Voorraad',
   },
 };

@@ -159,7 +159,7 @@ export default {
     goTrade: 'Centre',
     bannerh1: 'Fournisseur de liquidité',
     banner:
-      "Nos solutions de liquidité pour la résolution des transactions institutionnelles sont conçues pour répondre aux besoins des clients institutionnels et professionnels en matière de transactions et de couverture des risques. Elles peuvent être conçues pour permettre l'accès à des liquidités importantes en fonction des besoins de l'entreprise et du client. La portée inégalée du marché et le service supérieur qu'un leader mondial tel que MagicCompass peut fournir maximisent la valeur et l'efficacité pour le client'",
+      "Nos solutions de liquidité pour la résolution des transactions institutionnelles sont conçues pour répondre aux besoins des clients institutionnels et professionnels en matière de transactions et de couverture des risques. Elles peuvent être conçues pour permettre l'accès à des liquidités importantes en fonction des besoins de l'entreprise et du client. La portée inégalée du marché et le service supérieur qu'un leader mondial tel que MagicCompass peut fournir maximisent la valeur et l'efficacité pour le client",
     chatLink: 'Nous contacter',
     featuresh1: 'Téléchargement côté produit',
     featuresH21: 'API et logiciel de négociation',
@@ -196,5 +196,12 @@ export default {
     about: 'À propos de nous',
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) est la société holding ultime de Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd et Magic Compass Investments Limited. Adresse du siège social : Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Îles Vierges britanniques. ',
+  },
+  symbol: {
+    Crypto: 'Crypto',
+    Forex: 'Forex',
+    Commodity: 'Produit de base',
+    Index: 'Indice',
+    Stock: 'Action',
   },
 };

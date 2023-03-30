@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) adalah perusahaan induk utama dari Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd, dan Magic Compass Investments Limited. Alamat terdaftar: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin Islands. ',
   },
+  symbol: {
+    Crypto: 'Kripto',
+    Forex: 'Forex',
+    Commodity: 'Komoditi',
+    Index: 'Indeks',
+    Stock: 'Stok',
+  },
 };

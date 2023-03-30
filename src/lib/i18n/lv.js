@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) ir Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd un Magic Compass Investments Limited holdingsabiedrība. Uzņēmuma juridiskā adrese: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin Islands. ',
   },
+  symbol: {
+    Crypto: 'Kripto',
+    Forex: 'Forex',
+    Commodity: 'Prece',
+    Index: 'Rādītājs',
+    Stock: 'Krājumi',
+  },
 };

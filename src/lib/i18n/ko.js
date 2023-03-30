@@ -196,4 +196,11 @@ export default {
     aboutp:
       'Magic Compass Group(Magic Compass Holdings Limited)은 Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd 및 Magic Compass Investments Limited의 궁극적인 지주 회사입니다. 등록 주소: Cistra 기업 서비스 센터, 위컴스 케이 II, 로드 타운, 토르톨라, VG1110, 영국령 버진 아일랜드. ',
   },
+  symbol: {
+    Crypto: '암호화폐',
+    Forex: '외환',
+    Commodity: '상품',
+    Index: '인덱스',
+    Stock: '재고',
+  },
 };

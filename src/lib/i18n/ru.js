@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) является конечной холдинговой компанией Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd и Magic Compass Investments Limited. Зарегистрированный адрес: Центр корпоративных услуг Cistra, Wickhams Cay II, Road Town, Tortola, VG1110, Британские Виргинские острова. ',
   },
+  symbol: {
+    Crypto: 'Крипто',
+    Forex: 'Форекс',
+    Commodity: 'Товар',
+    Index: 'Индекс',
+    Stock: 'Запас',
+  },
 };

@@ -34,6 +34,7 @@ export default {
     warning: 'advarsel',
     unauthorized: 'Login er udløbet, log venligst ind igen!',
   },
+
   menu: {
     profile: 'Menu',
     trade: 'Handle',
@@ -42,6 +43,7 @@ export default {
     history: 'Lukkede positioner',
     wallet: 'Aktiver',
   },
+
   trade: {
     change: 'Lave om',
     highLow: 'høj/lav',
@@ -57,6 +59,7 @@ export default {
     popular: 'Alle populære',
     commodity: 'Alle varer',
   },
+
   order: {
     currentValue: 'nuværende værdi',
     openPrice: 'åben pris',
@@ -66,7 +69,9 @@ export default {
     closePosition: 'Luk position',
     close: 'Tæt',
   },
+
   limit: {},
+
   wallet: {
     myAssets: 'Mine aktiver',
     estimatedTotalAssets: 'Anslået samlet formue',
@@ -119,7 +124,7 @@ export default {
     transferOutTime: 'Fuldstændig tid',
     operations: 'Operationer',
     cancelConfirm: 'Annuller denne ordre, fortsæt?',
-    overført: 'Overført',
+    transferred: 'Overført',
     noTransfer: 'Ingen overførsel',
     depositSuccess: 'Indbetalingssucces',
     depositFail: 'Indbetaling mislykkedes',
@@ -133,6 +138,7 @@ export default {
   user: {
     logout: 'Log ud',
   },
+
   login: {
     login: 'Log på',
     reg: 'Tilmeld',
@@ -155,6 +161,7 @@ export default {
     loginSuccess: 'Login succes',
     loginFail: 'Login mislykkedes',
   },
+
   index: {
     goTrade: 'Centrum',
     bannerh1: 'Likviditetsudbyder',
@@ -196,5 +203,13 @@ export default {
     about: 'Om os',
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) er det ultimative holdingselskab for Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd og Magic Compass Investments Limited. Registreret adresse: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, De Britiske Jomfruøer. ',
+  },
+
+  symbol: {
+    Crypto: 'Krypto',
+    Forex: 'Forex',
+    Commodity: 'Handelsvare',
+    Index: 'Indeks',
+    Stock: 'Lager',
   },
 };

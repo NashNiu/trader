@@ -55,11 +55,7 @@ export default {
     stopLoss: 'close at loss',
     favorite: 'My Favorite',
     popular: 'All  Popular',
-    commodity: 'Commodity',
-    index: 'Index',
-    stock: 'Stock',
-    forex: 'Forex',
-    cryptocurrency: 'Crypto Currency',
+    commodity: 'All Commodity',
   },
   order: {
     currentValue: 'current Value',
@@ -132,7 +128,6 @@ export default {
     underReview: 'Under Review',
     withdrawFail: 'Withdraw Fail',
     withdrawSuccess: 'Withdraw Success',
-    amountOrAddressWrong: 'Please enter appropriate quantity and address',
   },
   user: {
     logout: 'Logout',
@@ -200,5 +195,13 @@ export default {
     about: 'About Us',
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) is the ultimate holding company of Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd and Magic Compass Investments Limited. Registered address: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin Islands. ',
+  },
+
+  symbol: {
+    Crypto: 'Crypto',
+    Forex: 'Forex',
+    Commodity: 'Commodity',
+    Index: 'Index',
+    Stock: 'Stock',
   },
 };

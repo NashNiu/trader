@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) je hlavnou holdingovou spoločnosťou spoločností Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd a Magic Compass Investments Limited. Sídlo spoločnosti: Sídlo: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Britské Panenské ostrovy. ',
   },
+  symbol: {
+    Crypto: 'Crypto',
+    Forex: 'Forex',
+    Commodity: 'Komodita',
+    Index: 'Index',
+    Stock: 'Skladom',
+  },
 };

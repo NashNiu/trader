@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) on Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd ja Magic Compass Investments Limited lõplik valdusettevõte. Registreeritud aadress: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Briti Neitsisaared. ',
   },
+  symbol: {
+    Crypto: 'Krüpto',
+    Forex: 'Forex',
+    Commodity: 'Kaup',
+    Index: 'Indeks',
+    Stock: 'Varud',
+  },
 };

@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) a Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd és Magic Compass Investments Limited végső holding társasága. Bejegyzett cím: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Brit Virgin-szigetek. ',
   },
+  symbol: {
+    Crypto: 'Crypto',
+    Forex: 'Forex',
+    Commodity: 'Árucikk',
+    Index: 'Index',
+    Stock: 'Készlet',
+  },
 };

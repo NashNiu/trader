@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) は、Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd および Magic Compass Investments Limitedの最終持株会社です。登録住所 Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin Islands. ',
   },
+  symbol: {
+    Crypto: 'クリプト',
+    Forex: '外国為替',
+    Commodity: '商品',
+    Index: '指数',
+    Stock: 'ストック',
+  },
 };

@@ -17,11 +17,35 @@
         {{ t('trade.favorite') }}
       </div>
       <div
-        :class="{ item: true, active: activeType === 'goods' }"
-        @click="setType('goods')"
+        :class="{ item: true, active: activeType === 'cryptocurrency' }"
+        @click="setType('cryptocurrency')"
       >
-        {{ t('trade.commodity') }}
+        {{ t('symbol.Crypto') }}
       </div>
+      <div
+        :class="{ item: true, active: activeType === 'forex' }"
+        @click="setType('forex')"
+      >
+        {{ t('symbol.Forex') }}
+      </div>
+      <div
+        :class="{ item: true, active: activeType === 'commodity' }"
+        @click="setType('commodity')"
+      >
+        {{ t('symbol.Commodity') }}
+      </div>
+      <div
+        :class="{ item: true, active: activeType === 'index' }"
+        @click="setType('index')"
+      >
+        {{ t('symbol.Index') }}
+      </div>
+      <!--      <div-->
+      <!--        :class="{ item: true, active: activeType === 'stock' }"-->
+      <!--        @click="setType('stock')"-->
+      <!--      >-->
+      <!--        {{ t('trade.stock') }}-->
+      <!--      </div>-->
     </div>
   </el-card>
 </template>
@@ -37,6 +61,23 @@ const activeType = computed(() => tradeStore.activeType);
 <style lang="less" scoped>
 .container {
   height: 100%;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  /* 滚动槽 */
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+  /* 滚动条滑块 */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.1);
+  }
   .typeBox {
     .item {
       padding-left: 10px;

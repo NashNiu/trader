@@ -198,4 +198,11 @@ export default {
     aboutp:
       'Magic Compass Group" ("Magic Compass Holdings Limited") yra pagrindinė "Magic Compass Ltd", "Magic Compass Securities Limited", "Magic Compass Financial Services OÜ", "Magic Compass International Capital Ltd" ir "Magic Compass Investments Limited" kontroliuojančioji bendrovė. Registracijos adresas: Registracijos adresas: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Britų Mergelių salos. ',
   },
+  symbol: {
+    Crypto: 'Kripto',
+    Forex: 'Forex',
+    Commodity: 'Prekė',
+    Index: 'Indeksas',
+    Stock: 'Atsargos',
+  },
 };

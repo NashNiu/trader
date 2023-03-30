@@ -198,4 +198,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) è la società capogruppo di Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd e Magic Compass Investments Limited. Sede legale: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Isole Vergini britanniche. ',
   },
+  symbol: {
+    Crypto: 'Cripto',
+    Forex: 'Forex',
+    Commodity: 'Merce',
+    Index: 'Indice',
+    Stock: 'Azione',
+  },
 };

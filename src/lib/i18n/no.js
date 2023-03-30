@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) er det ultimate holdingselskapet til Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd og Magic Compass Investments Limited. Registrert adresse: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, De britiske jomfruøyene. ',
   },
+  symbol: {
+    Crypto: 'Krypto',
+    Forex: 'Forex',
+    Commodity: 'Råvara',
+    Index: 'Index',
+    Stock: 'Stock',
+  },
 };

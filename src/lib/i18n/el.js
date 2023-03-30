@@ -129,10 +129,7 @@ export default {
     withdrawFail: 'Αποτυχία απόσυρσης',
     withdrawSuccess: 'Απόσυρση Επιτυχία',
   },
-
-  user: {
-    logout: 'Αποσύνδεση',
-  },
+  user: { logout: 'Αποσύνδεση' },
   login: {
     login: 'Σύνδεση',
     reg: 'Κανω ΕΓΓΡΑΦΗ',
@@ -196,5 +193,12 @@ export default {
     about: 'Σχετικά με εμάς',
     aboutp:
       'Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd και Magic Compass Investments Limited. Εγγεγραμμένη διεύθυνση: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Βρετανικές Παρθένοι Νήσοι. ',
+  },
+  symbol: {
+    Crypto: 'Crypto',
+    Forex: 'Forex',
+    Commodity: 'Εμπόρευμα',
+    Index: 'Δείκτης',
+    Stock: 'Στοκ',
   },
 };

@@ -197,4 +197,11 @@ export default {
     aboutp:
       'Magic Compass Group (Magic Compass Holdings Limited) é a derradeira empresa holding da Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd e Magic Compass Investments Limited. Endereço registado: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Ilhas Virgens Britânicas. ',
   },
+  symbol: {
+    Crypto: 'Criptografia',
+    Forex: 'Forex',
+    Commodity: 'Mercadoria',
+    Index: 'Índice',
+    Stock: 'Estoque',
+  },
 };

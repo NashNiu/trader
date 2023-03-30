@@ -6,8 +6,12 @@ export default defineStore('trade', {
     activeType: 'popular',
     symbolTypeArr: {
       popular: configSymbols.popularSymbols,
-      goods: configSymbols.goodsSymbols,
+      index: configSymbols.indexSymbols,
       favorite: configSymbols.favoriteSymbols,
+      cryptocurrency: configSymbols.cryptocurrencySymbols,
+      forex: configSymbols.forexSymbols,
+      commodity: configSymbols.commoditySymbols,
+      stock: configSymbols.stockSymbols,
     },
   }),
   actions: {

@@ -197,4 +197,11 @@ export default {
     aboutp:
       'V tem primeru je Magic Compass Group (Magic Compass Holdings Limited) končna holdinška družba družb Magic Compass Ltd, Magic Compass Securities Limited, Magic Compass Financial Services OÜ, Magic Compass International Capital Ltd in Magic Compass Investments Limited. Registrirani naslov: Naslov sedeža: Cistra Corporate Services Centre, Wickhams Cay II, Road Town, Tortola, VG1110, Britanski Deviški otoki. ',
   },
+  symbol: {
+    Crypto: 'Kripto',
+    Forex: 'Forex',
+    Commodity: 'Blago',
+    Index: 'Kazalo',
+    Stock: 'Zaloga',
+  },
 };

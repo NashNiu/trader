@@ -58,6 +58,7 @@ const tabValue = ref('overview');
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: calc(100% - 80px);
   }
 }
 </style>

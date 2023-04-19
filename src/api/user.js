@@ -73,6 +73,13 @@ export function getAssetBalance(vaultId, assetId) {
     },
   });
 }
+// 获取记账钱包信息
+export function getBackEndWalletInfo() {
+  return request({
+    url: '/api/users/backEndWallet/getBackEndWalletInfo',
+    method: 'GET',
+  });
+}
 // 刷新钱包余额
 export function refreshAssetBalance(vaultId, assetId) {
   return request({
@@ -95,6 +102,17 @@ export function getDepositList(page = 0) {
     },
   });
 }
+// 获取转入列表
+export function getTransferInList(page = 0) {
+  return request({
+    url: '/api/users/backEndWalletDeposit/getWithdrawList',
+    method: 'POST',
+    data: {
+      page,
+      size: 10,
+    },
+  });
+}
 // 获取出金列表
 export function getWithdrawList(page = 0) {
   return request({
@@ -109,7 +127,7 @@ export function getWithdrawList(page = 0) {
 // 获取钱包转出列表
 export function getWalletOutList(page = 0) {
   return request({
-    url: '/api/users/digitalWallet/getWithdrawList',
+    url: '/api/users/backEndWalletWithdraw/getWithdrawList',
     method: 'POST',
     data: {
       page,
@@ -146,7 +164,7 @@ export function getTransferFee(data) {
 // 钱包出金
 export function walletWithdraw(data) {
   return request({
-    url: '/api/users/digitalWallet/createWithdraw',
+    url: '/api/users/backEndWalletWithdraw/createWithdraw',
     method: 'POST',
     data,
   });
@@ -163,7 +181,7 @@ export function cancelMtWithdraw(params) {
 // 取消钱包出金
 export function cancelWalletWithdraw(params) {
   return request({
-    url: '/api/users/digitalWallet/cancelWithdraw',
+    url: '/api/users/backEndWalletWithdraw/cancelWithdraw?id=1',
     method: 'GET',
     params,
   });

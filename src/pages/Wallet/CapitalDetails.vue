@@ -63,6 +63,65 @@
         </el-col>
       </el-row>
     </el-tab-pane>
+    <el-tab-pane name="transferIn">
+      <template #label>
+        <span>{{ t('wallet.transferInDetails') }}</span>
+        <el-icon
+          v-if="activeTab === 'transferIn'"
+          style="margin-left: 10px"
+          @click="reloadTransferInData"
+        >
+          <Refresh />
+        </el-icon>
+      </template>
+      <el-table
+        v-loading="transferInLoading"
+        :data="transferInData"
+        stripe
+        border
+        style="width: 100%"
+        :row-style="{ height: '50px' }"
+      >
+        <el-table-column
+          align="center"
+          prop="id"
+          :label="t('wallet.orderNo')"
+          width="120"
+        />
+        <el-table-column
+          align="center"
+          prop="i_time"
+          :label="t('wallet.depositTime')"
+        />
+        <el-table-column
+          prop="currency"
+          :label="t('wallet.cashDepositCurrency')"
+        />
+        <el-table-column prop="amount" :label="t('wallet.amountOfDeposit')" />
+        <el-table-column
+          prop="amountUSD"
+          :label="t('wallet.depositUsdAmount')"
+        />
+        <el-table-column
+          prop="i_status"
+          :label="t('wallet.goldDepositStatus')"
+        />
+        <el-table-column
+          prop="i_completeTime"
+          :label="t('wallet.competeTime')"
+        />
+      </el-table>
+      <el-row justify="end" align="middle" style="margin-top: 15px">
+        <el-col :span="6">
+          <el-pagination
+            v-model:current-page="transferInPageInfo.page"
+            :total="transferInPageInfo.total"
+            layout="prev, pager, next"
+            @current-change="transferInPageChange"
+          />
+        </el-col>
+      </el-row>
+    </el-tab-pane>
     <el-tab-pane name="withdraw">
       <template #label>
         <span>{{ t('wallet.cashDetails') }}</span>
@@ -92,7 +151,10 @@
           prop="usdamount"
           :label="t('wallet.withdrawUsdAmount')"
         />
-        <el-table-column prop="assetid" :label="t('wallet.withdrawCurrency')" />
+        <el-table-column
+          prop="currency"
+          :label="t('wallet.withdrawCurrency')"
+        />
         <el-table-column prop="price" :label="t('wallet.withdrawExchange')" />
         <el-table-column prop="amount" :label="t('wallet.withdrawAmount')" />
         <el-table-column
@@ -158,7 +220,7 @@
           :label="t('wallet.applyTime')"
         />
         <el-table-column
-          prop="assetid"
+          prop="currency"
           :label="t('wallet.transferOutCurrency')"
         />
         <el-table-column
@@ -219,6 +281,9 @@ const activeTab = ref('deposit');
 const depositLoading = ref(false);
 const depositData = ref([]);
 const depositPageInfo = ref({ page: 1, total: 0 });
+const transferInLoading = ref(false);
+const transferInData = ref([]);
+const transferInPageInfo = ref({ page: 1, total: 0 });
 const withdrawData = ref([]);
 const withdrawLoading = ref(false);
 const withdrawPageInfo = ref({ page: 1, total: 0 });
@@ -278,6 +343,30 @@ const getDepositData = async (page = 0) => {
 };
 const depositPageChange = (page) => {
   getDepositData(page - 1);
+};
+const getTransferInData = async (page = 0) => {
+  transferInLoading.value = true;
+  const res = await userApi.getTransferInList(page);
+  transferInLoading.value = false;
+  if (res.data.status === 0) {
+    transferInData.value = res.data.data.content.map((item) => {
+      return {
+        ...item,
+        i_time: dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+        i_status: depositStatusOptions[item.status] || '--',
+        i_completeTime: item.timestamp
+          ? dayjs(item.timestamp).format('YYYY-MM-DD HH:mm:ss')
+          : '--',
+      };
+    });
+    transferInPageInfo.value = {
+      page: page + 1,
+      total: res.data.data?.totalElements,
+    };
+  }
+};
+const transferInPageChange = (page) => {
+  getTransferInData(page - 1);
 };
 const getWithdrawData = async (page = 0) => {
   withdrawLoading.value = true;
@@ -354,6 +443,8 @@ const cancelWithdraw = (id) => {
 const tabChange = (tab) => {
   if (tab === 'deposit') {
     reloadDepositData();
+  } else if (tab === 'transferIn') {
+    reloadTransferInData();
   } else if (tab === 'withdraw') {
     reloadWithdrawData();
   } else if (tab === 'transferOut') {
@@ -362,6 +453,9 @@ const tabChange = (tab) => {
 };
 const reloadDepositData = () => {
   getDepositData(depositPageInfo.value.page - 1);
+};
+const reloadTransferInData = () => {
+  getTransferInData(transferInPageInfo.value.page - 1);
 };
 const reloadWithdrawData = () => {
   getWithdrawData(withdrawPageInfo.value.page - 1);

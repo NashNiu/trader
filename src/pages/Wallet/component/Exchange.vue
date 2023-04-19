@@ -20,7 +20,7 @@
       >
         <el-row align="middle">
           <el-col :span="8">
-            <p class="desc">{{ walletInfo?.mtName }}</p>
+            <p class="desc">{{ walletInfo?.currency }}</p>
           </el-col>
           <el-col :span="14">
             <span>{{ orderData?.price }}</span>
@@ -39,12 +39,12 @@
             />
           </el-col>
           <el-col :span="2">
-            {{ walletInfo?.mtName?.split('USDT')[0] }}
+            {{ walletInfo?.currency }}
           </el-col>
           <el-col :span="8">
             <span>
               {{ t('common.balance') }}
-              {{ Number(walletInfo?.total).toFixed(6) }}
+              {{ Number(walletInfo?.available).toFixed(6) }}
               {{ walletInfo?.mtName?.split('USDT')[0] }}
             </span>
           </el-col>
@@ -114,7 +114,9 @@ const getData = async () => {
   const res = await userApi.depositBefore({
     vaultId: userStore.userInfo.fb,
     platName: 'LP',
-    assetId: props.walletInfo.id,
+    // assetId: props.walletInfo.id,
+    assetCoin: props.walletInfo.currency,
+    symbolName: props.walletInfo.currency + 'USDT',
   });
   getDataLoading.value = false;
   if (res.data.status === 0) {
@@ -141,7 +143,7 @@ const afterClose = () => {
 };
 
 const submit = async () => {
-  if (amount.value > props.walletInfo?.total) {
+  if (amount.value > props.walletInfo?.available) {
     ElMessage.error(t?.('common.insufficientBalance'));
     return;
   }

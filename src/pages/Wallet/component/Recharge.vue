@@ -20,23 +20,38 @@
             <p class="desc">{{ t('wallet.wallet') }}</p>
           </el-col>
           <el-col :span="14">
-            {{ walletInfo?.id }}
+            {{ walletInfo?.currency }}
           </el-col>
         </el-row>
-        <el-row align="middle">
+        <el-row>
+          <el-col :span="8">
+            <p class="desc">{{ t('wallet.chooseNetWork') }}</p>
+          </el-col>
+          <el-col :span="14">
+            <el-select v-model="coinNetwork">
+              <el-option
+                v-for="item in addressArr"
+                :key="item.id"
+                :label="item.assetType"
+                :value="item.assetType"
+              />
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row v-if="coinNetwork" align="middle">
           <el-col :span="8">
             <p class="desc">{{ t('wallet.copyAddress') }}</p>
           </el-col>
           <el-col :span="14">
             <el-space>
-              <span>{{ walletInfo?.address }}</span>
+              <span>{{ coinAddress }}</span>
               <el-icon class="copyIcon">
                 <CopyDocument @click="copyAddress" />
               </el-icon>
             </el-space>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row v-if="coinNetwork">
           <el-col :span="10" :offset="8">
             <img class="qrImg" :src="qrcode" alt="qr code" />
           </el-col>
@@ -58,7 +73,19 @@ import { useClipboard } from '@vueuse/core';
 import { ElMessage } from 'element-plus';
 import { useQRCode } from '@vueuse/integrations/useQRCode';
 import { useI18n } from 'vue-i18n';
+import { useUserStore } from '@/store/index.js';
 
+const userStore = useUserStore();
+const addressArr = computed(() => {
+  const target = userStore.userAssetsArr.find(
+    (item) => item.assetCoin === props.walletInfo.currency
+  );
+  if (target) {
+    return target.children;
+  } else {
+    return [];
+  }
+});
 const { t } = useI18n();
 const props = defineProps({
   walletInfo: {
@@ -67,10 +94,22 @@ const props = defineProps({
   },
 });
 const visible = ref(false);
-const address = computed(() => props.walletInfo?.address);
-const qrcode = useQRCode(address, { margin: 0 });
-const { isSupported, copy } = useClipboard({ source: address, legacy: true });
-
+const coinNetwork = ref();
+const coinAddress = computed(() => {
+  if (coinNetwork.value) {
+    return (
+      addressArr.value.find((item) => item.assetType === coinNetwork.value)
+        ?.address ?? ''
+    );
+  } else {
+    return '';
+  }
+});
+const qrcode = useQRCode(coinAddress, { margin: 0 });
+const { isSupported, copy } = useClipboard({
+  source: coinAddress,
+  legacy: true,
+});
 const copyAddress = () => {
   if (isSupported) {
     copy?.();
@@ -80,9 +119,11 @@ const copyAddress = () => {
   }
 };
 const open = () => {
+  coinNetwork.value = '';
   visible.value = true;
 };
 const close = () => {
+  coinNetwork.value = '';
   visible.value = false;
 };
 defineExpose({

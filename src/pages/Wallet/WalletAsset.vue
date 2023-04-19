@@ -7,21 +7,21 @@
     <div class="contentBox">
       <div
         v-for="item in walletData"
-        :key="item.name"
+        :key="item.currency"
         v-loading="item.loading"
         class="itemBox"
       >
         <div class="iconBox">
-          <SvgIcon icon-class="icon-bitcoin" size="50px" color="#f7931a" />
+          <CoinIco :coin="item.currency" />
         </div>
         <div class="symbolBox">
-          <p class="symbol">{{ item.id }}</p>
+          <p class="symbol">{{ item.currency }}</p>
           <p class="balance">
             {{ t('wallet.wallet') }}{{ t('common.balance') }}
           </p>
         </div>
         <div class="balanceValue">
-          <span>{{ Number(item?.total)?.toFixed(6) }}</span>
+          <span>{{ item.available }}</span>
           <el-icon class="refreshIcon" @click="refreshBalance(item)">
             <Refresh />
           </el-icon>
@@ -63,16 +63,17 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import SvgIcon from '@/components/common/svgIcon.vue';
 import ExchangeDialog from './component/Exchange.vue';
 import RechargeDialog from './component/Recharge.vue';
 import TransferOutDialog from './component/TransferOut.vue';
+import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import { userApi } from '@/api';
 import { ElMessage } from 'element-plus';
-import { useUserStore, useSocketStore } from '@/store/index.js';
+import { useSocketStore, useUserStore } from '@/store/index.js';
 import { useI18n } from 'vue-i18n';
-
+import NP from 'number-precision';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
@@ -80,14 +81,14 @@ const liveData = computed(() => socketStore.liveData);
 const exchangeDialogRef = ref(null);
 const rechargeDialogRef = ref(null);
 const transferDialogRef = ref();
-const walletData = ref([]);
-
+const walletData = ref([]); // 后台返回的钱包余额
+const walletAddressData = ref([]); // 第三方返回的钱包地址
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
     const ask = liveData.value[cur?.mtName]?.ask;
     let value;
     if (ask) {
-      value = ask * cur?.total + pre;
+      value = ask * cur?.available + pre;
     } else {
       value = pre;
     }
@@ -129,32 +130,50 @@ const refreshBalance = async (item) => {
     }
   }
 };
+const getWallerAddressInfo = async () => {
+  const res = await userApi.getWalletInfo(userStore.userInfo?.fb);
+  if (res.data.status == 0) {
+    walletAddressData.value = res.data.data.reduce((pre, cur) => {
+      if (pre.length) {
+        const target = pre.find((item) => item.assetCoin === cur.assetCoin);
+        if (target) {
+          target.children.push(cur);
+          target.available = Number(cur.available) + target.available;
+        } else {
+          pre.push({
+            assetCoin: cur.assetCoin,
+            children: [cur],
+            available: Number(cur.available),
+          });
+        }
+      } else {
+        pre.push({
+          assetCoin: cur.assetCoin,
+          children: [cur],
+          available: Number(cur.available),
+        });
+      }
+      return pre;
+    }, []);
+    userStore.setUserAssetsArr(walletAddressData.value);
+  }
+};
 const getWalletData = async () => {
   loadingData.value = true;
-  const res = await userApi.getWalletInfo(userStore.userInfo?.fb);
+  const res = await userApi.getBackEndWalletInfo();
   loadingData.value = false;
   if (res.data.status === 0) {
-    const dataArr = res.data.data;
-    for (const item of dataArr) {
-      const nameRes = await userApi.getSymbolName(item.id);
-      if (nameRes.data.status === 0) {
-        item.mtName = nameRes.data.data;
-      }
-    }
-    walletData.value = dataArr;
-    userStore.setUserAssetsArr(
-      dataArr?.map((item) => ({
-        assetId: item.id,
-        mtName: item.mtName,
-        address: item.address,
-      }))
-    );
+    walletData.value = res.data.data.map((item) => ({
+      ...item,
+      available: NP.round(item.balance - item.freeze, 6),
+    }));
   } else {
     ElMessage.error('GET WALLET INFO FAILED');
   }
 };
 onMounted(() => {
   getWalletData();
+  getWallerAddressInfo();
 });
 </script>
 <style lang="less" scoped>

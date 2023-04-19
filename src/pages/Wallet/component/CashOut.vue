@@ -6,21 +6,31 @@
     <el-form :model="formData" label-width="200px">
       <el-form-item :label="t('wallet.paymentMethod')">
         <el-select v-model="formData.method" style="width: 250px">
-          <el-option :label="t('wallet.giveMoneyToMyWallet')" :value="1" />
-          <el-option :label="t('wallet.cashOutToExternalWallet')" :value="2" />
+          <el-option :label="t('wallet.giveMoneyToMyWallet')" :value="0" />
+          <el-option :label="t('wallet.cashOutToExternalWallet')" :value="1" />
         </el-select>
       </el-form-item>
       <el-form-item :label="t('wallet.cashCurrency')">
         <el-select v-model="formData.currency" style="width: 250px">
           <el-option
             v-for="item in userAssetsArr"
-            :key="item.assetId"
-            :label="item.assetId"
-            :value="item.assetId"
+            :key="item.assetCoin"
+            :label="item.assetCoin"
+            :value="item.assetCoin"
           />
         </el-select>
       </el-form-item>
-      <el-form-item v-if="formData.currency" :label="currentCurrency">
+      <el-form-item v-if="formData.currency" :label="t('wallet.chooseNetWork')">
+        <el-select v-model="formData.assetType" style="width: 250px">
+          <el-option
+            v-for="item in currentCurrencyData"
+            :key="item.id"
+            :label="item.assetType"
+            :value="item.assetType"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="formData.currency" :label="formData.currency">
         <span v-loading="beforeOrderLoading">{{ currencyPrice }}</span>
       </el-form-item>
       <el-form-item :label="t('wallet.amountPaid')">
@@ -29,7 +39,7 @@
           :controls="false"
           style="width: 250px; margin-right: 20px"
         />
-        <span>{{ t('wallet.dollars') }} US($1000)</span>
+        <span>{{ t('wallet.dollars') }} US</span>
       </el-form-item>
       <el-form-item :label="t('wallet.cashAvailable')">
         <el-input-number
@@ -38,10 +48,10 @@
           disabled
           style="width: 250px; margin-right: 20px"
         />
-        <span>ETH</span>
+        <span>{{ formData.currency }}</span>
       </el-form-item>
       <el-form-item
-        v-if="formData.method === 2"
+        v-if="formData.method === 1"
         :label="t('wallet.cashAddress')"
       >
         <el-input v-model="formData.externalAddress" style="width: 250px" />
@@ -72,8 +82,9 @@ const userStore = useUserStore();
 const visible = ref(false);
 const userAssetsArr = computed(() => userStore.userAssetsArr);
 const formData = ref({
-  method: 1,
+  method: 0,
   currency: '',
+  assetType: '',
   amount: 0,
   externalAddress: '',
 });
@@ -81,37 +92,33 @@ const beforeOrderLoading = ref(false);
 const submitting = ref(false);
 const currencyPrice = ref(0);
 const orderId = ref();
-const currentCurrency = computed(() => {
+const currentCurrencyData = computed(() => {
   if (formData.value.currency) {
     return (
       userAssetsArr.value.find(
-        (item) => item.assetId === formData.value.currency
-      )?.mtName ?? ''
+        (item) => item.assetCoin === formData.value.currency
+      )?.children ?? []
     );
   } else {
-    return '';
+    return [];
   }
 });
-const currentAddress = computed(() => {
-  if (formData.value.currency) {
-    return (
-      userAssetsArr.value.find(
-        (item) => item.assetId === formData.value.currency
-      )?.address ?? ''
-    );
-  } else {
-    return '';
-  }
-});
+// const currentAddress = computed(() => {
+//   if (formData.value.assetType) {
+//     return (
+//       currentCurrencyData.value.find(
+//         (item) => item.assetType === formData.value.assetType
+//       )?.address ?? ''
+//     );
+//   } else {
+//     return '';
+//   }
+// });
 const confirmDisabled = computed(() => {
-  if (
-    !formData.value.currency ||
-    !formData.value.method ||
-    !transferAmount.value
-  ) {
+  if (!formData.value.currency || !transferAmount.value) {
     return true;
   } else {
-    return formData.value.method === 2 && !formData.value.externalAddress;
+    return formData.value.method === 1 && !formData.value.externalAddress;
   }
 });
 const transferAmount = computed(() => {
@@ -125,14 +132,13 @@ const showDialog = () => {
   visible.value = true;
 };
 const confirmOut = async () => {
-  const toExternal = formData.value.method === 2;
   const params = {
     id: orderId.value,
     amount: transferAmount.value,
-    ToExternal: toExternal ? 1 : 0,
-    externalAddress: toExternal
-      ? formData.value.externalAddress
-      : currentAddress.value,
+    withdrawChannel: formData.value.method,
+    // ToExternal: toExternal ? 1 : 0,
+    externalAddress:
+      formData.value.method === 1 ? formData.value.externalAddress : '',
   };
   submitting.value = true;
   const res = await userApi.withdrawConfirm(params);
@@ -141,15 +147,16 @@ const confirmOut = async () => {
     ElMessage.success(t('common.success'));
     visible.value = false;
   } else {
-    ElMessage.success(t('common.failed'));
+    ElMessage.error(t('common.failed'));
   }
 };
 watch(visible, (nv) => {
   if (!nv) {
     formData.value = {
       currency: '',
-      method: 1,
+      method: 0,
       amount: 0,
+      assetType: '',
       externalAddress: '',
     };
     orderId.value = null;
@@ -159,19 +166,24 @@ watch(visible, (nv) => {
   }
 });
 watch(
-  () => formData.value.currency,
-  async (nv) => {
-    if (nv) {
+  [() => formData.value.currency, () => formData.value.assetType],
+  async ([nv1, nv2]) => {
+    if (nv1 && nv2) {
       beforeOrderLoading.value = true;
       const res = await userApi.withdrawBefore({
         vaultId: userStore.userInfo.fb,
         platName: 'LP',
-        assetId: nv,
+        assetCoin: nv1,
+        assetType: nv2,
+        withdrawChannel: formData.value.method,
+        symbolName: nv1 + 'USDT',
       });
+      beforeOrderLoading.value = false;
       if (res.data.status === 0) {
-        beforeOrderLoading.value = false;
         currencyPrice.value = res.data.data.price;
         orderId.value = res.data.data.id;
+      } else {
+        ElMessage.error(t('common.failed'));
       }
     }
   }

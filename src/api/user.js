@@ -181,7 +181,7 @@ export function cancelMtWithdraw(params) {
 // 取消钱包出金
 export function cancelWalletWithdraw(params) {
   return request({
-    url: '/api/users/backEndWalletWithdraw/cancelWithdraw?id=1',
+    url: '/api/users/backEndWalletWithdraw/cancelWithdraw',
     method: 'GET',
     params,
   });

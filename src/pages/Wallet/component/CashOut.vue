@@ -103,17 +103,6 @@ const currentCurrencyData = computed(() => {
     return [];
   }
 });
-// const currentAddress = computed(() => {
-//   if (formData.value.assetType) {
-//     return (
-//       currentCurrencyData.value.find(
-//         (item) => item.assetType === formData.value.assetType
-//       )?.address ?? ''
-//     );
-//   } else {
-//     return '';
-//   }
-// });
 const confirmDisabled = computed(() => {
   if (!formData.value.currency || !transferAmount.value) {
     return true;
@@ -136,7 +125,6 @@ const confirmOut = async () => {
     id: orderId.value,
     amount: transferAmount.value,
     withdrawChannel: formData.value.method,
-    // ToExternal: toExternal ? 1 : 0,
     externalAddress:
       formData.value.method === 1 ? formData.value.externalAddress : '',
   };

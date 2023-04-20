@@ -119,7 +119,14 @@ const copyAddress = () => {
   }
 };
 const open = () => {
-  coinNetwork.value = '';
+  setTimeout(() => {
+    if (addressArr.value.length) {
+      coinNetwork.value = addressArr.value[0].assetType;
+    } else {
+      coinNetwork.value = '';
+    }
+  }, 10);
+
   visible.value = true;
 };
 const close = () => {

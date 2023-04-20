@@ -114,7 +114,6 @@ const getData = async () => {
   const res = await userApi.depositBefore({
     vaultId: userStore.userInfo.fb,
     platName: 'LP',
-    // assetId: props.walletInfo.id,
     assetCoin: props.walletInfo.currency,
     symbolName: props.walletInfo.currency + 'USDT',
   });

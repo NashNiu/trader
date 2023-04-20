@@ -105,7 +105,13 @@ const visible = ref(false);
 const coinNetwork = ref();
 const showDialog = () => {
   visible.value = true;
-  coinNetwork.value = '';
+  setTimeout(() => {
+    if (addressArr.value.length) {
+      coinNetwork.value = addressArr.value[0].id;
+    } else {
+      coinNetwork.value = '';
+    }
+  }, 10);
 };
 const transferQuantity = ref(0);
 const transferAddress = ref('');
@@ -142,11 +148,8 @@ const transferOut = async () => {
       (item) => item.id === coinNetwork.value
     );
     const params = {
-      // vaultId: userStore.userInfo.fb,
       platName: 'LP',
-      // assetId: coinNetwork.value,
       amount: transferQuantity.value,
-      // ToExternal: 1,
       externalAddress: transferAddress.value,
       withdrawChannel: 1,
       assetCoin: target?.assetCoin,

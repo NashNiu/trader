@@ -1,9 +1,15 @@
 <template>
   <div v-loading="loadingData" class="walletAssetContainer">
-    <h3 class="title">
-      {{ t('wallet.walletAssets') }} $
-      {{ walletsValue.toFixed(2) }}
-    </h3>
+    <el-space>
+      <h3 class="title">
+        {{ t('wallet.walletAssets') }} $
+        {{ walletsValue.toFixed(2) }}
+      </h3>
+      <el-icon class="refreshIcon" @click="getWalletData">
+        <Refresh />
+      </el-icon>
+    </el-space>
+
     <div class="contentBox">
       <div
         v-for="item in walletData"
@@ -22,9 +28,6 @@
         </div>
         <div class="balanceValue">
           <span>{{ item.available }}</span>
-          <el-icon class="refreshIcon" @click="refreshBalance(item)">
-            <Refresh />
-          </el-icon>
         </div>
         <div class="operateBox">
           <el-tooltip :content="t('wallet.rechargeCurrency')" placement="top">
@@ -64,7 +67,7 @@
 </template>
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import SvgIcon from '@/components/common/svgIcon.vue';
+// import SvgIcon from '@/components/common/svgIcon.vue';
 import ExchangeDialog from './component/Exchange.vue';
 import RechargeDialog from './component/Recharge.vue';
 import TransferOutDialog from './component/TransferOut.vue';
@@ -85,10 +88,10 @@ const walletData = ref([]); // 后台返回的钱包余额
 const walletAddressData = ref([]); // 第三方返回的钱包地址
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
-    const ask = liveData.value[cur?.mtName]?.ask;
+    const ask = liveData.value[cur?.currency + 'USDT']?.ask;
     let value;
     if (ask) {
-      value = ask * cur?.available + pre;
+      value = ask * (cur?.balance - cur?.freeze) + pre;
     } else {
       value = pre;
     }
@@ -110,29 +113,9 @@ const openTransferOutDialog = (data) => {
   activeWalletInfo.value = data;
   transferDialogRef.value?.open();
 };
-const refreshBalance = async (item) => {
-  item.loading = true;
-  const res = await userApi.refreshAssetBalance(
-    userStore.userInfo?.fb,
-    item.id
-  );
-  if (res.data.status === 0) {
-    const res2 = await userApi.getAssetBalance(userStore.userInfo?.fb, item.id);
-    if (res2.data.status === 0) {
-      const index = walletData.value.findIndex((li) => li.id === item.id);
-      if (index > -1) {
-        walletData.value[index] = {
-          ...walletData.value[index],
-          loading: false,
-          ...res.data.data,
-        };
-      }
-    }
-  }
-};
 const getWallerAddressInfo = async () => {
   const res = await userApi.getWalletInfo(userStore.userInfo?.fb);
-  if (res.data.status == 0) {
+  if (res.data.status === 0) {
     walletAddressData.value = res.data.data.reduce((pre, cur) => {
       if (pre.length) {
         const target = pre.find((item) => item.assetCoin === cur.assetCoin);
@@ -191,6 +174,11 @@ onMounted(() => {
     font-size: 20px;
     padding-left: 5px;
   }
+  .refreshIcon {
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 20px;
+  }
   .contentBox {
     padding: 0;
     box-sizing: border-box;
@@ -239,11 +227,6 @@ onMounted(() => {
         align-self: flex-end;
         margin-left: 50px;
         width: 160px;
-      }
-      .refreshIcon {
-        margin-left: 15px;
-        cursor: pointer;
-        font-size: 20px;
       }
       .operateBox {
         margin-left: 20px;

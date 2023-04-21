@@ -25,6 +25,21 @@
       </el-row>
       <el-row align="middle" :gutter="20">
         <el-col :span="6">
+          <p class="desc">{{ t('wallet.chooseNetWork') }}</p>
+        </el-col>
+        <el-col :span="14">
+          <el-select v-model="coinNetwork">
+            <el-option
+              v-for="item in addressArr"
+              :key="item.id"
+              :label="item.assetType"
+              :value="item.id"
+            />
+          </el-select>
+        </el-col>
+      </el-row>
+      <el-row v-if="coinNetwork" align="middle" :gutter="20">
+        <el-col :span="6">
           <p class="desc">{{ t('wallet.receiveAddress') }}</p>
         </el-col>
         <el-col :span="14">
@@ -63,7 +78,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/store/index.js';
 import { ElMessage } from 'element-plus';
@@ -76,9 +91,27 @@ const props = defineProps({
 });
 const { t } = useI18n();
 const userStore = useUserStore();
+const addressArr = computed(() => {
+  const target = userStore.userAssetsArr.find(
+    (item) => item.assetCoin === props.walletInfo.currency
+  );
+  if (target) {
+    return target.children;
+  } else {
+    return [];
+  }
+});
 const visible = ref(false);
+const coinNetwork = ref();
 const showDialog = () => {
   visible.value = true;
+  setTimeout(() => {
+    if (addressArr.value.length) {
+      coinNetwork.value = addressArr.value[0].id;
+    } else {
+      coinNetwork.value = '';
+    }
+  }, 10);
 };
 const transferQuantity = ref(0);
 const transferAddress = ref('');
@@ -97,7 +130,7 @@ const getTransferFee = async () => {
   if (transferAddress.value && transferQuantity.value) {
     loadingTransferFee.value = true;
     const params = {
-      assetId: props.walletInfo.id,
+      assetId: coinNetwork.value,
       vaultId: userStore.userInfo.fb,
       externalAddress: transferAddress.value,
       amount: transferQuantity.value,
@@ -111,13 +144,16 @@ const getTransferFee = async () => {
 };
 const transferOut = async () => {
   if (transferQuantity.value && transferAddress.value) {
+    const target = addressArr.value.find(
+      (item) => item.id === coinNetwork.value
+    );
     const params = {
-      vaultId: userStore.userInfo.fb,
       platName: 'LP',
-      assetId: props.walletInfo.id,
       amount: transferQuantity.value,
-      ToExternal: 1,
       externalAddress: transferAddress.value,
+      withdrawChannel: 1,
+      assetCoin: target?.assetCoin,
+      assetType: target?.assetType,
     };
     transferLoading.value = true;
     const res = await userApi.walletWithdraw(params);

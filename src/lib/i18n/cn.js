@@ -75,7 +75,7 @@ export default {
     walletAssets: '钱包资产',
     rechargeCurrency: '充值',
     copyAddress: '复制地址',
-    currencyExchange: '货币兑换',
+    currencyExchange: '转入交易账户',
     exchangeAmount: '兑换数量',
     chooseNetWork: '选择网络',
     convert: '转换',

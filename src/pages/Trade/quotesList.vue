@@ -117,7 +117,7 @@ const tableData = computed(() =>
       changeColor,
       sell: ask,
       buy: liveData.value?.[item.name]?.['ask'] ?? '0.00',
-      highLow: `${high} \\ ${low}`,
+      highLow: `${high} / ${low}`,
       mtName: item.name,
     };
   })

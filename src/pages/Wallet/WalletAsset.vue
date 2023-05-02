@@ -88,7 +88,10 @@ const walletData = ref([]); // 后台返回的钱包余额
 const walletAddressData = ref([]); // 第三方返回的钱包地址
 const walletsValue = computed(() => {
   return walletData.value.reduce((pre, cur) => {
-    const ask = liveData.value[cur?.currency + 'USDT']?.ask;
+    let ask = liveData.value[cur?.currency + 'USDT']?.ask;
+    if (cur?.currency === 'USDT') {
+      ask = 1;
+    }
     let value;
     if (ask) {
       value = ask * (cur?.balance - cur?.freeze) + pre;

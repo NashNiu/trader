@@ -311,14 +311,14 @@ export const symbolArr = [
     d: 3,
   },
   {
-    name: 'USOil',
+    name: 'USOIL',
     displayName: 'USOil',
     type: 4,
     isPopular: false,
     d: 3,
   },
   {
-    name: 'UKOil',
+    name: 'UKOIL',
     displayName: 'UKOil',
     type: 4,
     isPopular: false,

@@ -183,7 +183,7 @@ const bid = computed(() => currentSblData.value.bid);
 
 // 挂单参考保证金
 const limitMarginRequired = computed(() =>
-  ((props.conSize * count.value * limitPrice.value) / 100).toFixed(2)
+  ((props.conSize * count.value) / 100).toFixed(2)
 );
 // 挂单价格范围
 const limitPriceScope = computed(() => {

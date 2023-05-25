@@ -28,7 +28,7 @@
       class="rowItemBox"
     >
       <el-col :span="8">
-        <span>{{ t('trade.depositRequired') }} 0.01-5</span>
+        <span>{{ t('trade.depositRequired') }}</span>
       </el-col>
       <el-col :span="16">
         <p class="textRight">{{ marginRequired }}</p>

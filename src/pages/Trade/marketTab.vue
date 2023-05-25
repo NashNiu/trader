@@ -163,9 +163,9 @@ const bid = computed(() => currentSblData.value.bid);
 // 市价参考保证金
 const marginRequired = computed(() => {
   if (props.type === 'buy') {
-    return ((props.conSize * count.value * bid.value) / 100).toFixed(2);
+    return ((props.conSize * count.value) / 100).toFixed(2);
   } else {
-    return ((props.conSize * count.value * ask.value) / 100).toFixed(2);
+    return ((props.conSize * count.value) / 100).toFixed(2);
   }
 });
 // 市价止盈范围

@@ -20,7 +20,7 @@
         </template>
       </el-menu-item>
       <div class="sideBarOther">
-        <Img :src="HelpImg" class="otherItem" @click="clickHelp" />
+        <img :src="HelpImg" class="otherItem" @click="clickHelp" />
       </div>
     </el-menu>
     <ProfileDrawer ref="profileDrawerRef" />

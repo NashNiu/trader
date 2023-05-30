@@ -1,8 +1,8 @@
 import { request } from '@/utils/index.js';
 
 /**
- * @param data请求接口传递的参数
  * @return {Promise}
+ * @param data
  */
 //可以传递请求需要的其他参数也可以放在配置项中如url,method,params,headers等
 export function getInfo(data) {
@@ -53,6 +53,14 @@ export function loginInterface(data) {
   return request({
     url: '/api/auth/login?randomStr=*&code=*_*',
     method: 'POST',
+    data,
+  });
+}
+// 上传文件
+export function uploadFile(data) {
+  return request({
+    url: '/api/users/user/uploadFile',
+    method: 'post',
     data,
   });
 }

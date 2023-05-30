@@ -126,7 +126,7 @@ useEventListener(shadowRef, 'mouseleave', () => {
 <style lang="less" scoped>
 .container {
   display: flex;
-  width: 100vw;
+  //width: 100vw;
   height: 100vh;
   .main {
     flex: 1;

@@ -186,3 +186,20 @@ export function cancelWalletWithdraw(params) {
     params,
   });
 }
+
+// 获取证件信息
+export function getCertificate() {
+  return request({
+    url: '/api/users/user/getDocument',
+    method: 'get',
+  });
+}
+
+// 修改证件
+export function updateCertificate(data) {
+  return request({
+    url: '/api/users/user/updateDocument',
+    method: 'post',
+    data,
+  });
+}

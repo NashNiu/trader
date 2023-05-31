@@ -93,19 +93,26 @@
         <div class="amountBox">
           <div class="labelBox">
             <span class="label">Amount</span>
-            <span class="price">$0.00</span>
+            <span class="price">{{ selectedCoin?.available }}</span>
           </div>
           <div class="amountInputBox">
             <el-input
               v-model="withdrawAmount"
               class="inputAmount"
+              type="number"
+              step="0.000000001"
               placeholder="Withdraw Amount"
             >
               <template #suffix>
                 <CoinIco :size="24" :coin="selectedCoin.currency" />
               </template>
               <template #append>
-                <div class="max">Max</div>
+                <div
+                  class="max"
+                  @click="withdrawAmount = selectedCoin?.available"
+                >
+                  Max
+                </div>
               </template>
             </el-input>
           </div>
@@ -145,6 +152,10 @@ import { computed, ref } from 'vue';
 import { useHeaderStore } from '@/store/index.js';
 import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import { promiseTimeout } from '@vueuse/core';
+import { ElMessage } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+import { userApi } from '@/api';
+const { t } = useI18n();
 const headerStore = useHeaderStore();
 const walletData = computed(() => headerStore.walletData);
 const addressData = computed(() => headerStore.addressData);
@@ -177,8 +188,26 @@ const coinItemClick = async (coin) => {
     selectedType.value = activeTypeArray.value[0]?.assetType;
   }
 };
-const submit = () => {
-  step.value = 2;
+const submit = async () => {
+  if (selectedType.value && withdrawAddress.value && withdrawAmount.value) {
+    const params = {
+      platName: 'LP',
+      amount: withdrawAmount.value,
+      externalAddress: withdrawAddress.value,
+      withdrawChannel: 1,
+      assetCoin: selectedCoin.value?.currency,
+      assetType: selectedType.value,
+    };
+    const res = await userApi.walletWithdraw(params);
+    if (!res.data.status) {
+      ElMessage.success(t('common.operateSuccess'));
+      await getWalletData();
+    } else {
+      ElMessage.error(res.data.message || t('common.operateFailed'));
+    }
+  } else {
+    ElMessage.error(t('wallet.amountOrAddressWrong'));
+  }
 };
 const enterPass = () => {
   console.log(password.value);
@@ -219,7 +248,7 @@ const back = () => {
           .amount {
             margin-right: 5px;
             font-size: 20px;
-            font-weight: bold;
+            //font-weight: bold;
             color: #666666;
           }
         }
@@ -258,7 +287,7 @@ const back = () => {
           align-items: center;
           cursor: pointer;
           font-size: 20px;
-          font-weight: bold;
+          //font-weight: bold;
           color: #666666;
           img {
             margin-left: 15px;
@@ -307,9 +336,9 @@ const back = () => {
       .tips {
         margin-top: 15px;
         font-size: 16px;
-        font-weight: bold;
         color: #666666;
         word-break: break-word;
+        line-height: 20px;
       }
     }
   }
@@ -364,7 +393,7 @@ const back = () => {
     }
     span {
       font-size: 20px;
-      font-weight: bold;
+      //font-weight: bold;
       color: #666666;
     }
     &:hover,
@@ -389,7 +418,7 @@ const back = () => {
     }
     .currency {
       font-size: 20px;
-      font-weight: bold;
+      //font-weight: bold;
       color: #666666;
       margin-left: 15px;
     }

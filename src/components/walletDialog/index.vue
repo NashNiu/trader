@@ -38,6 +38,7 @@
           <Deposit v-if="!ifNeedVerification" />
         </div>
         <Withdraw v-show="activeTab === 2" />
+        <Transfer v-show="activeTab === 3" />
       </div>
       <div class="footerBox">
         <span class="tips">
@@ -55,6 +56,7 @@ import closeImg from '@/assets/img/header/close.png';
 import Verification from '@/components/walletDialog/verification.vue';
 import Deposit from '@/components/walletDialog/deposit.vue';
 import Withdraw from '@/components/walletDialog/withdraw.vue';
+import Transfer from '@/components/walletDialog/transfer.vue';
 const visible = ref(false);
 const tabData = [
   {

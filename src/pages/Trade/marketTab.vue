@@ -112,6 +112,9 @@ import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { computed, ref } from 'vue';
 import { ElLoading, ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
+import { calcMargin } from '@/utils/tools.js';
+import { getSymbolType } from '@/config/symbol.js';
+
 const { t } = useI18n();
 const props = defineProps({
   type: {
@@ -138,10 +141,21 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  marginInit: {
+    type: Number,
+    default: 0,
+  },
 });
 const emit = defineEmits(['close']);
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
+
+// 产品基本信息
+const currentSblBasicData = computed(
+  () => socketStore.sblBasicData[props.symbol] || {}
+);
+// 基础货币
+const baseSymbol = computed(() => currentSblBasicData.value.cur_base);
 // 市价手数
 const count = ref(0.01);
 // 市价是否止盈
@@ -162,10 +176,37 @@ const ask = computed(() => currentSblData.value.ask);
 const bid = computed(() => currentSblData.value.bid);
 // 市价参考保证金
 const marginRequired = computed(() => {
+  const type = getSymbolType(props.symbol);
+  const ifCrossForex =
+    type === 3 &&
+    !props.symbol.startsWith('USD') &&
+    !props.symbol.endsWith('USD');
   if (props.type === 'buy') {
-    return ((props.conSize * count.value) / 100).toFixed(2);
+    const price = ifCrossForex
+      ? socketStore.liveData[baseSymbol.value + 'USD'].bid
+      : bid.value;
+    return calcMargin({
+      symbol: props.symbol,
+      consize: props.conSize,
+      count: count.value,
+      marginInt: props.marginInit,
+      price,
+      type,
+    });
+    // return ((props.conSize * count.value) / 100).toFixed(2);
   } else {
-    return ((props.conSize * count.value) / 100).toFixed(2);
+    const price = ifCrossForex
+      ? socketStore.liveData[baseSymbol.value + 'USD'].ask
+      : bid.value;
+    return calcMargin({
+      symbol: props.symbol,
+      consize: props.conSize,
+      count: count.value,
+      marginInt: props.marginInit,
+      price,
+      type,
+    });
+    // return ((props.conSize * count.value) / 100).toFixed(2);
   }
 });
 // 市价止盈范围

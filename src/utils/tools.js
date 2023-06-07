@@ -84,3 +84,24 @@ export function updateChartByList(listData, idKey, symbolKey) {
     commonStore.changeChartData({});
   }
 }
+
+// 计算保证金 consize: 合约  marginInit: 初始保证金
+export function calcMargin({ symbol, count, consize, price, marginInt, type }) {
+  const level = 100; //杠杆
+  // type 1:数字货币 2:指数 3:外汇  4:商品  5:股票
+  if (type === 1) {
+    return ((count * consize * price) / level).toFixed(2);
+  } else if (type === 2) {
+    return marginInt;
+  } else if (type === 3) {
+    if (symbol.startsWith('USD')) {
+      return ((consize * count) / level).toFixed(2);
+    } else if (symbol.endsWith('USD')) {
+      return ((consize * count * price) / level).toFixed(2);
+    } else {
+      return ((consize * count * price) / level).toFixed(2);
+    }
+  } else if (type === 4) {
+    return ((count * consize * price) / level).toFixed(2);
+  }
+}

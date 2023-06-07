@@ -57,7 +57,7 @@ const props = defineProps({
 });
 const socketStore = useSocketStore();
 const symbolBasicData = computed(() => {
-  return socketStore.sblBasicData?.[props.drawerData?.symbol];
+  return socketStore.sblBasicData?.[props.symbol];
 });
 const symbolDeepAsk = computed(() => {
   return (

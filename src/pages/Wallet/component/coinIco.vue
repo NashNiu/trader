@@ -1,7 +1,7 @@
 <template>
   <SvgIcon
     :icon-class="coinClass"
-    size="50px"
+    :size="size + 'px'"
     :color="coinColor[coin] || '#ffbe4e'"
   />
 </template>
@@ -12,6 +12,10 @@ const props = defineProps({
   coin: {
     type: String,
     default: '',
+  },
+  size: {
+    type: Number,
+    default: 50,
   },
 });
 const coinClass = computed(() => {

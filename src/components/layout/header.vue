@@ -11,6 +11,48 @@
           <el-icon><Search /></el-icon>
         </div>
       </div>
+      <div class="walletBox">
+        <el-popover
+          :show-arrow="false"
+          trigger="click"
+          :width="211"
+          :offset="10"
+          popper-class="walletInfoPop"
+          @show="getWalletData"
+        >
+          <template #reference>
+            <div class="assetBox">
+              <span>0.00000000</span>
+              <CoinIco :size="24" class="icon" />
+              <img :src="DownArrowImg" alt="" />
+            </div>
+          </template>
+          <template #default>
+            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">
+              <div class="inputBox">
+                <el-input
+                  v-model="searchWalletText"
+                  placeholder="查询"
+                ></el-input>
+              </div>
+
+              <div class="allWalletBox">
+                <div
+                  v-for="item in filterWalletData"
+                  :key="item.id"
+                  class="walletItemBox"
+                >
+                  <span class="balance">{{ item.balance.toFixed(8) }}</span>
+                  <span class="currency">{{ item.currency }}</span>
+                  <CoinIco class="icon" :size="22" :coin="item.currency" />
+                </div>
+              </div>
+            </el-scrollbar>
+          </template>
+        </el-popover>
+
+        <div class="btnBox" @click="showWalletDialog">wallet</div>
+      </div>
       <div class="content-nav">
         <div class="itemBox">
           <span class="itemValue">
@@ -50,16 +92,22 @@
         </div>
       </div>
     </div>
+    <WalletDialog ref="walletDialogRef" />
   </header>
 </template>
 <script setup>
 import { Search } from '@element-plus/icons-vue';
-import { useSocketStore, useUserStore } from '@/store/index.js';
-import { computed } from 'vue';
+import { useSocketStore, useUserStore, useHeaderStore } from '@/store/index.js';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import CoinIco from '@/pages/Wallet/component/coinIco.vue';
+import DownArrowImg from '@/assets/img/header/down.png';
+import WalletDialog from '@/components/walletDialog/index.vue';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
+const headerStore = useHeaderStore();
+const walletDialogRef = ref();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(() => socketStore.userTotalProfit);
@@ -68,6 +116,27 @@ const userFundsVisible = computed(() => userStore.userFundsVisible);
 const setFundsVisible = (visible) => {
   userStore.setUserFundsVisible(visible);
 };
+
+const getWalletDataLoading = ref(false);
+const walletData = computed(() => headerStore.walletData);
+const searchWalletText = ref('');
+const filterWalletData = computed(() => {
+  if (searchWalletText.value.trim()) {
+    return walletData.value.filter((item) =>
+      item?.currency?.includes(searchWalletText.value.trim().toUpperCase())
+    );
+  } else {
+    return walletData.value;
+  }
+});
+const getWalletData = async () => {
+  getWalletDataLoading.value = true;
+  await headerStore.getWalletData();
+  getWalletDataLoading.value = false;
+};
+const showWalletDialog = () => {
+  walletDialogRef?.value?.show();
+};
 </script>
 
 <style scoped lang="less">
@@ -75,7 +144,7 @@ header {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 68px;
+  height: 80px;
   background: white;
   box-shadow: 0 5px 6px rgba(0, 0, 0, 0.16);
   opacity: 1;
@@ -91,8 +160,8 @@ header {
   width: 160px;
   height: 50px;
   cursor: pointer;
-  margin-right: 100px;
-  margin-left: 60px;
+  margin-right: 90px;
+  margin-left: 54px;
 }
 .content-logo img {
   height: 100%;
@@ -128,32 +197,108 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
+  width: 370px;
+  .content-search {
+    display: flex;
+    align-items: center;
+    padding: 3px 10px;
+    width: 370px;
+    height: 52px;
+    border-radius: 26px;
+    background: #f0f2f4;
+    box-sizing: border-box;
+  }
+  .content-search input {
+    padding: 0 10px;
+    width: 300px;
+    height: 40px;
+    border: 0;
+    border-radius: 8px;
+    color: #808080;
+    background: #f0f2f4;
+    font-size: 16px;
+    outline: none;
+  }
 }
-.content-search {
+.walletBox {
+  margin: 0 40px;
+  width: 311px;
+  height: 52px;
+  border-radius: 12px;
+  overflow: hidden;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 3px 5px;
-  width: 250px;
-  height: 35px;
-  border-radius: 8px;
-  background: #f0f2f4;
-}
-.content-search input {
-  padding: 0 10px;
-  width: 200px;
-  height: 40px;
-  border: 0;
-  border-radius: 8px;
-  color: #808080;
-  background: #f0f2f4;
-  font-size: 16px;
-  outline: none;
-}
-.content-login {
-  font-size: 18px;
-  color: #808080;
-  text-align: center;
   cursor: pointer;
+  .assetBox {
+    width: 211px;
+    height: 52px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-family: MicrosoftYaHei;
+    font-size: 20px;
+    color: #666666;
+    .icon {
+      margin: 0 20px 0 10px;
+    }
+    --el-border-radius-base: '12px';
+  }
+  .btnBox {
+    width: 100px;
+    height: 52px;
+    background-color: #266fe8;
+    font-size: 22px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+</style>
+<style lang="less">
+.walletInfoPop {
+  --el-border-radius-base: 12px;
+  --el-popover-padding: 0;
+  .el-popover.el-popper {
+    padding: 0;
+  }
+  .inputBox {
+    padding: 10px 15px;
+    box-sizing: border-box;
+  }
+  .allWalletBox {
+    .walletItemBox {
+      display: flex;
+      height: 42px;
+      align-items: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      &.active,
+      &:hover {
+        background: #eef2f7;
+      }
+      .balance {
+        padding-left: 12px;
+        font-size: 16px;
+        color: #666666;
+        width: 120px;
+        box-sizing: border-box;
+      }
+      .currency {
+        padding: 0 5px 0 5px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #666666;
+        box-sizing: border-box;
+        width: 60px;
+      }
+      .icon {
+        padding-right: 5px;
+      }
+    }
+  }
 }
 </style>

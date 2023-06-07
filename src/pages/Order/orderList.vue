@@ -67,7 +67,7 @@
         </el-table-column>
         <el-table-column prop="storage" :label="t('common.overnightFee')">
           <template #default="scope">
-            <span class="bold">{{ scope.row.storage }}</span>
+            <span class="bold">{{ scope.row?.storage?.toFixed(8) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" :label="t('common.openingTime')" />

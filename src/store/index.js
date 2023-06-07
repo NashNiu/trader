@@ -3,3 +3,4 @@ export { default as useTradeStore } from './trade.js';
 export { default as useCommonStore } from './common.js';
 export { default as useUserStore } from './user.js';
 export { default as useChartStore } from './chart.js';
+export { default as useHeaderStore } from './header.js';

@@ -183,7 +183,9 @@ const marginRequired = computed(() => {
     !props.symbol.endsWith('USD');
   if (props.type === 'buy') {
     const price = ifCrossForex
-      ? socketStore.liveData[baseSymbol.value + 'USD']?.bid ?? 0
+      ? socketStore.liveData[baseSymbol.value + 'USD']?.bid ??
+        1 / socketStore.liveData['USD' + baseSymbol.value]?.bid ??
+        1
       : bid.value;
     return calcMargin({
       symbol: props.symbol,
@@ -196,7 +198,9 @@ const marginRequired = computed(() => {
     // return ((props.conSize * count.value) / 100).toFixed(2);
   } else {
     const price = ifCrossForex
-      ? socketStore.liveData[baseSymbol.value + 'USD']?.ask ?? 0
+      ? socketStore.liveData[baseSymbol.value + 'USD']?.ask ??
+        1 / socketStore.liveData['USD' + baseSymbol.value]?.bid ??
+        1
       : bid.value;
     return calcMargin({
       symbol: props.symbol,

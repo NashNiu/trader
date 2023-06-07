@@ -204,8 +204,12 @@ const limitMarginRequired = computed(
 
     const price = ifCrossForex
       ? props.type === 'buy'
-        ? socketStore.liveData[baseSymbol.value + 'USD']?.bid ?? 0
-        : socketStore.liveData[baseSymbol.value + 'USD']?.ask ?? 0
+        ? socketStore.liveData[baseSymbol.value + 'USD']?.bid ??
+          1 / socketStore.liveData['USD' + baseSymbol.value]?.bid ??
+          1
+        : socketStore.liveData[baseSymbol.value + 'USD']?.ask ??
+          1 / socketStore.liveData['USD' + baseSymbol.value]?.ask ??
+          1
       : limitPrice.value;
     return calcMargin({
       symbol: props.symbol,

@@ -27,6 +27,7 @@
             :step="step"
             :stop-l="stopL"
             :con-size="conSize"
+            :margin-init="marginInit"
             @close="close"
           />
         </el-tab-pane>
@@ -42,6 +43,7 @@
             :step="step"
             :stop-l="stopL"
             :con-size="conSize"
+            :margin-init="marginInit"
             @close="close"
           />
         </el-tab-pane>
@@ -86,9 +88,10 @@ const step = computed(() => Math.pow(10, -digit.value) * 100);
 const stopL = computed(
   () => currentSblBasicData.value.stopl * Math.pow(10, -digit.value) * 10
 );
-// 杠杆
+// 合约
 const conSize = computed(() => currentSblBasicData.value.consize);
-
+// 初始保证金
+const marginInit = computed(() => currentSblBasicData.value.margin_init);
 // 开启弹窗
 const show = () => {
   visible.value = true;

@@ -409,3 +409,7 @@ export const favoriteSymbols = symbolArr.filter((item) => {
     return false;
   }
 });
+
+export const getSymbolType = (symbol) => {
+  return symbolArr.find((item) => item.name === symbol)?.type ?? 0;
+};

@@ -39,6 +39,12 @@ const router = createRouter({
           meta: { hideChart: true },
           component: () => import('@/pages/Wallet/index.vue'),
         },
+        {
+          path: 'customer',
+          name: 'customer',
+          meta: { hideChart: true },
+          component: () => import('@/pages/customer/index.vue'),
+        },
       ],
     },
     {

@@ -69,6 +69,11 @@ const menuItemData = [
     icon: 'icon-wallet',
     title: t?.('menu.wallet'),
   },
+  {
+    index: '/t/customer',
+    icon: 'icon-wallet',
+    title: t?.('menu.customer'),
+  },
 ];
 const menuOpen = (index) => {
   if (index === '/index') {

@@ -84,3 +84,30 @@ export function updateChartByList(listData, idKey, symbolKey) {
     commonStore.changeChartData({});
   }
 }
+/**
+  @param {Number} timeStamp 传入的时间戳
+  @param {Number} startType 要返回的时间字符串的格式类型，传入'year'则返回年开头的完整时间
+*/
+export const getDate = (timeStamp, startType, line) => {
+  const e = line || '-';
+  const d = new Date(timeStamp * 1000);
+  const year = d.getFullYear();
+  const month = getHandledValue(d.getMonth() + 1);
+  const date = getHandledValue(d.getDate());
+  const hours = getHandledValue(d.getHours());
+  const minutes = getHandledValue(d.getMinutes());
+  const second = getHandledValue(d.getSeconds());
+  let resStr = '';
+  if (startType === 'year') {
+    resStr =
+      year + e + month + e + date + ' ' + hours + ':' + minutes + ':' + second;
+  } else if (startType === 'ymd') {
+    resStr = year + e + month + e + date;
+  } else {
+    resStr = month + e + date + ' ' + hours + ':' + minutes;
+  }
+  return resStr;
+};
+const getHandledValue = (num) => {
+  return num < 10 ? '0' + num : num;
+};

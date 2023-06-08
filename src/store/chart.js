@@ -65,7 +65,7 @@ export default defineStore('chart', {
           },
           { baseURL: configUrl.klineHistoryDataUrl }
         );
-        if (res.data.length) {
+        if (res?.data?.length) {
           return res.data.map((item) => {
             const blob = window.atob(item.b);
             const timeStamp = KlineDecode.base64ToInt(blob.slice(20))[0] * 1000;

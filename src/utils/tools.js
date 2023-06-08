@@ -7,6 +7,7 @@ import {
 } from '@/store/index.js';
 import { configConst, configKey } from '@/config/index.js';
 import cryptoJS from 'crypto-js';
+import { getSymbolType } from '@/config/symbol.js';
 // 计算持仓浮动盈亏 和 价格变化
 export function calcOrderChange({ order, liveData, cs }) {
   let profit = 0;
@@ -103,5 +104,44 @@ export function calcMargin({ symbol, count, consize, price, marginInt, type }) {
     }
   } else if (type === 4) {
     return ((count * consize * price) / level).toFixed(2);
+  }
+}
+
+// 计算盈亏
+export function calcProfit({ createPrice, closePrice, lot, consize, rate }) {
+  if (
+    isNaN(createPrice) ||
+    isNaN(closePrice) ||
+    isNaN(lot) ||
+    isNaN(consize) ||
+    isNaN(rate)
+  ) {
+    return 0;
+  }
+  return ((closePrice - createPrice) * lot * consize * rate).toFixed(2);
+}
+
+// 计算浮动盈亏时需要的汇率的产品名称 或者固定汇率
+// 如果有汇率，直接用汇率，没有汇率，用产品名称取实时汇率
+export function getProfitSymbol(symbol) {
+  const type = getSymbolType(symbol);
+  if (type === 1 || type === 4) {
+    return {
+      rate: 1,
+    };
+  } else if(type === 2) {
+
+  } else if (type ===3) {
+    if(symbol.startsWith('USD')){
+      return {
+        symbol: symbol,
+        multiply: false,
+      }
+    } else if(symbol.endsWith('USD')) {
+      return {
+        symbol: symbol,
+        multiply: true,
+      }
+    }
   }
 }

@@ -68,6 +68,7 @@ export default defineStore('socket', {
         };
       });
     },
+
   },
   actions: {
     // 连接socket
@@ -253,6 +254,7 @@ export default defineStore('socket', {
         ...this.sblBasicData,
         [data.sbl]: data,
       };
+      console.log(this.sblBasicData);
     },
     // 获取产品高开低收数据
     async getStatisticData() {

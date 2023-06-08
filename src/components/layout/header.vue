@@ -11,48 +11,48 @@
           <el-icon><Search /></el-icon>
         </div>
       </div>
-      <div class="walletBox">
-        <el-popover
-          :show-arrow="false"
-          trigger="click"
-          :width="211"
-          :offset="10"
-          popper-class="walletInfoPop"
-          @show="getWalletData"
-        >
-          <template #reference>
-            <div class="assetBox">
-              <span>0.00000000</span>
-              <CoinIco :size="24" class="icon" />
-              <img :src="DownArrowImg" alt="" />
-            </div>
-          </template>
-          <template #default>
-            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">
-              <div class="inputBox">
-                <el-input
-                  v-model="searchWalletText"
-                  placeholder="查询"
-                ></el-input>
-              </div>
+      <!--      <div class="walletBox">-->
+      <!--        <el-popover-->
+      <!--          :show-arrow="false"-->
+      <!--          trigger="click"-->
+      <!--          :width="211"-->
+      <!--          :offset="10"-->
+      <!--          popper-class="walletInfoPop"-->
+      <!--          @show="getWalletData"-->
+      <!--        >-->
+      <!--          <template #reference>-->
+      <!--            <div class="assetBox">-->
+      <!--              <span>0.00000000</span>-->
+      <!--              <CoinIco :size="24" class="icon" />-->
+      <!--              <img :src="DownArrowImg" alt="" />-->
+      <!--            </div>-->
+      <!--          </template>-->
+      <!--          <template #default>-->
+      <!--            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">-->
+      <!--              <div class="inputBox">-->
+      <!--                <el-input-->
+      <!--                  v-model="searchWalletText"-->
+      <!--                  placeholder="查询"-->
+      <!--                ></el-input>-->
+      <!--              </div>-->
 
-              <div class="allWalletBox">
-                <div
-                  v-for="item in filterWalletData"
-                  :key="item.id"
-                  class="walletItemBox"
-                >
-                  <span class="balance">{{ item.balance.toFixed(8) }}</span>
-                  <span class="currency">{{ item.currency }}</span>
-                  <CoinIco class="icon" :size="22" :coin="item.currency" />
-                </div>
-              </div>
-            </el-scrollbar>
-          </template>
-        </el-popover>
+      <!--              <div class="allWalletBox">-->
+      <!--                <div-->
+      <!--                  v-for="item in filterWalletData"-->
+      <!--                  :key="item.id"-->
+      <!--                  class="walletItemBox"-->
+      <!--                >-->
+      <!--                  <span class="balance">{{ item.balance.toFixed(8) }}</span>-->
+      <!--                  <span class="currency">{{ item.currency }}</span>-->
+      <!--                  <CoinIco class="icon" :size="22" :coin="item.currency" />-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--            </el-scrollbar>-->
+      <!--          </template>-->
+      <!--        </el-popover>-->
 
-        <div class="btnBox" @click="showWalletDialog">wallet</div>
-      </div>
+      <!--        <div class="btnBox" @click="showWalletDialog">wallet</div>-->
+      <!--      </div>-->
       <div class="content-nav">
         <div class="itemBox">
           <span class="itemValue">
@@ -160,8 +160,8 @@ header {
   width: 160px;
   height: 50px;
   cursor: pointer;
-  margin-right: 90px;
-  margin-left: 54px;
+  margin-right: 100px;
+  margin-left: 60px;
 }
 .content-logo img {
   height: 100%;
@@ -197,7 +197,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 370px;
+  width: 400px;
   .content-search {
     display: flex;
     align-items: center;

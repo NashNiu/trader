@@ -129,7 +129,7 @@ import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { computed, ref } from 'vue';
 import { ElLoading, ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { calcMargin } from '@/utils/tools.js';
+import { calcMargin, calcProfit, getProfitSymbol } from '@/utils/tools.js';
 import { getSymbolType } from '@/config/symbol.js';
 const { t } = useI18n();
 const props = defineProps({
@@ -188,11 +188,31 @@ const currentSblBasicData = computed(
 );
 // 基础货币
 const baseSymbol = computed(() => currentSblBasicData.value.cur_base);
+// 结算货币
+const profitSymbol = computed(() => currentSblBasicData.value.cur_profit);
 // 实时ask
 const ask = computed(() => currentSblData.value.ask);
 // 实时bid
 const bid = computed(() => currentSblData.value.bid);
 
+// 计算浮动盈亏时的汇率
+const profitRate = computed(() => {
+  const { rate, symbol, multiply } = getProfitSymbol(
+    props.symbol,
+    currentSblBasicData.value
+  );
+  if (rate) {
+    return rate;
+  } else {
+    if (props.type === 'buy') {
+      const exchange = socketStore.liveData[symbol]?.bid || 1;
+      return multiply ? exchange : 1 / exchange;
+    } else {
+      const exchange = socketStore.liveData[symbol]?.ask || 1;
+      return multiply ? exchange : 1 / exchange;
+    }
+  }
+});
 // 挂单参考保证金
 const limitMarginRequired = computed(
   () => {
@@ -252,23 +272,16 @@ const limitSlScope = computed(() => {
 });
 // 挂单预计止损
 const limitSlProfit = computed(() => {
+  let createPrice = limitSlPrice.value;
+  let closePrice = limitPrice.value;
+  let rate = profitRate.value;
+  const consize = props.conSize;
+  const lot = count.value;
   if (props.type === 'buy') {
-    return limitPrice.value && limitSlPrice.value
-      ? (
-          (limitSlPrice.value - limitPrice.value) *
-          count.value *
-          props.conSize
-        ).toFixed(props.digit)
-      : 0;
-  } else {
-    return limitPrice.value && limitSlPrice.value
-      ? (
-          (limitPrice.value - limitSlPrice.value) *
-          count.value *
-          props.conSize
-        ).toFixed(props.digit)
-      : 0;
+    createPrice = limitPrice.value;
+    closePrice = limitSlPrice.value;
   }
+  return calcProfit({ consize, closePrice, createPrice, lot, rate });
 });
 // 挂单止盈范围
 const limitSpScope = computed(() => {
@@ -284,23 +297,16 @@ const limitSpScope = computed(() => {
 });
 // 挂单预计盈利
 const limitSpProfit = computed(() => {
+  let createPrice = limitSpPrice.value;
+  let closePrice = limitPrice.value;
+  let rate = profitRate.value;
+  const consize = props.conSize;
+  const lot = count.value;
   if (props.type === 'buy') {
-    return limitPrice.value && limitSpPrice.value
-      ? (
-          (limitSpPrice.value - limitPrice.value) *
-          count.value *
-          props.conSize
-        ).toFixed(props.digit)
-      : 0;
-  } else {
-    return limitPrice.value && limitSpPrice.value
-      ? (
-          (limitPrice.value - limitSpPrice.value) *
-          count.value *
-          props.conSize
-        ).toFixed(props.digit)
-      : 0;
+    createPrice = limitPrice.value;
+    closePrice = limitSpPrice.value;
   }
+  return calcProfit({ consize, closePrice, createPrice, lot, rate });
 });
 // 挂单止损是否有效
 const limitSlPriceValid = computed(() => {

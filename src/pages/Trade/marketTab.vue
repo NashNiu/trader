@@ -112,7 +112,7 @@ import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { computed, ref } from 'vue';
 import { ElLoading, ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { calcMargin } from '@/utils/tools.js';
+import { calcMargin, getProfitSymbol, calcProfit } from '@/utils/tools.js';
 import { getSymbolType } from '@/config/symbol.js';
 
 const { t } = useI18n();
@@ -174,6 +174,25 @@ const currentSblData = computed(
 const ask = computed(() => currentSblData.value.ask);
 // 实时bid
 const bid = computed(() => currentSblData.value.bid);
+
+// 计算浮动盈亏时的汇率
+const profitRate = computed(() => {
+  const { rate, symbol, multiply } = getProfitSymbol(
+    props.symbol,
+    currentSblBasicData.value
+  );
+  if (rate) {
+    return rate;
+  } else {
+    if (props.type === 'buy') {
+      const exchange = socketStore.liveData[symbol]?.bid || 1;
+      return multiply ? exchange : 1 / exchange;
+    } else {
+      const exchange = socketStore.liveData[symbol]?.ask || 1;
+      return multiply ? exchange : 1 / exchange;
+    }
+  }
+});
 // 市价参考保证金
 const marginRequired = computed(() => {
   const type = getSymbolType(props.symbol);
@@ -231,35 +250,37 @@ const slScope = computed(() => {
 });
 // 市价止盈预计
 const spProfit = computed(() => {
-  if (props.type === 'buy') {
-    return spPrice.value && bid.value
-      ? ((spPrice.value - bid.value) * count.value * props.conSize).toFixed(
-          props.digit
-        )
-      : 0;
-  } else {
-    return spPrice.value && ask.value
-      ? ((ask.value - spPrice.value) * count.value * props.conSize).toFixed(
-          props.digit
-        )
-      : 0;
+  const rate = profitRate.value;
+  let createPrice = bid.value;
+  let closePrice = spPrice.value;
+  if (props.type === 'sell') {
+    createPrice = spPrice.value;
+    closePrice = ask.value;
   }
+  return calcProfit({
+    consize: props.conSize,
+    closePrice,
+    createPrice,
+    rate,
+    lot: count.value,
+  });
 });
 // 市价止损预计
 const slProfit = computed(() => {
-  if (props.type === 'buy') {
-    return slPrice.value && bid.value
-      ? ((slPrice.value - bid.value) * count.value * props.conSize).toFixed(
-          props.digit
-        )
-      : 0;
-  } else {
-    return slPrice.value && ask.value
-      ? ((ask.value - slPrice.value) * count.value * props.conSize).toFixed(
-          props.digit
-        )
-      : 0;
+  const rate = profitRate.value;
+  let createPrice = bid.value;
+  let closePrice = slPrice.value;
+  if (props.type === 'sell') {
+    createPrice = slPrice.value;
+    closePrice = ask.value;
   }
+  return calcProfit({
+    consize: props.conSize,
+    closePrice,
+    createPrice,
+    rate,
+    lot: count.value,
+  });
 });
 // 市价止盈开启关闭
 const spShowChange = (val) => {

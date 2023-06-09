@@ -8,6 +8,7 @@ import { configUrl } from '@/config/index.js';
 import dayjs from 'dayjs';
 import i18n from '@/lib/i18n';
 import { promiseTimeout } from '@vueuse/core';
+import { calcProfit, getProfitSymbol } from '@/utils/tools.js';
 export default defineStore('socket', {
   state: () => ({
     socket: null,
@@ -33,7 +34,7 @@ export default defineStore('socket', {
     // 持仓浮动盈亏
     userTotalProfit() {
       return this.holdingOrdersWithPrice.reduce(
-        (pre, cur) => pre + cur.profit,
+        (pre, cur) => pre + Number(cur.profit),
         0
       );
     },
@@ -52,6 +53,38 @@ export default defineStore('socket', {
     // 持仓列表 价格浮动
     holdingOrdersWithPrice(state) {
       return state.holdingOrders.map((item) => {
+        const baseData = state.sblBasicData[item.symbol];
+        const liveData = state.liveData[item.symbol];
+        const profitRate = () => {
+          const { rate, symbol, multiply } = getProfitSymbol(
+            item.symbol,
+            baseData
+          );
+          if (rate) return rate;
+          if (item.action === 0) {
+            const exchange = state.liveData[symbol]?.bid || 1;
+            return multiply ? exchange : 1 / exchange;
+          } else {
+            const exchange = state.liveData[symbol]?.ask || 1;
+            return multiply ? exchange : 1 / exchange;
+          }
+        };
+        const profit = () => {
+          let createPrice = item?.price ?? 0;
+          let closePrice = liveData?.bid ?? 0;
+          const rate = profitRate();
+          if (item.action === 1) {
+            createPrice = liveData?.ask ?? 0;
+            closePrice = item?.price ?? 0;
+          }
+          return calcProfit({
+            createPrice,
+            closePrice,
+            lot: item?.vol / 10000,
+            rate,
+            consize: baseData?.consize ?? 1,
+          });
+        };
         return {
           ...item,
           actionType:
@@ -60,15 +93,14 @@ export default defineStore('socket', {
               : i18n.global.t('common.sell'),
           createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
           lot: item.vol / 10000,
+          profit: profit(),
           ...tools.calcOrderChange({
             order: item,
-            liveData: state.liveData[item.symbol],
-            cs: state.sblBasicData[item.symbol]?.consize,
+            liveData,
           }),
         };
       });
     },
-
   },
   actions: {
     // 连接socket
@@ -254,7 +286,6 @@ export default defineStore('socket', {
         ...this.sblBasicData,
         [data.sbl]: data,
       };
-      console.log(this.sblBasicData);
     },
     // 获取产品高开低收数据
     async getStatisticData() {

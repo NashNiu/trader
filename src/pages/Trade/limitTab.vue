@@ -129,7 +129,7 @@ import { useCommonStore, useSocketStore } from '@/store/index.js';
 import { computed, ref } from 'vue';
 import { ElLoading, ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { calcMargin, calcProfit } from '@/utils/tools.js';
+import { calcMargin, calcProfit, getProfitSymbol } from '@/utils/tools.js';
 import { getSymbolType } from '@/config/symbol.js';
 const { t } = useI18n();
 const props = defineProps({
@@ -194,34 +194,24 @@ const profitSymbol = computed(() => currentSblBasicData.value.cur_profit);
 const ask = computed(() => currentSblData.value.ask);
 // 实时bid
 const bid = computed(() => currentSblData.value.bid);
+
 // 计算浮动盈亏时的汇率
 const profitRate = computed(() => {
-  const type = getSymbolType(props.symbol);
-  let rate = 1;
-  if (props.type === 'buy') {
-    if (type === 3) {
-      if (props.symbol.startsWith('USD')) {
-        rate = 1 / currentSblData.value.bid;
-      } else if (props.symbol.endsWith('USD')) {
-        rate = currentSblData.value.bid;
-      } else {
-        rate =
-          socketStore.liveData[profitSymbol.value + 'USD']?.bid ||
-          1 / socketStore.liveData['USD' + profitSymbol.value]?.bid;
-      }
-    }
+  const { rate, symbol, multiply } = getProfitSymbol(
+    props.symbol,
+    currentSblBasicData.value
+  );
+  if (rate) {
+    return rate;
   } else {
-    if (props.symbol.startsWith('USD')) {
-      rate = 1 / currentSblData.value.ask;
-    } else if (props.symbol.endsWith('USD')) {
-      rate = currentSblData.value.ask;
+    if (props.type === 'buy') {
+      const exchange = socketStore.liveData[symbol]?.bid || 1;
+      return multiply ? exchange : 1 / exchange;
     } else {
-      rate =
-        socketStore.liveData[profitSymbol.value + 'USD']?.ask ||
-        1 / socketStore.liveData['USD' + profitSymbol.value]?.ask;
+      const exchange = socketStore.liveData[symbol]?.ask || 1;
+      return multiply ? exchange : 1 / exchange;
     }
   }
-  return rate;
 });
 // 挂单参考保证金
 const limitMarginRequired = computed(

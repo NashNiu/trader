@@ -7,7 +7,6 @@ export default defineStore('common', {
       id: 'BTC/USDT',
       symbol: 'BTCUSDT',
     },
-    payPassVisible: false, // 修改设置支付密码弹窗
   }),
   getters: {
     chartDataAvailable(state) {
@@ -25,9 +24,6 @@ export default defineStore('common', {
     },
     changeChartData(data) {
       this.chartData = data;
-    },
-    setPayPassVisible(data) {
-      this.payPassVisible = data;
     },
   },
 });

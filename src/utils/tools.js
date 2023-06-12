@@ -96,7 +96,7 @@ export function calcMargin({ symbol, count, consize, price, marginInt, type }) {
     return marginInt;
   } else if (type === 3) {
     if (marginInt) {
-      return ((marginInt * count) / consize).toFixed(2);
+      return ((marginInt * count) / level).toFixed(2);
     }
     if (symbol.startsWith('USD')) {
       return ((consize * count) / level).toFixed(2);

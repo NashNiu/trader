@@ -93,7 +93,7 @@ export function calcMargin({ symbol, count, consize, price, marginInt, type }) {
   if (type === 1) {
     return ((count * consize * price) / level).toFixed(2);
   } else if (type === 2) {
-    return marginInt;
+    return (marginInt * count).toFixed(2);
   } else if (type === 3) {
     if (marginInt) {
       return ((marginInt * count) / level).toFixed(2);

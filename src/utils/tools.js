@@ -95,6 +95,9 @@ export function calcMargin({ symbol, count, consize, price, marginInt, type }) {
   } else if (type === 2) {
     return marginInt;
   } else if (type === 3) {
+    if (marginInt) {
+      return ((marginInt * count) / level).toFixed(2);
+    }
     if (symbol.startsWith('USD')) {
       return ((consize * count) / level).toFixed(2);
     } else if (symbol.endsWith('USD')) {
@@ -103,6 +106,9 @@ export function calcMargin({ symbol, count, consize, price, marginInt, type }) {
       return ((consize * count * price) / level).toFixed(2);
     }
   } else if (type === 4) {
+    if (marginInt) {
+      return (marginInt * count).toFixed(2);
+    }
     return ((count * consize * price) / level).toFixed(2);
   }
 }

@@ -7,6 +7,9 @@
       </div>
     </div>
     <div class="mainBox">
+      <div class="item">
+        <p class="title" @click="goUserCenter">个人中心</p>
+      </div>
       <div class="item" @click="toggleLanguage">
         <p class="title">
           <img :src="enImg" alt="" />
@@ -49,6 +52,8 @@ import { useUserStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { useI18n } from 'vue-i18n';
 import { configConst } from '@/config/index.js';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 // import { commonApi } from '@/api';
 const { t, locale } = useI18n();
 const userStore = useUserStore();
@@ -181,6 +186,10 @@ const changeLanguage = async (command) => {
   locale.value = command;
   // await commonApi.setLanguage(command);
   location.reload();
+};
+const goUserCenter = () => {
+  visible.value = false;
+  router.push('/t/userCenter');
 };
 const show = () => {
   visible.value = true;

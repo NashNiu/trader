@@ -11,48 +11,48 @@
           <el-icon><Search /></el-icon>
         </div>
       </div>
-      <!--      <div class="walletBox">-->
-      <!--        <el-popover-->
-      <!--          :show-arrow="false"-->
-      <!--          trigger="click"-->
-      <!--          :width="211"-->
-      <!--          :offset="10"-->
-      <!--          popper-class="walletInfoPop"-->
-      <!--          @show="getWalletData"-->
-      <!--        >-->
-      <!--          <template #reference>-->
-      <!--            <div class="assetBox">-->
-      <!--              <span>0.00000000</span>-->
-      <!--              <CoinIco :size="24" class="icon" />-->
-      <!--              <img :src="DownArrowImg" alt="" />-->
-      <!--            </div>-->
-      <!--          </template>-->
-      <!--          <template #default>-->
-      <!--            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">-->
-      <!--              <div class="inputBox">-->
-      <!--                <el-input-->
-      <!--                  v-model="searchWalletText"-->
-      <!--                  placeholder="查询"-->
-      <!--                ></el-input>-->
-      <!--              </div>-->
+      <div class="walletBox">
+        <el-popover
+          :show-arrow="false"
+          trigger="click"
+          :width="211"
+          :offset="10"
+          popper-class="walletInfoPop"
+          @show="getWalletData"
+        >
+          <template #reference>
+            <div class="assetBox">
+              <span>0.00000000</span>
+              <CoinIco :size="24" class="icon" />
+              <img :src="DownArrowImg" alt="" />
+            </div>
+          </template>
+          <template #default>
+            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">
+              <div class="inputBox">
+                <el-input
+                  v-model="searchWalletText"
+                  placeholder="查询"
+                ></el-input>
+              </div>
 
-      <!--              <div class="allWalletBox">-->
-      <!--                <div-->
-      <!--                  v-for="item in filterWalletData"-->
-      <!--                  :key="item.id"-->
-      <!--                  class="walletItemBox"-->
-      <!--                >-->
-      <!--                  <span class="balance">{{ item.balance.toFixed(8) }}</span>-->
-      <!--                  <span class="currency">{{ item.currency }}</span>-->
-      <!--                  <CoinIco class="icon" :size="22" :coin="item.currency" />-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </el-scrollbar>-->
-      <!--          </template>-->
-      <!--        </el-popover>-->
+              <div class="allWalletBox">
+                <div
+                  v-for="item in filterWalletData"
+                  :key="item.id"
+                  class="walletItemBox"
+                >
+                  <span class="balance">{{ item.balance.toFixed(8) }}</span>
+                  <span class="currency">{{ item.currency }}</span>
+                  <CoinIco class="icon" :size="22" :coin="item.currency" />
+                </div>
+              </div>
+            </el-scrollbar>
+          </template>
+        </el-popover>
 
-      <!--        <div class="btnBox" @click="showWalletDialog">wallet</div>-->
-      <!--      </div>-->
+        <div class="btnBox" @click="showWalletDialog">wallet</div>
+      </div>
       <div class="content-nav">
         <div class="itemBox">
           <span class="itemValue">
@@ -91,8 +91,12 @@
           </template>
         </div>
       </div>
+      <div class="outBtn">
+        <el-button type="primary" @click="showWithdrawDialog">出金</el-button>
+      </div>
     </div>
     <WalletDialog ref="walletDialogRef" />
+    <WithdrawDialog ref="withdrawDialogRef" />
   </header>
 </template>
 <script setup>
@@ -103,11 +107,13 @@ import { useI18n } from 'vue-i18n';
 import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import DownArrowImg from '@/assets/img/header/down.png';
 import WalletDialog from '@/components/walletDialog/index.vue';
+import WithdrawDialog from '@/components/withdrawDialog/index.vue';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
 const headerStore = useHeaderStore();
 const walletDialogRef = ref();
+const withdrawDialogRef = ref();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(() => socketStore.userTotalProfit);
@@ -137,6 +143,9 @@ const getWalletData = async () => {
 const showWalletDialog = () => {
   walletDialogRef?.value?.show();
 };
+const showWithdrawDialog = () => {
+  withdrawDialogRef.value.show();
+};
 </script>
 
 <style scoped lang="less">
@@ -160,8 +169,8 @@ header {
   width: 160px;
   height: 50px;
   cursor: pointer;
-  margin-right: 100px;
-  margin-left: 60px;
+  margin-right: 90px;
+  margin-left: 54px;
 }
 .content-logo img {
   height: 100%;
@@ -197,7 +206,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
+  width: 370px;
   .content-search {
     display: flex;
     align-items: center;

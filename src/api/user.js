@@ -203,3 +203,28 @@ export function updateCertificate(data) {
     data,
   });
 }
+
+// 修改密码
+export function changePass(data) {
+  return request({
+    url: '/api/users/user/chpwd',
+    method: 'post',
+    data,
+  });
+}
+// 设置支付密码
+export function setPayPass(data) {
+  return request({
+    url: '/api/users/user/updatePayPassword',
+    method: 'post',
+    data,
+  });
+}
+// 验证支付密码
+export function verifyPayPass(data) {
+  return request({
+    url: '/api/users/user/checkPayPassword',
+    method: 'post',
+    data,
+  });
+}

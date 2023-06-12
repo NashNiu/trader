@@ -19,13 +19,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="profit" :label="t('order.currentValue')">
-          <template #default="scope">
-            <span :class="`${scope.row.color} bold`">
-              {{ scope.row.netValue }}
-            </span>
-          </template>
-        </el-table-column>
+        <!--        <el-table-column prop="profit" :label="t('order.currentValue')">-->
+        <!--          <template #default="scope">-->
+        <!--            <span :class="`${scope.row.color} bold`">-->
+        <!--              {{ scope.row.netValue }}-->
+        <!--            </span>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
         <el-table-column :label="t('common.profit')" width="110">
           <template #default="scope">
             <span :class="`${scope.row.color} bold`">

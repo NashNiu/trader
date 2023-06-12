@@ -32,7 +32,7 @@
       <div class="contentContainer">
         <div v-show="activeTab === 1">
           <Verification
-            v-show="ifNeedVerification"
+            v-show="!ifNeedVerification"
             @finish="certificateFinish"
           />
           <Deposit v-if="!ifNeedVerification" />
@@ -40,12 +40,12 @@
         <Withdraw v-show="activeTab === 2" />
         <Transfer v-show="activeTab === 3" />
       </div>
-      <div class="footerBox">
-        <span class="tips">
-          Improve your account security with Two-Factor Authentication
-        </span>
-        <el-button type="primary" class="footerBtn">Enable 2FA</el-button>
-      </div>
+      <!--      <div class="footerBox">-->
+      <!--        <span class="tips">-->
+      <!--          Improve your account security with Two-Factor Authentication-->
+      <!--        </span>-->
+      <!--        <el-button type="primary" class="footerBtn">Enable 2FA</el-button>-->
+      <!--      </div>-->
     </div>
   </el-dialog>
 </template>

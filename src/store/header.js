@@ -39,6 +39,7 @@ export default defineStore('header', {
           }
           return pre;
         }, []);
+        userStore.setUserAssetsArr(this.addressData);
       }
     },
   },

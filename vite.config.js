@@ -66,7 +66,7 @@ export default defineConfig({
         ws: true,
       },
       '/kline': {
-        target: 'https://mckline.zzsmgs55.com:9443',
+        target: 'http://trader.lp.lan/kline',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/kline/, ''),
       },

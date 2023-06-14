@@ -41,7 +41,7 @@
                   :key="item.id"
                   class="walletItemBox"
                 >
-                  <span class="balance">{{ item.balance.toFixed(8) }}</span>
+                  <span class="balance">{{ item.available.toFixed(8) }}</span>
                   <span class="currency">{{ item.currency }}</span>
                   <CoinIco class="icon" :size="22" :coin="item.currency" />
                 </div>

@@ -9,7 +9,7 @@
         popper-class="walletCoinPop"
         :popper-style="{ width: 'auto' }"
         placement="bottom-start"
-        @show="getWalletData"
+        @show="() => getWalletData()"
       >
         <template #reference>
           <div class="coinDropdown">
@@ -100,6 +100,7 @@ import { useHeaderStore, useUserStore } from '@/store/index.js';
 import { userApi } from '@/api/index.js';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
+const emit = defineEmits(['hide']);
 const selectedCoin = ref({});
 const { t } = useI18n();
 const headerStore = useHeaderStore();
@@ -110,9 +111,9 @@ const withdrawAmount = ref('');
 const orderData = ref({});
 const submitting = ref(false);
 const submitDisabled = computed(() => withdrawAmount.value <= 0);
-const getWalletData = async () => {
+const getWalletData = async (forceFresh = false) => {
   getWalletDataLoading.value = true;
-  await headerStore.getWalletData();
+  await headerStore.getWalletData({ forceFresh });
   getWalletDataLoading.value = false;
 };
 const createOrderBefore = async (coin) => {
@@ -149,7 +150,8 @@ const submit = async () => {
   const res = await userApi.confirmDeposit(params);
   if (res.data.status === 0) {
     ElMessage.success(t?.('common.success'));
-    await getWalletData();
+    await getWalletData(true);
+    emit('hide');
   } else {
     ElMessage.error(t?.('common.failed'));
   }

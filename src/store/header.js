@@ -10,8 +10,8 @@ export default defineStore('header', {
   }),
 
   actions: {
-    async getWalletData() {
-      if (this.walletData.length) return;
+    async getWalletData({ forceFresh } = { forceFresh: false }) {
+      if (this.walletData.length && !forceFresh) return;
       const res = await userApi.getBackEndWalletInfo();
       if (res.data.status === 0) {
         this.walletData = res.data.data.map((item) => ({

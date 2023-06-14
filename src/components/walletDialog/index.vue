@@ -37,8 +37,8 @@
           />
           <Deposit v-if="!ifNeedVerification" />
         </div>
-        <Withdraw v-show="activeTab === 2" />
-        <Transfer v-show="activeTab === 3" />
+        <Withdraw v-show="activeTab === 2" @hide="hide" />
+        <Transfer v-show="activeTab === 3" @hide="hide" />
       </div>
       <!--      <div class="footerBox">-->
       <!--        <span class="tips">-->

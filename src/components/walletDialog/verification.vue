@@ -450,6 +450,7 @@ const submitClick = async () => {
 const getUserInfo = async () => {
   loadingData.value = true;
   const res = await userApi.getCertificate();
+  loadingData.value = false;
   if (res.data.status === 0) {
     if (props.parent !== 'userVerify') {
       // 不校验
@@ -458,7 +459,7 @@ const getUserInfo = async () => {
         return;
       }
     }
-    auditStatus.value = res.data.data.auditstatus;
+    auditStatus.value = res.data?.data?.auditstatus ?? 0;
     const data = res.data.data;
     // 审核状态(0未提交/1第一页提交/2全提交(待审核)/3审核通过/4审核失败)
     switch (auditStatus.value) {
@@ -522,7 +523,6 @@ const getUserInfo = async () => {
         break;
     }
   }
-  loadingData.value = false;
 };
 onMounted(() => {
   getUserInfo().then();

@@ -77,7 +77,7 @@ const openVerifyDialog = () => {
 const getAuditStatus = async () => {
   const res = await userApi.getCertificate();
   if (res.data.status === 0) {
-    auditStatus.value = res.data.data.auditstatus;
+    auditStatus.value = res.data.data?.auditstatus ?? 0;
   }
 };
 onMounted(() => {

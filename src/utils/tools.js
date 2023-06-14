@@ -130,21 +130,21 @@ export function getProfitSymbol(symbol, symbolInfo) {
       rate: 1,
     };
   } else if (type === 2) {
-    if (symbolInfo.cur_profit === 'USD') {
+    if (symbolInfo?.cur_profit === 'USD') {
       return {
         rate: 1,
       };
     } else {
       if (
-        symbolArr.find((item) => item.name === symbolInfo.cur_profit + 'USD')
+        symbolArr.find((item) => item.name === symbolInfo?.cur_profit + 'USD')
       ) {
         return {
-          symbol: symbolInfo.cur_profit + 'USD',
+          symbol: symbolInfo?.cur_profit + 'USD',
           multiply: true,
         };
       } else {
         return {
-          symbol: 'USD' + symbolInfo.cur_profit,
+          symbol: 'USD' + symbolInfo?.cur_profit,
           multiply: false,
         };
       }
@@ -165,12 +165,12 @@ export function getProfitSymbol(symbol, symbolInfo) {
         symbolArr.find((item) => item.name === symbolInfo.cur_profit + 'USD')
       ) {
         return {
-          symbol: symbolInfo.cur_profit + 'USD',
+          symbol: symbolInfo?.cur_profit + 'USD',
           multiply: true,
         };
       } else {
         return {
-          symbol: 'USD' + symbolInfo.cur_profit,
+          symbol: 'USD' + symbolInfo?.cur_profit,
           multiply: false,
         };
       }

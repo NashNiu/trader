@@ -32,7 +32,7 @@
       <div class="contentContainer">
         <div v-show="activeTab === 1">
           <Verification
-            v-show="!ifNeedVerification"
+            v-show="ifNeedVerification"
             @finish="certificateFinish"
           />
           <Deposit v-if="!ifNeedVerification" />

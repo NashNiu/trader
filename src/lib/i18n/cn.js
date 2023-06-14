@@ -15,6 +15,7 @@ export default {
     balance: '余额',
     netWorth: '净值',
     occupy: '占用保证金',
+    availableMargin: '可用保证金',
     search: '搜索',
     type: '类型',
     openingTime: '开仓时间',

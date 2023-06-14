@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="visible"
-    width="680"
+    width="500"
     class="withdrawDialogContainer"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -20,6 +20,8 @@
       :model="formData"
       :rules="formRules"
       label-width="120px"
+      label-position="top"
+      class="form"
     >
       <el-form-item :label="t('wallet.paymentMethod')" prop="method">
         <el-select v-model="formData.method" style="width: 250px">
@@ -27,53 +29,53 @@
           <el-option :label="t('wallet.cashOutToExternalWallet')" :value="1" />
         </el-select>
       </el-form-item>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item :label="t('wallet.cashCurrency')" prop="currency">
-            <el-select v-model="formData.currency" style="width: 250px">
-              <el-option
-                v-for="item in userAssetsArr"
-                :key="item.assetCoin"
-                :label="item.assetCoin"
-                :value="item.assetCoin"
-              />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item
-            v-if="formData.currency"
-            label=" "
-            prop="assetType"
-            label-width="20"
-          >
-            <el-select v-model="formData.assetType" style="width: 250px">
-              <el-option
-                v-for="item in currentCurrencyData"
-                :key="item.id"
-                :label="item.assetType"
-                :value="item.assetType"
-              />
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <el-space :gutter="20" alignment="flex-end">
+        <el-form-item :label="t('wallet.cashCurrency')" prop="currency">
+          <el-select v-model="formData.currency" style="width: 180px">
+            <el-option
+              v-for="item in userAssetsArr"
+              :key="item.assetCoin"
+              :label="item.assetCoin"
+              :value="item.assetCoin"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          v-if="formData.currency"
+          label=" "
+          prop="assetType"
+          label-width="20"
+        >
+          <el-select v-model="formData.assetType" style="width: 220px">
+            <el-option
+              v-for="item in currentCurrencyData"
+              :key="item.id"
+              :label="item.assetType"
+              :value="item.assetType"
+            />
+          </el-select>
+        </el-form-item>
+      </el-space>
       <el-form-item :label="t('wallet.cashAddress')" prop="externalAddress">
         <el-input
           v-model="formData.externalAddress"
           :disabled="formData.method === 0"
-          style="width: 250px"
+          style="width: 440px"
         />
       </el-form-item>
       <el-form-item :label="t('wallet.amountPaid')" prop="amount">
-        <el-input-number
+        <el-input
           v-model="formData.amount"
           :controls="false"
-          style="width: 250px; margin-right: 20px"
-        />
+          style="width: 440px"
+        >
+          <template #append>
+            <el-button type="primary" class="maxBtn">Max</el-button>
+          </template>
+        </el-input>
       </el-form-item>
 
-      <div v-if="formData.currency">
+      <div v-if="formData.currency" class="tips">
         <span v-loading="beforeOrderLoading">
           目前汇率是{{ currencyPrice }},钱包将会到账
           {{ transferAmount }}
@@ -82,15 +84,17 @@
       </div>
       <el-form-item>
         <el-button
-          type="primary"
           :disabled="confirmDisabled"
+          type="primary"
           :loading="submitting"
-          @click="passCheck"
+          class="submitBtn"
+          @click="beforeSubmit"
         >
           {{ t('wallet.confirmPay') }}
         </el-button>
       </el-form-item>
     </el-form>
+    <PayPassDialog ref="payPassDialogRef" @next="beforeSubmit" />
   </el-dialog>
 </template>
 <script setup>
@@ -101,11 +105,15 @@ import { useHeaderStore, useUserStore } from '@/store/index.js';
 import NP from 'number-precision';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { userApi } from '@/api';
+import PayPassDialog from '@/components/common/payPassDialog.vue';
+
 const { t } = useI18n();
 const userStore = useUserStore();
 const headerStore = useHeaderStore();
+const userInfo = computed(() => userStore.userInfo);
 const visible = ref(false);
 const formRef = ref();
+const payPassDialogRef = ref(null);
 const userAssetsArr = computed(() => userStore.userAssetsArr);
 const beforeOrderLoading = ref(false);
 const submitting = ref(false);
@@ -113,7 +121,7 @@ const formData = ref({
   method: 0,
   currency: '',
   assetType: '',
-  amount: 0,
+  amount: '',
   externalAddress: '',
 });
 const currencyPrice = ref(0);
@@ -153,15 +161,44 @@ const confirmDisabled = computed(() => {
   }
 });
 const passCheck = () => {
-  ElMessageBox.prompt('Please input your password', '', {
+  ElMessageBox.prompt('Please input your payment password', '', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
     inputType: 'password',
     inputPattern: /^.+$/,
     inputErrorMessage: 'Required',
-  }).then(({ value }) => {
-    console.log(value);
+    beforeClose: (action, instance, done) => {
+      if (action === 'confirm') {
+        console.log(action, instance, done);
+        instance.confirmButtonLoading = true;
+        userApi
+          .verifyPayPass({
+            payPassword: instance.inputValue,
+          })
+          .then((res) => {
+            if (res.data.status === 0) {
+              confirmOut();
+            } else {
+              ElMessage.error('密码不对');
+            }
+          })
+          .finally(() => {
+            instance.confirmButtonLoading = false;
+            done();
+          });
+      } else {
+        done();
+      }
+    },
   });
+};
+const beforeSubmit = () => {
+  if (userInfo.value.paypassword) {
+    passCheck();
+  } else {
+    ElMessage.info('还未设置支付密码，请先设置支付密码');
+    payPassDialogRef.value.show();
+  }
 };
 
 const confirmOut = async () => {
@@ -246,24 +283,55 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="less">
-.withdrawDialogHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 10px 30px 30px;
-  box-sizing: border-box;
-  .title {
-    font-size: 22px;
+.withdrawDialogContainer {
+  .withdrawDialogHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px 15px 30px;
+    box-sizing: border-box;
+    .title {
+      font-size: 22px;
+      color: #333333;
+    }
+    .close {
+      width: 17px;
+      cursor: pointer;
+    }
+  }
+  .form {
+    padding: 0 30px 30px 30px;
+    box-sizing: border-box;
+  }
+  .maxBtn {
+    width: 60px;
+    background-color: #266fe8 !important;
+    border-radius: 0px 6px 6px 0px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff !important;
+  }
+  .tips {
+    font-size: 16px;
     color: #333333;
   }
-  .close {
-    width: 17px;
-    cursor: pointer;
+  .submitBtn {
+    margin-top: 40px;
+    width: 620px;
+    height: 42px;
+    background-color: #0c3d93;
+    border-radius: 8px;
+    font-family: MicrosoftYaHei;
+    font-size: 20px;
+    color: #ffffff;
   }
 }
 </style>
 <style lang="less">
 .withdrawDialogContainer {
   --el-dialog-padding-primary: 0;
+  .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
+    margin-bottom: 2px;
+  }
 }
 </style>

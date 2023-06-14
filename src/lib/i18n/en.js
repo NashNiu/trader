@@ -15,6 +15,7 @@ export default {
     balance: 'Available',
     netWorth: 'Equity',
     occupy: 'M.Margin',
+    availableMargin: 'Available Margin',
     search: 'search',
     type: 'Type',
     openingTime: 'openingTime',

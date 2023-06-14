@@ -26,6 +26,7 @@ export default defineStore('user', {
         fb: data,
       };
     },
+
     setWalletAssets(data) {
       this.walletAssets = data;
     },

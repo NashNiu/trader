@@ -42,13 +42,21 @@ export default defineStore('socket', {
     totalOverNightFee(state) {
       return state.holdingOrders.reduce((pre, cur) => pre + cur.storage, 0);
     },
-    // 账户净值 = 余额 + 浮动盈亏
+    //  余额=MT5的结余(如果拿不到的话 等于 净值+盈利）
+    // 净值=MT5的净值
+    // 保证金=MT5的预付款
+    // 可用保证金=MT5的可用预付款
+    // 净值
     userNetWorth(state) {
-      return (this.userTotalProfit || 0) + (state.userFunds?.balance || 0);
+      return (state.userFunds?.balance || 0) - (this.userTotalProfit || 0);
     },
-    // 可用保证金 = 账户净值 - 占用保证金
+    // 可用保证金
     availableMargin(state) {
-      return (this.userNetWorth || 0) - (state.userFunds?.margin || 0);
+      return state.userFunds?.marginfree || 0;
+    },
+    // 余额
+    balance(state) {
+      return state.userFunds?.balance || 0;
     },
     // 持仓列表 价格浮动
     holdingOrdersWithPrice(state) {

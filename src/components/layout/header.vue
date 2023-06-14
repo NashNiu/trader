@@ -8,7 +8,7 @@
       <div class="search-buy-login">
         <div class="content-search">
           <input type="text" :placeholder="t('common.search')" />
-          <el-icon><Search /></el-icon>
+          <el-icon size="25"><Search /></el-icon>
         </div>
       </div>
       <div class="walletBox">
@@ -22,8 +22,7 @@
         >
           <template #reference>
             <div class="assetBox">
-              <span>0.00000000</span>
-              <CoinIco :size="24" class="icon" />
+              <span>Search Currency</span>
               <img :src="DownArrowImg" alt="" />
             </div>
           </template>
@@ -56,7 +55,7 @@
       <div class="content-nav">
         <div class="itemBox">
           <span class="itemValue">
-            {{ userFundsVisible ? '$' + availableMargin?.toFixed(2) : ' *** ' }}
+            {{ userFundsVisible ? '$' + balance?.toFixed(2) : ' *** ' }}
           </span>
           <span class="itemKey">{{ t('common.balance') }}</span>
         </div>
@@ -68,17 +67,23 @@
         </div>
         <div class="itemBox">
           <span class="itemValue">
+            {{ userFundsVisible ? '$' + availableMargin.toFixed(2) : ' *** ' }}
+          </span>
+          <span class="itemKey">{{ t('common.availableMargin') }}</span>
+        </div>
+        <div class="itemBox small">
+          <span class="itemValue">
             {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
           </span>
           <span class="itemKey">{{ t('common.occupy') }}</span>
         </div>
-        <div class="itemBox">
+        <div class="itemBox small">
           <span class="itemValue">
             {{ userFundsVisible ? '$' + profit.toFixed(2) : ' *** ' }}
           </span>
           <span class="itemKey">{{ t('common.profit') }}</span>
         </div>
-        <div class="itemBox">
+        <div class="itemBox iconBox">
           <template v-if="userFundsVisible">
             <el-icon class="view" @click="setFundsVisible(false)">
               <View />
@@ -92,7 +97,13 @@
         </div>
       </div>
       <div class="outBtn">
-        <el-button type="primary" @click="showWithdrawDialog">出金</el-button>
+        <el-button
+          class="withdrawBtn"
+          type="primary"
+          @click="showWithdrawDialog"
+        >
+          withdraw
+        </el-button>
       </div>
     </div>
     <WalletDialog ref="walletDialogRef" />
@@ -119,6 +130,7 @@ const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(() => socketStore.userTotalProfit);
 const availableMargin = computed(() => socketStore.availableMargin);
 const userFundsVisible = computed(() => userStore.userFundsVisible);
+const balance = computed(() => socketStore.balance);
 const setFundsVisible = (visible) => {
   userStore.setUserFundsVisible(visible);
 };
@@ -169,8 +181,8 @@ header {
   width: 160px;
   height: 50px;
   cursor: pointer;
-  margin-right: 90px;
-  margin-left: 54px;
+  margin-right: 40px;
+  margin-left: 40px;
 }
 .content-logo img {
   height: 100%;
@@ -184,7 +196,14 @@ header {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    margin-right: 50px;
+    margin-right: 23px;
+    width: 130px;
+    &.small {
+      width: 110px;
+    }
+    &.iconBox {
+      width: 30px;
+    }
     .itemValue {
       font-size: 22px;
       color: #000000;
@@ -206,12 +225,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 370px;
+  width: 320px;
   .content-search {
     display: flex;
     align-items: center;
     padding: 3px 10px;
-    width: 370px;
+    width: 320px;
     height: 52px;
     border-radius: 26px;
     background: #f0f2f4;
@@ -219,7 +238,7 @@ header {
   }
   .content-search input {
     padding: 0 10px;
-    width: 300px;
+    width: 240px;
     height: 40px;
     border: 0;
     border-radius: 8px;
@@ -245,7 +264,8 @@ header {
     background-color: #f4f4f4;
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    justify-content: space-between;
+    padding: 0 12px;
     box-sizing: border-box;
     font-family: MicrosoftYaHei;
     font-size: 20px;
@@ -264,6 +284,15 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+.outBtn {
+  .withdrawBtn {
+    width: 107px;
+    height: 52px;
+    background-color: #266fe8;
+    border-radius: 12px;
+    font-size: 20px;
   }
 }
 </style>

@@ -45,6 +45,24 @@ const router = createRouter({
           meta: { hideChart: true },
           component: () => import('@/pages/customer/index.vue'),
         },
+        {
+          path: 'details',
+          name: 'details',
+          meta: { hideChart: true },
+          component: () => import('@/pages/customer/details.vue'),
+        },
+        {
+          path: 'customerCount',
+          name: 'customerCount',
+          meta: { hideChart: true },
+          component: () => import('@/pages/customerCount/index.vue'),
+        },
+        {
+          path: 'commManage',
+          name: 'commManage',
+          meta: { hideChart: true },
+          component: () => import('@/pages/commManage/index.vue'),
+        },
       ],
     },
     {

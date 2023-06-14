@@ -71,8 +71,18 @@ const menuItemData = [
   },
   {
     index: '/t/customer',
-    icon: 'icon-wallet',
+    icon: 'icon-dollar',
     title: t?.('menu.customer'),
+  },
+  {
+    index: '/t/customerCount',
+    icon: 'icon-bnb',
+    title: t?.('menu.customerCount'),
+  },
+  {
+    index: '/t/commManage',
+    icon: 'icon-doge',
+    title: t?.('menu.commManage'),
   },
 ];
 const menuOpen = (index) => {

@@ -40,6 +40,7 @@
               class="tree-tbale"
               :loading-table="loadingTable"
               :tree-data="treeData"
+              :expanded-key="expandedKey"
               @re-get-lsit="_getData"
               @expand="_expand"
               @collapse="_collapse"
@@ -62,6 +63,7 @@ import $ from 'jquery';
 const { t } = useI18n();
 const treeData = ref([]); // 名下用户列表tree数据
 const expandedKey = ref([]);
+const userTree = ref();
 const defaultTreeDataProps = ref({
   children: 'childrens',
   label: 'username',
@@ -89,6 +91,7 @@ const _exportUserList = async () => {
 };
 // 获取名下客户列表
 const _getData = async () => {
+  console.log('asddddddddddddddddd');
   loadingTable.value = true;
   const res = await getUserList({
     account: String(userStore.userInfo?.mtaccr),
@@ -185,24 +188,43 @@ const _treeClick = (row) => {
 };
 const _collapse = (row) => {
   // 修改default-expanded-keys无法控制tree动态收缩和展开
-  for (const item of this.$refs.userTree.store._getAllNodes()) {
+  for (const item of userTree.value.store._getAllNodes()) {
     item.expanded = false;
   }
-  if (this.expandedKey.indexOf(row.account) > -1) {
-    this.$store.commit('updatedExpandeKey', row.account);
+  if (expandedKey.value.indexOf(row.account) > -1) {
+    updatedExpandeKey(row.account);
   }
 };
 const _expand = (row) => {
-  if (row.level == 1) {
+  if (row.agentLevel == 1) {
     // 修改default-expanded-keys无法控制tree动态收缩和展开
-    if (this.expandedKey.indexOf(row.account) < 0) {
-      for (const item of this.$refs.userTree.store._getAllNodes()) {
+    if (expandedKey.value.indexOf(row.account) < 0) {
+      for (const item of userTree.value.store._getAllNodes()) {
         item.expanded = false;
       }
     }
-    this.$store.commit('setExpandedKey', row);
+    setExpandedKey(row);
   } else {
-    this.$store.commit('setExpandedKey', row);
+    setExpandedKey(row);
+  }
+};
+const setExpandedKey = (row) => {
+  if (!row) {
+    expandedKey.value = [];
+  } else if (row.agentLevel == 1) {
+    expandedKey.value = [];
+    expandedKey.value.push(row.account);
+  } else {
+    expandedKey.value.push(row.account);
+  }
+};
+// 关闭用户tree展开
+const updatedExpandeKey = (account) => {
+  for (let i = 0; i < expandedKey.value.length; i++) {
+    if (expandedKey[i] == account) {
+      expandedKey.value.splice(i);
+      break;
+    }
   }
 };
 </script>
@@ -211,8 +233,28 @@ const _expand = (row) => {
   color: #000;
   font-size: 16px;
 }
+.customer-tree {
+  .el-card__header {
+    margin-bottom: 0 !important;
+    padding: 11px 0px !important;
+  }
+  .el-card__body {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+.diy-style {
+  .el-tree-node {
+    .el-tree-node__content {
+      height: 48px;
+    }
+  }
+}
 </style>
 <style lang="less" scoped>
+.tree-active {
+  background-color: #f5efe8 !important;
+}
 .customer-box {
   padding: 20px;
   box-sizing: border-box;

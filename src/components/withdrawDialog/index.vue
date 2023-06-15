@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="visible"
-    width="500"
+    width="680"
     class="withdrawDialogContainer"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -15,7 +15,13 @@
         <img :src="closeImg" class="close" alt="" @click="hide" />
       </div>
     </template>
+    <Verification
+      v-show="ifNeedVerification"
+      parent="traderWithdraw"
+      @finish="certificateFinish"
+    />
     <el-form
+      v-if="!ifNeedVerification"
       ref="formRef"
       :model="formData"
       :rules="formRules"
@@ -24,14 +30,14 @@
       class="form"
     >
       <el-form-item :label="t('wallet.paymentMethod')" prop="method">
-        <el-select v-model="formData.method" style="width: 250px">
+        <el-select v-model="formData.method" style="width: 240px">
           <el-option :label="t('wallet.giveMoneyToMyWallet')" :value="0" />
           <el-option :label="t('wallet.cashOutToExternalWallet')" :value="1" />
         </el-select>
       </el-form-item>
-      <el-space :gutter="20" alignment="flex-end">
+      <el-space :gutter="25" alignment="flex-end">
         <el-form-item :label="t('wallet.cashCurrency')" prop="currency">
-          <el-select v-model="formData.currency" style="width: 180px">
+          <el-select v-model="formData.currency" style="width: 240px">
             <el-option
               v-for="item in userAssetsArr"
               :key="item.assetCoin"
@@ -46,7 +52,7 @@
           prop="assetType"
           label-width="20"
         >
-          <el-select v-model="formData.assetType" style="width: 220px">
+          <el-select v-model="formData.assetType" style="width: 250px">
             <el-option
               v-for="item in currentCurrencyData"
               :key="item.id"
@@ -60,14 +66,14 @@
         <el-input
           v-model="formData.externalAddress"
           :disabled="formData.method === 0"
-          style="width: 440px"
+          style="width: 520px"
         />
       </el-form-item>
       <el-form-item :label="t('wallet.amountPaid')" prop="amount">
         <el-input
           v-model="formData.amount"
           :controls="false"
-          style="width: 440px"
+          style="width: 520px"
         >
           <template #append>
             <el-button type="primary" class="maxBtn">Max</el-button>
@@ -106,6 +112,7 @@ import NP from 'number-precision';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { userApi } from '@/api';
 import PayPassDialog from '@/components/common/payPassDialog.vue';
+import Verification from '@/components/walletDialog/verification.vue';
 
 const { t } = useI18n();
 const userStore = useUserStore();
@@ -117,6 +124,7 @@ const payPassDialogRef = ref(null);
 const userAssetsArr = computed(() => userStore.userAssetsArr);
 const beforeOrderLoading = ref(false);
 const submitting = ref(false);
+const ifNeedVerification = ref(true);
 const formData = ref({
   method: 0,
   currency: '',
@@ -200,7 +208,9 @@ const beforeSubmit = () => {
     payPassDialogRef.value.show();
   }
 };
-
+const certificateFinish = () => {
+  ifNeedVerification.value = false;
+};
 const confirmOut = async () => {
   const params = {
     id: orderId.value,
@@ -224,6 +234,7 @@ const show = () => {
 };
 const hide = () => {
   visible.value = false;
+  ifNeedVerification.value = true;
 };
 watch(visible, (nv) => {
   if (!nv) {
@@ -288,7 +299,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 10px 15px 30px;
+    padding: 20px 10px 15px 90px;
     box-sizing: border-box;
     .title {
       font-size: 22px;
@@ -300,7 +311,7 @@ onMounted(() => {
     }
   }
   .form {
-    padding: 0 30px 30px 30px;
+    padding: 30px 90px 30px 90px;
     box-sizing: border-box;
   }
   .maxBtn {
@@ -317,7 +328,7 @@ onMounted(() => {
   }
   .submitBtn {
     margin-top: 40px;
-    width: 620px;
+    width: 520px;
     height: 42px;
     background-color: #0c3d93;
     border-radius: 8px;

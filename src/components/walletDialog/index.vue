@@ -24,21 +24,36 @@
           v-for="item in tabData"
           :key="item.value"
           :class="{ active: activeTab === item.value, titleItem: true }"
-          @click="activeTab = item.value"
+          @click="tabChange(item.value)"
         >
           {{ item.label }}
         </div>
       </div>
       <div class="contentContainer">
-        <div v-show="activeTab === 1">
+        <div v-if="activeTab === 1">
           <Verification
             v-show="ifNeedVerification"
+            parent="depositToWallet"
             @finish="certificateFinish"
           />
           <Deposit v-if="!ifNeedVerification" />
         </div>
-        <Withdraw v-show="activeTab === 2" @hide="hide" />
-        <Transfer v-show="activeTab === 3" @hide="hide" />
+        <div v-if="activeTab === 2">
+          <Verification
+            v-show="ifNeedVerification"
+            parent="walletToOut"
+            @finish="certificateFinish"
+          />
+          <Withdraw v-if="!ifNeedVerification" @hide="hide" />
+        </div>
+        <div v-if="activeTab === 3">
+          <Verification
+            v-show="ifNeedVerification"
+            parent="walletToTrader"
+            @finish="certificateFinish"
+          />
+          <Transfer v-if="!ifNeedVerification" @hide="hide" />
+        </div>
       </div>
       <!--      <div class="footerBox">-->
       <!--        <span class="tips">-->
@@ -78,6 +93,10 @@ const tabData = [
 ];
 const ifNeedVerification = ref(true);
 const activeTab = ref(1);
+const tabChange = (value) => {
+  activeTab.value = value;
+  ifNeedVerification.value = true;
+};
 const hide = () => {
   visible.value = false;
 };

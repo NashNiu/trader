@@ -256,6 +256,7 @@ const props = defineProps({
   parent: {
     type: String,
     default: '',
+    required: true,
   },
 });
 const emit = defineEmits(['finish']);
@@ -430,7 +431,7 @@ const submitClick = async () => {
           if (res.data.status === 0) {
             ElMessage.success('提交成功');
             auditStatus.value = 2;
-            emit('finish');
+            // emit('finish');
           }
         } else {
           ElMessage.error('请先上传身份证');
@@ -452,16 +453,52 @@ const getUserInfo = async () => {
   const res = await userApi.getCertificate();
   loadingData.value = false;
   if (res.data.status === 0) {
-    if (props.parent !== 'userVerify') {
-      // 不校验
-      if (res.data.message === '5') {
-        emit('finish');
-        return;
-      }
+    const from = props.parent;
+    const message = res.data.message;
+    const skipValid =
+      (from === 'depositToWallet' && message !== '1') ||
+      (from === 'walletToOut' && message !== '2') ||
+      (from === 'walletToTrader' && message !== '3') ||
+      (from === 'traderWithdraw' && message !== '4');
+    if (skipValid) {
+      emit('finish');
+      return;
     }
     auditStatus.value = res.data?.data?.auditstatus ?? 0;
     const data = res.data.data;
     // 审核状态(0未提交/1第一页提交/2全提交(待审核)/3审核通过/4审核失败)
+    const assignValue = () => {
+      step.value = 1;
+      formData.value = {
+        lastname: data.lastname,
+        firstname: data.firstname,
+        birthday: data.birthday,
+        country: data.country,
+        city: data.city,
+        postcode: data.postcode,
+        address: data.address,
+        addressimg: data.addressimg,
+        job: data.job,
+        documenttype: data.documenttype,
+        documentnum: data.documentnum,
+        documentfront: data.documentfront,
+        documentback: data.documentback,
+      };
+      frontUploadList.value = [
+        {
+          response: {
+            data: data.documentfront,
+          },
+        },
+      ];
+      backUploadList.value = [
+        {
+          response: {
+            data: data.documentback,
+          },
+        },
+      ];
+    };
     switch (auditStatus.value) {
       case 0:
         step.value = 1;
@@ -485,37 +522,13 @@ const getUserInfo = async () => {
         };
         break;
       case 2:
+        assignValue();
+        break;
       case 3:
-        step.value = 1;
-        formData.value = {
-          lastname: data.lastname,
-          firstname: data.firstname,
-          birthday: data.birthday,
-          country: data.country,
-          city: data.city,
-          postcode: data.postcode,
-          address: data.address,
-          addressimg: data.addressimg,
-          job: data.job,
-          documenttype: data.documenttype,
-          documentnum: data.documentnum,
-          documentfront: data.documentfront,
-          documentback: data.documentback,
-        };
-        frontUploadList.value = [
-          {
-            response: {
-              data: data.documentfront,
-            },
-          },
-        ];
-        backUploadList.value = [
-          {
-            response: {
-              data: data.documentback,
-            },
-          },
-        ];
+        assignValue();
+        if (props.parent !== 'userVerify') {
+          emit('finish');
+        }
         break;
       case 4:
         step.value = 1;
@@ -529,154 +542,5 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="less">
-.contentBox {
-  width: 620px;
-  margin: 0 auto;
-  .statusBox {
-    margin: 10px auto 15px;
-    width: 620px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eeeeee;
-    .label {
-      font-size: 16px;
-      font-weight: normal;
-      font-stretch: normal;
-      letter-spacing: 0;
-      color: #333333;
-      &.s1 {
-        margin-right: 20px;
-      }
-      .s2 {
-        color: #0c3d93;
-      }
-    }
-  }
-}
-.container {
-  width: 620px;
-  //height: 747px;
-  box-sizing: border-box;
-  background-color: #fafafa;
-  border-radius: 8px;
-  border: solid 1px #eeeeee;
-  margin: 0 auto;
-  .formContainer {
-    padding: 25px;
-    box-sizing: border-box;
-    .title {
-      font-family: MicrosoftYaHei-Bold;
-      font-size: 24px;
-      color: #333333;
-    }
-    .desc {
-      font-family: MicrosoftYaHei;
-      font-size: 16px;
-      color: #333333;
-      margin: 20px 0;
-      span {
-        word-break: break-word;
-        margin-top: 15px;
-        line-height: 18px;
-        display: inline-block;
-      }
-    }
-    .divided {
-      width: 560px;
-      height: 1px;
-      background-color: #eaeaea;
-      border-radius: 1px;
-      margin-bottom: 20px;
-    }
-    .uploadBox {
-      width: 570px;
-      height: 40px;
-      &.noSelect {
-        cursor: not-allowed;
-        .uploadContainer {
-          background-color: #f5f7fa;
-        }
-      }
-      .uploadContainer {
-        display: flex;
-        justify-content: space-between;
-        width: 570px;
-        height: 40px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        border: solid 1px #eaeaea;
-        box-sizing: border-box;
-        align-items: center;
-        padding: 0 18px;
-        .select {
-          font-size: 16px;
-          color: #666666;
-          margin-right: 10px;
-        }
-        .noSelected {
-          font-size: 18px;
-          color: #666666;
-        }
-      }
-    }
-    .imgViewContainer {
-      margin-top: 15px;
-      .title {
-        font-size: 16px;
-        color: #333333;
-        span {
-          margin-right: 5px;
-        }
-      }
-      .imgContainer {
-        width: 570px;
-        height: 180px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        border: solid 1px #eaeaea;
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-    .lint {
-      font-size: 16px;
-      font-style: italic;
-      color: #999999;
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-  .line {
-    width: 620px;
-    height: 1px;
-    background-color: #eaeaea;
-  }
-  .footer {
-    width: 100%;
-    height: 92px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    box-sizing: border-box;
-    .info {
-      font-family: MicrosoftYaHei;
-      font-size: 20px;
-      color: #666666;
-    }
-    .back {
-      font-family: MicrosoftYaHei;
-      font-size: 20px;
-      color: #666666;
-      cursor: pointer;
-    }
-    .submitBtn {
-      width: 154px;
-      height: 52px;
-      border-radius: 8px;
-      font-size: 20px;
-    }
-  }
-}
+@import './verification.less';
 </style>

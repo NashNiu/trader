@@ -75,6 +75,7 @@ import { useUserStore } from '@/store/index.js';
 import { commonApi, userApi } from '@/api';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
+import { configConst } from '@/config/index.js';
 const emit = defineEmits(['next']);
 const { t } = useI18n();
 const userStore = useUserStore();
@@ -91,6 +92,15 @@ const formData = reactive({
   password: '',
   repeatPass: '',
 });
+const validatePass = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('Please input the password'));
+  } else if (!configConst.passCheckRegex.test(value)) {
+    callback(new Error('包含大小写、数字、至少9位'));
+  } else {
+    callback();
+  }
+};
 const validatePass2 = (rule, value, callback) => {
   if (value === '') {
     callback(new Error('Please input the password again'));
@@ -103,6 +113,7 @@ const validatePass2 = (rule, value, callback) => {
 const formRules = reactive({
   code: [{ required: true, message: 'Please input code', trigger: 'blur' }],
   password: [
+    { validator: validatePass, trigger: 'blur' },
     { required: true, message: 'Please input password', trigger: 'blur' },
   ],
   repeatPass: [

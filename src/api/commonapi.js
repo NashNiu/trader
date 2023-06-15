@@ -30,7 +30,7 @@ export function setLanguage(lan) {
 export function getCodeInterface(data) {
   const localLan = localStorage.getItem(configConst.LANGUAGE) || 'en';
   return request({
-    url: `/api/users/user/verifyCode?language=${localLan}&email` + data,
+    url: `/api/users/user/verifyCode?language=${localLan}&email=` + data,
     method: 'GET',
   });
 }

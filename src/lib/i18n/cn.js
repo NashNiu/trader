@@ -145,7 +145,7 @@ export default {
     orP: '或通过以下方式继续',
     pEmail: '请输入邮箱地址',
     pExa: '请输入验证码',
-    pLeight: '密码必须同时包含大小写字母、数字、字符且大于8位',
+    pLeight: '密码必须同时包含大小写字母、数字、字符且大于9位',
     code: '获取验证码',
     codeSuccess: '验证码发送成功！',
     codefail: '验证码获取失败！',

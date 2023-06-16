@@ -241,6 +241,7 @@ import uploadImg from '@/assets/img/header/upload.png';
 import { configConst } from '@/config/index.js';
 import { genFileId, ElMessage } from 'element-plus';
 import { userApi } from '@/api';
+import { useUserStore } from '@/store';
 const props = defineProps({
   // 是否展示标题提示
   showTitle: {
@@ -260,6 +261,7 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(['finish']);
+const userStore = useUserStore();
 const loadingData = ref(false);
 const formRef = ref();
 const uploadHeaders = {
@@ -408,6 +410,7 @@ const submitClick = async () => {
             if (res.data.status === 0) {
               step.value = 2;
               auditStatus.value = 1;
+              await userStore.getAuditData({ forceFresh: true });
             }
           }
         }
@@ -431,6 +434,7 @@ const submitClick = async () => {
           if (res.data.status === 0) {
             ElMessage.success('提交成功');
             auditStatus.value = 2;
+            await userStore.getAuditData({ forceFresh: true });
             // emit('finish');
           }
         } else {
@@ -450,11 +454,12 @@ const submitClick = async () => {
 // };
 const getUserInfo = async () => {
   loadingData.value = true;
-  const res = await userApi.getCertificate();
+  const res = await userStore.getAuditData();
+  // const res = await userApi.getCertificate();
   loadingData.value = false;
-  if (res.data.status === 0) {
+  if (res.status === 0) {
     const from = props.parent;
-    const message = res.data.message;
+    const message = res.message;
     const skipValid =
       (from === 'depositToWallet' && message !== '1') ||
       (from === 'walletToOut' && message !== '2') ||
@@ -464,8 +469,8 @@ const getUserInfo = async () => {
       emit('finish');
       return;
     }
-    auditStatus.value = res.data?.data?.auditstatus ?? 0;
-    const data = res.data.data;
+    auditStatus.value = res?.data?.auditstatus ?? 0;
+    const data = res.data;
     // 审核状态(0未提交/1第一页提交/2全提交(待审核)/3审核通过/4审核失败)
     const assignValue = () => {
       step.value = 1;

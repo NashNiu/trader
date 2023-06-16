@@ -205,7 +205,7 @@ const onSubmitRegister = () => {
 };
 // 邮箱验证方法
 const checkEmail = (rule, value, callback) => {
-  const mailReg = configConst.emailCheckRegex;
+  const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
   if (!value) {
     return callback(new Error(t('login.emailBlank')));
   }

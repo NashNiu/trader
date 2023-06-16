@@ -145,7 +145,7 @@ export default {
     pEmail: 'Please enter the email address',
     pExa: 'Please enter the verification code',
     pLeight:
-      'The password must contain uppercase and lowercase letters, digits, and characters and be longer than eight characters',
+      'The password must contain uppercase and lowercase letters, digits, and characters and be longer than nine characters',
     code: 'Get code',
     codeSuccess: 'Code Success！',
     codefail: 'Code Fail!',

@@ -55,7 +55,6 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import { useUserStore } from '@/store/index.js';
-import { userApi } from '@/api';
 import ChangePass from './components/changePass.vue';
 import PayPassDialog from '@/components/common/payPassDialog.vue';
 import Verification from './components/verifyDialog.vue';

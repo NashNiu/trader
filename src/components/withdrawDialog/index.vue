@@ -186,8 +186,6 @@ const passCheck = () => {
           .then((res) => {
             if (res.data.status === 0) {
               confirmOut();
-            } else {
-              ElMessage.error('密码不对');
             }
           })
           .finally(() => {
@@ -225,8 +223,6 @@ const confirmOut = async () => {
   if (res.data.status === 0) {
     ElMessage.success(t?.('common.success'));
     visible.value = false;
-  } else {
-    ElMessage.error(t?.('common.failed'));
   }
 };
 const show = () => {
@@ -281,8 +277,6 @@ watch(
         if (res.data.status === 0) {
           currencyPrice.value = res.data.data.price;
           orderId.value = res.data.data.id;
-        } else {
-          ElMessage.error(t?.('common.failed'));
         }
       }
     }

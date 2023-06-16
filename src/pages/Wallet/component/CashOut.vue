@@ -134,8 +134,6 @@ const confirmOut = async () => {
   if (res.data.status === 0) {
     ElMessage.success(t('common.success'));
     visible.value = false;
-  } else {
-    ElMessage.error(t('common.failed'));
   }
 };
 watch(visible, (nv) => {
@@ -170,8 +168,6 @@ watch(
       if (res.data.status === 0) {
         currencyPrice.value = res.data.data.price;
         orderId.value = res.data.data.id;
-      } else {
-        ElMessage.error(t('common.failed'));
       }
     }
   }

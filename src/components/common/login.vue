@@ -192,8 +192,6 @@ const onSubmitRegister = () => {
           type: 'success',
         });
         GoLogin(registerFrom.email, registerFrom.password);
-      } else {
-        ElMessage.error(res.data.message);
       }
     });
   } else {
@@ -254,8 +252,6 @@ const GoLogin = (username, password) => {
           path: '/t/trade',
           query: {},
         });
-      } else {
-        ElMessage.error(t('login.loginFail'));
       }
     }
   );

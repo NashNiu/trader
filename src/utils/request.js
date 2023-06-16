@@ -41,6 +41,27 @@ service.interceptors.response.use(
     //     PriceLoss(10, "报价丢失"),
     //     TimeLoss(11, "行情丢失"),
     //     BalanceLow(12, "余额不足"),
+    console.log(response);
+    const statusErrorMsg = {
+      '-2': '参数错误',
+      '-1': '服务器错误',
+      1: '已更新',
+      2: '已存在',
+      3: '不存在',
+      4: '验证码错误',
+      5: '密码错误',
+      6: '未登录',
+      7: '无效Token',
+      8: '账号已停用',
+      9: '订单不存在',
+      10: '报价丢失',
+      11: '行情丢失',
+      12: '余额不足',
+    };
+    if (response.data.status) {
+      ElMessage.error(statusErrorMsg[response.data.status] || '未知错误');
+      // ElMessage.error(i18n.global.t('common.unauthorized'));
+    }
     return response;
   },
   (error) => {

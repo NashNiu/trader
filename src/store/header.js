@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { userApi } from '@/api';
 import NP from 'number-precision';
-import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/index.js';
 export default defineStore('header', {
   state: () => ({
@@ -18,8 +17,6 @@ export default defineStore('header', {
           ...item,
           available: NP.round(item.balance - item.freeze, 6),
         }));
-      } else {
-        ElMessage.error('GET WALLET INFO FAILED');
       }
     },
     async getAddressData() {

@@ -125,8 +125,6 @@ const createOrderBefore = async (coin) => {
   });
   if (res.data.status === 0) {
     orderData.value = res.data.data;
-  } else {
-    ElMessage.error(t?.('common.operateFailed'));
   }
 };
 const coinItemClick = async (coin) => {
@@ -152,8 +150,6 @@ const submit = async () => {
     ElMessage.success(t?.('common.success'));
     await getWalletData(true);
     emit('hide');
-  } else {
-    ElMessage.error(t?.('common.failed'));
   }
   submitting.value = false;
 };

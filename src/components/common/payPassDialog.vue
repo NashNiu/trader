@@ -143,8 +143,6 @@ const sendCode = async () => {
       type: 'success',
     });
     startCount();
-  } else {
-    ElMessage.error(t('login.codefail'));
   }
 };
 const submit = () => {
@@ -165,8 +163,6 @@ const submit = () => {
             });
             emit('next');
             close();
-          } else {
-            ElMessage.error('操作失败');
           }
         })
         .finally(() => {

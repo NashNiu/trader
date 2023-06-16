@@ -139,8 +139,6 @@ const sendCode = async () => {
       type: 'success',
     });
     startCount();
-  } else {
-    ElMessage.error(t('login.codefail'));
   }
 };
 const submit = () => {
@@ -158,8 +156,6 @@ const submit = () => {
             ElMessage.success('密码修改成功,请重新登录');
             close();
             tools.clearAndLogout();
-          } else {
-            ElMessage.error('操作失败');
           }
         })
         .finally(() => {

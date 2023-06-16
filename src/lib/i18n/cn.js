@@ -44,6 +44,7 @@ export default {
     customer: '名下客户',
     customerCount: '名下用户数据统计',
     commManage: '佣金管理',
+    extensionlink: '推广链接',
   },
   trade: {
     change: '涨跌幅',
@@ -284,6 +285,18 @@ export default {
     soc: '结算返佣$',
     settleteime: '结算时间',
     ss: '结算状态',
+  },
+  extensionlink: {
+    copy: '复制',
+    promocode: '推广码',
+    copysucc: '复制成功',
+    stpnocom: 'STP標準帳號/無手續費',
+    stp10usd: 'STP標準帳號/每手10USD手續費',
+    stp20usd: 'STP標準帳號/每手20USD手續費',
+    stp30usd: 'STP標準帳號/每手30USD手續費',
+    stp40usd: 'STP標準賬/每手40USD手續費',
+    stp50usd: 'STP標準帳號/每手50USD手續費',
+    ecnlowspread: 'ECN低點差帳號/每手10USD手續費',
   },
   user: {
     logout: '登出',

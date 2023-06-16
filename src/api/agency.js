@@ -195,3 +195,16 @@ export function getExportTradeInfoDetails(data) {
     data,
   });
 }
+/**
+ * 获取推广链接
+ * @date 2023-06-09
+ * @param {any} data
+ * @returns {any}
+ */
+export function getPromotionNumber(data) {
+  return request2({
+    url: '/agent/getPromotionNumber',
+    method: 'POST',
+    data,
+  });
+}

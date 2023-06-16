@@ -63,6 +63,12 @@ const router = createRouter({
           meta: { hideChart: true },
           component: () => import('@/pages/commManage/index.vue'),
         },
+        {
+          path: 'extensionlink',
+          name: 'extensionlink',
+          meta: { hideChart: true },
+          component: () => import('@/pages/extensionlink/index.vue'),
+        },
       ],
     },
     {

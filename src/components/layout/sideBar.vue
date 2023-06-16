@@ -84,6 +84,11 @@ const menuItemData = [
     icon: 'icon-doge',
     title: t?.('menu.commManage'),
   },
+  {
+    index: '/t/extensionlink',
+    icon: 'icon-eth',
+    title: t?.('menu.extensionlink'),
+  },
 ];
 const menuOpen = (index) => {
   if (index === '/index') {

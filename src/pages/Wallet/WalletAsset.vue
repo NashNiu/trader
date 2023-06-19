@@ -73,7 +73,6 @@ import RechargeDialog from './component/Recharge.vue';
 import TransferOutDialog from './component/TransferOut.vue';
 import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import { userApi } from '@/api';
-import { ElMessage } from 'element-plus';
 import { useSocketStore, useUserStore } from '@/store/index.js';
 import { useI18n } from 'vue-i18n';
 import NP from 'number-precision';
@@ -153,8 +152,6 @@ const getWalletData = async () => {
       ...item,
       available: NP.round(item.balance - item.freeze, 6),
     }));
-  } else {
-    ElMessage.error('GET WALLET INFO FAILED');
   }
 };
 onMounted(() => {

@@ -121,7 +121,6 @@ const getData = async () => {
   if (res.data.status === 0) {
     orderData.value = res.data.data;
   } else {
-    ElMessage.error(t?.('common.operateFailed'));
     visible.value = false;
   }
 };
@@ -155,8 +154,6 @@ const submit = async () => {
   if (res.data.status === 0) {
     ElMessage.success(t?.('common.success'));
     visible.value = false;
-  } else {
-    ElMessage.error(t?.('common.failed'));
   }
   submitLoading.value = false;
 };

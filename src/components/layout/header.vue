@@ -8,55 +8,54 @@
       <div class="search-buy-login">
         <div class="content-search">
           <input type="text" :placeholder="t('common.search')" />
-          <el-icon><Search /></el-icon>
+          <el-icon size="25"><Search /></el-icon>
         </div>
       </div>
-      <!--      <div class="walletBox">-->
-      <!--        <el-popover-->
-      <!--          :show-arrow="false"-->
-      <!--          trigger="click"-->
-      <!--          :width="211"-->
-      <!--          :offset="10"-->
-      <!--          popper-class="walletInfoPop"-->
-      <!--          @show="getWalletData"-->
-      <!--        >-->
-      <!--          <template #reference>-->
-      <!--            <div class="assetBox">-->
-      <!--              <span>0.00000000</span>-->
-      <!--              <CoinIco :size="24" class="icon" />-->
-      <!--              <img :src="DownArrowImg" alt="" />-->
-      <!--            </div>-->
-      <!--          </template>-->
-      <!--          <template #default>-->
-      <!--            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">-->
-      <!--              <div class="inputBox">-->
-      <!--                <el-input-->
-      <!--                  v-model="searchWalletText"-->
-      <!--                  placeholder="查询"-->
-      <!--                ></el-input>-->
-      <!--              </div>-->
+      <div class="walletBox">
+        <el-popover
+          :show-arrow="false"
+          trigger="click"
+          :width="211"
+          :offset="10"
+          popper-class="walletInfoPop"
+          @show="getWalletData"
+        >
+          <template #reference>
+            <div class="assetBox">
+              <span>Search Currency</span>
+              <img :src="DownArrowImg" alt="" />
+            </div>
+          </template>
+          <template #default>
+            <el-scrollbar v-loading="getWalletDataLoading" max-height="270px">
+              <div class="inputBox">
+                <el-input
+                  v-model="searchWalletText"
+                  placeholder="查询"
+                ></el-input>
+              </div>
 
-      <!--              <div class="allWalletBox">-->
-      <!--                <div-->
-      <!--                  v-for="item in filterWalletData"-->
-      <!--                  :key="item.id"-->
-      <!--                  class="walletItemBox"-->
-      <!--                >-->
-      <!--                  <span class="balance">{{ item.balance.toFixed(8) }}</span>-->
-      <!--                  <span class="currency">{{ item.currency }}</span>-->
-      <!--                  <CoinIco class="icon" :size="22" :coin="item.currency" />-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </el-scrollbar>-->
-      <!--          </template>-->
-      <!--        </el-popover>-->
+              <div class="allWalletBox">
+                <div
+                  v-for="item in filterWalletData"
+                  :key="item.id"
+                  class="walletItemBox"
+                >
+                  <span class="balance">{{ item.available.toFixed(8) }}</span>
+                  <span class="currency">{{ item.currency }}</span>
+                  <CoinIco class="icon" :size="22" :coin="item.currency" />
+                </div>
+              </div>
+            </el-scrollbar>
+          </template>
+        </el-popover>
 
-      <!--        <div class="btnBox" @click="showWalletDialog">wallet</div>-->
-      <!--      </div>-->
+        <div class="btnBox" @click="showWalletDialog">wallet</div>
+      </div>
       <div class="content-nav">
         <div class="itemBox">
           <span class="itemValue">
-            {{ userFundsVisible ? '$' + availableMargin?.toFixed(2) : ' *** ' }}
+            {{ userFundsVisible ? '$' + balance?.toFixed(2) : ' *** ' }}
           </span>
           <span class="itemKey">{{ t('common.balance') }}</span>
         </div>
@@ -68,17 +67,23 @@
         </div>
         <div class="itemBox">
           <span class="itemValue">
+            {{ userFundsVisible ? '$' + availableMargin.toFixed(2) : ' *** ' }}
+          </span>
+          <span class="itemKey">{{ t('common.availableMargin') }}</span>
+        </div>
+        <div class="itemBox small">
+          <span class="itemValue">
             {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
           </span>
           <span class="itemKey">{{ t('common.occupy') }}</span>
         </div>
-        <div class="itemBox">
+        <div class="itemBox small">
           <span class="itemValue">
             {{ userFundsVisible ? '$' + profit.toFixed(2) : ' *** ' }}
           </span>
           <span class="itemKey">{{ t('common.profit') }}</span>
         </div>
-        <div class="itemBox">
+        <div class="itemBox iconBox">
           <template v-if="userFundsVisible">
             <el-icon class="view" @click="setFundsVisible(false)">
               <View />
@@ -91,8 +96,18 @@
           </template>
         </div>
       </div>
+      <div class="outBtn">
+        <el-button
+          class="withdrawBtn"
+          type="primary"
+          @click="showWithdrawDialog"
+        >
+          withdraw
+        </el-button>
+      </div>
     </div>
     <WalletDialog ref="walletDialogRef" />
+    <WithdrawDialog ref="withdrawDialogRef" />
   </header>
 </template>
 <script setup>
@@ -103,16 +118,19 @@ import { useI18n } from 'vue-i18n';
 import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import DownArrowImg from '@/assets/img/header/down.png';
 import WalletDialog from '@/components/walletDialog/index.vue';
+import WithdrawDialog from '@/components/withdrawDialog/index.vue';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
 const headerStore = useHeaderStore();
 const walletDialogRef = ref();
+const withdrawDialogRef = ref();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(() => socketStore.userTotalProfit);
 const availableMargin = computed(() => socketStore.availableMargin);
 const userFundsVisible = computed(() => userStore.userFundsVisible);
+const balance = computed(() => socketStore.balance);
 const setFundsVisible = (visible) => {
   userStore.setUserFundsVisible(visible);
 };
@@ -137,6 +155,9 @@ const getWalletData = async () => {
 const showWalletDialog = () => {
   walletDialogRef?.value?.show();
 };
+const showWithdrawDialog = () => {
+  withdrawDialogRef.value.show();
+};
 </script>
 
 <style scoped lang="less">
@@ -160,8 +181,8 @@ header {
   width: 160px;
   height: 50px;
   cursor: pointer;
-  margin-right: 100px;
-  margin-left: 60px;
+  margin-right: 40px;
+  margin-left: 40px;
 }
 .content-logo img {
   height: 100%;
@@ -175,7 +196,14 @@ header {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    margin-right: 50px;
+    margin-right: 23px;
+    width: 130px;
+    &.small {
+      width: 110px;
+    }
+    &.iconBox {
+      width: 30px;
+    }
     .itemValue {
       font-size: 22px;
       color: #000000;
@@ -197,12 +225,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
+  width: 320px;
   .content-search {
     display: flex;
     align-items: center;
     padding: 3px 10px;
-    width: 370px;
+    width: 320px;
     height: 52px;
     border-radius: 26px;
     background: #f0f2f4;
@@ -210,7 +238,7 @@ header {
   }
   .content-search input {
     padding: 0 10px;
-    width: 300px;
+    width: 240px;
     height: 40px;
     border: 0;
     border-radius: 8px;
@@ -236,7 +264,8 @@ header {
     background-color: #f4f4f4;
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    justify-content: space-between;
+    padding: 0 12px;
     box-sizing: border-box;
     font-family: MicrosoftYaHei;
     font-size: 20px;
@@ -255,6 +284,15 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+.outBtn {
+  .withdrawBtn {
+    width: 107px;
+    height: 52px;
+    background-color: #266fe8;
+    border-radius: 12px;
+    font-size: 20px;
   }
 }
 </style>

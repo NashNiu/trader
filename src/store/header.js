@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { userApi } from '@/api';
 import NP from 'number-precision';
-import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/index.js';
 export default defineStore('header', {
   state: () => ({
@@ -10,16 +9,14 @@ export default defineStore('header', {
   }),
 
   actions: {
-    async getWalletData() {
-      if (this.walletData.length) return;
+    async getWalletData({ forceFresh } = { forceFresh: false }) {
+      if (this.walletData.length && !forceFresh) return;
       const res = await userApi.getBackEndWalletInfo();
       if (res.data.status === 0) {
         this.walletData = res.data.data.map((item) => ({
           ...item,
           available: NP.round(item.balance - item.freeze, 6),
         }));
-      } else {
-        ElMessage.error('GET WALLET INFO FAILED');
       }
     },
     async getAddressData() {
@@ -39,6 +36,7 @@ export default defineStore('header', {
           }
           return pre;
         }, []);
+        userStore.setUserAssetsArr(this.addressData);
       }
     },
   },

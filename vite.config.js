@@ -27,16 +27,20 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: [
-      {
-        find: '@',
-        replacement: path.resolve(__dirname, 'src'),
-      },
-      {
-        find: 'vue-i18n',
-        replacement: 'vue-i18n/dist/vue-i18n.cjs.js',
-      },
-    ],
+    // alias: [
+    //   {
+    //     find: '@',
+    //     replacement: path.resolve(__dirname, 'src'),
+    //   },
+    //   {
+    //     find: 'vue-i18n',
+    //     replacement: 'vue-i18n/dist/vue-i18n.cjs.js',
+    //   },
+    // ],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
+    },
   },
   css: {
     preprocessorOptions: {
@@ -66,7 +70,7 @@ export default defineConfig({
         ws: true,
       },
       '/kline': {
-        target: 'https://mckline.zzsmgs55.com:9443',
+        target: 'http://trader.lp.lan/kline',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/kline/, ''),
       },

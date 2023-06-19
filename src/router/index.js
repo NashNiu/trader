@@ -39,6 +39,12 @@ const router = createRouter({
           meta: { hideChart: true },
           component: () => import('@/pages/Wallet/index.vue'),
         },
+        {
+          path: 'userCenter',
+          name: 'UserCenter',
+          meta: { hideChart: true },
+          component: () => import('@/pages/userCenter/index.vue'),
+        },
       ],
     },
     {

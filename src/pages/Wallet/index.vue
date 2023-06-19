@@ -2,14 +2,14 @@
   <div class="walletBox">
     <div class="walletTitle">
       <h3 class="title">{{ t('wallet.capitalDetails') }}</h3>
-      <el-radio-group v-model="tabValue" size="large">
-        <el-radio-button label="overview">
-          {{ t('wallet.assetsOverview') }}
-        </el-radio-button>
-        <el-radio-button label="detail">
-          {{ t('wallet.capitalDetails') }}
-        </el-radio-button>
-      </el-radio-group>
+      <!--      <el-radio-group v-model="tabValue" size="large">-->
+      <!--                <el-radio-button label="-->
+      <!--        <el-radio-button label="detail">-->
+      <!--          {{ t('wallet.capitalDetails') }}overview">-->
+      <!--            {{ t('wallet.assetsOverview') }}-->
+      <!--        </el-radio-button>-->
+      <!--        </el-radio-button>-->
+      <!--      </el-radio-group>-->
     </div>
     <div class="tabContentBox">
       <MyAsset v-show="tabValue === 'overview'" />
@@ -21,17 +21,17 @@
 </template>
 <script setup>
 import MyAsset from './MyAsset.vue';
-import WalletAsset from './WalletAsset.vue';
+// import WalletAsset from './WalletAsset.vue';
 import CapitalDetail from './CapitalDetails.vue';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 
 const component = {
-  overview: WalletAsset,
+  // overview: WalletAsset,
   detail: CapitalDetail,
 };
 const { t } = useI18n();
-const tabValue = ref('overview');
+const tabValue = ref('detail');
 </script>
 <style lang="less" scoped>
 .walletBox {

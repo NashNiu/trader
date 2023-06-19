@@ -131,26 +131,31 @@ export function calcProfit({ createPrice, closePrice, lot, consize, rate }) {
 // 如果有汇率，直接用汇率，没有汇率，用产品名称取实时汇率
 export function getProfitSymbol(symbol, symbolInfo) {
   const type = getSymbolType(symbol);
+  if (!symbol || !symbolInfo) {
+    return {
+      rate: 1,
+    };
+  }
   if (type === 1 || type === 4) {
     return {
       rate: 1,
     };
   } else if (type === 2) {
-    if (symbolInfo.cur_profit === 'USD') {
+    if (symbolInfo?.cur_profit === 'USD') {
       return {
         rate: 1,
       };
     } else {
       if (
-        symbolArr.find((item) => item.name === symbolInfo.cur_profit + 'USD')
+        symbolArr.find((item) => item.name === symbolInfo?.cur_profit + 'USD')
       ) {
         return {
-          symbol: symbolInfo.cur_profit + 'USD',
+          symbol: symbolInfo?.cur_profit + 'USD',
           multiply: true,
         };
       } else {
         return {
-          symbol: 'USD' + symbolInfo.cur_profit,
+          symbol: 'USD' + symbolInfo?.cur_profit,
           multiply: false,
         };
       }
@@ -171,12 +176,12 @@ export function getProfitSymbol(symbol, symbolInfo) {
         symbolArr.find((item) => item.name === symbolInfo.cur_profit + 'USD')
       ) {
         return {
-          symbol: symbolInfo.cur_profit + 'USD',
+          symbol: symbolInfo?.cur_profit + 'USD',
           multiply: true,
         };
       } else {
         return {
-          symbol: 'USD' + symbolInfo.cur_profit,
+          symbol: 'USD' + symbolInfo?.cur_profit,
           multiply: false,
         };
       }

@@ -133,7 +133,7 @@ useEventListener(shadowRef, 'mouseleave', () => {
     .contentBox {
       box-sizing: border-box;
       padding: 15px 20px;
-      height: calc(100% - 68px);
+      height: calc(100% - 80px);
       display: flex;
       flex-direction: column;
       position: relative;

@@ -1,4 +1,5 @@
 import { request } from '@/utils/index.js';
+import { configConst } from '@/config/index.js';
 
 /**
  * @return {Promise}
@@ -27,8 +28,9 @@ export function setLanguage(lan) {
 }
 // 获取验证码接口
 export function getCodeInterface(data) {
+  const localLan = localStorage.getItem(configConst.LANGUAGE) || 'en';
   return request({
-    url: '/email?reg=' + data,
+    url: `/api/users/user/verifyCode?language=${localLan}&email=` + data,
     method: 'GET',
   });
 }

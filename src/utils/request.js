@@ -41,7 +41,6 @@ service.interceptors.response.use(
     //     PriceLoss(10, "报价丢失"),
     //     TimeLoss(11, "行情丢失"),
     //     BalanceLow(12, "余额不足"),
-    console.log(response);
     const statusErrorMsg = {
       '-2': '参数错误',
       '-1': '服务器错误',

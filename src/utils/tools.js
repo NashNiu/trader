@@ -125,6 +125,11 @@ export function calcProfit({ createPrice, closePrice, lot, consize, rate }) {
 // 如果有汇率，直接用汇率，没有汇率，用产品名称取实时汇率
 export function getProfitSymbol(symbol, symbolInfo) {
   const type = getSymbolType(symbol);
+  if (!symbol || !symbolInfo) {
+    return {
+      rate: 1,
+    };
+  }
   if (type === 1 || type === 4) {
     return {
       rate: 1,

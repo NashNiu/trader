@@ -127,7 +127,9 @@ const walletDialogRef = ref();
 const withdrawDialogRef = ref();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
-const profit = computed(() => socketStore.userTotalProfit);
+const profit = computed(
+  () => socketStore.userTotalProfit + socketStore.totalOverNightFee
+);
 const availableMargin = computed(() => socketStore.availableMargin);
 const userFundsVisible = computed(() => userStore.userFundsVisible);
 const balance = computed(() => socketStore.balance);

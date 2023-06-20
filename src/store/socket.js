@@ -44,16 +44,20 @@ export default defineStore('socket', {
     },
 
     //  Available取MT5的balance
-    // Equity=Available +  Profit（盈亏）
+    // Equity=Available +  Profit（盈亏） + 过夜费
     // M.Margin=已用保证金  取MT5的margin
     // 可用保证金=Equity - 已用保证金
     // 净值  Equity
     userNetWorth(state) {
-      return (state.userFunds?.balance || 0) + (this.userTotalProfit || 0);
+      return (
+        (state.userFunds?.balance || 0) +
+        (this.userTotalProfit || 0) +
+        (this.totalOverNightFee || 0)
+      );
     },
     // 可用保证金
     availableMargin(state) {
-      return state.userNetWorth - state.userFunds?.margin || 0;
+      return this.userNetWorth - state.userFunds?.margin || 0;
     },
     // Available
     balance(state) {

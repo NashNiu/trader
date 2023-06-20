@@ -5,7 +5,7 @@ import { tools } from '@/utils/index.js';
 import { configConst } from '@/config/index.js';
 import i18n from '@/lib/i18n';
 const service = axios.create({
-  baseURL: '/api/users',
+  baseURL: '/lpapi/api/users',
   // withCredentials:true,//跨域请求时发送Cookie
   timeout: 15000, // 设置超时时间 ms
 });

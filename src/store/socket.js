@@ -44,7 +44,7 @@ export default defineStore('socket', {
     },
 
     //  Available取MT5的balance
-    // Equity=Available +  Profit（盈亏） + 过夜费
+    // Equity=Available +  Profit（盈亏）
     // M.Margin=已用保证金  取MT5的margin
     // 可用保证金=Equity - 已用保证金
     // 净值  Equity

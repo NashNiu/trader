@@ -4,6 +4,8 @@ import {
   useUserStore,
   useTradeStore,
   useCommonStore,
+  useChartStore,
+  useHeaderStore,
 } from '@/store/index.js';
 import { configConst, configKey } from '@/config/index.js';
 import cryptoJS from 'crypto-js';
@@ -50,11 +52,15 @@ export function clearAndLogout() {
   const socketStore = useSocketStore();
   const tradeStore = useTradeStore();
   const commonStore = useCommonStore();
+  const headerStore = useHeaderStore();
+  const chartStore = useChartStore();
   userStore.$reset();
   socketStore.closeSocket();
   socketStore.$reset();
   tradeStore.$reset();
   commonStore.$reset();
+  headerStore.$reset();
+  chartStore.$reset();
   localStorage.removeItem(configConst.TOKEN);
   Router.push({ name: 'Index' }).then();
 }

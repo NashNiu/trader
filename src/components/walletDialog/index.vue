@@ -94,8 +94,10 @@ const tabData = [
 const ifNeedVerification = ref(true);
 const activeTab = ref(1);
 const tabChange = (value) => {
-  activeTab.value = value;
-  ifNeedVerification.value = true;
+  if (value !== activeTab.value) {
+    activeTab.value = value;
+    ifNeedVerification.value = true;
+  }
 };
 const hide = () => {
   visible.value = false;

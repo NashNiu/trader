@@ -289,7 +289,7 @@ const handleCredentialResponse = (response) => {
       });
     } else {
       //ElMessage.error('登录失败！');
-      if (res.data.status === -1) {
+      if (res.data.status === 3) {
         const RandomWord = '@Qwer' + Math.random().toString(36).slice(2, 6);
         registerGoogleInterface({
           gugeid: googleSub,

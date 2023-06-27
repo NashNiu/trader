@@ -43,11 +43,14 @@ export function registerInterface(code, data) {
   });
 }
 // google注册接口
-export function registerGoogleInterface(data) {
+export function registerGoogleInterface(data, hideError) {
   return request({
     url: '/api/users/user/reg/1/0',
     method: 'POST',
     data,
+    headers: {
+      hideError,
+    },
   });
 }
 // 登录接口

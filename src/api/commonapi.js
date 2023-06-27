@@ -48,6 +48,9 @@ export function registerGoogleInterface(data) {
     url: '/api/users/user/reg/1/0',
     method: 'POST',
     data,
+    headers: {
+      hideError: data.hideError,
+    },
   });
 }
 // 登录接口

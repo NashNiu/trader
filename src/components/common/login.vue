@@ -294,6 +294,8 @@ const handleCredentialResponse = (response) => {
         registerGoogleInterface({
           gugeid: googleSub,
           password: RandomWord,
+          hideError: true,
+          email: responsePayload.email,
         }).then((res) => {
           if (res.data.status === 0) {
             ElMessage({

@@ -57,7 +57,7 @@ service.interceptors.response.use(
       11: '行情丢失',
       12: '余额不足',
     };
-    if (response.data.status) {
+    if (response.data.status && !response.config.headers?.hideError) {
       ElMessage.error(statusErrorMsg[response.data.status] || '未知错误');
       // ElMessage.error(i18n.global.t('common.unauthorized'));
     }

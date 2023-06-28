@@ -43,22 +43,22 @@ export function registerInterface(code, data) {
   });
 }
 // google注册接口
-export function registerGoogleInterface(data, hideError) {
+export function registerGoogleInterface(data) {
   return request({
     url: '/api/users/user/reg/1/0',
+    method: 'POST',
+    data,
+  });
+}
+// 登录接口
+export function loginInterface(data, hideError) {
+  return request({
+    url: '/api/auth/login?randomStr=*&code=*_*',
     method: 'POST',
     data,
     headers: {
       hideError,
     },
-  });
-}
-// 登录接口
-export function loginInterface(data) {
-  return request({
-    url: '/api/auth/login?randomStr=*&code=*_*',
-    method: 'POST',
-    data,
   });
 }
 // 上传文件

@@ -189,7 +189,7 @@ const currentSblBasicData = computed(
 // 基础货币
 const baseSymbol = computed(() => currentSblBasicData.value.cur_base);
 // 结算货币
-const profitSymbol = computed(() => currentSblBasicData.value.cur_profit);
+// const profitSymbol = computed(() => currentSblBasicData.value.cur_profit);
 // 实时ask
 const ask = computed(() => currentSblData.value.ask);
 // 实时bid

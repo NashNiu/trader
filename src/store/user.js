@@ -8,7 +8,7 @@ export default defineStore('user', {
     userFundsVisible: true,
     userAssetsArr: [], // 客户的数字货币类型
     platform: 53, // 平台id
-    NoLoadList: [{ value: 0, label: 'real/LP/MC1S' }],
+    NoLoadList: [{ value: 0, label: 'realLPMC1S' }],
   }),
   getters: {
     totalAssets(state) {

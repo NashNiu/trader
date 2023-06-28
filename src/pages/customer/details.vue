@@ -23,6 +23,9 @@
           <el-button @click="_exportUserList">
             {{ t('customer.exportButton') }}
           </el-button>
+          <el-button @click="_goPage">
+            {{ t('customer.return') }}
+          </el-button>
         </div>
       </div>
       <el-row :gutter="20" class="set-margin-top">
@@ -154,7 +157,7 @@
           :label="t('commManage.salet')"
         >
           <template #default="scope">
-            {{ scope.row.command === OP_BUY ? '买入' : '卖出' }}
+            {{ scope.row.command === 'OP_BUY' ? '买入' : '卖出' }}
           </template>
         </el-table-column>
         <el-table-column
@@ -172,7 +175,15 @@
           width="145"
           align="center"
           :label="t('commManage.closet')"
-        ></el-table-column>
+        >
+          <template #default="scope">
+            <span>
+              {{
+                getDate(new Date(scope.row.close_time).getTime() / 1000, 'year')
+              }}
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="username"
           align="center"
@@ -214,7 +225,11 @@
           :label="t('commManage.settleteime')"
         >
           <template #default="scope">
-            {{ scope.row.updateDate ? scope.row.updateDate : '--' }}
+            <span>
+              {{
+                getDate(new Date(scope.row.updateDate).getTime() / 1000, 'year')
+              }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -241,15 +256,17 @@ import { ref, reactive, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ElMessage } from 'element-plus';
 import { useUserStore } from '@/store/index.js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { currency } from '@/utils/tools.js';
 import {
   getTradeInfoDetails,
   getExportTradeInfoDetails,
 } from '@/api/agency.js';
+import { getDate } from '@/utils/tools.js';
 const { t } = useI18n();
 const userStore = useUserStore();
 const route = useRoute();
+const router = useRouter();
 const account = route.query.account;
 const data = reactive({
   timeRange: '',
@@ -310,6 +327,9 @@ const _exportUserList = async () => {
     ElMessage.error(res.data.Data);
   }
 };
+const _goPage = () => {
+  router.go(-1);
+};
 const getData = async (num) => {
   data.loadingTable = true;
   let params = {
@@ -334,7 +354,7 @@ const getData = async (num) => {
   }
 };
 const _pageChange = (page) => {
-  getData(page);
+  getData(page - 1);
 };
 </script>
 <style lang="less" scoped>

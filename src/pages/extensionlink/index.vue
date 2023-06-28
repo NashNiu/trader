@@ -10,8 +10,9 @@
             <div
               v-if="item.url !== '' && item.url !== undefined"
               :key="item.name"
+              style="width: 100%; display: flex"
             >
-              <el-col :span="16">
+              <el-col :span="12">
                 <el-form-item :label="item.name" label-width="120px">
                   <el-input
                     :id="item.name"
@@ -20,7 +21,7 @@
                   ></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="12">
                 <el-form-item>
                   <el-button type="primary" @click="onCopy(item.name)">
                     {{ t('extensionlink.copy') }}
@@ -98,21 +99,7 @@ const getData = async () => {
 const formatIsNoLoad = (val) => {
   switch (+val) {
     case 0:
-      return 'S0';
-    case 1:
-      return 'S10';
-    case 2:
-      return 'S20';
-    case 3:
-      return 'S30';
-    case 4:
-      return 'S40';
-    case 5:
-      return 'S50';
-    case 6:
-      return 'S502';
-    case 7:
-      return 'E10';
+      return 'realLPMC1S';
   }
 };
 const formatTip = (val) => {

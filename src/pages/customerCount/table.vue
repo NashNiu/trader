@@ -123,8 +123,23 @@ const prop = defineProps({
     },
   },
 });
+const emit = defineEmits(['expand', 'collapse', 're-get-lsit']);
 const formatDot = (val) => {
   return currency.currency(val, '') == '' ? '--' : currency.currency(val, '');
+};
+const _getRowClass = (row, index) => {
+  if (row.row.childrens.length > 0) {
+    return '';
+  } else {
+    return 'hide-expand';
+  }
+};
+const _toggleRowExpansion = (row) => {
+  if (prop.expandedKey.indexOf(row.account) < 0) {
+    emit('expand', row);
+  } else {
+    emit('collapse', row);
+  }
 };
 </script>
 <script>
@@ -154,5 +169,8 @@ export default {
 }
 .custom-table .el-form--inline .el-form-item__content {
   width: 300px;
+}
+.hide-expand .el-table__expand-column .cell {
+  display: none;
 }
 </style>

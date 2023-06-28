@@ -24,10 +24,10 @@
               :icon="User"
               :empty-text="t('customer.nodate')"
               :render-content="_renderContent"
-              :data="treeData"
+              :data="states.treeData"
               accordion
-              :default-expanded-keys="expandedKey"
-              :props="defaultTreeDataProps"
+              :default-expanded-keys="states.expandedKey"
+              :props="states.defaultTreeDataProps"
               @node-click="_treeClick"
               @node-collapse="_collapse"
               @node-expand="_expand"
@@ -38,9 +38,9 @@
           <el-card class="box-card" shadow="never">
             <new-table
               class="tree-tbale"
-              :loading-table="loadingTable"
-              :tree-data="treeData"
-              :expanded-key="expandedKey"
+              :loading-table="states.loadingTable"
+              :tree-data="states.treeData"
+              :expanded-key="states.expandedKey"
               @re-get-lsit="_getData"
               @expand="_expand"
               @collapse="_collapse"
@@ -53,7 +53,7 @@
 </template>
 <script setup>
 import { User } from '@element-plus/icons-vue';
-import { onMounted, ref, nextTick } from 'vue';
+import { onMounted, reactive, ref, nextTick } from 'vue';
 import { useUserStore } from '@/store/index.js';
 import { exportUserList, getUserList } from '@/api/agency.js';
 import { useI18n } from 'vue-i18n';
@@ -61,14 +61,20 @@ import { ElMessage } from 'element-plus';
 import newTable from './table.vue';
 import $ from 'jquery';
 const { t } = useI18n();
-const treeData = ref([]); // 名下用户列表tree数据
-const expandedKey = ref([]);
 const userTree = ref();
+const states = reactive({
+  loadingTable: false,
+  treeData: [],
+  expandedKey: [],
+  defaultTreeDataProps: {
+    children: 'childrens',
+    label: 'name',
+  },
+});
 const defaultTreeDataProps = ref({
   children: 'childrens',
   label: 'username',
 });
-const loadingTable = ref(false);
 onMounted(() => {
   _getData();
 });
@@ -92,15 +98,14 @@ const _exportUserList = async () => {
 // 获取名下客户列表
 const _getData = async () => {
   console.log('asddddddddddddddddd');
-  loadingTable.value = true;
+  states.loadingTable = true;
   const res = await getUserList({
     account: String(userStore.userInfo?.mtaccr),
     platform: userStore.platform,
   });
   if (res.data.IsSuccess) {
-    loadingTable.value = false;
-    treeData.value = _createTreeData(res.data.Data);
-    console.log(treeData.value);
+    states.loadingTable = false;
+    states.treeData = _createTreeData(res.data.Data);
   }
 };
 // 生成数据
@@ -191,14 +196,14 @@ const _collapse = (row) => {
   for (const item of userTree.value.store._getAllNodes()) {
     item.expanded = false;
   }
-  if (expandedKey.value.indexOf(row.account) > -1) {
+  if (states.expandedKey.indexOf(row.account) > -1) {
     updatedExpandeKey(row.account);
   }
 };
 const _expand = (row) => {
   if (row.agentLevel == 1) {
     // 修改default-expanded-keys无法控制tree动态收缩和展开
-    if (expandedKey.value.indexOf(row.account) < 0) {
+    if (states.expandedKey.indexOf(row.account) < 0) {
       for (const item of userTree.value.store._getAllNodes()) {
         item.expanded = false;
       }
@@ -210,29 +215,29 @@ const _expand = (row) => {
 };
 const setExpandedKey = (row) => {
   if (!row) {
-    expandedKey.value = [];
+    states.expandedKey = [];
   } else if (row.agentLevel == 1) {
-    expandedKey.value = [];
-    expandedKey.value.push(row.account);
+    states.expandedKey = [];
+    states.expandedKey.push(row.account);
   } else {
-    expandedKey.value.push(row.account);
+    states.expandedKey.push(row.account);
   }
 };
 // 关闭用户tree展开
 const updatedExpandeKey = (account) => {
-  for (let i = 0; i < expandedKey.value.length; i++) {
-    if (expandedKey[i] == account) {
-      expandedKey.value.splice(i);
+  for (let i = 0; i < states.expandedKey.length; i++) {
+    if (states.expandedKey[i] == account) {
+      states.expandedKey.splice(i);
       break;
     }
   }
 };
 </script>
 <style lang="less">
-.el-tree-node__expand-icon.is-leaf {
-  color: #000;
-  font-size: 16px;
-}
+// .el-tree-node__expand-icon.is-leaf {
+//   color: #000;
+//   font-size: 16px;
+// }
 .customer-tree {
   .el-card__header {
     margin-bottom: 0 !important;

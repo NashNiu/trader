@@ -117,21 +117,18 @@
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.lindgold') }}
-                      <br />
                       {{ data.tradeInfo.settmentOverview.goldCountStatic }}
                     </span>
                   </el-col>
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.usoil') }}
-                      <br />
                       {{ data.tradeInfo.settmentOverview.oilCountStatic }}
                     </span>
                   </el-col>
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.forexchange') }}
-                      <br />
                       {{ data.tradeInfo.settmentOverview.exchangeCountStatic }}
                     </span>
                   </el-col>
@@ -140,21 +137,20 @@
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.china300') }}
-                      <br />
                       {{ data.tradeInfo.settmentOverview.china300CountStatic }}
                     </span>
                   </el-col>
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.china50') }}
-                      <br />
+
                       {{ data.tradeInfo.settmentOverview.china50CountStatic }}
                     </span>
                   </el-col>
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.lonsilv') }}
-                      <br />
+
                       {{ data.tradeInfo.settmentOverview.silverCountStatic }}
                     </span>
                   </el-col>
@@ -163,7 +159,6 @@
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.britishoil') }}
-                      <br />
                       {{
                         data.tradeInfo.settmentOverview.britainOilCountStatic
                       }}
@@ -172,14 +167,12 @@
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.stock') }}
-                      <br />
                       {{ data.tradeInfo.settmentOverview.stockCountStatic }}
                     </span>
                   </el-col>
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.oindex') }}
-                      <br />
                       {{ data.tradeInfo.settmentOverview.indexCountStatic }}
                     </span>
                   </el-col>
@@ -188,10 +181,11 @@
                   <el-col :span="6">
                     <span class="count-cat">
                       {{ t('commManage.otherbtc') }}
-                      <br />
                       {{
-                        data.tradeInfo.settmentOverview.btcsCountStatic +
-                        data.tradeInfo.settmentOverview.btcCountStatic
+                        (
+                          data.tradeInfo.settmentOverview.btcsCountStatic +
+                          data.tradeInfo.settmentOverview.btcCountStatic
+                        ).toFixed(2)
                       }}
                     </span>
                   </el-col>
@@ -222,7 +216,7 @@
               :label="t('commManage.salet')"
             >
               <template #default="scope">
-                {{ scope.row.command === OP_BUY ? '买入' : '卖出' }}
+                {{ scope.row.command === 'OP_BUY' ? '买入' : '卖出' }}
               </template>
             </el-table-column>
             <el-table-column
@@ -240,7 +234,18 @@
               width="145"
               align="center"
               :label="t('commManage.closet')"
-            ></el-table-column>
+            >
+              <template #default="scope">
+                <span>
+                  {{
+                    getDate(
+                      new Date(scope.row.close_time).getTime() / 1000,
+                      'year'
+                    )
+                  }}
+                </span>
+              </template>
+            </el-table-column>
             <el-table-column
               prop="username"
               align="center"
@@ -259,6 +264,11 @@
               prop="account_commission"
               align="center"
               :label="t('commManage.ownrebate')"
+            ></el-table-column>
+            <el-table-column
+              prop="child_agent_commission"
+              align="center"
+              :label="t('commManage.ownlow')"
             ></el-table-column>
             <!-- <el-table-column
               width="120"
@@ -297,7 +307,14 @@
               :label="t('commManage.settleteime')"
             >
               <template #default="scope">
-                {{ scope.row.updateDate ? scope.row.updateDate : '--' }}
+                <span>
+                  {{
+                    getDate(
+                      new Date(scope.row.updateDate).getTime() / 1000,
+                      'year'
+                    )
+                  }}
+                </span>
               </template>
             </el-table-column>
             <el-table-column
@@ -623,6 +640,7 @@ import {
   getGroupsAndBackPoint,
 } from '@/api/agency.js';
 import { currency } from '@/utils/tools.js';
+import { getDate } from '@/utils/tools.js';
 const userStore = useUserStore();
 const { t } = useI18n();
 const isNoLoad = userStore.NoLoadList;
@@ -668,7 +686,7 @@ const _handleClick = (tab, event) => {
   }
 };
 const _pageChange = (page) => {
-  _getCMTradeInfoDetails(page);
+  _getCMTradeInfoDetails(page - 1);
 };
 const formatSettleType = (val) => {
   let str = '';
@@ -874,6 +892,7 @@ const _exportUserList = async () => {
     display: flex;
     flex-direction: column;
     height: calc(100% - 80px);
+    overflow-y: auto;
   }
   .top-box {
     width: 100%;
@@ -945,6 +964,7 @@ const _exportUserList = async () => {
   margin-bottom: 5px;
   font-size: 14px;
   text-align: center;
+  line-height: 25px;
 }
 .basic-left-free {
   overflow: hidden;

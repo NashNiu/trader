@@ -6,9 +6,9 @@
       class="table-style"
       :data="treeData"
       :row-key="getRowKeys"
-      :expand-row-keys="expandedKey"
+      :expand-row-keys="prop.expandedKey"
       :row-class-name="_getRowClass"
-      :show-header="childrenNode"
+      :show-header="prop.childrenNode"
       @expand-change="_toggleRowExpansion"
     >
       <el-table-column type="expand" width="30">
@@ -1102,6 +1102,9 @@ export default {
   span {
     font-size: 16px;
   }
+}
+.hide-expand .el-table__expand-column .cell {
+  display: none;
 }
 </style>
 <style lang="less" scoped>

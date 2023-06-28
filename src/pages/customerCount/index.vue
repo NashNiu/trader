@@ -44,15 +44,13 @@
         </p>
         <p class="data-count">
           <el-button>
-            {{ t('customerCount.proloss') }}：{{ states.countData.profit }}
+            {{ t('customerCount.proloss') }}{{ states.countData.profit }}
           </el-button>
           <el-button>
-            {{ t('customerCount.totaltra') }}：{{ states.countData.lot }}
+            {{ t('customerCount.totaltra') }}{{ states.countData.lot }}
           </el-button>
           <el-button>
-            {{ t('customerCount.trebates') }}：{{
-              states.countData.sumBackPoint
-            }}
+            {{ t('customerCount.trebates') }}{{ states.countData.sumBackPoint }}
           </el-button>
           <el-button>
             {{ t('customerCount.totalreb')

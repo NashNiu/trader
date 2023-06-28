@@ -208,3 +208,16 @@ export function getPromotionNumber(data) {
     data,
   });
 }
+/**
+ * 获取账户类型
+ * @date 2023-06-09
+ * @param {any} data
+ * @returns {any}
+ */
+export function getAgentType(data) {
+  return request2({
+    url: '/agent/getAgentType',
+    method: 'POST',
+    data,
+  });
+}

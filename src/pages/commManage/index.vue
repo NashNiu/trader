@@ -772,16 +772,16 @@ const _extractCommission = async () => {
   }
   const res = await extractCommission(params);
   if (res.data.IsSuccess) {
+    data.btnLoading = false;
+    data.mt4.money = '';
+    _getElectronicWallet();
     // 满足转账条件提交转账申请
-    saveExtractCommission(params).then((res) => {
-      if (res.data.IsSuccess) {
-        data.btnLoading = false;
-        data.mt4.money = '';
-        _getElectronicWallet();
-      } else {
-        ElMessage.error(res.data.Data);
-      }
-    });
+    // saveExtractCommission(params).then((res) => {
+    //   if (res.data.IsSuccess) {
+    //   } else {
+    //     ElMessage.error(res.data.Data);
+    //   }
+    // });
   } else {
     data.btnLoading = false;
     ElMessage.error(res.data.Data);

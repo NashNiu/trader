@@ -318,7 +318,7 @@
               >
                 <el-input
                   v-model="states.form.btcsFreeCommission"
-                  onkeyup="this.value = this.value.replace(/[^\d.]/g,'') ? this.value.replace(/[^\d.]/g,'') : ''"
+                  onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
                 ></el-input>
               </el-form-item>
               <span class="basic-agent-free">
@@ -327,7 +327,7 @@
               </span>
             </div>
           </el-tab-pane>
-          <el-tab-pane :label="t('customer.ecnset')" name="1">
+          <!-- <el-tab-pane :label="t('customer.ecnset')" name="1">
             <div class="basic-left-free">
               <span class="basic-bold">{{ t('customer.frebate2') }}</span>
               <el-form-item
@@ -476,7 +476,7 @@
               >
                 <el-input
                   v-model="states.form.btcsFreeCommissionEcn"
-                  onkeyup="this.value = this.value.replace(/[^\d.]/g,'') ? this.value.replace(/[^\d.]/g,'') : ''"
+                  onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
                 ></el-input>
               </el-form-item>
               <span class="basic-agent-free">
@@ -484,7 +484,7 @@
                 {{ t('customer.ulot') }}
               </span>
             </div>
-          </el-tab-pane>
+          </el-tab-pane> -->
         </el-tabs>
       </el-form>
       <template #footer>
@@ -541,12 +541,18 @@ const getRowKeys = (row) => {
   return row.account;
 };
 const validateDaili = (rule, value, callback) => {
+  // console.log(
+  //   parseInt(value) <= states.form[rule.dailiNumber] ||
+  //     states.form[rule.dailiNumber] == -1
+  // );
   if (
     parseInt(value) <= states.form[rule.dailiNumber] ||
     states.form[rule.dailiNumber] == -1
   ) {
+    console.log(0);
     callback();
   } else {
+    console.log(1);
     callback(new Error());
   }
 };
@@ -746,7 +752,6 @@ const states = reactive({
     ],
     btcsFreeCommission: [
       {
-        type: 'number',
         required: true,
         message: t('customer.otherrebate'),
         trigger: 'blur',

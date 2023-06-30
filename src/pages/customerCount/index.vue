@@ -96,7 +96,7 @@
           </el-card>
         </el-col>
       </el-row>
-      <p class="tips-p">{{ t('customerCount.report') }}</p>
+      <!-- <p class="tips-p">{{ t('customerCount.report') }}</p> -->
     </div>
   </div>
 </template>

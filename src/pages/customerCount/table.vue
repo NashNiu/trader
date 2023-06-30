@@ -63,18 +63,18 @@
           {{ formatDot(scope.row.map.netincome) }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="t('customerCount.proloss')">
+      <el-table-column align="center" :label="t('customerCount.proloss2')">
         <template #default="scope">
           {{ formatDot(scope.row.map.totalprofit) }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="t('customerCount.totaltra')">
+      <el-table-column align="center" :label="t('customerCount.totaltra2')">
         <template #default="scope">
           <span :class="'tree' + scope.row.account"></span>
           {{ formatDot(scope.row.map.totallots) }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="t('customerCount.trebates')">
+      <el-table-column align="center" :label="t('customerCount.trebatess')">
         <template #default="scope">
           {{ formatDot(scope.row.map.totalsettledmoney) }}
         </template>

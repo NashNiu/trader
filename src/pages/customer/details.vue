@@ -9,7 +9,7 @@
           <el-date-picker
             v-model="data.timeRange"
             type="daterange"
-            value-format="YYYY/MM/DD"
+            value-format="YYYY-MM-DD"
             :range-separator="t('customerCount.to')"
             :start-placeholder="t('customerCount.startd')"
             :end-placeholder="t('customerCount.endd')"
@@ -125,8 +125,10 @@
                   {{ t('commManage.otherbtc') }}
                   <br />
                   {{
-                    data.tradeInfo.settmentOverview.btcsCountStatic +
-                    data.tradeInfo.settmentOverview.btcCountStatic
+                    (
+                      data.tradeInfo.settmentOverview.btcsCountStatic +
+                      data.tradeInfo.settmentOverview.btcCountStatic
+                    ).toFixed(2)
                   }}
                 </span>
               </el-col>
@@ -202,6 +204,11 @@
           prop="account_commission"
           align="center"
           :label="t('commManage.ownrebate')"
+        ></el-table-column>
+        <el-table-column
+          prop="child_agent_commission"
+          align="center"
+          :label="t('commManage.ownlow')"
         ></el-table-column>
         <el-table-column align="center" :label="t('commManage.sor')">
           <template #default="scope">

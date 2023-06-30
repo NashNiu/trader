@@ -75,7 +75,7 @@
               <el-date-picker
                 v-model="data.timeRange"
                 type="daterange"
-                value-format="YYYY/MM/DD"
+                value-format="YYYY-MM-DD"
                 :range-separator="t('customerCount.to')"
                 :start-placeholder="t('customerCount.startd')"
                 :end-placeholder="t('customerCount.endd')"
@@ -491,7 +491,7 @@
                   </span>
                 </div>
               </el-tab-pane>
-              <el-tab-pane :label="t('customer.ecnset')" name="1">
+              <!-- <el-tab-pane :label="t('customer.ecnset')" name="1">
                 <div class="basic-left-free">
                   <span class="basic-bold">{{ t('customer.frebate2') }}</span>
                   <el-form-item style="margin-left: 65px">
@@ -618,7 +618,7 @@
                     {{ t('customer.ulot') }}
                   </span>
                 </div>
-              </el-tab-pane>
+              </el-tab-pane> -->
             </el-tabs>
           </el-form>
         </el-tab-pane>

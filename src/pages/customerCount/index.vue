@@ -9,7 +9,7 @@
           <el-date-picker
             v-model="states.timeRange"
             type="daterange"
-            value-format="YYYY/MM/DD"
+            value-format="YYYY-MM-DD"
             :range-separator="t('customerCount.to')"
             :start-placeholder="t('customerCount.startd')"
             :end-placeholder="t('customerCount.endd')"

@@ -154,8 +154,7 @@ export default {
     lowlevel: '修改下级返佣',
     lowlevels: '机构客户升级',
     cgrade: '客户升级',
-    rebate:
-      '您在这里设置下级机构客户每种商品的返佣金额（返佣/手），不能超过您自己的返佣金额',
+    rebate: '此处设置的返点金额不能超过该客户所属上级返点金额',
     cname: '客户姓名:',
     stpset: 'STP设置',
     ecnset: 'ECN设置',

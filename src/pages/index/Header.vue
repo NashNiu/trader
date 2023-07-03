@@ -1,5 +1,5 @@
 <template>
-  <header class="site-header site-header__header-one">
+  <!-- <header class="site-header site-header__header-one">
     <nav class="navbar navbar-expand-lg navbar-light header-navigation stricky">
       <div class="container clearfix">
         <div class="logo-box clearfix">
@@ -15,8 +15,6 @@
             <span class="fa fa-bars"></span>
           </button>
         </div>
-        <!-- /.logo-box -->
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="main-navigation">
           <ul class="one-page-scroll-menu navigation-box">
             <li class="current scrollToLink">
@@ -76,24 +74,65 @@
         <LoginRegister v-if="centerDialogVisible" @hide="hideDialog" />
       </div>
     </nav>
-  </header>
+  </header> -->
+  <div class="header">
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      :ellipsis="false"
+      @select="handleSelect"
+    >
+      <el-menu-item>
+        <img src="../../assets/logo_new.png" />
+      </el-menu-item>
+      <div class="flex-grow" />
+      <el-menu-item index="1">功能</el-menu-item>
+      <el-menu-item index="2">产品</el-menu-item>
+      <el-menu-item index="3">定价</el-menu-item>
+      <el-sub-menu index="4">
+        <template #title>平台</template>
+        <el-menu-item index="4-1">移动端</el-menu-item>
+        <el-menu-item index="4-2">MT5平台</el-menu-item>
+        <el-menu-item index="4-3">WAP网页端</el-menu-item>
+      </el-sub-menu>
+      <el-menu-item index="5">教学</el-menu-item>
+      <el-menu-item index="6">支持</el-menu-item>
+      <div class="menu-right">
+        <div class="menu-button menu-button_1" @click="goTrade">登录</div>
+        <div class="menu-button menu-button_2" @click="toggleTab">注册</div>
+        <div class="menu-button menu-button_3">下载应用</div>
+      </div>
+    </el-menu>
+    <LoginRegister ref="LoginRegister" v-if="centerDialogVisible" @hide="hideDialog"/>
+  </div>
 </template>
 <script setup>
 import LoginRegister from '../../components/common/login.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { configConst } from '@/config/index.js';
 const { t, locale } = useI18n();
 const router = useRouter();
+const data = reactive({
+  activeIndex: 1,
+});
 const centerDialogVisible = ref(false);
 const hideDialog = () => {
   centerDialogVisible.value = false;
 };
+const toggleTab = () => {
+  const login = ref('LoginRegister');
+  console.log(login.activeName);
+}
 const changeLanguage = (command) => {
   localStorage.setItem(configConst.LANGUAGE, command);
   locale.value = command;
   location.reload();
+};
+const handleSelect = (key, keyPath) => {
+  console.log(key, keyPath);
 };
 const goTrade = () => {
   if (localStorage.getItem('token')) {
@@ -289,5 +328,53 @@ a:visited {
   overflow: scroll;
   max-height: 200px;
   overflow-x: hidden;
+}
+</style>
+<style lang="less" scoped>
+.header {
+  background-color: #fff;
+  height: 98px;
+  .el-menu-demo {
+    max-width: 1300px;
+    margin: 0 auto;
+    height: 100%;
+    .el-menu-item {
+      font-size: 16px;
+      color: #000;
+    }
+  }
+  .flex-grow {
+    flex-grow: 1;
+  }
+  .menu-right {
+    display: flex;
+    align-items: center;
+    .menu-button {
+      width: 92px;
+      height: 40px;
+      font-size: 16px;
+      line-height: 40px;
+      text-align: center;
+      color: #fff;
+      cursor: pointer;
+    }
+    .menu-button_1 {
+      color: #2a64a5;
+      border: 1px solid #2A64A5;
+    }
+    .menu-button_2 {
+      background: linear-gradient(90deg, #2964a5 0%, #0e305d 100%);
+      margin: 0 10px;
+    }
+    .menu-button_3 {
+      background: #239ffe;
+    }
+  }
+}
+</style>
+<style>
+.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+  font-size: 16px;
+  color: #000;
 }
 </style>

@@ -28,6 +28,7 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from '@/store/index.js';
 import { ref, watch } from 'vue';
 import ProfileDrawer from './profileDrawer.vue';
 import { useI18n } from 'vue-i18n';
@@ -38,6 +39,8 @@ const router = useRouter();
 const route = useRoute();
 const activeIndex = ref(route.path);
 const profileDrawerRef = ref(null);
+const userStore = useUserStore();
+const userInfo = userStore.userInfo;
 const menuItemData = [
   {
     index: '/index',
@@ -70,6 +73,36 @@ const menuItemData = [
     title: t?.('menu.wallet'),
   },
 ];
+console.log(userInfo.agentType);
+// 如果是机构客户展示代理模块
+if (userInfo.agentType === '1') {
+  const agencyRouter = [
+    {
+      index: '/t/customer',
+      icon: 'icon-dollar',
+      title: t?.('menu.customer'),
+    },
+    {
+      index: '/t/customerCount',
+      icon: 'icon-bnb',
+      title: t?.('menu.customerCount'),
+    },
+    {
+      index: '/t/commManage',
+      icon: 'icon-doge',
+      title: t?.('menu.commManage'),
+    },
+    {
+      index: '/t/extensionlink',
+      icon: 'icon-eth',
+      title: t?.('menu.extensionlink'),
+    },
+  ];
+  agencyRouter.forEach((item) => {
+    menuItemData.push(item);
+  });
+  console.log(menuItemData);
+}
 const menuOpen = (index) => {
   if (index === '/index') {
     profileDrawerRef.value.show();

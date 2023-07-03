@@ -194,3 +194,48 @@ export function getProfitSymbol(symbol, symbolInfo) {
     }
   }
 }
+/**
+  @param {Number} timeStamp 传入的时间戳
+  @param {Number} startType 要返回的时间字符串的格式类型，传入'year'则返回年开头的完整时间
+*/
+export const getDate = (timeStamp, startType, line) => {
+  const e = line || '-';
+  const d = new Date(timeStamp * 1000);
+  const year = d.getFullYear();
+  const month = getHandledValue(d.getMonth() + 1);
+  const date = getHandledValue(d.getDate());
+  const hours = getHandledValue(d.getHours());
+  const minutes = getHandledValue(d.getMinutes());
+  const second = getHandledValue(d.getSeconds());
+  let resStr = '';
+  if (startType === 'year') {
+    resStr =
+      year + e + month + e + date + ' ' + hours + ':' + minutes + ':' + second;
+  } else if (startType === 'ymd') {
+    resStr = year + e + month + e + date;
+  } else {
+    resStr = month + e + date + ' ' + hours + ':' + minutes;
+  }
+  return resStr;
+};
+const getHandledValue = (num) => {
+  return num < 10 ? '0' + num : num;
+};
+export const currency = {
+  currency: (value, currency, decimals) => {
+    const digitsRE = /(\d{3})(?=\d)/g;
+    value = parseFloat(value);
+    if (!isFinite(value) || (!value && value !== 0)) return '';
+    currency = currency != null ? currency : '$';
+    decimals = decimals != null ? decimals : 2;
+    let stringified = Math.abs(value).toFixed(decimals);
+    let _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
+    let i = _int.length % 3;
+    let head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? ',' : '') : '';
+    let _float = decimals ? stringified.slice(-1 - decimals) : '';
+    let sign = value < 0 ? '-' : '';
+    return (
+      sign + currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float
+    );
+  },
+};

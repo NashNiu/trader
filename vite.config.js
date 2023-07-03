@@ -52,11 +52,11 @@ export default defineConfig({
   server: {
     port: 3001,
     proxy: {
-      // '/apis': {
+      // '/api/users': {
       //   // target: 'http://192.168.0.94:9000/',
-      //   target: 'http://192.168.137.135:9000/',
+      //   target: 'http://192.168.137.135:9000/api/users',
       //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/apis/, ''),
+      //   rewrite: (path) => path.replace(/^\/api\/users/, ''),
       // },
       '/lpapi': {
         target: 'http://trader.lp.lan/lpapi',

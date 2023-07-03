@@ -41,6 +41,7 @@ import SideBar from './sideBar.vue';
 import Header from './header.vue';
 import Chart from '@/components/common/tradeViewChart/index.vue';
 import { getUserInfoByToken, createUserWallet } from '@/api/user.js';
+import { getAgentType } from '@/api/agency.js';
 import { useUserStore, useSocketStore, useCommonStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { useEventListener, useStorage } from '@vueuse/core';
@@ -90,6 +91,25 @@ const checkToken = async () => {
       if (res?.data?.status === 0) {
         const password = tools.decrypt(res.data?.data?.password);
         userStore.setUserInfo({ ...res.data.data, password });
+        if (res.data.data.mtaccr) {
+          const getType = await getAgentType({
+            account: res.data.data.mtaccr,
+            platform: 53,
+          });
+          if (getType.data.IsSuccess) {
+            userStore.setUserInfo({
+              ...res.data.data,
+              password,
+              agentType: getType.data.Data,
+            });
+          } else {
+            userStore.setUserInfo({
+              ...res.data.data,
+              password,
+              agentType: '0',
+            });
+          }
+        }
         if (!res.data.data.fb) {
           await createWallet();
         }

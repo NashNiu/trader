@@ -721,11 +721,11 @@ const _getElectronicWallet = async () => {
 const _getCMTradeInfoDetails = async (num) => {
   data.loadingTable = true;
   let params = {
-    beginCreateTime:
+    beginCloseTime:
       data.timeRange && data.timeRange[0]
         ? data.timeRange[0] + ' 00:00:00'
         : undefined,
-    endCreateTime:
+    endCloseTime:
       data.timeRange && data.timeRange[1]
         ? data.timeRange[1] + ' 23:59:59'
         : undefined,

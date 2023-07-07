@@ -12,7 +12,7 @@ const router = createRouter({
       children: [
         {
           path: 'index',
-          name: 'index',
+          name: 'Index',
           component: () => import('@/pages/index/index.vue'),
         },
         {

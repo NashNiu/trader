@@ -106,9 +106,43 @@
       </el-sub-menu>
       <el-menu-item index="5" @click="goPage('/teach')">教学</el-menu-item>
       <el-menu-item index="6" @click="goPage('/Support')">支持</el-menu-item>
+      <el-dropdown @command="changeLanguage">
+        <div class="lang_pc">
+          <img src="../../assets/img/newIndex/earth.png" />
+          <span>{{ data.langActive }}</span>
+          <img src="../../assets/img/newIndex/arrow_down.png" />
+        </div>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="item in data.langList"
+              :key="item.id"
+              :command="item"
+            >
+              {{ item.name }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <div class="menu-right">
-        <div class="menu-button menu-button_1" @click="goTrade">登录</div>
-        <div class="menu-button menu-button_2" @click="toggleTab">注册</div>
+        <div
+          v-if="token"
+          class="loginLast"
+          @click="
+            () => {
+              router.push({
+                path: '/t/trade',
+              });
+            }
+          "
+        >
+          <img src="../../assets/img/newIndex/user_img.png" />
+          <span>{{ userInfo.email }}</span>
+        </div>
+        <template v-else>
+          <div class="menu-button menu-button_1" @click="goTrade">登录</div>
+          <div class="menu-button menu-button_2" @click="toggleTab">注册</div>
+        </template>
         <div class="menu-button menu-button_3" @click="goPage('/app')">
           下载应用
         </div>
@@ -194,10 +228,23 @@ import 'element-plus/theme-chalk/display.css';
 import LoginRegister from '../../components/common/login.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { ref, reactive, nextTick } from 'vue';
+import {
+  ref,
+  reactive,
+  nextTick,
+  onMounted,
+  onBeforeMount,
+  computed,
+} from 'vue';
 import { configConst } from '@/config/index.js';
+import { useUserStore } from '@/store/index.js';
+import { getUserInfoByToken } from '@/api/user.js';
+import { tools } from '@/utils/index.js';
 const { t, locale } = useI18n();
 const router = useRouter();
+const userStore = useUserStore();
+const userInfo = computed(() => userStore.userInfo);
+const token = localStorage.getItem(configConst.TOKEN);
 const data = reactive({
   activeIndex: 1,
   drawer: false,
@@ -323,6 +370,29 @@ const data = reactive({
   ],
 });
 const centerDialogVisible = ref(false);
+onMounted(() => {
+  screenLang();
+});
+onBeforeMount(() => {
+  checkToken();
+});
+const checkToken = async () => {
+  if (token) {
+    const res = await getUserInfoByToken();
+    if (res?.data?.status === 0) {
+      const password = tools.decrypt(res.data?.data?.password);
+      userStore.setUserInfo({ ...res.data.data, password });
+    }
+  }
+};
+const screenLang = () => {
+  const langID = localStorage.getItem(configConst.LANGUAGE);
+  data.langList.forEach((item) => {
+    if (langID === item.id) {
+      data.langActive = item.name;
+    }
+  });
+};
 const hideDialog = () => {
   centerDialogVisible.value = false;
 };
@@ -334,9 +404,10 @@ const toggleTab = () => {
   });
 };
 const changeLanguage = (command) => {
-  localStorage.setItem(configConst.LANGUAGE, command);
-  locale.value = command;
+  localStorage.setItem(configConst.LANGUAGE, command.id);
+  locale.value = command.id;
   location.reload();
+  data.langActive = command.name;
 };
 // 切换语言
 const switchLang = (item) => {
@@ -557,6 +628,16 @@ a:visited {
 }
 </style>
 <style lang="less" scoped>
+.lang_pc {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+  span {
+    margin: 0 6px;
+  }
+}
 .header {
   background-color: #fff;
   height: 98px;
@@ -576,6 +657,16 @@ a:visited {
   .menu-right {
     display: flex;
     align-items: center;
+    .loginLast {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      cursor: pointer;
+      img {
+        width: 40px;
+        margin-right: 10px;
+      }
+    }
     .menu-button {
       width: 92px;
       height: 40px;

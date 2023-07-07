@@ -10,7 +10,8 @@
         <div class="left">
           <div class="left_title">让世界尽在您掌握</div>
           <p>
-            覆盖全球包括NYSE、NASDAQ、LSE 和HKSE在内的90多个股票市场，外加期权以及比特币、比特币现金、以太坊和莱特币等加密货币——所有这些从您的移动设备即可直达。
+            覆盖全球包括NYSE、NASDAQ、LSE
+            和HKSE在内的90多个股票市场，外加期权以及比特币、比特币现金、以太坊和莱特币等加密货币——所有这些从您的移动设备即可直达。
           </p>
           <div class="down_text hidden-xs-only">马上下载应用程序。</div>
           <div class="down_view hidden-xs-only">

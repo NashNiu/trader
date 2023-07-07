@@ -30,7 +30,7 @@
       </el-row>
     </div>
     <div class="width_1270 MT5Model">
-      <div class="MT5Model_1" id="MT5">
+      <div id="MT5" class="MT5Model_1">
         <div class="MT5Model_1_title">
           <h1>MetaTrader 5 - 下载</h1>
           <h2>适用于电脑,Mac,安卓，手提电脑，网页，Windows版</h2>
@@ -166,7 +166,7 @@
         </div>
         <!-- <div class="MT5Model_trading_switch"></div> -->
       </div>
-      <div class="MT5Model_mobile" id="Mobile">
+      <div id="Mobile" class="MT5Model_mobile">
         <div class="MT5Model_title">
           <h1>MT5平台手机&平板端</h1>
           <p>
@@ -226,7 +226,7 @@
           </el-col>
         </el-row>
       </div>
-      <div class="MT5Model_wab" id="WAB">
+      <div id="WAB" class="MT5Model_wab">
         <div class="MT5Model_title">
           <h1>MT5网页版</h1>
           <p>无需安装任何软件即可直接通过浏览器登录MT5账号。。</p>

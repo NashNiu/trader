@@ -132,7 +132,7 @@ import 'element-plus/theme-chalk/display.css';
 }
 @media (max-width: 768px) {
   .row_center {
-    padding:30px 0 0;
+    padding: 30px 0 0;
     .el-col-xs-24 {
       padding: 0 20px;
       .left {

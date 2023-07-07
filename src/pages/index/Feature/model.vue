@@ -233,7 +233,7 @@ const tabClick = (name) => {
       padding: 17px 64px 0;
       p {
         font-size: 20px;
-        color: #2D3436;
+        color: #2d3436;
         text-align: center;
         line-height: 32px;
       }

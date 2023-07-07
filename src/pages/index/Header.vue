@@ -240,7 +240,7 @@ import { configConst } from '@/config/index.js';
 import { useUserStore } from '@/store/index.js';
 import { getUserInfoByToken } from '@/api/user.js';
 import { tools } from '@/utils/index.js';
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const router = useRouter();
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);

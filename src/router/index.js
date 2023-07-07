@@ -13,7 +13,7 @@ const router = createRouter({
         {
           path: 'index',
           name: 'Index',
-          component: () => import('@/pages/index/index.vue'),
+          component: () => import('@/pages/index/Index.vue'),
         },
         {
           path: 'Feature',

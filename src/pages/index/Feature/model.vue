@@ -178,8 +178,9 @@ const tabClick = (name) => {
       color: #2d3436;
       position: relative;
       top: 80px;
+      display: inline-block;
       > div {
-        width: 238px;
+        // width: 238px;
         height: 60px;
         padding: 0 20px;
         margin-bottom: 20px;
@@ -189,7 +190,7 @@ const tabClick = (name) => {
         cursor: pointer;
       }
       .model_tab-active {
-        width: 230px;
+        // width: 230px;
         color: #2963a4;
         border: 1px solid #2963a4;
       }

@@ -4,6 +4,7 @@ export default {
     sell: 'Sell',
     financialTool: 'instrument',
     quantity: 'Quantity',
+    commission: 'commission',
     overnightFee: 'OvernightFee',
     currentPrice: 'Current Price',
     stopLossPrice: 'Stop Loss Price',
@@ -34,6 +35,7 @@ export default {
     language: 'language',
     warning: 'warning',
     unauthorized: 'Login has expired, please log in again!',
+    submit: 'Submit',
   },
   menu: {
     profile: 'Menu',

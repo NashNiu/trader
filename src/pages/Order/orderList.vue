@@ -5,6 +5,7 @@
         :data="tableData"
         header-row-class-name="headerRow"
         :row-class-name="rowClassName"
+        :fit="true"
         @row-click="rowDblClick"
       >
         <el-table-column
@@ -47,6 +48,20 @@
             </span>
           </template>
         </el-table-column>
+        <el-table-column
+          :label="`${t('common.stopSurplusPrice')}/${t(
+            'common.stopLossPrice'
+          )}`"
+          :width="250"
+        >
+          <template #default="scope">
+            <div>
+              <span>{{ t('common.stopSurplusPrice') }}:{{ scope.row.tp }}</span>
+              <br />
+              <span>{{ t('common.stopLossPrice') }}:{{ scope.row.sl }}</span>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="change" :label="t('order.variety')" width="170">
           <template #default="scope">
             <div class="varietyBox">
@@ -65,9 +80,14 @@
             <span class="bold">{{ scope.row.lot }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="commission" :label="t('common.commission')">
+          <template #default="scope">
+            <span class="bold">{{ NP.round(scope.row.commission, 8) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="storage" :label="t('common.overnightFee')">
           <template #default="scope">
-            <span class="bold">{{ scope.row?.storage?.toFixed(8) }}</span>
+            <span class="bold">{{ NP.round(scope.row?.storage, 8) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" :label="t('common.openingTime')" />
@@ -112,7 +132,7 @@ import { computed, ref, onMounted, watch } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
 import { tools } from '@/utils';
 import { useI18n } from 'vue-i18n';
-
+import NP from 'number-precision';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();

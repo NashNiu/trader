@@ -4,6 +4,7 @@ export default {
     sell: '卖出',
     financialTool: '名称',
     quantity: '手数',
+    commission: '佣金',
     overnightFee: '过夜费',
     currentPrice: '现价',
     stopLossPrice: '止损价',
@@ -34,6 +35,7 @@ export default {
     language: '语言',
     warning: '警告',
     unauthorized: '登录已失效，请重新登录！',
+    submit: '提交',
   },
   menu: {
     profile: '账户',

@@ -32,7 +32,7 @@
       <el-form-item :label="t('wallet.paymentMethod')" prop="method">
         <el-select v-model="formData.method" style="width: 240px">
           <el-option :label="t('wallet.giveMoneyToMyWallet')" :value="0" />
-          <el-option :label="t('wallet.cashOutToExternalWallet')" :value="1" />
+          <!--          <el-option :label="t('wallet.cashOutToExternalWallet')" :value="1" />-->
         </el-select>
       </el-form-item>
       <el-space :gutter="25" alignment="flex-end">

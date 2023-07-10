@@ -73,7 +73,6 @@ const menuItemData = [
     title: t?.('menu.wallet'),
   },
 ];
-console.log(userInfo.agentType);
 // 如果是机构客户展示代理模块
 if (userInfo.agentType === '1') {
   const agencyRouter = [
@@ -101,7 +100,6 @@ if (userInfo.agentType === '1') {
   agencyRouter.forEach((item) => {
     menuItemData.push(item);
   });
-  console.log(menuItemData);
 }
 const menuOpen = (index) => {
   if (index === '/index') {

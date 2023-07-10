@@ -68,6 +68,11 @@ export default defineStore('socket', {
       return state.holdingOrders.map((item) => {
         const baseData = state.sblBasicData[item.symbol];
         const liveData = state.liveData[item.symbol];
+        const symbolType = configSymbols.getSymbolType(item.symbol);
+        const commission =
+          symbolType === 1
+            ? item.price * (item?.vol / 10000) * (0.08 / 100)
+            : 0;
         const profitRate = () => {
           const { rate, symbol, multiply } = getProfitSymbol(
             item.symbol,
@@ -107,6 +112,7 @@ export default defineStore('socket', {
           createTime: dayjs(item.utime).format('YYYY/MM/DD HH:mm:ss'),
           lot: item.vol / 10000,
           profit: profit(),
+          commission,
           ...tools.calcOrderChange({
             order: item,
             liveData,
@@ -437,10 +443,12 @@ export default defineStore('socket', {
     },
     // 修改持仓单
     updateHoldingOrder({ id, sl, tp }) {
-      this.sendSocketMsg({ cmd: 10037, ticket: id, sl: sl, tp: tp });
+      this.sendSocketMsg({ cmd: 10037, ticket: id, sl, tp });
     },
     // 修改持仓单结果
     handleUpdateHoldingOrder(data) {
+      const commonStore = useCommonStore();
+      commonStore.closeLoading();
       if (data.status === 0) {
         ElMessage.success({
           message: i18n.global.t('common.operateSuccess'),

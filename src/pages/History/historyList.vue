@@ -40,6 +40,11 @@
           <span class="bold">{{ scope.row.Profit }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="overnightFee" :label="t('common.overnightFee')">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.OrderSwaps }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="createTime" :label="t('common.openingTime')" />
       <el-table-column prop="closeTime" :label="t('common.closeTime')" />
     </el-table>
@@ -57,6 +62,7 @@
           layout="prev, pager, next"
           :page-size="pageSize"
           :total="totalCount"
+          :current-page="pageIndex"
           @current-change="pageChange"
         />
       </el-col>

@@ -35,79 +35,98 @@
           <span class="key">{{ t('common.currentPrice') }}</span>
           <span class="value">{{ drawerData.currentPrice }}</span>
         </div>
-        <el-row
-          :gutter="20"
-          align="middle"
-          justify="space-between"
-          class="infoItemBox"
-          style="height: 100px"
-        >
-          <el-col :span="6">
-            <span>{{ t('common.stopSurplusPrice') }}</span>
-          </el-col>
-          <el-col v-if="spShow" :span="14">
-            <InputNumber
-              v-model.number="spPrice"
-              size="small"
-              :step="step"
-              :digit="digit"
-            >
-              <template #tips>
-                <el-space>
-                  <span :class="{ error: !spPriceValid }">
-                    {{ t('common.price') }}
-                    {{ drawerData.action === 0 ? '≥' : '≤' }}
-                    {{ spScope }}
-                  </span>
-                  <span>{{ t('common.profit') }} {{ spProfit }}</span>
-                </el-space>
-              </template>
-            </InputNumber>
-          </el-col>
-          <el-col :span="3">
-            <el-switch v-model="spShow" @change="spShowChange" />
-          </el-col>
-        </el-row>
-        <el-row
-          :gutter="20"
-          align="middle"
-          justify="space-between"
-          class="infoItemBox"
-          style="height: 100px"
-        >
-          <el-col :span="6">
-            <span>{{ t('common.stopLossPrice') }}</span>
-          </el-col>
-          <el-col v-if="slShow" :span="14">
-            <InputNumber
-              v-model.number="slPrice"
-              size="small"
-              :step="step"
-              :digit="digit"
-            >
-              <template #tips>
-                <el-space>
-                  <span :class="{ error: !slPriceValid }">
-                    {{ t('common.price') }}
-                    {{ drawerData.action === 0 ? '≤' : '≥' }}
-                    {{ slScope }}
-                  </span>
-                  <span>{{ t('common.profit') }} {{ slProfit }}</span>
-                </el-space>
-              </template>
-            </InputNumber>
-          </el-col>
-          <el-col :span="3">
-            <el-switch v-model="slShow" @change="slShowChange" />
-          </el-col>
-        </el-row>
+        <template v-if="drawerType === 'close'">
+          <div class="infoItemBox">
+            <span class="key">{{ t('common.stopLossPrice') }}</span>
+            <span class="value">{{ drawerData.sl }}</span>
+          </div>
+          <div class="infoItemBox">
+            <span class="key">{{ t('common.stopSurplusPrice') }}</span>
+            <span class="value">{{ drawerData.tp }}</span>
+          </div>
+        </template>
+        <template v-else>
+          <el-row
+            :gutter="20"
+            align="middle"
+            justify="space-between"
+            class="infoItemBox"
+            style="height: 100px"
+          >
+            <el-col :span="6">
+              <span>{{ t('common.stopSurplusPrice') }}</span>
+            </el-col>
+            <el-col v-if="spShow" :span="14">
+              <InputNumber
+                v-model.number="spPrice"
+                size="small"
+                :step="step"
+                :digit="digit"
+              >
+                <template #tips>
+                  <el-space>
+                    <span :class="{ error: !spPriceValid }">
+                      {{ t('common.price') }}
+                      {{ drawerData.action === 0 ? '≥' : '≤' }}
+                      {{ spScope }}
+                    </span>
+                    <span>{{ t('common.profit') }} {{ spProfit }}</span>
+                  </el-space>
+                </template>
+              </InputNumber>
+            </el-col>
+            <el-col :span="3">
+              <el-switch v-model="spShow" @change="spShowChange" />
+            </el-col>
+          </el-row>
+          <el-row
+            :gutter="20"
+            align="middle"
+            justify="space-between"
+            class="infoItemBox"
+            style="height: 100px"
+          >
+            <el-col :span="6">
+              <span>{{ t('common.stopLossPrice') }}</span>
+            </el-col>
+            <el-col v-if="slShow" :span="14">
+              <InputNumber
+                v-model.number="slPrice"
+                size="small"
+                :step="step"
+                :digit="digit"
+              >
+                <template #tips>
+                  <el-space>
+                    <span :class="{ error: !slPriceValid }">
+                      {{ t('common.price') }}
+                      {{ drawerData.action === 0 ? '≤' : '≥' }}
+                      {{ slScope }}
+                    </span>
+                    <span>{{ t('common.profit') }} {{ slProfit }}</span>
+                  </el-space>
+                </template>
+              </InputNumber>
+            </el-col>
+            <el-col :span="3">
+              <el-switch v-model="slShow" @change="slShowChange" />
+            </el-col>
+          </el-row>
+        </template>
         <div class="infoItemBox">
           <span class="key">{{ t('common.overnightFee') }}</span>
           <span class="value">{{ drawerData.storage }}</span>
         </div>
       </div>
-      <div v-if="!drawerData.isInfo" class="btnContainer">
-        <div class="btnBox" @click="editPosition">
+      <div class="btnContainer">
+        <div
+          v-if="drawerType === 'close'"
+          class="btnBox"
+          @click="closePosition"
+        >
+          {{ t('order.closePosition') }}
+        </div>
+        <div v-else class="btnBox" @click="editPosition">
           {{ t('common.submit') }}
         </div>
       </div>
@@ -134,6 +153,10 @@ const props = defineProps({
       action: 0,
       price: 0,
     }),
+  },
+  drawerType: {
+    type: String,
+    default: 'close',
   },
 });
 // 产品基本信息
@@ -271,6 +294,12 @@ const slShowChange = (val) => {
   if (val) {
     slPrice.value = Number(slScope.value);
   }
+};
+const closePosition = () => {
+  socketStore.marketClose({ id: props.drawerData.position });
+  close();
+  const instance = ElLoading.service({ lock: true, text: 'wait a minute' });
+  commonStore.setLoadingInstance(instance);
 };
 const editPosition = () => {
   if (slShow.value && !slPriceValid.value) {

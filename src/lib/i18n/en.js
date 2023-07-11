@@ -36,6 +36,7 @@ export default {
     warning: 'warning',
     unauthorized: 'Login has expired, please log in again!',
     submit: 'Submit',
+    modifyOrder: 'Modify Order',
   },
   menu: {
     profile: 'Menu',

@@ -68,7 +68,10 @@
               <span :class="`${scope.row.color} bold`">
                 {{ scope.row.change }}
               </span>
-              <div class="closeBox" @click.stop="openInfoDrawer(scope.row)">
+              <div
+                class="closeBox"
+                @click.stop="openInfoDrawer(scope.row, 'close')"
+              >
                 <el-icon><Close /></el-icon>
                 <span>{{ t('order.close') }}</span>
               </div>
@@ -93,12 +96,14 @@
         <el-table-column prop="createTime" :label="t('common.openingTime')" />
         <el-table-column width="100">
           <template #default="scope">
-            <el-icon
-              class="infoIcon"
-              @click.stop="openInfoDrawer({ ...scope.row, isInfo: true })"
-            >
-              <InfoFilled />
-            </el-icon>
+            <el-tooltip :content="t('common.modifyOrder')" placement="top">
+              <el-icon
+                class="infoIcon"
+                @click.stop="openInfoDrawer(scope.row, 'edit')"
+              >
+                <InfoFilled />
+              </el-icon>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -122,6 +127,7 @@
     <OrderDrawer
       ref="orderDrawerRef"
       :drawer-data="drawerData"
+      :drawer-type="drawerType"
       @close="closeDrawer"
     />
   </div>
@@ -138,6 +144,7 @@ const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const orderDrawerRef = ref(null);
 const activeRowOrder = ref(-1);
+const drawerType = ref('close');
 const chartData = computed(() => commonStore.chartData);
 const holdingOrders = computed(() => socketStore.holdingOrders);
 const totalProfit = computed(() => socketStore.userTotalProfit);
@@ -145,8 +152,9 @@ const totalFee = computed(() => socketStore.totalOverNightFee);
 const profitColor = computed(() => (totalProfit.value <= 0 ? 'red' : 'green'));
 const feeColor = computed(() => (totalFee.value > 0 ? 'green' : 'red'));
 const tableData = computed(() => socketStore.holdingOrdersWithPrice);
-const openInfoDrawer = (row) => {
+const openInfoDrawer = (row, type) => {
   activeRowOrder.value = row.position;
+  drawerType.value = type;
   orderDrawerRef.value.show();
 };
 const closeDrawer = () => {

@@ -36,6 +36,7 @@ export default {
     warning: '警告',
     unauthorized: '登录已失效，请重新登录！',
     submit: '提交',
+    modifyOrder: '修改订单',
   },
   menu: {
     profile: '账户',

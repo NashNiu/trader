@@ -69,9 +69,13 @@ export default defineStore('socket', {
         const baseData = state.sblBasicData[item.symbol];
         const liveData = state.liveData[item.symbol];
         const symbolType = configSymbols.getSymbolType(item.symbol);
+        // 数字货币佣金 = 下单价格 * 手数 * 乘合约 * 0.08% * -1,其他类型佣金为0
         const commission =
           symbolType === 1
-            ? item.price * (item?.vol / 10000) * (0.08 / 100)
+            ? item.price *
+              (item?.vol / 10000) *
+              (-0.08 / 100) *
+              (baseData?.consize ?? 1)
             : 0;
         const profitRate = () => {
           const { rate, symbol, multiply } = getProfitSymbol(

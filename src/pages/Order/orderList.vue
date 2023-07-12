@@ -85,7 +85,7 @@
         </el-table-column>
         <el-table-column prop="commission" :label="t('common.commission')">
           <template #default="scope">
-            <span class="bold">{{ NP.round(scope.row.commission, 8) }}</span>
+            <span class="bold">{{ NP.round(scope.row.commission, 2) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="storage" :label="t('common.overnightFee')">

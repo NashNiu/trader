@@ -65,7 +65,7 @@
 </template>
 <script setup>
 import { getHistoryOrder } from '@/api/historyOrder.js';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import dayjs from 'dayjs';
 import { useCommonStore, useUserStore } from '@/store/index.js';
 import { useI18n } from 'vue-i18n';
@@ -82,6 +82,7 @@ const chartData = computed(() => commonStore.chartData);
 const totalCount = computed(() => historyData.value?.TotalCount ?? 0);
 const totalProfit = computed(() => historyData.value?.SumProfit ?? 0);
 const profitColor = computed(() => (totalProfit.value > 0 ? 'green' : 'red'));
+const isRealAccount = computed(() => userStore.isRealAccount);
 const tableData = computed(
   () =>
     historyData.value?.Data?.map((item) => {
@@ -100,7 +101,9 @@ const getTableData = async () => {
     pageIndex: pageIndex.value,
     commandType: 0,
     pageSize: pageSize.value,
-    login: userStore.userInfo?.mtaccr,
+    login: isRealAccount.value
+      ? userStore.userInfo?.mtaccr
+      : userStore.userInfo?.mtaccd,
     startTime: dayjs().subtract(30, 'day').format('YYYY-MM-DD HH:mm:ss'),
     endTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     sourceID: 53,
@@ -138,6 +141,13 @@ const initChart = () => {
     commonStore.changeChartData({});
   }
 };
+watch(isRealAccount, async () => {
+  historyData.value = [];
+  totalCount.value = 0;
+  pageIndex.value = 1;
+  await getTableData();
+  initChart();
+});
 onMounted(async () => {
   await getTableData();
   initChart();

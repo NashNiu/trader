@@ -133,7 +133,9 @@ export default defineStore('socket', {
       this.socket.addEventListener('open', () => {
         this.sendSocketMsg({
           cmd: 10000,
-          login: userStore.userInfo?.mtaccr,
+          login: userStore.isRealAccount
+            ? userStore.userInfo?.mtaccr
+            : userStore.userInfo?.mtaccd,
           device: 1,
           password: userStore.userInfo?.password,
         });

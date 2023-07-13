@@ -3,12 +3,19 @@
     <div class="titleBox">
       <img :src="userImg" alt="" />
       <div class="userBox">
-        <p>{{ userInfo.mtaccr }}</p>
+        <p v-if="isRealAccount">{{ userInfo.mtaccr }}</p>
+        <p v-else>{{ userInfo.mtaccd }}</p>
       </div>
     </div>
     <div class="mainBox">
       <div class="item">
         <p class="title" @click="goUserCenter">个人中心</p>
+      </div>
+      <div class="item">
+        <p v-if="isRealAccount" class="title" @click="toggleRealDemo">
+          切换至模拟账户
+        </p>
+        <p v-else class="title" @click="toggleRealDemo">切换至真实账户</p>
       </div>
       <div class="item" @click="toggleLanguage">
         <p class="title">
@@ -48,16 +55,20 @@ import downImg from '@/assets/img/sidebar/down.png';
 import upImg from '@/assets/img/sidebar/up.png';
 import logoutImg from '@/assets/img/sidebar/logout.png';
 import enImg from '@/assets/img/sidebar/en.png';
-import { useUserStore } from '@/store/index.js';
+import { useUserStore, useSocketStore } from '@/store/index.js';
 import { tools } from '@/utils/index.js';
 import { useI18n } from 'vue-i18n';
 import { configConst } from '@/config/index.js';
 import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
+import { promiseTimeout } from '@vueuse/core';
 const router = useRouter();
 // import { commonApi } from '@/api';
 const { t, locale } = useI18n();
 const userStore = useUserStore();
+const socketStore = useSocketStore();
 const userInfo = computed(() => userStore.userInfo);
+const isRealAccount = computed(() => userStore.isRealAccount);
 const visible = ref(false);
 const showLanguage = ref(false);
 const languageArr = [
@@ -196,6 +207,15 @@ const show = () => {
 };
 const logOut = () => {
   tools.clearAndLogout();
+};
+const toggleRealDemo = async () => {
+  userStore.toggleRealDemo();
+  socketStore.closeSocket();
+  socketStore.$reset();
+  socketStore.initSocket();
+  visible.value = false;
+  await promiseTimeout(1200);
+  ElMessage.success(t?.('common.operateSuccess'));
 };
 defineExpose({
   show,

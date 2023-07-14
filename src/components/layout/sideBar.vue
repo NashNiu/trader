@@ -9,7 +9,7 @@
       @select="menuOpen"
     >
       <el-menu-item
-        v-for="item in menuItemData"
+        v-for="item in menuData"
         :key="item.index"
         :index="item.index"
         :class="{ menuItemActive: activeIndex === item.index }"
@@ -29,7 +29,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/store/index.js';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import ProfileDrawer from './profileDrawer.vue';
 import { useI18n } from 'vue-i18n';
 import HelpImg from '@/assets/img/sidebar/help.png';
@@ -41,6 +41,7 @@ const activeIndex = ref(route.path);
 const profileDrawerRef = ref(null);
 const userStore = useUserStore();
 const userInfo = userStore.userInfo;
+const isRealAccount = computed(() => userStore.isRealAccount);
 const menuItemData = [
   {
     index: '/index',
@@ -103,6 +104,20 @@ if (userInfo.agentType === '1') {
   });
   console.log(menuItemData);
 }
+const menuData = computed(() => {
+  if (isRealAccount.value) {
+    return menuItemData;
+  } else {
+    const demoIndex = [
+      '/index',
+      '/t/trade',
+      '/t/order',
+      '/t/limit',
+      '/t/history',
+    ];
+    return menuItemData.filter((item) => demoIndex.includes(item.index));
+  }
+});
 const menuOpen = (index) => {
   if (index === '/index') {
     profileDrawerRef.value.show();

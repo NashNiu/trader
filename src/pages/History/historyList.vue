@@ -6,6 +6,7 @@
       header-row-class-name="headerRow"
       :row-class-name="rowClassName"
       class="orderTable"
+      :fit="true"
       @row-click="rowDblClick"
     >
       <el-table-column
@@ -30,6 +31,16 @@
           <span class="bold">{{ scope.row.ClosePrice }}</span>
         </template>
       </el-table-column>
+      <el-table-column
+        :label="`${t('common.stopSurplusPrice')}/${t('common.stopLossPrice')}`"
+        :width="250"
+      >
+        <template #default="scope">
+          <span class="bold">
+            {{ scope.row.TakeProfit }}/{{ scope.row.StopLoss }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="Lot" :label="t('common.quantity')">
         <template #default="scope">
           <span class="bold">{{ scope.row.Lot }}</span>
@@ -38,6 +49,16 @@
       <el-table-column prop="Profit" :label="t('common.profit')">
         <template #default="scope">
           <span class="bold">{{ scope.row.Profit }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="overnightFee" :label="t('common.overnightFee')">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.OrderSwaps }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="commission" :label="t('common.commission')">
+        <template #default="scope">
+          <span class="bold">{{ scope.row.Commission }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('common.openingTime')" />
@@ -57,6 +78,7 @@
           layout="prev, pager, next"
           :page-size="pageSize"
           :total="totalCount"
+          :current-page="pageIndex"
           @current-change="pageChange"
         />
       </el-col>

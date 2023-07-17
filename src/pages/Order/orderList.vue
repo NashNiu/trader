@@ -5,6 +5,7 @@
         :data="tableData"
         header-row-class-name="headerRow"
         :row-class-name="rowClassName"
+        :fit="true"
         @row-click="rowDblClick"
       >
         <el-table-column
@@ -47,13 +48,30 @@
             </span>
           </template>
         </el-table-column>
+        <el-table-column
+          :label="`${t('common.stopSurplusPrice')}/${t(
+            'common.stopLossPrice'
+          )}`"
+          :width="250"
+        >
+          <template #default="scope">
+            <div>
+              <span>{{ t('common.stopSurplusPrice') }}:{{ scope.row.tp }}</span>
+              <br />
+              <span>{{ t('common.stopLossPrice') }}:{{ scope.row.sl }}</span>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="change" :label="t('order.variety')" width="170">
           <template #default="scope">
             <div class="varietyBox">
               <span :class="`${scope.row.color} bold`">
                 {{ scope.row.change }}
               </span>
-              <div class="closeBox" @click.stop="openInfoDrawer(scope.row)">
+              <div
+                class="closeBox"
+                @click.stop="openInfoDrawer(scope.row, 'close')"
+              >
                 <el-icon><Close /></el-icon>
                 <span>{{ t('order.close') }}</span>
               </div>
@@ -65,20 +83,27 @@
             <span class="bold">{{ scope.row.lot }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="commission" :label="t('common.commission')">
+          <template #default="scope">
+            <span class="bold">{{ NP.round(scope.row.commission, 2) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="storage" :label="t('common.overnightFee')">
           <template #default="scope">
-            <span class="bold">{{ scope.row?.storage?.toFixed(8) }}</span>
+            <span class="bold">{{ NP.round(scope.row?.storage, 8) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" :label="t('common.openingTime')" />
         <el-table-column width="100">
           <template #default="scope">
-            <el-icon
-              class="infoIcon"
-              @click.stop="openInfoDrawer({ ...scope.row, isInfo: true })"
-            >
-              <InfoFilled />
-            </el-icon>
+            <el-tooltip :content="t('common.modifyOrder')" placement="top">
+              <el-icon
+                class="infoIcon"
+                @click.stop="openInfoDrawer(scope.row, 'edit')"
+              >
+                <InfoFilled />
+              </el-icon>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -102,6 +127,7 @@
     <OrderDrawer
       ref="orderDrawerRef"
       :drawer-data="drawerData"
+      :drawer-type="drawerType"
       @close="closeDrawer"
     />
   </div>
@@ -112,12 +138,13 @@ import { computed, ref, onMounted, watch } from 'vue';
 import OrderDrawer from './orederInfoDrawer.vue';
 import { tools } from '@/utils';
 import { useI18n } from 'vue-i18n';
-
+import NP from 'number-precision';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const commonStore = useCommonStore();
 const orderDrawerRef = ref(null);
 const activeRowOrder = ref(-1);
+const drawerType = ref('close');
 const chartData = computed(() => commonStore.chartData);
 const holdingOrders = computed(() => socketStore.holdingOrders);
 const totalProfit = computed(() => socketStore.userTotalProfit);
@@ -125,8 +152,9 @@ const totalFee = computed(() => socketStore.totalOverNightFee);
 const profitColor = computed(() => (totalProfit.value <= 0 ? 'red' : 'green'));
 const feeColor = computed(() => (totalFee.value > 0 ? 'green' : 'red'));
 const tableData = computed(() => socketStore.holdingOrdersWithPrice);
-const openInfoDrawer = (row) => {
+const openInfoDrawer = (row, type) => {
   activeRowOrder.value = row.position;
+  drawerType.value = type;
   orderDrawerRef.value.show();
 };
 const closeDrawer = () => {

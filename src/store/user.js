@@ -10,6 +10,7 @@ export default defineStore('user', {
     userAssetsArr: [], // 客户的数字货币类型
     platform: 53, // 平台id
     NoLoadList: [{ value: 0, label: 'realLPMC1S' }],
+    isRealAccount: true, // 是否真实账号
   }),
   getters: {
     totalAssets(state) {
@@ -49,6 +50,9 @@ export default defineStore('user', {
         this.auditData = {};
       }
       return this.auditData;
+    },
+    toggleRealDemo() {
+      this.isRealAccount = !this.isRealAccount;
     },
   },
 });

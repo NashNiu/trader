@@ -18,6 +18,7 @@
           :width="211"
           :offset="10"
           popper-class="walletInfoPop"
+          :disabled="!isRealAccount"
           @show="getWalletData"
         >
           <template #reference>
@@ -119,6 +120,7 @@ import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import DownArrowImg from '@/assets/img/header/down.png';
 import WalletDialog from '@/components/walletDialog/index.vue';
 import WithdrawDialog from '@/components/withdrawDialog/index.vue';
+import { ElMessage } from 'element-plus';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
@@ -132,6 +134,7 @@ const profit = computed(
 );
 const availableMargin = computed(() => socketStore.availableMargin);
 const userFundsVisible = computed(() => userStore.userFundsVisible);
+const isRealAccount = computed(() => userStore.isRealAccount);
 const balance = computed(() => socketStore.balance);
 const setFundsVisible = (visible) => {
   userStore.setUserFundsVisible(visible);
@@ -155,10 +158,18 @@ const getWalletData = async () => {
   getWalletDataLoading.value = false;
 };
 const showWalletDialog = () => {
-  walletDialogRef?.value?.show();
+  if (isRealAccount.value) {
+    walletDialogRef?.value?.show();
+  } else {
+    ElMessage.info('请切换至真实账户进行操作');
+  }
 };
 const showWithdrawDialog = () => {
-  withdrawDialogRef.value.show();
+  if (isRealAccount.value) {
+    withdrawDialogRef.value.show();
+  } else {
+    ElMessage.info('请切换至真实账户进行操作');
+  }
 };
 </script>
 

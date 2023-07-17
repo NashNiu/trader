@@ -121,11 +121,13 @@ export default defineStore('socket', {
       if (this.socket) {
         this.socket.close();
       }
+      const userStore = useUserStore();
       const protocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
-      const socketUrls = [protocol + configUrl.socketUrl];
+      const socketUrls = userStore.isRealAccount
+        ? [protocol + configUrl.socketUrl]
+        : [protocol + configUrl.demoSocketUrl];
       let urlIndex = 0;
       const urlProvider = () => socketUrls[urlIndex++ % socketUrls.length];
-      const userStore = useUserStore();
       const options = {
         maxRetries: 1, //断开重连次数
       };

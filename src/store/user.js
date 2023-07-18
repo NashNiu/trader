@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useSocketStore } from '@/store/index.js';
 import { userApi } from '@/api';
+import { configConst } from '@/config';
 export default defineStore('user', {
   state: () => ({
     userInfo: {},
@@ -10,7 +11,7 @@ export default defineStore('user', {
     userAssetsArr: [], // 客户的数字货币类型
     platform: 53, // 平台id
     NoLoadList: [{ value: 0, label: 'realLPMC1S' }],
-    isRealAccount: true, // 是否真实账号
+    isRealAccount: localStorage.getItem(configConst.accountType) !== 'demo', // 是否真实账号
   }),
   getters: {
     totalAssets(state) {

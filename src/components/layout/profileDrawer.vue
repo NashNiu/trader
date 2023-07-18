@@ -209,6 +209,11 @@ const logOut = () => {
   tools.clearAndLogout();
 };
 const toggleRealDemo = async () => {
+  if (!isRealAccount.value) {
+    localStorage.setItem(configConst.accountType, 'real');
+  } else {
+    localStorage.setItem(configConst.accountType, 'demo');
+  }
   userStore.toggleRealDemo();
   socketStore.closeSocket();
   socketStore.$reset();

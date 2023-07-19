@@ -1,205 +1,157 @@
 <template>
-  <div>
-    <footer class="site-footer">
-      <div class="site-footer__upper">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 col-md-6 col-lg-3 footer--widget widget-about">
-              <div class="footer-widget footer-widget__about">
-                <img
-                  src="../../assets/img/logo-m.png"
-                  width="119"
-                  alt=""
-                  class="footer-widget__logo"
-                />
-                <p class="footer-widget__contact">
-                  {{ t('index.partner') }}
-                </p>
-                <!-- /.footer-widget__contact -->
-                <p class="footer-widget__contact">
-                  <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    placeholder="Subscribe Our Newsletter"
-                    value=""
-                  />
-                </p>
-                <!-- /.footer-widget__contact -->
-              </div>
-              <!-- /.footer-widget -->
-            </div>
-            <!-- /.col-lg-2 -->
-            <div
-              class="col-12 col-sm-4 col-md-6 col-lg-2 footer--widget widget-links"
-            >
-              <h3 class="footer-widget__title">{{ t('index.link') }}</h3>
-              <!-- /.footer-widget__title -->
-              <ul class="footer-widget__links list-unstyled">
-                <li>
-                  <a href="#">{{ t('index.t1') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t2') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t3') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t4') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t5') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t6') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t7') }}</a>
-                </li>
-                <li>
-                  <a href="#">{{ t('index.t8') }}</a>
-                </li>
-              </ul>
-              <!-- /.footer-widget__links -->
-            </div>
-            <!-- /.footer-widget -->
-            <div
-              class="col-12 col-sm-8 col-md-6 col-lg-7 footer--widget widget-links widget-links-inline"
-            >
-              <h3 class="footer-widget__title">{{ t('index.about') }}</h3>
-              <!-- /.footer-widget__title -->
-              <p>
-                Magic Compass Group (Magic Compass Holdings Limited) is the
-                ultimate holding company of Magic Compass Ltd, Magic Compass
-                Securities Limited, Magic Compass Financial Services OÜ, Magic
-                Compass International Capital Ltd and Magic Compass Investments
-                Limited. Registered address: Cistra Corporate Services Centre,
-                Wickhams Cay II, Road Town, Tortola, VG1110, British Virgin
-                Islands.
-              </p>
-            </div>
-            <!-- /.footer-widget -->
+  <div class="footer">
+    <div class="footer_menu">
+      <el-row>
+        <el-col :md="6" class="logo_col hidden-sm-and-down">
+          <div>
+            <img src="../../assets/img/newIndex/logo_icon.png" />
           </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container -->
-      </div>
-      <!-- /.site-footer__upper -->
-      <div class="site-footer__bottom">
-        <div class="container">
-          <div class="inner-container text-center">
-            <p class="site-footer__copy">
-              &copy; 2022 Magic Compass Group.All Rights Reserved.
-            </p>
-            <!-- /.site-footer__copy -->
+          <p>备受全球投资者信赖的流动性供应商</p>
+        </el-col>
+        <el-col :xs="8" :sm="8" :md="5">
+          <div class="menu_ul">
+            <div class="menu_li">MCLP</div>
+            <div class="menu_li" @click="goPage('/Feature')">功能</div>
+            <div class="menu_li" @click="goPage('/Product')">产品</div>
+            <div class="menu_li" @click="goPage('/FixPrice')">定价</div>
           </div>
-          <!-- /.inner-container -->
-        </div>
-        <!-- /.container -->
+        </el-col>
+        <el-col :xs="8" :sm="8" :md="5">
+          <div class="menu_ul">
+            <div class="menu_li">服务</div>
+            <div class="menu_li" @click="goPage('/teach')">教学</div>
+            <div class="menu_li" @click="goPage('/Support')">支持</div>
+          </div>
+        </el-col>
+        <el-col :xs="8" :sm="8" :md="5">
+          <div class="menu_ul">
+            <div class="menu_li">条款说明</div>
+            <div class="menu_li" @click="goPage('/table')">表格与披露</div>
+            <div class="menu_li" @click="goPage('/agreement')">隐私政策</div>
+            <div class="menu_li">风险声明</div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="footer_text">
+      <strong>
+        保证金融资只适合风险承受能力较高的有经验的投资者。您的损失可能会超过您的初始投资。
+      </strong>
+      <div>
+        在线交易股票、期权、期货、货币、外国股票和固定收益产品可能存在巨大损失风险。
+        <br />
+        请注意，账户申请者均须在摩石证券有限公司开立一个MCLP
+        Lite版账户。该账户类型仅限于交易美国交易所挂牌股票和ETF。更多信息，请参见lp.mcgrp.com/info。MCLP之所以能够支持某些产品免佣金交易是因为我们可以就这类委托单的单流从做市商那里获得一定报酬。
+        <br />
+        所有卖单都需缴纳一小笔费用以补偿监管机构向我司收取的交易费。更多信息，请参见lp.mcgrp.com/info
+        <br />
+        期权交易涉及风险，并不适合所有投资者。更多信息，请阅读标准期权的特征和风险（也称“期权披露文件（ODD）”）。或者，也可以致电+357
+        25023880索要ODD副本。开始交易之前，客户必须阅读我们警告和披露页面上的相关风险披露声明。保证金交易只适合风险承受能力较高的有经验的投资者。您的损失可能会超过您的初始投资。有关保证金借贷利率的详细信息，请参见保证金贷款利率页面。证券期货具有高风险，并不适合所有投资者。您的损失可能会超过您的初始投资。开始交易证券期货之前，请阅读证券期货风险披露声明。结构性产品和固定收益产品（如债券）属于复杂产品，风险较高，并不适合所有投资者。开始交易前，请阅读风险警告和披露声明。
       </div>
-      <!-- /.site-footer__bottom -->
-    </footer>
-
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
+    </div>
+    <div class="footer_bottom">
+      <p>摩石有限责任公司（MAGIC COMPASS LTD）的MC LiquityProvider</p>
+      <p>
+        是NYSE - FINRA - SIPC的成员，受塞浦路斯和商品期货交易委员会（Commodity
+        Futures Trading Commission）监管。
+      </p>
+      <p>总部地址：Sarlo 9, Ayios Athanasios, 4106 Limassol, Cyprus</p>
+      <p>网站：https://www.magiccompass.com/</p>
+      <p>有关其他摩石证券MCLP联属公司的信息>></p>
+    </div>
   </div>
 </template>
 <script setup>
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const goPage = (url) => {
+  router.push({
+    path: url,
+  });
+};
 </script>
-<style scoped>
-.site-footer {
-  position: relative;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
-  background-color: #000;
-  color: #fff;
+<style lang="less" scoped>
+a {
+  text-decoration: none;
+  color: #000;
 }
-.site-footer__upper {
-  padding-top: 120px;
-  padding-bottom: 120px;
-}
-.row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-.footer-widget__title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
-  margin: 0;
-  line-height: 1em;
-  margin-bottom: 40px;
-}
-.footer-widget__links li a {
-  font-size: 16px;
-  font-weight: 400;
-  color: #74727a;
-  -webkit-transition: all 0.4s ease;
-  transition: all 0.4s ease;
-}
-.list-unstyled {
-  padding-left: 0;
-  list-style: none;
-}
-.site-footer__bottom .inner-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  text-align: center;
-  padding-top: 44px;
-  padding-bottom: 44px;
-  color: #333;
-}
-.footer-widget__links li {
-  line-height: 1.5em;
-}
-.site-footer__bottom {
-  background-color: #fff9ff;
-}
-.footer-widget__contact {
-  margin: 10px 0;
-}
-.footer--widget {
-  line-height: 22px;
-}
-@media (min-width: 992px) {
-  .col-lg-3 {
-    -ms-flex: 0 0 25%;
-    flex: 0 0 25%;
-    max-width: 25%;
+.footer {
+  max-width: 1270px;
+  margin: 0 auto;
+  .footer_menu {
+    margin-bottom: 26px;
+    padding-top: 38px;
+    .logo_col {
+      img {
+        margin-bottom: 15px;
+      }
+    }
+    .menu_ul {
+      text-align: center;
+      .menu_li {
+        margin-bottom: 17px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
-  .col-lg-2 {
-    -ms-flex: 0 0 16.666667%;
-    flex: 0 0 16.666667%;
-    max-width: 16.666667%;
+  .footer_text {
+    font-size: 14px;
+    margin-bottom: 31px;
+    > div {
+      line-height: 22px;
+    }
+    strong {
+      margin-bottom: 14px;
+      display: block;
+    }
   }
-  .col-lg-7 {
-    -ms-flex: 0 0 58.333333%;
-    flex: 0 0 58.333333%;
-    max-width: 58.333333%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1200px;
+  .footer_bottom {
     margin: 0 auto;
+    border-top: 1px solid #e4e4e4;
+    padding: 30px 0 42px;
+    text-align: center;
+    line-height: 30px;
+    p {
+      font-size: 14px;
+      &:nth-child(1) {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      &:nth-child(5) {
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .footer {
+    .footer_text {
+      margin-bottom: 18px;
+    }
+    .footer_bottom {
+      text-align: left;
+      padding-top: 20px;
+      p {
+        &:nth-child(1) {
+          line-height: 21px;
+          margin-bottom: 10px;
+        }
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4) {
+          line-height: 16px;
+          margin-bottom: 12px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1270px) {
+  .footer {
+    padding: 0 20px;
   }
 }
 </style>

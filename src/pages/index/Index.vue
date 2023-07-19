@@ -1,19 +1,12 @@
 <template>
   <div>
-    <Header />
-    <Banner />
-    <Features />
-    <CallToAction />
-    <Pricing />
-    <Footer />
+    <down />
+    <Model_3 />
+    <Model_4 />
   </div>
 </template>
 <script setup>
-import Header from './Header.vue';
-import Banner from './Banner.vue';
-import Features from './Features.vue';
-import CallToAction from './CallToAction.vue';
-import Pricing from './Pricing.vue';
-import Footer from './Footer.vue';
+import down from './down.vue';
+import Model_3 from './model_3.vue';
+import Model_4 from './model_4.vue';
 </script>
-<style scoped></style>

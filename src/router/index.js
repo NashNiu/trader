@@ -100,6 +100,18 @@ const router = createRouter({
           component: () => import('@/pages/userCenter/index.vue'),
         },
         {
+          path: 'authInfo',
+          name: 'authInfo',
+          meta: { hideChart: true },
+          component: () => import('@/pages/userCenter/authInfo.vue'),
+        },
+        {
+          path: 'authBind',
+          name: 'authBind',
+          meta: { hideChart: true },
+          component: () => import('@/pages/userCenter/authBind.vue'),
+        },
+        {
           path: 'customer',
           name: 'customer',
           meta: { hideChart: true },

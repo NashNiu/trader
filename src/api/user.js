@@ -228,3 +228,18 @@ export function verifyPayPass(data) {
     data,
   });
 }
+// google身份验证器(绑定)
+export function bindGoogleAuth() {
+  return request({
+    url: '/api/users/user/bindOTP',
+    method: 'get',
+  });
+}
+
+// google身份验证器(校验)
+export function verifyGoogleAuth(code) {
+  return request({
+    url: `/api/users/user/verifyOTP?verifyCode=${code}`,
+    method: 'get',
+  });
+}

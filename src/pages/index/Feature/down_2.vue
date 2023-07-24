@@ -4,17 +4,16 @@
       <el-col :xs="24" :sm="24" :md="12">
         <div class="left">
           <div class="left_title_top">MC LiquidityProvide</div>
-          <div class="left_title">可靠！值得信赖！全面！</div>
+          <div class="left_title">{{ t('index.title') }}</div>
           <p>
-            正式开户前，您可在几秒钟内开立一个模拟交易账户试用一下MC
-            LiquidityProvider。
+            {{ t('index.desc1') }}
             <br />
             <br />
-            即刻获取1万美元模拟资金。
+            {{ t('index.desc2') }}
             <br />
-            在模拟交易环境下进行模拟交易。
+            {{ t('index.desc3') }}
             <br />
-            如果准备好开立真实账户，只需填写开户申请、入金账户便可开始全球交易
+            {{ t('index.desc4') }}
           </p>
           <div class="down_view hidden-xs-only">
             <div class="down_view_ewm">
@@ -22,7 +21,7 @@
             </div>
           </div>
           <div class="down_text hidden-xs-only">
-            扫描二维码下载MC LiquidityProvider应用程序
+            {{ t('feature.scanDownload') }}
           </div>
         </div>
       </el-col>
@@ -34,8 +33,10 @@
     </el-row>
   </div>
 </template>
-<script>
+<script setup>
 import 'element-plus/theme-chalk/display.css';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .download {

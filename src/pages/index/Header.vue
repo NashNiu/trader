@@ -89,23 +89,33 @@
         </router-link>
       </el-menu-item>
       <div class="flex-grow" />
-      <el-menu-item index="1" @click="goPage('/Feature')">功能</el-menu-item>
-      <el-menu-item index="2" @click="goPage('/Product')">产品</el-menu-item>
-      <el-menu-item index="3" @click="goPage('/FixPrice')">定价</el-menu-item>
+      <el-menu-item index="1" @click="goPage('/Feature')">
+        {{ t('index.feature') }}
+      </el-menu-item>
+      <el-menu-item index="2" @click="goPage('/Product')">
+        {{ t('index.product') }}
+      </el-menu-item>
+      <el-menu-item index="3" @click="goPage('/FixPrice')">
+        {{ t('index.price') }}
+      </el-menu-item>
       <el-sub-menu index="4">
-        <template #title>平台</template>
+        <template #title>{{ t('index.plat') }}</template>
         <el-menu-item index="4-1" @click="goPage('/Platform')">
-          移动端
+          {{ t('index.mobile') }}
         </el-menu-item>
         <el-menu-item index="4-2" @click="goPage('/Platform')">
-          MT5平台
+          {{ t('index.mt5') }}
         </el-menu-item>
         <el-menu-item index="4-3" @click="goPage('/Platform')">
-          WAP网页端
+          {{ t('index.wap') }}
         </el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="5" @click="goPage('/teach')">教学</el-menu-item>
-      <el-menu-item index="6" @click="goPage('/Support')">支持</el-menu-item>
+      <el-menu-item index="5" @click="goPage('/teach')">
+        {{ t('index.teach') }}
+      </el-menu-item>
+      <el-menu-item index="6" @click="goPage('/Support')">
+        {{ t('index.support') }}
+      </el-menu-item>
       <el-dropdown @command="changeLanguage">
         <div class="lang_pc">
           <img src="../../assets/img/newIndex/earth.png" />
@@ -140,11 +150,15 @@
           <span>{{ userInfo.email }}</span>
         </div>
         <template v-else>
-          <div class="menu-button menu-button_1" @click="goTrade">登录</div>
-          <div class="menu-button menu-button_2" @click="toggleTab">注册</div>
+          <div class="menu-button menu-button_1" @click="goTrade">
+            {{ t('login.login') }}
+          </div>
+          <div class="menu-button menu-button_2" @click="toggleTab">
+            {{ t('login.reg') }}
+          </div>
         </template>
         <div class="menu-button menu-button_3" @click="goPage('/app')">
-          下载应用
+          {{ t('index.download') }}
         </div>
       </div>
     </el-menu>
@@ -182,12 +196,12 @@
         </div>
       </template>
       <div class="router-menu">
-        <div @click="goPage('/Feature')">功能</div>
-        <div @click="goPage('/Product')">产品</div>
-        <div @click="goPage('/FixPrice')">定价</div>
-        <div @click="goPage('/teach')">教学</div>
-        <div @click="goPage('/Support')">支持</div>
-        <div @click="goPage('/app')">下载应用</div>
+        <div @click="goPage('/Feature')">{{ t('index.feature') }}</div>
+        <div @click="goPage('/Product')">{{ t('index.product') }}</div>
+        <div @click="goPage('/FixPrice')">{{ t('index.price') }}</div>
+        <div @click="goPage('/teach')">{{ t('index.teach') }}</div>
+        <div @click="goPage('/Support')">{{ t('index.support') }}</div>
+        <div @click="goPage('/app')">{{ t('index.download') }}</div>
         <div
           @click="
             () => {
@@ -195,7 +209,7 @@
             }
           "
         >
-          <span>语言</span>
+          <span>{{ t('common.language') }}</span>
           <div class="lang_view">
             <span>{{ data.langActive }}</span>
             <img src="../../assets/img/newIndex/vector_2.png" />
@@ -240,7 +254,7 @@ import { configConst } from '@/config/index.js';
 import { useUserStore } from '@/store/index.js';
 import { getUserInfoByToken } from '@/api/user.js';
 import { tools } from '@/utils/index.js';
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const router = useRouter();
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);

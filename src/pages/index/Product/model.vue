@@ -56,7 +56,7 @@
         <h4>{{ t('product.otherProduct') }}？</h4>
         <p>{{ t('product.findMore') }}</p>
         <div class="model_problem_tab">
-          <div class="model_problem_tab-active">产品</div>
+          <div class="model_problem_tab-active">{{ t('index.product') }}</div>
           <div>{{ t('product.tools') }}</div>
         </div>
       </div>

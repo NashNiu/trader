@@ -2,7 +2,7 @@
   <div class="withdrawContainer">
     <div v-if="step === 1" class="step1">
       <div class="currencyBox">
-        <span class="s1">Currency</span>
+        <span class="s1">{{ t('header.currency') }}</span>
         <el-popover
           :show-arrow="false"
           trigger="hover"
@@ -51,10 +51,10 @@
       <div class="chainBox">
         <p class="p3">
           <CoinIco :size="16" :coin="selectedCoin.currency" />
-          Your {{ selectedCoin.currency }} Receipt Address
+          {{ t('header.receiptAddress', { coin: selectedCoin.currency }) }}
         </p>
         <div class="selectBox">
-          <span class="s2">Select the chain</span>
+          <span class="s2">{{ t('header.selectChain') }}</span>
           <el-popover
             v-if="selectedCoin"
             :show-arrow="false"
@@ -92,7 +92,7 @@
         />
         <div class="amountBox">
           <div class="labelBox">
-            <span class="label">Amount</span>
+            <span class="label">{{ t('header.amount') }}</span>
             <span class="price">{{ selectedCoin?.available }}</span>
           </div>
           <div class="amountInputBox">
@@ -111,27 +111,30 @@
                   class="max"
                   @click="withdrawAmount = selectedCoin?.available"
                 >
-                  Max
+                  {{ t('header.max') }}
                 </div>
               </template>
             </el-input>
           </div>
         </div>
         <el-button type="primary" class="submitBtn" @click="submit">
-          Withdraw
+          {{ t('header.withdraw') }}
         </el-button>
         <div class="tips">
-          Minimum withdrawal is 0.00020000
+          {{ t('header.minWithdraw') }} 0.00020000
           <CoinIco :size="16" :coin="selectedCoin.currency" />
-          . Your withdrawal will have 0.00007000
-          <CoinIco :size="16" :coin="selectedCoin.currency" />
-          subtracted from your remaining balance to cover the fee required to
-          process the transaction.
+          .
+          {{
+            t('header.withdrawFee', {
+              coin: selectedCoin.currency,
+              fee: '0.00007',
+            })
+          }}
         </div>
       </div>
     </div>
     <div v-if="step === 2" class="step2">
-      <div class="label">Enter withdrawal password</div>
+      <div class="label">{{ t('header.enterWithdrawPass') }}</div>
       <el-input
         v-model="password"
         class="inputPass"
@@ -140,9 +143,9 @@
         show-password
       />
       <el-button type="primary" class="submitBtn" @click="enterPass">
-        Submit
+        {{ t('common.submit') }}
       </el-button>
-      <div class="back" @click="back">Back</div>
+      <div class="back" @click="back">{{ t('uc.back') }}</div>
     </div>
   </div>
 </template>

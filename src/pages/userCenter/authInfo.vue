@@ -2,6 +2,8 @@
 import googleImg from '@/assets/img/usercenter/google.png';
 import appStoreImg from '@/assets/img/usercenter/appStore.png';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const router = useRouter();
 const goAuthBind = () => {
   router.push('/t/authBind');
@@ -10,26 +12,25 @@ const goAuthBind = () => {
 <template>
   <div class="authInfoBox">
     <div class="section">
-      <div class="h3">绑定谷歌验证器</div>
+      <div class="h3">{{ t('auth.bind') }}</div>
       <div class="info">
-        我们通过双重身份认证，采用谷歌双重认证保护您的账号。设置方式简单仅需花费几分钟即可完成
+        {{ t('auth.title') }}
       </div>
     </div>
     <div class="divider"></div>
     <div class="section">
-      <div class="alink">下载 Google Authenticator 应用程序</div>
+      <div class="alink">{{ t('auth.download') }}</div>
       <div class="info">
-        IOS手机装置可从APP商店下载Google Authenticator
-        应用程序,而Android手机装置则可至Google Pay商店。
+        {{ t('auth.install') }}
       </div>
       <div class="imgBox">
         <img :src="googleImg" alt="google" />
         <img :src="appStoreImg" alt="app store" />
       </div>
-      <div class="info">成功安装app至手机后，我们将协助您的账号创建2FA令牌</div>
+      <div class="info">{{ t('auth.afterInstall') }}</div>
       <div class="btnBox">
         <el-button type="primary" size="large" class="btn" @click="goAuthBind">
-          继续
+          {{ t('auth.next') }}
         </el-button>
       </div>
     </div>

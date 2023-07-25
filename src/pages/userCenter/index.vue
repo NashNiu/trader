@@ -1,10 +1,10 @@
 <template>
   <div class="userCenterContainer">
-    <div class="header">个人中心</div>
+    <div class="header">{{ t('uc.uc') }}</div>
     <div class="content">
       <el-row>
         <el-col :span="24">
-          <div class="title">双重验证（2FA）</div>
+          <div class="title">{{ t('uc.two_factor') }}</div>
         </el-col>
       </el-row>
       <el-row class="itemBox" align="middle">
@@ -12,19 +12,21 @@
           <div class="leftBox">
             <img :src="authImg" alt="auth" />
             <div>
-              <p class="desc">身份验证器</p>
-              <p class="info">保护您的交易和账户安全</p>
+              <p class="desc">{{ t('uc.authenticator') }}</p>
+              <p class="info">{{ t('uc.protect') }}</p>
             </div>
           </div>
         </el-col>
         <el-col :span="3">
-          <div v-if="isBindOtp" class="status success">已启用</div>
-          <div v-else class="status danger">未开启</div>
+          <div v-if="isBindOtp" class="status success">
+            {{ t('uc.enabled') }}
+          </div>
+          <div v-else class="status danger">{{ t('uc.notOpen') }}</div>
         </el-col>
         <el-col :span="3">
           <div v-if="!isBindOtp">
             <el-button plain type="primary" size="large" @click="goAuthInfo">
-              管理
+              {{ t('uc.manage') }}
             </el-button>
           </div>
         </el-col>
@@ -34,8 +36,8 @@
           <div class="leftBox">
             <img :src="loginPassImg" alt="loginPass" />
             <div>
-              <p class="desc">登录密码</p>
-              <p class="info">用于管理您的账户登录密码</p>
+              <p class="desc">{{ t('uc.loginPass') }}</p>
+              <p class="info">{{ t('uc.manageLoginPass') }}</p>
             </div>
           </div>
         </el-col>
@@ -48,7 +50,7 @@
               size="large"
               @click="openChangePass"
             >
-              修改
+              {{ t('uc.modify') }}
             </el-button>
           </div>
         </el-col>
@@ -58,24 +60,26 @@
           <div class="leftBox">
             <img :src="walletImg" alt="wallet" />
             <div>
-              <p class="desc">支付密码</p>
-              <p class="info">用于管理您的账户支付密码</p>
+              <p class="desc">{{ t('uc.payPass') }}</p>
+              <p class="info">{{ t('uc.managePayPass') }}</p>
             </div>
           </div>
         </el-col>
         <el-col :span="3">
-          <div v-if="userInfo.paypassword" class="status success">已设置</div>
-          <div v-else class="status danger">未设置</div>
+          <div v-if="userInfo.paypassword" class="status success">
+            {{ t('uc.settled') }}
+          </div>
+          <div v-else class="status danger">{{ t('uc.notSet') }}</div>
         </el-col>
         <el-col :span="3">
           <div v-if="userInfo.paypassword">
             <el-button plain type="primary" size="large" @click="openPayPass">
-              修改
+              {{ t('uc.modify') }}
             </el-button>
           </div>
           <div v-else>
             <el-button plain type="primary" size="large" @click="openPayPass">
-              设置
+              {{ t('uc.set') }}
             </el-button>
           </div>
         </el-col>
@@ -83,7 +87,7 @@
       <div class="divider"></div>
       <el-row>
         <el-col :span="24">
-          <div class="title">身份认证</div>
+          <div class="title">{{ t('uc.idAuth') }}</div>
         </el-col>
       </el-row>
       <el-row class="itemBox" align="middle">
@@ -91,8 +95,8 @@
           <div class="leftBox">
             <img :src="userImg" alt="user" />
             <div>
-              <p class="desc">身份认证</p>
-              <p class="info">完成身份认证，保护账户安全，获得更多权益</p>
+              <p class="desc">{{ t('uc.idAuth') }}</p>
+              <p class="info">{{ t('uc.finishIdAuth') }}</p>
             </div>
           </div>
         </el-col>
@@ -101,14 +105,16 @@
             v-if="auditStatus === 0 || auditStatus === 1"
             class="status danger"
           >
-            未认证
+            {{ t('uc.unverified') }}
           </div>
-          <div v-else-if="auditStatus === 2" class="status">待审核</div>
+          <div v-else-if="auditStatus === 2" class="status">
+            {{ t('uc.toBeReviewed') }}
+          </div>
           <div v-else-if="auditStatus === 3" class="status success">
-            审核通过
+            {{ t('uc.verified') }}
           </div>
           <div v-else-if="auditStatus === 4" class="status danger">
-            审核失败
+            {{ t('uc.auditFail') }}
           </div>
         </el-col>
         <el-col :span="3">
@@ -119,7 +125,7 @@
               size="large"
               @click="openVerifyDialog"
             >
-              认证
+              {{ t('uc.authentication') }}
             </el-button>
           </div>
           <div v-else>
@@ -129,7 +135,7 @@
               size="large"
               @click="openVerifyDialog"
             >
-              查看
+              {{ t('uc.view') }}
             </el-button>
           </div>
         </el-col>
@@ -151,6 +157,8 @@ import ChangePass from './components/changePass.vue';
 import PayPassDialog from '@/components/common/payPassDialog.vue';
 import Verification from './components/verifyDialog.vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);
 const isBindOtp = computed(() => userInfo.value?.isbindotp === 1);

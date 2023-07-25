@@ -11,7 +11,7 @@
   >
     <template #header>
       <div class="withdrawDialogHeader">
-        <div class="title">出金</div>
+        <div class="title">{{ t('header.withdraw') }}</div>
         <img :src="closeImg" class="close" alt="" @click="hide" />
       </div>
     </template>
@@ -76,16 +76,22 @@
           style="width: 520px"
         >
           <template #append>
-            <el-button type="primary" class="maxBtn">Max</el-button>
+            <el-button type="primary" class="maxBtn">
+              {{ t('header.max') }}
+            </el-button>
           </template>
         </el-input>
       </el-form-item>
 
       <div v-if="formData.currency" class="tips">
         <span v-loading="beforeOrderLoading">
-          目前汇率是{{ currencyPrice }},钱包将会到账
-          {{ transferAmount }}
-          {{ formData.currency }}
+          {{
+            t('header.rateExchange', {
+              rate: currencyPrice,
+              amount: transferAmount,
+              coin: formData.currency,
+            })
+          }}
         </span>
       </div>
       <el-form-item>
@@ -134,13 +140,7 @@ const formData = ref({
 });
 const currencyPrice = ref(0);
 const orderId = ref();
-const formRules = reactive({
-  birthday: [
-    { required: true, message: 'Please pick a date', trigger: 'blur' },
-  ],
-  city: [{ required: true, message: 'Please input a city', trigger: 'blur' }],
-  job: [{ required: true, message: 'Please input a job', trigger: 'blur' }],
-});
+const formRules = reactive({});
 const currentCurrencyData = computed(() => {
   if (formData.value.currency) {
     return (
@@ -169,9 +169,9 @@ const confirmDisabled = computed(() => {
   }
 });
 const passCheck = () => {
-  ElMessageBox.prompt('Please input your payment password', '', {
-    confirmButtonText: 'OK',
-    cancelButtonText: 'Cancel',
+  ElMessageBox.prompt(t('header.inputPayPass'), '', {
+    confirmButtonText: t('header.confirm'),
+    cancelButtonText: t('header.cancel'),
     inputType: 'password',
     inputPattern: /^.+$/,
     inputErrorMessage: 'Required',
@@ -202,7 +202,7 @@ const beforeSubmit = () => {
   if (userInfo.value.paypassword) {
     passCheck();
   } else {
-    ElMessage.info('还未设置支付密码，请先设置支付密码');
+    ElMessage.info(t('header.setPayPassFirst'));
     payPassDialogRef.value.show();
   }
 };

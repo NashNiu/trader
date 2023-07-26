@@ -1,150 +1,229 @@
 <template>
-  <div class="userCenterContainer">
-    <div class="header">{{ t('uc.uc') }}</div>
-    <div class="content">
-      <el-row>
-        <el-col :span="24">
-          <div class="title">{{ t('uc.two_factor') }}</div>
-        </el-col>
-      </el-row>
-      <el-row class="itemBox" align="middle">
-        <el-col :span="18">
-          <div class="leftBox">
-            <img :src="authImg" alt="auth" />
-            <div>
-              <p class="desc">{{ t('uc.authenticator') }}</p>
-              <p class="info">{{ t('uc.protect') }}</p>
+  <el-scrollbar>
+    <div class="userCenterContainer">
+      <div class="header">{{ t('uc.uc') }}</div>
+      <div class="content">
+        <el-row>
+          <el-col :span="24">
+            <div class="title">{{ t('uc.two_factor') }}</div>
+          </el-col>
+        </el-row>
+        <el-row class="itemBox" align="middle">
+          <el-col :span="18">
+            <div class="leftBox">
+              <img :src="authImg" alt="auth" />
+              <div>
+                <p class="desc">{{ t('uc.authenticator') }}</p>
+                <p class="info">{{ t('uc.protect') }}</p>
+              </div>
             </div>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <div v-if="isBindOtp" class="status success">
-            {{ t('uc.enabled') }}
-          </div>
-          <div v-else class="status danger">{{ t('uc.notOpen') }}</div>
-        </el-col>
-        <el-col :span="3">
-          <div v-if="!isBindOtp">
-            <el-button plain type="primary" size="large" @click="goAuthInfo">
-              {{ t('uc.manage') }}
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row class="itemBox" align="middle">
-        <el-col :span="18">
-          <div class="leftBox">
-            <img :src="loginPassImg" alt="loginPass" />
-            <div>
-              <p class="desc">{{ t('uc.loginPass') }}</p>
-              <p class="info">{{ t('uc.manageLoginPass') }}</p>
+          </el-col>
+          <el-col :span="3">
+            <div v-if="isBindOtp" class="status success">
+              {{ t('uc.enabled') }}
             </div>
-          </div>
-        </el-col>
-        <el-col :span="3"></el-col>
-        <el-col :span="3">
-          <div>
-            <el-button
-              plain
-              type="primary"
-              size="large"
-              @click="openChangePass"
+            <div v-else class="status danger">{{ t('uc.notOpen') }}</div>
+          </el-col>
+          <el-col :span="3">
+            <div v-if="!isBindOtp">
+              <el-button plain type="primary" size="large" @click="goAuthInfo">
+                {{ t('uc.manage') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="itemBox" align="middle">
+          <el-col :span="18">
+            <div class="leftBox">
+              <img :src="loginPassImg" alt="loginPass" />
+              <div>
+                <p class="desc">{{ t('uc.loginPass') }}</p>
+                <p class="info">{{ t('uc.manageLoginPass') }}</p>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="3"></el-col>
+          <el-col :span="3">
+            <div>
+              <el-button
+                plain
+                type="primary"
+                size="large"
+                @click="openChangePass"
+              >
+                {{ t('uc.modify') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="itemBox" align="middle">
+          <el-col :span="18">
+            <div class="leftBox">
+              <img :src="walletImg" alt="wallet" />
+              <div>
+                <p class="desc">{{ t('uc.payPass') }}</p>
+                <p class="info">{{ t('uc.managePayPass') }}</p>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="3">
+            <div v-if="userInfo.paypassword" class="status success">
+              {{ t('uc.settled') }}
+            </div>
+            <div v-else class="status danger">{{ t('uc.notSet') }}</div>
+          </el-col>
+          <el-col :span="3">
+            <div v-if="userInfo.paypassword">
+              <el-button plain type="primary" size="large" @click="openPayPass">
+                {{ t('uc.modify') }}
+              </el-button>
+            </div>
+            <div v-else>
+              <el-button plain type="primary" size="large" @click="openPayPass">
+                {{ t('uc.set') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <div class="divider"></div>
+        <el-row>
+          <el-col :span="24">
+            <div class="title">{{ t('uc.idAuth') }}</div>
+          </el-col>
+        </el-row>
+        <el-row class="itemBox" align="middle">
+          <el-col :span="18">
+            <div class="leftBox">
+              <img :src="userImg" alt="user" />
+              <div>
+                <p class="desc">{{ t('uc.idAuth') }}</p>
+                <p class="info">{{ t('uc.finishIdAuth') }}</p>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="3">
+            <div
+              v-if="auditStatus === 0 || auditStatus === 1"
+              class="status danger"
             >
-              {{ t('uc.modify') }}
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row class="itemBox" align="middle">
-        <el-col :span="18">
-          <div class="leftBox">
-            <img :src="walletImg" alt="wallet" />
-            <div>
-              <p class="desc">{{ t('uc.payPass') }}</p>
-              <p class="info">{{ t('uc.managePayPass') }}</p>
+              {{ t('uc.unverified') }}
             </div>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <div v-if="userInfo.paypassword" class="status success">
-            {{ t('uc.settled') }}
-          </div>
-          <div v-else class="status danger">{{ t('uc.notSet') }}</div>
-        </el-col>
-        <el-col :span="3">
-          <div v-if="userInfo.paypassword">
-            <el-button plain type="primary" size="large" @click="openPayPass">
-              {{ t('uc.modify') }}
-            </el-button>
-          </div>
-          <div v-else>
-            <el-button plain type="primary" size="large" @click="openPayPass">
-              {{ t('uc.set') }}
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
-      <div class="divider"></div>
-      <el-row>
-        <el-col :span="24">
-          <div class="title">{{ t('uc.idAuth') }}</div>
-        </el-col>
-      </el-row>
-      <el-row class="itemBox" align="middle">
-        <el-col :span="18">
-          <div class="leftBox">
-            <img :src="userImg" alt="user" />
-            <div>
-              <p class="desc">{{ t('uc.idAuth') }}</p>
-              <p class="info">{{ t('uc.finishIdAuth') }}</p>
+            <div v-else-if="auditStatus === 2" class="status">
+              {{ t('uc.toBeReviewed') }}
             </div>
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <div
-            v-if="auditStatus === 0 || auditStatus === 1"
-            class="status danger"
-          >
-            {{ t('uc.unverified') }}
-          </div>
-          <div v-else-if="auditStatus === 2" class="status">
-            {{ t('uc.toBeReviewed') }}
-          </div>
-          <div v-else-if="auditStatus === 3" class="status success">
-            {{ t('uc.verified') }}
-          </div>
-          <div v-else-if="auditStatus === 4" class="status danger">
-            {{ t('uc.auditFail') }}
-          </div>
-        </el-col>
-        <el-col :span="3">
-          <div v-if="auditStatus === 0 || auditStatus === 1">
-            <el-button
-              plain
-              type="primary"
-              size="large"
-              @click="openVerifyDialog"
-            >
-              {{ t('uc.authentication') }}
-            </el-button>
-          </div>
-          <div v-else>
-            <el-button
-              plain
-              type="primary"
-              size="large"
-              @click="openVerifyDialog"
-            >
-              {{ t('uc.view') }}
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
+            <div v-else-if="auditStatus === 3" class="status success">
+              {{ t('uc.verified') }}
+            </div>
+            <div v-else-if="auditStatus === 4" class="status danger">
+              {{ t('uc.auditFail') }}
+            </div>
+          </el-col>
+          <el-col :span="3">
+            <div v-if="auditStatus === 0 || auditStatus === 1">
+              <el-button
+                plain
+                type="primary"
+                size="large"
+                @click="openVerifyDialog"
+              >
+                {{ t('uc.authentication') }}
+              </el-button>
+            </div>
+            <div v-else>
+              <el-button
+                plain
+                type="primary"
+                size="large"
+                @click="openVerifyDialog"
+              >
+                {{ t('uc.view') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <div class="divider"></div>
+        <el-row>
+          <el-col :span="24">
+            <div class="title">{{ t('uc.accountManage') }}</div>
+          </el-col>
+        </el-row>
+        <el-row class="itemBox" align="middle">
+          <el-col :span="15">
+            <div class="leftBox">
+              <img :src="emailImg" alt="email" />
+              <div>
+                <p class="desc">{{ t('uc.email') }}</p>
+                <p class="info">{{ t('uc.protectAccount') }}</p>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="status">
+              {{ userInfo.email }}
+            </div>
+          </el-col>
+          <el-col :span="3">
+            <div>
+              <el-button
+                plain
+                type="primary"
+                size="large"
+                @click="openChangeEmail"
+              >
+                {{ t('uc.modify') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="itemBox" align="middle">
+          <el-col :span="15">
+            <div class="leftBox">
+              <img :src="phoneImg" alt="phone" />
+              <div>
+                <p class="desc">{{ t('uc.phone') }}</p>
+                <p class="info">{{ t('uc.protectAccount') }}</p>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div v-if="userInfo.phone" class="status">
+              {{ userInfo.phone }}
+            </div>
+            <div v-else class="status danger">
+              {{ t('uc.notBind') }}
+            </div>
+          </el-col>
+          <el-col :span="3">
+            <div>
+              <el-button
+                v-if="userInfo.phone"
+                plain
+                type="primary"
+                size="large"
+                @click="openChangePhone"
+              >
+                {{ t('uc.modify') }}
+              </el-button>
+              <el-button
+                v-else
+                plain
+                type="primary"
+                size="large"
+                @click="openChangePhone"
+              >
+                {{ t('uc.manage') }}
+              </el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <ChangePass ref="changePassRef" />
+      <PayPassDialog ref="payPassDialogRef" />
+      <Verification ref="verifyDialogRef" @complete="getAuditStatus" />
+      <ChangeEmailDialog ref="changeEmailRef" />
+      <UpdatePhoneDialog ref="updatePhoneRef" />
     </div>
-    <ChangePass ref="changePassRef" />
-    <PayPassDialog ref="payPassDialogRef" />
-    <Verification ref="verifyDialogRef" @complete="getAuditStatus" />
-  </div>
+  </el-scrollbar>
 </template>
 <script setup>
 import { computed, ref, onMounted } from 'vue';
@@ -153,9 +232,13 @@ import authImg from '@/assets/img/usercenter/auth.png';
 import loginPassImg from '@/assets/img/usercenter/loginPass.png';
 import walletImg from '@/assets/img/usercenter/wallet.png';
 import userImg from '@/assets/img/usercenter/user.png';
+import phoneImg from '@/assets/img/usercenter/phone.png';
+import emailImg from '@/assets/img/usercenter/email.png';
 import ChangePass from './components/changePass.vue';
 import PayPassDialog from '@/components/common/payPassDialog.vue';
 import Verification from './components/verifyDialog.vue';
+import ChangeEmailDialog from './components/changeEmail.vue';
+import UpdatePhoneDialog from './components/updatePhone.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -166,6 +249,8 @@ const changePassRef = ref(null);
 const router = useRouter();
 const payPassDialogRef = ref(null);
 const verifyDialogRef = ref(null);
+const changeEmailRef = ref(null);
+const updatePhoneRef = ref(null);
 const auditStatus = ref(0);
 const openPayPass = () => {
   payPassDialogRef.value.show();
@@ -175,6 +260,12 @@ const openChangePass = () => {
 };
 const openVerifyDialog = () => {
   verifyDialogRef.value.show();
+};
+const openChangeEmail = () => {
+  changeEmailRef.value?.show();
+};
+const openChangePhone = () => {
+  updatePhoneRef.value?.show();
 };
 const getAuditStatus = async () => {
   const res = await userStore.getAuditData();

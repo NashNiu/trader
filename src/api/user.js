@@ -1,4 +1,5 @@
 import { request } from '@/utils/index.js';
+import { configConst } from '@/config/index.js';
 
 export function getUserInfoByToken() {
   return request({
@@ -241,5 +242,30 @@ export function verifyGoogleAuth(code) {
   return request({
     url: `/api/users/user/verifyOTP?verifyCode=${code}`,
     method: 'get',
+  });
+}
+// 变更邮箱  ?email=19522515512@139.com&newEmailVerifyCode=d5a2&oldEmailVerifyCode=9726
+export function changeEmail(params) {
+  return request({
+    url: `/api/users/user/bindEmail`,
+    method: 'GET',
+    params,
+  });
+}
+// 发送手机验证码
+export function sendPhoneCode(phone) {
+  const localLan = localStorage.getItem(configConst.LANGUAGE) || 'en';
+  return request({
+    url: `/api/users/user/phoneVerifyCode?language=${localLan}&phone=${phone}`,
+    method: 'GET',
+  });
+}
+
+// 变更手机号
+export function changePhone(params) {
+  return request({
+    url: `/api/users/user/bindPhone`,
+    method: 'GET',
+    params,
   });
 }

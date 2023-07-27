@@ -213,6 +213,10 @@ export default {
     cryptos: '数字货币返点不能大于上级返点',
     indexrebates: '其它指数返点不能大于上级返点',
     xagusdreabage: '伦敦银返点不能大于上级返点',
+    settlementWeekly: '每周结算',
+    settlementMonthly: '每月结算',
+    settlementDaily: '每日结算',
+    forbiddenSettlement: '禁止结算',
   },
   customerCount: {
     title: '名下用户数据统计',
@@ -307,6 +311,8 @@ export default {
   },
   user: {
     logout: '登出',
+    switchToDemo: '切换至模拟账户',
+    switchToReal: '切换至真实账户',
   },
   login: {
     login: '登录',

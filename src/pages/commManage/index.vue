@@ -46,7 +46,7 @@
                 <span>{{ t('commManage.transferamo') }}</span>
                 <el-input
                   v-model="data.mt4.money"
-                  style="width: 200px"
+                  style="width: 300px"
                   :placeholder="t('commManage.amountomt4acc')"
                 ></el-input>
               </el-col>
@@ -216,7 +216,11 @@
               :label="t('commManage.salet')"
             >
               <template #default="scope">
-                {{ scope.row.command === 'OP_BUY' ? '买入' : '卖出' }}
+                {{
+                  scope.row.command === 'OP_BUY'
+                    ? t('common.buy')
+                    : t('common.sell')
+                }}
               </template>
             </el-table-column>
             <el-table-column
@@ -692,16 +696,16 @@ const formatSettleType = (val) => {
   let str = '';
   switch (parseInt(val)) {
     case 0:
-      str = '每周结算';
+      str = t('customer.settlementWeekly');
       return str;
     case 1:
-      str = '每月结算';
+      str = t('customer.settlementMonthly');
       return str;
     case 2:
-      str = '禁止结算';
+      str = t('customer.forbiddenSettlement');
       return str;
     case 3:
-      str = '每日结算';
+      str = t('customer.settlementDaily');
       return str;
   }
   return '';

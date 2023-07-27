@@ -778,7 +778,7 @@ const _extractCommission = async () => {
   if (res.data.IsSuccess) {
     data.btnLoading = false;
     data.mt4.money = '';
-    ElMessage.success(res.data.Data);
+    ElMessage.success(t('common.success'));
     _getElectronicWallet();
     // 满足转账条件提交转账申请
     // saveExtractCommission(params).then((res) => {

@@ -42,23 +42,26 @@ service.interceptors.response.use(
     //     TimeLoss(11, "行情丢失"),
     //     BalanceLow(12, "余额不足"),
     const statusErrorMsg = {
-      '-2': '参数错误',
-      '-1': '服务器错误',
-      1: '已更新',
-      2: '已存在',
-      3: '不存在',
-      4: '验证码错误',
-      5: '密码错误',
-      6: '未登录',
-      7: '无效Token',
-      8: '账号已停用',
-      9: '订单不存在',
-      10: '报价丢失',
-      11: '行情丢失',
-      12: '余额不足',
+      '-2': i18n.global.t('req.paramsWrong'),
+      '-1': i18n.global.t('req.serveError'),
+      1: i18n.global.t('req.updated'),
+      2: i18n.global.t('req.existed'),
+      3: i18n.global.t('req.notExisted'),
+      4: i18n.global.t('req.codeError'),
+      5: i18n.global.t('req.passError'),
+      6: i18n.global.t('req.notLogin'),
+      7: i18n.global.t('req.invalidToken'),
+      8: i18n.global.t('req.deactivatedAccount'),
+      9: i18n.global.t('req.notExistedOrder'),
+      10: i18n.global.t('req.priceLoss'),
+      11: i18n.global.t('req.quoteLoss'),
+      12: i18n.global.t('req.noBalance'),
     };
     if (response.data.status && !response.config.headers?.hideError) {
-      ElMessage.error(statusErrorMsg[response.data.status] || '未知错误');
+      ElMessage.error(
+        statusErrorMsg[response.data.status] ||
+          i18n.global.t('req.unknownError')
+      );
       // ElMessage.error(i18n.global.t('common.unauthorized'));
     }
     return response;
@@ -68,10 +71,10 @@ service.interceptors.response.use(
       ElMessage.error(i18n.global.t('common.unauthorized'));
       tools.clearAndLogout();
     } else if (error?.response?.status === 500) {
-      ElMessage.error('Server Error');
+      ElMessage.error(i18n.global.t('req.serveError'));
       return error;
     } else if (error?.code === 'ECONNABORTED') {
-      ElMessage.error(error?.message || 'request timeout');
+      ElMessage.error(error?.message || i18n.global.t('req.timeout'));
       return error;
     } else {
       console.log(error);

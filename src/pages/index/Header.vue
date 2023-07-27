@@ -182,6 +182,8 @@
         </div>
       </template>
       <div class="router-menu">
+        <div @click="goTrade">登录</div>
+        <div @click="toggleTab">注册</div>
         <div @click="goPage('/Feature')">功能</div>
         <div @click="goPage('/Product')">产品</div>
         <div @click="goPage('/FixPrice')">定价</div>

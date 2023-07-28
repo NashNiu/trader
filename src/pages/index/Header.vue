@@ -196,8 +196,8 @@
         </div>
       </template>
       <div class="router-menu">
-        <div @click="goTrade">登录</div>
-        <div @click="toggleTab">注册</div>
+        <div @click="goTrade">{{ t('login.login') }}</div>
+        <div @click="toggleTab">{{ t('login.reg') }}</div>
         <div @click="goPage('/Feature')">{{ t('index.feature') }}</div>
         <div @click="goPage('/Product')">{{ t('index.product') }}</div>
         <div @click="goPage('/FixPrice')">{{ t('index.price') }}</div>

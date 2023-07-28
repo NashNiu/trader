@@ -754,5 +754,7 @@ export default {
     noBalance: '余额不足',
     unknownError: '未知错误',
     timeout: '请求超时',
+    notAllowedChange:
+      '你正在使用三方账号登录，绑定邮箱默认与三方账号一致，修改请联系客服',
   },
 };

@@ -56,6 +56,7 @@ service.interceptors.response.use(
       10: i18n.global.t('req.priceLoss'),
       11: i18n.global.t('req.quoteLoss'),
       12: i18n.global.t('req.noBalance'),
+      13: i18n.global.t('req.notAllowedChange'),
     };
     if (response.data.status && !response.config.headers?.hideError) {
       ElMessage.error(

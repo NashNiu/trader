@@ -9,13 +9,15 @@
     </div>
     <div class="mainBox">
       <div class="item">
-        <p class="title" @click="goUserCenter">个人中心</p>
+        <p class="title" @click="goUserCenter">{{ t('uc.uc') }}</p>
       </div>
       <div class="item">
         <p v-if="isRealAccount" class="title" @click="toggleRealDemo">
-          切换至模拟账户
+          {{ t('user.switchToDemo') }}
         </p>
-        <p v-else class="title" @click="toggleRealDemo">切换至真实账户</p>
+        <p v-else class="title" @click="toggleRealDemo">
+          {{ t('user.switchToReal') }}
+        </p>
       </div>
       <div class="item" @click="toggleLanguage">
         <p class="title">
@@ -187,6 +189,10 @@ const languageArr = [
   {
     value: 'uk',
     label: 'Ukraine',
+  },
+  {
+    value: 'vi',
+    label: 'Tiếng Việt',
   },
 ];
 const toggleLanguage = () => {

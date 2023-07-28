@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="support">
-      <h1>支持</h1>
+      <h1>{{ t('support.support') }}</h1>
       <div class="chat">
         <div class="left">
-          <h4>还有问题？</h4>
-          <p>快来联系我们！我们很高兴为您提供帮助！</p>
+          <h4>{{ t('support.question') }}？</h4>
+          <p>{{ t('support.contact') }}！</p>
         </div>
         <div class="right">
-          <div>聊天</div>
-          <div>支持咨询单</div>
+          <div>{{ t('support.chat') }}</div>
+          <div>{{ t('support.consult') }}</div>
         </div>
       </div>
     </div>
@@ -17,7 +17,9 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n';
 import Model_4 from '../model_4.vue';
+const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .support {

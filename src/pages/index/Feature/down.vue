@@ -8,34 +8,35 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="12">
         <div class="left">
-          <div class="left_title">让世界尽在您掌握</div>
-          <p>
-            覆盖全球包括NYSE、NASDAQ、LSE
-            和HKSE在内的90多个股票市场，外加期权以及比特币、比特币现金、以太坊和莱特币等加密货币——所有这些从您的移动设备即可直达。
-          </p>
-          <div class="down_text hidden-xs-only">马上下载应用程序。</div>
+          <div class="left_title">{{ t('feature.title') }}</div>
+          <p>{{ t('feature.desc') }}</p>
+          <div class="down_text hidden-xs-only">
+            {{ t('feature.download') }}。
+          </div>
           <div class="down_view hidden-xs-only">
             <div class="down_view_button">
               <div class="down_view_button-flex">
                 <img src="../../../assets/img/newIndex/Andriod.png" />
                 <img src="../../../assets/img/newIndex/IOS.png" />
               </div>
-              <div class="down_view_button_2">登录网页版</div>
+              <div class="down_view_button_2">{{ t('feature.loginWap') }}</div>
             </div>
             <div class="down_view_ewm">
               <img src="../../../assets/img/newIndex/ewm.png" />
             </div>
           </div>
           <div class="down_text hidden-xs-only">
-            点击按钮开始下载交易平台或手机扫描二维码下载
+            {{ t('feature.clickDownload') }}
           </div>
         </div>
       </el-col>
     </el-row>
   </div>
 </template>
-<script>
+<script setup>
 import 'element-plus/theme-chalk/display.css';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .download {

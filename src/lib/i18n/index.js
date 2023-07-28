@@ -29,6 +29,7 @@ import sl from './sl.js';
 import sv from './sv.js';
 import tr from './tr.js';
 import uk from './uk.js';
+import vi from './vi.js';
 const messages = {
   cn,
   en,
@@ -59,6 +60,7 @@ const messages = {
   sv,
   tr,
   uk,
+  vi,
 };
 const localLan = localStorage.getItem(configConst.LANGUAGE);
 const i18n = createI18n({

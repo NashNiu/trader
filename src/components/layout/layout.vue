@@ -62,6 +62,7 @@ const showShadow = ref(false);
 const createWallet = async () => {
   const res = await createUserWallet();
   if (res?.data?.status === 0) {
+    userStore.setUserInfo({});
     await checkToken();
   }
 };

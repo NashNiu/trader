@@ -66,7 +66,7 @@
       </el-popover>
     </div>
     <div class="sec2">
-      <div class="title">Your {{ selectedCoin }} deposit address</div>
+      <div class="title">{{ t('header.address', { coin: selectedCoin }) }}</div>
       <div class="addressBox">
         <span class="address">
           {{ currentAddress }}
@@ -78,7 +78,7 @@
       <div v-if="currentAddress" class="qrBox">
         <img class="qrImg" :src="qrcode" alt="qr code" />
         <span>
-          Only send {{ selectedCoin }} to this address, 1 confirmation required.
+          {{ t('header.sendAddress', { coin: selectedCoin }) }}
         </span>
       </div>
     </div>
@@ -145,7 +145,7 @@ const copyAddress = () => {
     copy?.();
     ElMessage.success(t?.('common.copySuccess'));
   } else {
-    ElMessage.error('Your browser does not support Clipboard API');
+    ElMessage.error(t?.('header.notSupport'));
   }
 };
 onMounted(() => {

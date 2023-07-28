@@ -5,6 +5,8 @@ import { useQRCode } from '@vueuse/integrations/useQRCode';
 import { userApi } from '@/api';
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -29,39 +31,39 @@ const verify = async () => {
   submitting.value = false;
   if (res.data.status === 0) {
     if (res.data.data) {
-      ElMessage.success('绑定成功');
+      ElMessage.success(t('auth.bindSuccess'));
       userStore.setUserInfo({
         ...userStore.userInfo,
         isbindotp: 1,
       });
       await router.push('/t/UserCenter');
     } else {
-      ElMessage.error('绑定失败');
+      ElMessage.error(t('auth.bindFail'));
     }
   }
 };
 </script>
 <template>
   <div class="authBindBox">
-    <div class="title">双重身份验证器</div>
+    <div class="title">{{ t('auth.twoFactor') }}</div>
     <div class="aLink">
       <span class="symbol">①</span>
-      通过app扫描二维码以获取验证码
+      {{ t('auth.getCode') }}
     </div>
     <div v-loading="!authUrl" class="qrcodeBox">
-      <span class="s1">二维码</span>
+      <span class="s1">{{ t('auth.qrcode') }}</span>
       <img class="qrImg" :src="qrcode" alt="qr code" />
-      <span class="s1">设置密钥</span>
+      <span class="s1">{{ t('auth.setPass') }}</span>
       <p class="p1">{{ authCode }}</p>
     </div>
     <div class="aLink">
       <span class="symbol">②</span>
-      输入app所生成的双重认证验证码
+      {{ t('auth.input') }}
     </div>
     <div class="info">
-      密钥仅显示一次，若您有多台设备，请将其新增到您的所有设备中。
+      {{ t('auth.secretKey') }}
     </div>
-    <div class="info">谷歌双重认证验证码</div>
+    <div class="info">{{ t('auth.googleTwoFactor') }}</div>
     <div class="formBox">
       <el-input v-model="inputCode" class="input" size="large" />
       <el-button
@@ -72,7 +74,7 @@ const verify = async () => {
         size="large"
         @click="verify"
       >
-        启用
+        {{ t('auth.enable') }}
       </el-button>
     </div>
   </div>

@@ -6,7 +6,7 @@
     @close="close"
   >
     <template #header>
-      <span class="title">Change Login Password</span>
+      <span class="title">{{ t('uc.changeLoginPass') }}</span>
     </template>
     <el-form
       ref="formRef"
@@ -15,7 +15,9 @@
       :rules="formRules"
     >
       <el-form-item class="formItem">
-        <template #label><span class="label">E-mail address</span></template>
+        <template #label>
+          <span class="label">{{ t('uc.email') }}</span>
+        </template>
         <el-space alignment="flex-end">
           <el-input :value="userInfo?.email" disabled class="codeInput input" />
           <el-button
@@ -29,38 +31,42 @@
         </el-space>
       </el-form-item>
       <el-form-item class="formItem" prop="code">
-        <template #label><span class="label">Verification Code</span></template>
+        <template #label>
+          <span class="label">{{ t('uc.verifyCode') }}</span>
+        </template>
         <el-input
           v-model="formData.code"
           class="input"
-          placeholder="Please enter verification code"
+          :placeholder="t('uc.enterVerifyCode')"
         />
       </el-form-item>
       <el-form-item class="formItem" prop="password">
-        <template #label><span class="label">New Password</span></template>
+        <template #label>
+          <span class="label">{{ t('uc.newPass') }}</span>
+        </template>
         <el-input
           v-model="formData.password"
           type="password"
           show-password
           class="input"
-          placeholder="Password including case symbols greater than 8 digits"
+          :placeholder="t('uc.passReq')"
         />
       </el-form-item>
       <el-form-item class="formItem" prop="repeatPass">
         <template #label>
-          <span class="label">Confirm New Password</span>
+          <span class="label">{{ t('uc.confirmPass') }}</span>
         </template>
         <el-input
           v-model="formData.repeatPass"
           type="password"
           show-password
           class="input"
-          placeholder="Password including case symbols greater than 8 digits"
+          :placeholder="t('uc.passReq')"
         />
       </el-form-item>
     </el-form>
     <el-button class="submit" :loading="submitting" @click="submit">
-      Submit
+      {{ t('uc.submit') }}
     </el-button>
   </el-dialog>
 </template>
@@ -90,30 +96,30 @@ const formData = reactive({
 });
 const validatePass = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('Please input the password'));
+    callback(new Error(t('uc.passErr1')));
   } else if (!configConst.passCheckRegex.test(value)) {
-    callback(new Error('包含大小写、数字、至少9位'));
+    callback(new Error(t('uc.passErr2')));
   } else {
     callback();
   }
 };
 const validatePass2 = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('Please input the password again'));
+    callback(new Error(t('uc.passAgain')));
   } else if (value !== formData.password) {
-    callback(new Error("Two inputs don't match!"));
+    callback(new Error(t('uc.notMatch')));
   } else {
     callback();
   }
 };
 const formRules = reactive({
-  code: [{ required: true, message: 'Please input code', trigger: 'blur' }],
+  code: [{ required: true, message: t('uc.enterVerifyCode'), trigger: 'blur' }],
   password: [
     { validator: validatePass, trigger: 'blur' },
-    { required: true, message: 'Please input password', trigger: 'blur' },
+    { required: true, message: t('uc.passErr1'), trigger: 'blur' },
   ],
   repeatPass: [
-    { required: true, message: 'Please input password', trigger: 'blur' },
+    { required: true, message: t('uc.passErr1'), trigger: 'blur' },
     { validator: validatePass2, trigger: 'blur' },
   ],
 });
@@ -125,7 +131,7 @@ const startCount = () => {
     setTimeout(startCount, 1000);
   } else {
     sendCodeDisabled.value = false;
-    sendCodeText.value = 'Send Code';
+    sendCodeText.value = t('uc.sendCode');
     countDown.value = 30;
   }
 };
@@ -153,7 +159,7 @@ const submit = () => {
         })
         .then((res) => {
           if (res.data.status === 0) {
-            ElMessage.success('密码修改成功,请重新登录');
+            ElMessage.success(t('uc.passChangeSuccess'));
             close();
             tools.clearAndLogout();
           }
@@ -161,9 +167,7 @@ const submit = () => {
         .finally(() => {
           submitting.value = false;
         });
-      console.log('submit!');
     } else {
-      console.log('error submit!');
       return false;
     }
   });

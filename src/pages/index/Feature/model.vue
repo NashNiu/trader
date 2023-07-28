@@ -4,14 +4,14 @@
       <el-row>
         <el-col :md="12">
           <div class="model_h4">
-            本地存款。
+            {{ t('feature.local') }}
             <br />
-            数字币存款。
+            {{ t('feature.digital') }}
             <br />
-            极速到账。
+            {{ t('feature.fast') }}
           </div>
           <p>
-            可以24种不同币种存款，且可根据投资需要进行货币兑换，以及法币和数字币兑换。
+            {{ t('feature.manyCurrency') }}
           </p>
         </el-col>
         <el-col :md="12" class="model_img">
@@ -20,7 +20,7 @@
       </el-row>
     </div>
     <div class="model_2">
-      <h2>投资品种覆盖面广泛、灵活</h2>
+      <h2>{{ t('feature.WideCoverage') }}</h2>
       <el-row>
         <el-col :md="12">
           <div class="model_tab">
@@ -28,19 +28,19 @@
               :class="data.tabActive === '1' ? 'model_tab-active' : ''"
               @click="tabClick('1')"
             >
-              特点1：交易成本低
+              {{ t('feature.feature1') }}
             </div>
             <div
               :class="data.tabActive === '2' ? 'model_tab-active' : ''"
               @click="tabClick('2')"
             >
-              特点2 ：品种更新快
+              {{ t('feature.feature2') }}
             </div>
             <div
               :class="data.tabActive === '3' ? 'model_tab-active' : ''"
               @click="tabClick('3')"
             >
-              特点3：品种覆盖面广
+              {{ t('feature.feature3') }}
             </div>
           </div>
         </el-col>
@@ -53,20 +53,18 @@
       <el-row>
         <el-col :md="12" class="model_3_col">
           <div class="model_3_text">
-            <h4>品种</h4>
-            <p>合约和投资策略覆盖全球30多个市场上百种交易品种。</p>
+            <h4>{{ t('feature.currency') }}</h4>
+            <p>{{ t('feature.contract') }}</p>
           </div>
           <div class="model_3_text">
-            <h4>投资</h4>
+            <h4>{{ t('feature.invest') }}</h4>
             <p>
-              合约可供您快速查看和跟踪交易品种。在委托单输入面板点击买价或卖价加载交易品种，或使用交易品种窗口向自选列表添加单或订单。
+              {{ t('feature.investDesc') }}
             </p>
           </div>
           <div class="model_3_text">
-            <h4>下单</h4>
-            <p>
-              如果您持有的是复杂多边策略并且想借公司行动之机获取股息，合约可供您在到期日前手动行权期权。您也可以在星期五到期时行使根据结算所规则允许失效的期权。
-            </p>
+            <h4>{{ t('feature.trade') }}</h4>
+            <p>{{ t('feature.tradeDesc') }}</p>
           </div>
         </el-col>
         <el-col :md="12" class="model_img">
@@ -81,9 +79,9 @@
         </el-col>
         <el-col :md="12" class="model_3_col">
           <div class="model_3_text">
-            <h4>不确定从哪里开始？试试投资策略向导</h4>
+            <h4>{{ t('feature.notSure') }}</h4>
             <p>
-              只需回答几个关于您对未来交易品种走势预期的问题，投资策略向导便会给出多个标准策略，您可以从激进程度、盈利概率和最大收益等方面进行筛选。
+              {{ t('feature.onlyAnswer') }}
             </p>
           </div>
         </el-col>
@@ -91,15 +89,14 @@
     </div>
     <div class="model_4">
       <div class="model_3_text">
-        <h4>ETF和指数</h4>
+        <h4>{{ t('feature.ETF') }}</h4>
         <p>
-          在推动市场走向的新闻发生时、在当地市场的交易时段或您方便的时候，交易ETF和指数
-          并寻找到更多机会。
+          {{ t('feature.ETFDesc') }}
         </p>
       </div>
       <div class="model_3_text">
-        <h4>灵活的美国指数交易是如何运作的</h4>
-        <p>下列可供交易的指数代码，提供了参与广泛板块的机会:</p>
+        <h4>{{ t('feature.index') }}</h4>
+        <p>{{ t('feature.sample') }}</p>
       </div>
       <div class="model_4_table">
         <el-row>
@@ -135,6 +132,9 @@
 </template>
 <script setup>
 import { reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const data = reactive({
   tabActive: '1',
 });

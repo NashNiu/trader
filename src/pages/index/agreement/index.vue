@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="agreement">
-      <div class="title">隐私条款与政策</div>
+      <div class="title">{{ t('agreement.title') }}</div>
       <div class="content">
         <p>
-          隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策
+          {{ t('agreement.title') }}
         </p>
         <p>
-          隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策隐私条款与政策
+          {{ t('agreement.title') }}
         </p>
       </div>
     </div>
@@ -16,6 +16,8 @@
 </template>
 <script setup>
 import Model_4 from '../model_4.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .agreement {

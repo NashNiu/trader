@@ -1,7 +1,7 @@
 <template>
   <div class="transferContainer">
     <div class="currencyBox">
-      <span class="s1">Currency</span>
+      <span class="s1">{{ t('header.currency') }}</span>
       <el-popover
         :show-arrow="false"
         trigger="hover"
@@ -45,7 +45,7 @@
     </div>
     <div class="amountBox">
       <div class="labelBox">
-        <span class="label">Amount</span>
+        <span class="label">{{ t('header.amount') }}</span>
         <span class="price">{{ selectedCoin?.available }}</span>
       </div>
       <div class="amountInputBox">
@@ -54,31 +54,28 @@
           class="inputAmount"
           type="number"
           step="0.000000001"
-          placeholder="Transfer Amount"
+          :placeholder="t('header.enterTransferAmount')"
         >
           <template #suffix>
             <CoinIco :size="24" :coin="selectedCoin.currency" />
           </template>
           <template #append>
             <div class="max" @click="withdrawAmount = selectedCoin?.available">
-              Max
+              {{ t('header.max') }}
             </div>
           </template>
         </el-input>
       </div>
       <div class="rateBox">
         <p class="p1">
-          Current rate
+          {{ t('header.currentRate') }}
           <span v-if="orderData.price" class="bold">
             {{ selectedCoin.currency }}
             {{ selectedCoin.currency === 'USDT' ? '' : '/USDT' }}=
             {{ orderData.price }}
           </span>
         </p>
-        <p class="p1">
-          Trading accounts will be credited with
-          <span class="bold">USDT</span>
-        </p>
+        <p class="p1" v-html="t('header.receiveUSDT')"></p>
       </div>
       <el-button
         type="primary"
@@ -87,7 +84,7 @@
         class="submitBtn"
         @click="submit"
       >
-        Transfer to trading account
+        {{ t('header.transferToAccount') }}
       </el-button>
     </div>
   </div>

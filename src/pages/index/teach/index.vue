@@ -2,16 +2,16 @@
   <div>
     <div class="teach">
       <div class="teach_video">
-        <h1>教学</h1>
+        <h1>{{ t('teach.teach') }}</h1>
         <div class="teach_video_list">
           <div>
             <div class="video_img">
               <img src="../../../assets/img/newIndex/video_b.png" />
               <img src="../../../assets/img/newIndex/play.png" />
             </div>
-            <p>了解如何一步步使用MCLP全球CFD分析器工具筛选全球股票。</p>
+            <p>{{ t('teach.learn') }}</p>
             <el-button type="primary" color="#2963a4" size="large" round>
-              观看视频
+              {{ t('teach.video') }}
             </el-button>
           </div>
           <div>
@@ -19,9 +19,9 @@
               <img src="../../../assets/img/newIndex/video_b2.png" />
               <img src="../../../assets/img/newIndex/play.png" />
             </div>
-            <p>了解如何一步步使用MCLP全球CFD分析器工具筛选全球股票。</p>
+            <p>{{ t('teach.learn') }}</p>
             <el-button type="primary" color="#2963a4" size="large" round>
-              观看视频
+              {{ t('teach.video') }}
             </el-button>
           </div>
         </div>
@@ -29,14 +29,12 @@
       <div class="introduce">
         <div class="introduce_1">
           <div class="introduce_text">
-            <h4>聪明的投资者从不停止学习</h4>
+            <h4>{{ t('teach.smart') }}</h4>
             <p>
-              超过50门免费的在线课程，主题涵盖交易、股票、期权、期货、加密货币、技术分析
-              <br />
-              等，助您提升市场知识、学习投资。
+              {{ t('teach.course') }}
             </p>
             <div class="urlButton">
-              <span>访问交易者大学</span>
+              <span>{{ t('teach.visit') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
           </div>
@@ -49,22 +47,22 @@
             <img src="../../../assets/img/newIndex/introduce_img_2.png" />
           </div>
           <div class="introduce_text">
-            <h4>每日市场洞察</h4>
-            <p>访问交易员睿智，阅读来自70多位行业专业人士的每日市场评论。</p>
+            <h4>{{ t('teach.daily') }}</h4>
+            <p>{{ t('teach.reviews') }}</p>
             <div class="urlButton">
-              <span>访问交易员睿智</span>
+              <span>{{ t('teach.trader') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
           </div>
         </div>
         <div class="introduce_3">
           <div class="introduce_text">
-            <h4>听、学、问</h4>
+            <h4>{{ t('teach.listen') }}</h4>
             <p>
-              免费的实时网研会和丰富的录制网研会资源库助您掌握最新市场动向。
+              {{ t('teach.free') }}
             </p>
             <div class="urlButton">
-              <span>访问网研会</span>
+              <span>{{ t('teach.research') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
           </div>
@@ -77,12 +75,12 @@
             <img src="../../../assets/img/newIndex/introduce_img_4.png" />
           </div>
           <div class="introduce_text">
-            <h4>值得一听的讨论</h4>
+            <h4>{{ t('teach.discuss') }}</h4>
             <p>
-              订阅MC LiquidityProvider播客收听围绕全球金融市场的访谈和讨论。
+              {{ t('teach.subscribe') }}
             </p>
             <div class="urlButton">
-              <span>访问博客</span>
+              <span>{{ t('teach.blog') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
           </div>
@@ -93,7 +91,9 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n';
 import Model_4 from '../model_4.vue';
+const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .teach {

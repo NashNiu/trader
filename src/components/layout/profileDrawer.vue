@@ -190,6 +190,10 @@ const languageArr = [
     value: 'uk',
     label: 'Ukraine',
   },
+  {
+    value: 'vi',
+    label: 'Tiếng Việt',
+  },
 ];
 const toggleLanguage = () => {
   showLanguage.value = !showLanguage.value;

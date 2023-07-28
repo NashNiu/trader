@@ -381,6 +381,10 @@ const data = reactive({
       name: 'Ukraine',
       id: 'uk',
     },
+    {
+      name: 'Tiếng Việt',
+      id: 'vi',
+    },
   ],
 });
 const centerDialogVisible = ref(false);

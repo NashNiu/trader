@@ -2,16 +2,16 @@
   <div>
     <div class="model">
       <div class="model_title">
-        <h4>产品</h4>
-        <p>通过MC LiquidityProvider交易以下产品</p>
+        <h4>{{ t('index.product') }}</h4>
+        <p>{{ t('product.followingItems') }}</p>
       </div>
       <el-row>
         <el-col :md="16">
           <div class="model_flex">
             <img src="../../../assets/img/newIndex/P_icon_1.png" />
             <div class="model_flex_text">
-              <h4>指数属</h4>
-              <p>只需几分钟便可完成开户并开始交易</p>
+              <h4>{{ t('product.index') }}</h4>
+              <p>{{ t('product.fastTrade') }}</p>
             </div>
           </div>
         </el-col>
@@ -19,8 +19,8 @@
           <div class="model_flex">
             <img src="../../../assets/img/newIndex/P_icon_2.png" />
             <div class="model_flex_text">
-              <h4>贵金</h4>
-              <p>只需几分钟便可完成开户并开始交易</p>
+              <h4>{{ t('product.preciousMetal') }}</h4>
+              <p>{{ t('product.fastTrade') }}</p>
             </div>
           </div>
         </el-col>
@@ -28,8 +28,8 @@
           <div class="model_flex">
             <img src="../../../assets/img/newIndex/P_icon_3.png" />
             <div class="model_flex_text">
-              <h4>加密货币</h4>
-              <p>只需几分钟便可完成开户并开始交易</p>
+              <h4>{{ t('product.cryptocurrency') }}</h4>
+              <p>{{ t('product.fastTrade') }}</p>
             </div>
           </div>
         </el-col>
@@ -37,8 +37,8 @@
           <div class="model_flex">
             <img src="../../../assets/img/newIndex/P_icon_4.png" />
             <div class="model_flex_text">
-              <h4>外汇</h4>
-              <p>只需几分钟便可完成开户并开始交易</p>
+              <h4>{{ t('product.forex') }}</h4>
+              <p>{{ t('product.fastTrade') }}</p>
             </div>
           </div>
         </el-col>
@@ -46,18 +46,18 @@
           <div class="model_flex">
             <img src="../../../assets/img/newIndex/P_icon_5.png" />
             <div class="model_flex_text">
-              <h4>原油</h4>
-              <p>只需几分钟便可完成开户并开始交易</p>
+              <h4>{{ t('product.oil') }}</h4>
+              <p>{{ t('product.fastTrade') }}</p>
             </div>
           </div>
         </el-col>
       </el-row>
       <div class="model_problem">
-        <h4>还想交易其它产品？</h4>
-        <p>在MCLP发现更多机会</p>
+        <h4>{{ t('product.otherProduct') }}？</h4>
+        <p>{{ t('product.findMore') }}</p>
         <div class="model_problem_tab">
-          <div class="model_problem_tab-active">产品</div>
-          <div>交易工具</div>
+          <div class="model_problem_tab-active">{{ t('index.product') }}</div>
+          <div>{{ t('product.tools') }}</div>
         </div>
       </div>
     </div>
@@ -66,6 +66,8 @@
 </template>
 <script setup>
 import Model_4 from '../model_4.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .model {

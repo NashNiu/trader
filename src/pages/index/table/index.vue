@@ -22,91 +22,89 @@
           <div class="banner_list">
             <img src="../../../assets/img/newIndex/T_banner.png" />
             <div class="banner_title">
-              <p>FORMS AND DISCLOSURES</p>
-              <h4>Client Agreements</h4>
+              <p>{{ t('table.forms') }}</p>
+              <h4>{{ t('table.client') }}</h4>
             </div>
           </div>
         </el-col>
       </el-row>
       <p class="p_style">
-        The following forms are samples of the documents presented in our
-        Account Registration System and may not be submitted to Interactive
-        Brokers.
+        {{ t('table.following') }}
       </p>
       <div class="table_down">
-        <h4>IB LLC</h4>
+        <h4>{{ t('table.IB') }}</h4>
         <div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
           <div class="down_list">
             <div>
-              AMEX Card Supplement to Interactive Brokers LLC Client Agreement
+              {{ t('table.AMEX') }}
             </div>
-            <div>Download</div>
+            <div>{{ t('table.download') }}</div>
           </div>
         </div>
       </div>
@@ -117,31 +115,33 @@
 <script setup>
 import { reactive } from 'vue';
 import Model_4 from '../model_4.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const data = reactive({
   bannerTab: '1',
   tabList: [
     {
-      text: 'Client Agreements',
+      text: t('table.client'),
       id: '1',
     },
     {
-      text: 'Model Marketplace Agreements',
+      text: t('table.model'),
       id: '2',
     },
     {
-      text: 'Disclosures',
+      text: t('table.disclosures'),
       id: '3',
     },
     {
-      text: 'Tax Forms',
+      text: t('table.tax'),
       id: '4',
     },
     {
-      text: 'Client Service Forms',
+      text: t('table.serviceForms'),
       id: '5',
     },
     {
-      text: 'Market Data Agreements',
+      text: t('table.market'),
       id: '6',
     },
   ],

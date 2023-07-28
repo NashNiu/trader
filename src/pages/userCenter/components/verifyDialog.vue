@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="visible"
-    title="View"
+    :title="t('uc.view')"
     class="verifyDialogContainer"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
@@ -13,7 +13,7 @@
     <template #header>
       <div class="verifyDialogHeader">
         <div>
-          <span>View</span>
+          <span>{{ t('uc.view') }}</span>
         </div>
         <img :src="closeImg" class="close" alt="" @click="hide" />
       </div>
@@ -32,6 +32,8 @@
 import { ref } from 'vue';
 import Verification from '@/components/walletDialog/verification.vue';
 import closeImg from '@/assets/img/header/close.png';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const emit = defineEmits(['complete']);
 const visible = ref(false);
 const show = () => {

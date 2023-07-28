@@ -23,7 +23,7 @@
         >
           <template #reference>
             <div class="assetBox">
-              <span>Search Currency</span>
+              <span>{{ t('common.search') }}</span>
               <img :src="DownArrowImg" alt="" />
             </div>
           </template>
@@ -32,7 +32,7 @@
               <div class="inputBox">
                 <el-input
                   v-model="searchWalletText"
-                  placeholder="查询"
+                  :placeholder="t('common.search')"
                 ></el-input>
               </div>
 
@@ -51,7 +51,9 @@
           </template>
         </el-popover>
 
-        <div class="btnBox" @click="showWalletDialog">wallet</div>
+        <div class="btnBox" @click="showWalletDialog">
+          {{ t('wallet.wallet') }}
+        </div>
       </div>
       <div class="content-nav">
         <div class="itemBox">
@@ -103,7 +105,7 @@
           type="primary"
           @click="showWithdrawDialog"
         >
-          withdraw
+          {{ t('header.withdraw') }}
         </el-button>
       </div>
     </div>

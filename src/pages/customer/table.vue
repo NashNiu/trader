@@ -137,14 +137,14 @@
       ></el-alert>
       <el-form
         ref="form1"
-        label-width="150px"
+        label-width="250px"
         :model="states.form"
         :inline="true"
         :rules="states.rules"
       >
         <el-form-item
           class="formName"
-          label-width="100px"
+          label-width="200px"
           :label="t('customer.cname')"
         >
           <span>{{ states.form.name }}</span>
@@ -1110,6 +1110,12 @@ export default {
 }
 .hide-expand .el-table__expand-column .cell {
   display: none;
+}
+.el-table--border::after,
+.el-table--border::before,
+.el-table--border .el-table__inner-wrapper::after,
+.el-table__inner-wrapper::before {
+  z-index: 1;
 }
 </style>
 <style lang="less" scoped>

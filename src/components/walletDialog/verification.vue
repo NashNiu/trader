@@ -2,16 +2,18 @@
   <div v-loading="loadingData" class="contentBox">
     <div v-if="showStatus" class="statusBox">
       <span class="label s1">
-        Status:
+        {{ t('uc.status') }}:
         <span v-if="auditStatus === 0 || auditStatus === 1" class="s2">
-          Not Submitted
+          {{ t('uc.unverified') }}
         </span>
-        <span v-if="auditStatus === 2" class="s2">To be Verified</span>
-        <span v-if="auditStatus === 3" class="s2">Verified</span>
-        <span v-if="auditStatus === 4" class="s2">Application failed</span>
+        <span v-if="auditStatus === 2" class="s2">
+          {{ t('uc.toBeReviewed') }}
+        </span>
+        <span v-if="auditStatus === 3" class="s2">{{ t('uc.verified') }}</span>
+        <span v-if="auditStatus === 4" class="s2">{{ t('uc.auditFail') }}</span>
       </span>
       <span v-if="auditStatus === 4" class="label">
-        Reason for failure:
+        {{ t('uc.failReason') }}:
         <span class="s2">{{ failReason }}</span>
       </span>
     </div>
@@ -19,18 +21,15 @@
       <el-scrollbar max-height="380px">
         <div class="formContainer">
           <template v-if="showTitle">
-            <div class="title">Verification</div>
+            <div class="title">{{ t('uc.verification') }}</div>
             <div v-if="step === 1" class="desc">
-              In the event your details change, level one verification can be
-              updated at a later date
+              {{ t('uc.v1') }}
             </div>
             <div v-if="step === 2" class="desc">
-              last step before starting.
+              {{ t('uc.v2') }}
               <br />
               <span>
-                Please upload your proof of identity. All documents must be
-                laying on a flat surface with all 4 corners inside the frame.
-                All information should be clear and identifiable.
+                {{ t('uc.v3') }}
               </span>
             </div>
             <div class="divided"></div>
@@ -46,83 +45,89 @@
             <el-row v-if="step === 1" :gutter="20">
               <!--            first name-->
               <el-col :span="12">
-                <el-form-item label="First Name" prop="firstname">
+                <el-form-item :label="t('uc.firstName')" prop="firstname">
                   <el-input
                     v-model="formData.firstname"
-                    placeholder="first name"
+                    :placeholder="t('uc.firstName')"
                   />
                 </el-form-item>
               </el-col>
               <!--            last name-->
               <el-col :span="12">
-                <el-form-item label="Last Name" prop="lastname">
+                <el-form-item :label="t('uc.lastname')" prop="lastname">
                   <el-input
                     v-model="formData.lastname"
-                    placeholder="lastName"
+                    :placeholder="t('uc.lastname')"
                   />
                 </el-form-item>
               </el-col>
               <!--            date of birth-->
               <el-col :span="24">
-                <el-form-item label="Date of Birth" prop="birthday">
+                <el-form-item :label="t('uc.birth')" prop="birthday">
                   <el-date-picker
                     v-model="formData.birthday"
                     type="date"
-                    placeholder="Pick a day"
+                    :placeholder="t('uc.pickDay')"
                     value-format="YYYY-MM-DD"
                   />
                 </el-form-item>
               </el-col>
               <!--            country-->
               <el-col :span="24">
-                <el-form-item label="country" prop="country">
+                <el-form-item :label="t('uc.country')" prop="country">
                   <!--                <el-select style="width: 100%" />-->
-                  <el-input v-model="formData.country" placeholder="country" />
+                  <el-input
+                    v-model="formData.country"
+                    :placeholder="t('uc.country')"
+                  />
                 </el-form-item>
               </el-col>
               <!--            address-->
               <el-col :span="24">
-                <el-form-item label="Residential Address" prop="address">
-                  <el-input v-model="formData.address" placeholder="address" />
+                <el-form-item :label="t('uc.address')" prop="address">
+                  <el-input
+                    v-model="formData.address"
+                    :placeholder="t('uc.address')"
+                  />
                 </el-form-item>
               </el-col>
               <!--            city-->
               <el-col :span="12">
-                <el-form-item label="city" prop="city">
-                  <el-input v-model="formData.city" placeholder="city" />
+                <el-form-item :label="t('uc.city')" prop="city">
+                  <el-input
+                    v-model="formData.city"
+                    :placeholder="t('uc.city')"
+                  />
                 </el-form-item>
               </el-col>
               <!--            Postal Code *-->
               <el-col :span="12">
-                <el-form-item label="Postal Code" prop="postcode">
+                <el-form-item :label="t('uc.postCode')" prop="postcode">
                   <el-input
                     v-model="formData.postcode"
-                    placeholder="Postal Code"
+                    :placeholder="t('uc.postCode')"
                   />
                 </el-form-item>
               </el-col>
               <!--            Occupation (Your job/work) *-->
               <el-col :span="24">
-                <el-form-item label="Occupation (Your job/work)" prop="job">
-                  <el-input v-model="formData.job" placeholder="job" />
+                <el-form-item :label="t('uc.job')" prop="job">
+                  <el-input v-model="formData.job" :placeholder="t('uc.job')" />
                 </el-form-item>
               </el-col>
             </el-row>
             <template v-if="step === 2">
               <el-row>
                 <el-col :span="24">
-                  <el-form-item label="Identity Number" prop="documentnum">
+                  <el-form-item :label="t('uc.id')" prop="documentnum">
                     <el-input
                       v-model="formData.documentnum"
-                      placeholder="documentnum"
+                      :placeholder="t('uc.id')"
                     />
                   </el-form-item>
                 </el-col>
               </el-row>
-              <el-form-item
-                label="Proof of Identity (Front)"
-                prop="documentfront"
-              >
+              <el-form-item :label="t('uc.idFront')" prop="documentfront">
                 <el-upload
                   ref="frontUploadRef"
                   v-model:file-list="frontUploadList"
@@ -139,9 +144,9 @@
                   <div :class="`uploadBox ${ifCanEdit ? '' : 'noSelect'}`">
                     <div v-loading="frontUploading" class="uploadContainer">
                       <div>
-                        <span class="select">select file</span>
+                        <span class="select">{{ t('uc.selectFile') }}</span>
                         <span v-if="!frontUploadList.length" class="noSelected">
-                          No file selected
+                          {{ t('uc.notSelected') }}
                         </span>
                       </div>
                       <img :src="uploadImg" alt="" />
@@ -149,10 +154,7 @@
                   </div>
                 </el-upload>
               </el-form-item>
-              <el-form-item
-                label="Proof of Identity (Back)"
-                prop="documentback"
-              >
+              <el-form-item :label="t('uc.idBack')" prop="documentback">
                 <el-upload
                   ref="backUploadRef"
                   v-model:file-list="backUploadList"
@@ -169,9 +171,9 @@
                   <div :class="`uploadBox ${ifCanEdit ? '' : 'noSelect'}`">
                     <div v-loading="backUploading" class="uploadContainer">
                       <div>
-                        <span class="select">select file</span>
+                        <span class="select">{{ t('uc.selectFile') }}</span>
                         <span v-if="!backUploadList.length" class="noSelected">
-                          No file selected
+                          {{ t('uc.notSelected') }}
                         </span>
                       </div>
                       <img :src="uploadImg" alt="" />
@@ -180,12 +182,12 @@
                 </el-upload>
               </el-form-item>
               <div class="lint">
-                Following file types are accepted: .png, .jpg, .pdf
+                {{ t('uc.acceptType') }}
               </div>
               <div class="imgViewContainer">
                 <div class="title">
-                  <span class="bold">Preview:</span>
-                  <span>Proof of Identity (Front)</span>
+                  <span class="bold">{{ t('uc.preview') }}:</span>
+                  <span>{{ t('uc.idFront') }}</span>
                 </div>
                 <div v-loading="frontUploading" class="imgContainer">
                   <el-image
@@ -199,8 +201,8 @@
               </div>
               <div class="imgViewContainer">
                 <div class="title">
-                  <span class="bold">Preview:</span>
-                  <span>Proof of Identity (Back)</span>
+                  <span class="bold">{{ t('uc.preview') }}:</span>
+                  <span>{{ t('uc.idBack') }}</span>
                 </div>
                 <div v-loading="backUploading" class="imgContainer">
                   <el-image
@@ -219,9 +221,11 @@
       <div class="line"></div>
       <div class="footer">
         <span v-if="step === 1" class="info">
-          All data is safely stored and encrypted.
+          {{ t('uc.encryptData') }}
         </span>
-        <span v-if="step === 2" class="back" @click="step = 1">Back</span>
+        <span v-if="step === 2" class="back" @click="step = 1">
+          {{ t('uc.back') }}
+        </span>
         <el-button
           :loading="submitting"
           type="primary"
@@ -229,7 +233,7 @@
           :disabled="step === 2 && !ifCanEdit"
           @click="submitClick"
         >
-          {{ step === 1 ? 'Next' : 'Submit' }}
+          {{ step === 1 ? t('uc.next') : t('uc.submit') }}
         </el-button>
       </div>
     </div>
@@ -242,6 +246,9 @@ import { configConst } from '@/config/index.js';
 import { genFileId, ElMessage } from 'element-plus';
 import { userApi } from '@/api';
 import { useUserStore } from '@/store';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const props = defineProps({
   // 是否展示标题提示
   showTitle: {
@@ -284,30 +291,20 @@ const initFormData = {
 };
 const formData = ref(initFormData);
 const formRules = reactive({
-  lastname: [
-    { required: true, message: 'Please input lastname', trigger: 'blur' },
-  ],
-  firstname: [
-    { required: true, message: 'Please input firstname', trigger: 'blur' },
-  ],
-  birthday: [
-    { required: true, message: 'Please pick a date', trigger: 'blur' },
-  ],
-  city: [{ required: true, message: 'Please input a city', trigger: 'blur' }],
+  lastname: [{ required: true, message: t('uc.inputLast'), trigger: 'blur' }],
+  firstname: [{ required: true, message: t('uc.inputFirst'), trigger: 'blur' }],
+  birthday: [{ required: true, message: t('uc.pickDay'), trigger: 'blur' }],
+  city: [{ required: true, message: t('uc.inputCity'), trigger: 'blur' }],
   postcode: [
-    { required: true, message: 'Please input a postcode', trigger: 'blur' },
+    { required: true, message: t('uc.inputPostCode'), trigger: 'blur' },
   ],
-  address: [
-    { required: true, message: 'Please input a address', trigger: 'blur' },
-  ],
-  country: [
-    { required: true, message: 'Please input a country', trigger: 'blur' },
-  ],
-  job: [{ required: true, message: 'Please input a job', trigger: 'blur' }],
+  address: [{ required: true, message: t('uc.inputAddress'), trigger: 'blur' }],
+  country: [{ required: true, message: t('uc.inputCountry'), trigger: 'blur' }],
+  job: [{ required: true, message: t('uc.inputJob'), trigger: 'blur' }],
   documentnum: [
     {
       required: true,
-      message: 'Please input  Identity Number',
+      message: t('uc.inputIdNumber'),
       trigger: 'blur',
     },
   ],
@@ -432,13 +429,13 @@ const submitClick = async () => {
           });
           submitting.value = false;
           if (res.data.status === 0) {
-            ElMessage.success('提交成功');
+            ElMessage.success(t('uc.submitSuccess'));
             auditStatus.value = 2;
             await userStore.getAuditData({ forceFresh: true });
             // emit('finish');
           }
         } else {
-          ElMessage.error('请先上传身份证');
+          ElMessage.error(t('uc.pleaseUploadId'));
         }
       }
     });

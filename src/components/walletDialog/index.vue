@@ -13,7 +13,7 @@
       <div class="walletDialogHeader">
         <div>
           <img :src="wallerImg" alt="" />
-          <span>Wallet</span>
+          <span>{{ t('wallet.wallet') }}</span>
         </div>
         <img :src="closeImg" class="close" alt="" @click="hide" />
       </div>
@@ -72,22 +72,24 @@ import Verification from '@/components/walletDialog/verification.vue';
 import Deposit from '@/components/walletDialog/deposit.vue';
 import Withdraw from '@/components/walletDialog/withdraw.vue';
 import Transfer from '@/components/walletDialog/transfer.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const visible = ref(false);
 const tabData = [
   {
-    label: 'Deposit',
+    label: t('header.deposit'),
     value: 1,
   },
   {
-    label: 'Withdraw',
+    label: t('header.withdraw'),
     value: 2,
   },
   {
-    label: 'Transfer account',
+    label: t('header.transfer'),
     value: 3,
   },
   {
-    label: 'Buy Crypto',
+    label: t('header.buyCrypto'),
     value: 4,
   },
 ];

@@ -5,45 +5,45 @@
         <div>
           <img src="../../assets/img/newIndex/icon_1.png" />
         </div>
-        <h4>快速入门</h4>
-        <p>只需一分钟便可完成开户并开始交易</p>
+        <h4>{{ t('index.quickBegin') }}</h4>
+        <p>{{ t('index.oneMin') }}</p>
       </el-col>
       <el-col :sm="12" :md="6" class="row_col_style">
         <div>
           <img src="../../assets/img/newIndex/icon_2.png" />
         </div>
-        <h4>交易全球股票</h4>
-        <p>直达美国、加拿大、欧洲和亚洲90多个股票市场。</p>
+        <h4>{{ t('index.tradeAll') }}</h4>
+        <p>{{ t('index.manyMarket') }}</p>
       </el-col>
       <el-col :sm="12" :md="6" class="row_col_style">
         <div>
           <img src="../../assets/img/newIndex/icon_3.png" />
         </div>
-        <h4>交易全球期权</h4>
-        <p>交易全球数字币，交易全球主流数字货币合约</p>
+        <h4>{{ t('index.tradeGlobal') }}</h4>
+        <p>{{ t('index.tradeDigital') }}</p>
       </el-col>
       <el-col :sm="12" :md="6" class="row_col_style">
         <div>
           <img src="../../assets/img/newIndex/icon_4.png" />
         </div>
-        <h4>实力与安全</h4>
+        <h4>{{ t('index.powerAndSafe') }}</h4>
         <p>
-          MC LiquidityProvider有着超100亿美元
-          <br />
-          的权益资本，深受来自200多个国家和地区
-          <br />
-          的180多万投资者信赖。
+          {{ t('index.tenBillion') }}
         </p>
       </el-col>
     </el-row>
     <div class="model_text">
-      <h4>股票合约玩法</h4>
+      <h4>{{ t('index.stock') }}</h4>
       <p>
-        加入-->我们将每一只股票做成标准合约供您选择投资。不论股价是多少，你都可以通过交易标准合约持有股票。
+        {{ t('index.joinUs') }}
       </p>
     </div>
   </div>
 </template>
+<script setup>
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+</script>
 <style lang="less" scoped>
 .model_3 {
   max-width: 1270px;

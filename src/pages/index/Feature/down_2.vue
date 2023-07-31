@@ -3,7 +3,7 @@
     <el-row class="row_center">
       <el-col :xs="24" :sm="24" :md="12">
         <div class="left">
-          <div class="left_title_top">MC LiquidityProvide</div>
+          <div class="left_title_top">MC LiquidityProvider</div>
           <div class="left_title">{{ t('index.title') }}</div>
           <p>
             {{ t('index.desc1') }}

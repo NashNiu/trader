@@ -78,6 +78,7 @@ export default {
     myAssets: 'Mes Atouts',
     estimatedTotalAssets: 'Actif total estimé',
     tradingAccountAssets: 'Équité du compte de trading',
+    wallet: 'portefeuille',
     walletAssets: 'Actifs du portefeuille',
     rechargeCurrency: 'Recharger',
     copyAddress: "copier l'adresse",
@@ -391,6 +392,7 @@ export default {
     about: 'à propos de nous',
     aboutp:
       'MagicCompass Group (MagicCompassHoldingsLimited) est la société holding ultime de MagicCompassLtd, MagicCompassSecuritiesLimited, MagicCompassFinancialServicesOÜ, MagicCompassInternationalCapitalLtd et MagicCompassInvestmentsLimited. Adresse enregistrée. CistraCorporateServicesCentreWickhamsCayIIRoadTownTortolaVG1110BritishVirgin Islands.',
+    title: 'Fiable! Fiable! Complet!',
     desc: 'Couverture de plus de 90 marchés boursiers mondiaux, y compris NYSE, NASDAQ, LSE et HKSE, ainsi que des options et des crypto-monnaies comme Bitcoin, Bitcoin Cash, Ethereum et Litecoin - le tout directement depuis votre appareil mobile',
     down: "Téléchargez l'application maintenant",
     loginWap: 'Connexion à la version Web',
@@ -407,6 +409,7 @@ export default {
     powerAndSafe: 'Force et sécurité',
     tenBillion:
       "MCLiquidityProvider dispose d'un capital social de plus de 10 milliards de dollars américains et bénéficie de la confiance de plus de 1,8 million d'investisseurs de plus de 200 pays et régions",
+    stock: "Contrat d'actions",
     joinUs:
       "Rejoignez-nous pour transformer chaque action en un contrat standard dans lequel vous pourrez choisir d'investir. Quel que soit le cours de l'action, vous pouvez détenir des actions en négociant des contrats standard",
     desc1:
@@ -418,6 +421,7 @@ export default {
       "Si vous êtes prêt à ouvrir un compte réel, il vous suffit de remplir la demande d'ouverture de compte et de déposer sur le compte pour démarrer des transactions globales",
     feature: 'Fonction',
     product: 'produit',
+    price: 'tarification',
     plat: 'plateforme',
     mobile: 'Mobile',
     mt5: 'Plateforme de négociation MT5',
@@ -447,6 +451,9 @@ export default {
     other: 'Informations sur les autres filiales de Moshi Securities MCLP',
   },
   feature: {
+    title: 'Mettez le monde entre vos mains',
+    desc: 'Couverture de plus de 90 marchés boursiers dans le monde, y compris NYSE, NASDAQ, LSE et HKSE, ainsi que des options et des crypto-monnaies comme Bitcoin, Bitcoin Cash, Ethereum et Litecoin - le tout directement depuis votre appareil mobile',
+    download: "Téléchargez l'application maintenant",
     clickDownload:
       'Cliquez sur le bouton pour commencer à télécharger la plateforme de trading ou scannez le code QR sur votre téléphone mobile pour télécharger',
     local: 'Dépôt local',
@@ -465,6 +472,7 @@ export default {
     invest: 'investir',
     investDesc:
       'Les contrats vous permettent de visualiser et de suivre rapidement les symboles. Cliquez sur Bid ou Ask sur le panneau de saisie des commandes pour charger les symboles, ou utilisez la fenêtre des symboles pour ajouter des commandes ou des commandes à la liste de surveillance',
+    trade: 'commander',
     tradeDesc:
       "Si vous avez une stratégie multi-étapes complexe et que vous souhaitez profiter d'une opération sur titres pour capturer des dividendes, le contrat vous permet d'exercer manuellement des options avant l'expiration. Vous pouvez également exercer des options qui sont autorisées à expirer en vertu des règles de la chambre de compensation à l'expiration du vendredi. ",
     notSure: 'Je ne sais pas si MT5 vous convient',
@@ -473,11 +481,15 @@ export default {
     ETF: '«ETF et indices»',
     ETFDesc:
       "Tradez des ETF et des indices et trouvez plus d'opportunités sur les actualités du marché, pendant les heures d'ouverture du marché local ou à votre convenance",
+    index: 'Comment fonctionne le trading flexible des indices américains',
+    sample:
+      "Les symboles d'indices suivants sont disponibles à la négociation, offrant la possibilité de participer à un large éventail de secteurs:",
     scanDownload:
       "Scannez le code QR pour télécharger l'application MCLiquidityProvider",
   },
   product: {
     followingItems: 'Échangez les produits suivants via MCLiquidityProvider',
+    index: 'indice',
     fastTrade:
       'Cela ne prend que quelques minutes pour ouvrir un compte et commencer à trader',
     preciousMetal: 'métaux précieux',
@@ -489,6 +501,9 @@ export default {
     tools: '«44 outils de création de graphiques analytiques»',
   },
   price: {
+    title: 'MC LiquidityProvider Tarification pour les nouveaux clients',
+    commission: 'commission',
+    stock: 'action',
     free: 'Des webinaires gratuits en temps réel et une riche bibliothèque de ressources de webinaires enregistrés vous aident à vous tenir au courant des dernières tendances du marché',
     p1: 'Change, métaux précieux, indices, énergie, actions et contrats à terme•Écarts compétitifs et 0 commission•Exécution du marché•Capacités de règlement de la valeur nette',
     coin: 'Crypto-monnaie',
@@ -512,6 +527,7 @@ export default {
     tradeNow: 'Traiter maintenant',
     or: 'ou',
     tryDemo: 'Essayez le compte démo',
+    p1: 'Devises étrangères, métaux précieux, indices, énergie, actions et contrats à terme • Spreads compétitifs et 0 commission • Exécution du marché • Capacité de compensation',
     mt5Down: 'MetaTrader5-Télécharger',
     applyTo:
       'Applicable à PC Mac Android, ordinateur portable, Web, version Windows',
@@ -519,10 +535,13 @@ export default {
     extra:
       "Dispose également de fonctionnalités supplémentaires et d'un environnement optimisé pour les Expert Advisors",
     indicator: '38+ indicateurs techniques pré-installés',
-    frame: '«3 types de graphiques et 21 périodes»',
+    tools: '44 outils graphiques analytiques',
+    frame: '3 types de graphiques et 21 périodes',
     orderType:
       "Autres types d'ordres en attente (vendre une limite d'arrêt et acheter une limite d'arrêt)",
     chart: 'Carte détachable',
+    trade:
+      'sélectionnez le trading en un clic et le trading ordinaire dans le graphique',
     trackLoss: 'Stop suiveur',
     interface: 'Interface facile à utiliser',
     customizable: 'Graphiques entièrement personnalisables',
@@ -537,9 +556,12 @@ export default {
     osRequire: 'Configuration requise',
     requirement:
       "Compatible avec le système d'exploitation Microsoft Windows 2008/7/8/10, avec une vitesse de réseau de 56kbps ou plus",
+    attention: 'Veuillez noter',
     a1: 'Les comptes FxProMT5 sont définis sur Netting par défaut, ce qui signifie que les transactions sont agrégées',
     a2: 'et ne peut pas être couvert, bien que nous puissions fournir une version couverte de la plate-forme sur demande',
     tradeCenter: 'Outils du centre commercial MT5',
+    desc1:
+      "Utilisez les indicateurs d'analyse technique exclusifs fournis par Trading Center pour améliorer votre niveau de trading. Identifiez de nouvelles opportunités de trading, améliorez votre timing d'entrées et de sorties et obtenez un aperçu instantané de la direction préférée du centre de trading ainsi que des niveaux cibles et des alternatives basées sur les lignes de support et les axes de prix.",
     autoTrade: 'Trading automatique avec MT5',
     meta: 'Méta-éditeur•Testeur de stratégie•MclpPro',
     userGuide: "Télécharger le guide de l'utilisateur du backtesting",
@@ -560,6 +582,7 @@ export default {
     requirement2:
       "Vous pouvez vous connecter via n'importe quel navigateur Web sur votre appareil (il est recommandé que votre navigateur soit la dernière version)",
     customizeDisplay: 'Affichage graphique personnalisé',
+    clickTrade: 'cliquez pour échanger',
     safeData: 'Transfert de données sécurisé',
     compare:
       'Comparez les caractéristiques du compte et de la plateforme de trading MclpProMT4MT5 et cTrader, consultez le tableau de comparaison',
@@ -583,6 +606,7 @@ export default {
       'Téléchargez gratuitement la plateforme MT5 et commencez un voyage de trading dans MCLP',
   },
   teach: {
+    teach: 'enseignement',
     learn:
       "Apprenez étape par étape comment filtrer les actions mondiales à l'aide de l'outil MCLP Global CFD Analyzer",
     video: 'Voir la vidéo',
@@ -595,6 +619,7 @@ export default {
       "Accédez à Trader's Wisdom et lisez les commentaires quotidiens du marché de plus de 70 professionnels de l'industrie",
     trader: 'Accéder à la sagesse du commerçant',
     listen: '« Écoutez, apprenez, demandez »',
+    free: 'Des webinaires gratuits en temps réel et une riche bibliothèque de ressources de webinaires enregistrés vous aident à vous tenir au courant des dernières tendances du marché',
     research: 'Accéder au webinaire',
     discuss: "Une discussion qui vaut la peine d'être écoutée",
     subscribe:
@@ -620,6 +645,8 @@ export default {
       "Les formulaires suivants sont des exemples de documents fournis dans notre système d'enregistrement de compte et ne doivent pas être soumis à Moshi Brokers",
     IB: 'Moshi Co., Ltd.',
     AMEX: "Supplément d'American Express à l'accord client de Moshi Securities LLC",
+  },
+  uc: {
     uc: 'Centre personnel',
     two_factor: 'Authentification à deux facteurs (2FA)',
     authenticator: 'Authentificateur',
@@ -735,6 +762,8 @@ export default {
     enable: 'activer',
   },
   header: {
+    deposit: 'dépôt',
+    withdraw: 'retirer',
     transfer: 'transfert',
     buyCrypto: 'Acheter de la monnaie numérique',
     max: 'maximum',

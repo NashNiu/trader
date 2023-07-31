@@ -78,6 +78,7 @@ export default {
     myAssets: '「私の資産」',
     estimatedTotalAssets: '「推定総資産」',
     tradingAccountAssets: '「取引口座の資本」',
+    wallet: '財布',
     walletAssets: '「ウォレット資産」',
     rechargeCurrency: '「リチャージ」',
     copyAddress: '「アドレスをコピー」',
@@ -378,6 +379,7 @@ export default {
     about: '私たちに関しては',
     aboutp:
       '「MagicCompass Group (MagicCompassHoldingsLimited) は、MagicCompassLtd、MagicCompassSecuritiesLimited、MagicCompassFinancialServicesOÜ、MagicCompassInternationalCapitalLtd、MagicCompassInvestmentsLimitedの最終持株会社です。登録住所。CistraCorporateServicesCentreWickhamsCayIIRoadTownTortolaVG1110BritishVirginIslands。」',
+    title: '信頼性のある！信頼できる！包括的！',
     desc: '「NYSE、NASDAQ、LSE、HKSEを含む90を超える世界の株式市場に加え、ビットコイン、ビットコインキャッシュ、イーサリアム、ライトコインなどのオプションや暗号通貨をすべてモバイルデバイスから直接カバーします。」',
     down: '「今すぐアプリをダウンロードしてください」',
     loginWap: '「Web版にログイン」',
@@ -393,6 +395,7 @@ export default {
     powerAndSafe: '「強さと安心感」',
     tenBillion:
       '「MCLiquidityProviderの自己資本は100億米ドルを超え、200以上の国と地域からの180万人以上の投資家から信頼されています。」',
+    stock: '株式契約',
     joinUs:
       '「私たちに参加して、各銘柄を投資対象として選択できる標準契約にしましょう。株価がどのようなものであっても、標準契約を取引することで株式を保有できます。」',
     desc1:
@@ -403,6 +406,7 @@ export default {
       '「リアル口座を開設する準備ができたら、口座開設申請書に記入し、口座に入金するだけでグローバル取引を開始できます。」',
     feature: '関数',
     product: '製品',
+    price: '価格設定',
     plat: 'プラットホーム',
     mobile: 'モバイル',
     mt5: '「MT5取引プラットフォーム」',
@@ -452,6 +456,7 @@ export default {
     invest: '投資',
     investDesc:
       '「契約を使用すると、シンボルをすばやく表示して追跡できます。注文入力パネルで「買値」または「売値」をクリックしてシンボルをロードするか、シンボルウィンドウを使用して注文または注文をウォッチリストに追加します。',
+    trade: '注文する',
     tradeDesc:
       '「複雑なマルチレッグ戦略を持っていて、コーポレートアクションを利用して配当を獲得したい場合、契約では満期前にオプションを手動で行使することができます。また、金曜日の満期に清算機関の規則で失効が許可されているオプションを行使することもできます」 」',
     notSure: '「MT5が自分に合っているのかわからない」',
@@ -460,11 +465,15 @@ export default {
     ETF: '「ETFとインデックス」',
     ETFDesc:
       '「現地の市場時間中、またはご都合の良いときに、ETF や指数を取引し、市場を動かすニュースでより多くの機会を見つけてください。」',
+    index: '柔軟な米国指数取引の仕組み',
+    sample:
+      '以下の指数シンボルは取引に利用でき、幅広いセクターに参加する機会を提供します。',
     scanDownload:
       '「QR コードをスキャンして MCLiquidityProvider アプリケーションをダウンロードします」',
   },
   product: {
     followingItems: '「MCLiquidityProvider経由で次の商品を取引します」',
+    index: '索引',
     fastTrade: '「口座開設と取引開始には数分しかかかりません」',
     preciousMetal: '貴金属',
     cryptocurrency: '「暗号通貨」',
@@ -475,6 +484,9 @@ export default {
     tools: '「44の分析チャートツール」',
   },
   price: {
+    title: 'MC LiquidityProvider の新規顧客の価格設定',
+    commission: '手数料',
+    stock: 'ストック',
     free: '「無料のリアルタイム ウェビナーと録画されたウェビナーの豊富なリソース ライブラリは、最新の市場トレンドを把握するのに役立ちます。」',
     p1: '「外国為替、貴金属、指数、エネルギー、株式および先物• 競争力のあるスプレッドと手数料ゼロ• 市場執行• 純額決済能力」',
     coin: '「暗号通貨」',
@@ -498,6 +510,7 @@ export default {
     tradeNow: '「今すぐ取引しましょう」',
     or: 'また',
     tryDemo: '「デモ口座を試してみる」',
+    p1: '外国為替、貴金属、指数、エネルギー、株式および先物 • 競争力のあるスプレッドと手数料ゼロ • 市場約定 • ネッティング能力',
     mt5Down: '「メタトレーダー5-ダウンロード」',
     applyTo: '「PC Mac Android、ラップトップ、Web、Windows バージョンに適用」',
     wide: '「MT5 は業界で最も広く使用されているプラ​​ットフォームの 1 つとなり、MT4 が長年にわたって備えてきた主要な機能をすべて組み込んでいます。」',
@@ -508,6 +521,7 @@ export default {
     orderType:
       '「その他の未決注文タイプ（売りストップリミットと買いストップリミット）」',
     chart: '「取り外し可能なチャート」',
+    trade: 'チャートからワンクリック取引と通常取引を選択',
     trackLoss: 'トレーリングストップ',
     interface: '「使いやすいインターフェース」',
     customizable: '「完全にカスタマイズ可能なチャート」',
@@ -522,9 +536,12 @@ export default {
     osRequire: 'システム要求',
     requirement:
       '「Microsoft Windows 2008/7/8/10 オペレーティング システムと互換性があり、ネットワーク速度は 56kbps 以上です」',
+    attention: 'ご注意ください',
     a1: '「FxProMT5 アカウントはデフォルトで「ネッティング」に設定されており、これは取引が集約されることを意味します。」',
     a2: '「また、ヘッジすることはできませんが、ご要望に応じてプラットフォームの「ヘッジされた」バージョンを提供することは可能です。」',
     tradeCenter: '「MT5トレーディングセンターツール」',
+    desc1:
+      'Trading Center が提供する独自のテクニカル分析インジケーターを使用して、取引レベルを向上させます。新しい取引機会を特定し、エントリーとエグジットのタイミングを改善し、サポートラインと価格軸に基づいた目標レベルと代替案だけでなく、取引センターの好ましい方向性について即座に洞察を得ることができます。',
     autoTrade: '「MT5で自動売買」',
     meta: '「メタエディター・ストラテジーテスター・MclpPro」',
     userGuide: '「バックテストユーザーガイドをダウンロード」',
@@ -546,6 +563,7 @@ export default {
     requirement2:
       '「デバイス上のどの Web ブラウザからでもログインできます (ブラウザは最新バージョンであることをお勧めします)」',
     customizeDisplay: '「カスタムチャート表示」',
+    clickTrade: 'クリックして取引する',
     safeData: '「安全なデータ転送」',
     compare:
       '「MclpProMT4MT5 と cTrader 取引アカウントとプラットフォームの特徴を比較し、比較表を参照してください。」',
@@ -581,6 +599,7 @@ export default {
       "「Trader's Wisdom にアクセスし、70 名以上の業界専門家による毎日の市場解説を読んでください。」",
     trader: '「トレーダーの知恵にアクセス」',
     listen: '「聞いて、学んで、聞いて」',
+    free: '無料のリアルタイム ウェビナーと録画されたウェビナーの豊富なリソース ライブラリにより、最新の市場トレンドを把握できます。',
     research: '「アクセスウェビナー」',
     discuss: '「傾聴に値する議論」',
     subscribe:
@@ -718,6 +737,8 @@ export default {
     enable: '有効',
   },
   header: {
+    deposit: 'デポジット',
+    withdraw: '撤退',
     transfer: '移行',
     buyCrypto: '「デジタル通貨を買う」',
     max: '最大',

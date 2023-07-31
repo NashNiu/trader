@@ -87,7 +87,7 @@ const userStore = useUserStore();
 const userInfo = computed(() => userStore.userInfo);
 const visible = ref(false);
 const sendCodeDisabled = ref(false);
-const sendCodeText = ref('Send Code');
+const sendCodeText = ref(t('uc.sendCode'));
 const submitting = ref(false);
 const formRef = ref();
 const countDown = ref(30);

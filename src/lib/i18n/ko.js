@@ -77,6 +77,7 @@ export default {
     myAssets: '내 자산',
     estimatedTotalAssets: '추정 총 자산',
     tradingAccountAssets: '거래 계정 자산',
+    wallet: '지갑',
     walletAssets: '지갑 자산',
     rechargeCurrency: '충전',
     copyAddress: '주소 복사',
@@ -370,6 +371,7 @@ export default {
     about: '우리에 대해',
     aboutp:
       'MagicCompass Group(MagicCompassHoldingsLimited)은 MagicCompassLtd, MagicCompassSecuritiesLimited, MagicCompassFinancialServicesOÜ, MagicCompassInternationalCapitalLtd 및 MagicCompassInvestmentsLimited의 궁극적인 지주 회사입니다. 등록 주소는 CistraCorporateServicesCentreWickhamsCayIIRoadTownTortolaVG1110BritishVirgin Islands입니다.',
+    title: '믿을 수 있는! 신뢰할 수 있는! 포괄적인!',
     desc: 'NYSE, NASDAQ, LSE 및 HKSE를 포함한 90개 이상의 글로벌 주식 시장과 비트코인, 비트코인 ​​캐시, 이더리움 및 라이트코인과 같은 옵션 및 암호화폐에 대한 커버리지 - 모두 모바일 장치에서 직접 ',
     down: '지금 앱을 다운로드하세요',
     loginWap: '웹 버전으로 로그인',
@@ -384,6 +386,7 @@ export default {
     powerAndSafe: '힘과 보안',
     tenBillion:
       'MCLiquidityProvider는 미화 100억 달러 이상의 자기자본을 보유하고 있으며 200개 이상의 국가 및 지역에서 온 180만 명 이상의 투자자로부터 신뢰를 받고 있습니다.',
+    stock: '주식 계약',
     joinUs:
       '당신이 투자할 종목을 선택할 수 있도록 각 주식을 표준계약으로 만드는 데 동참하세요. 주가가 어떻든 표준계약을 매매하면 주식을 보유할 수 있습니다.',
     desc1:
@@ -394,6 +397,7 @@ export default {
       '실제 계좌를 개설할 준비가 되었다면 계좌 개설 신청서를 작성하고 계좌에 입금하기만 하면 글로벌 거래가 시작됩니다.',
     feature: '기능',
     product: '제품',
+    price: '가격',
     plat: '플랫폼',
     mobile: '이동하는',
     mt5: 'MT5 거래 플랫폼',
@@ -443,6 +447,7 @@ export default {
     invest: '투자하다',
     investDesc:
       '계약을 통해 기호를 빠르게 보고 추적할 수 있습니다. 주문 입력 패널에서 입찰 또는 요청을 클릭하여 기호를 로드하거나 기호 창을 사용하여 주문 또는 주문을 감시 목록에 추가하십시오.',
+    trade: '주문',
     tradeDesc:
       '복잡한 멀티 레그 전략을 가지고 있고 배당금을 얻기 위해 기업 행동을 이용하려는 경우 계약을 통해 만기 전에 수동으로 옵션을 행사할 수 있습니다. 또한 금요일 만기 시 청산소 규칙에 따라 소멸되는 옵션을 행사할 수 있습니다. ',
     notSure: 'MT5가 귀하에게 적합한지 확실하지 않습니다',
@@ -451,11 +456,15 @@ export default {
     ETF: 'ETF와 지수',
     ETFDesc:
       'ETF 및 지수를 거래하고 시장을 움직이는 뉴스, 현지 시장 시간 또는 편리한 시간에 더 많은 기회를 찾으십시오.',
+    index: '유연한 미국 지수 거래 방식',
+    sample:
+      '다음 지수 기호는 거래에 사용할 수 있으며 광범위한 부문에 참여할 수 있는 기회를 제공합니다.',
     scanDownload:
       'MCLiquidityProvider 애플리케이션을 다운로드하려면 QR 코드를 스캔하세요.',
   },
   product: {
     followingItems: 'MCLiquidityProvider를 통해 다음 상품 거래',
+    index: '색인',
     fastTrade: '계좌를 개설하고 거래를 시작하는 데 몇 분밖에 걸리지 않습니다.',
     preciousMetal: '귀금속',
     cryptocurrency: '암호화폐',
@@ -492,6 +501,7 @@ export default {
     tradeNow: '지금 거래하세요',
     or: '또는',
     tryDemo: '데모 계정 사용해보기',
+    p1: '외환, 귀금속, 지수, 에너지, 주식 및 선물 • 경쟁력 있는 스프레드 및 0 수수료 • 시장 실행 • 상계 능력',
     mt5Down: 'MetaTrader5-다운로드',
     applyTo: 'PC Mac Android, Laptop, Web, Windows 버전에 적용 가능',
     wide: 'MT5는 업계에서 가장 널리 사용되는 플랫폼 중 하나가 되었으며, 수년 동안 MT4가 가지고 있던 모든 주요 기능을 통합했습니다.',
@@ -501,6 +511,7 @@ export default {
     frame: '3가지 차트 유형 및 21가지 시간 프레임',
     orderType: '기타 지정가 주문 유형(Sell Stop Limit & Buy Stop Limit)',
     chart: '분리형 차트',
+    trade: '차트에서 원클릭 거래 & 일반 거래 선택',
     trackLoss: '트레일링 스톱',
     interface: '사용하기 쉬운 인터페이스',
     customizable: '완전히 사용자 정의 가능한 차트',
@@ -515,9 +526,12 @@ export default {
     osRequire: '시스템 요구 사항',
     requirement:
       '네트워크 속도가 56kbps 이상인 Microsoft Windows 2008/7/8/10 운영 체제와 호환 가능',
+    attention: '참고',
     a1: 'FxProMT5 계정은 기본적으로 네팅으로 설정되며 이는 거래가 집계됨을 의미합니다.',
     a2: "헤지할 수 없지만 요청 시 플랫폼의 '헤지' 버전을 제공할 수 있습니다.",
     tradeCenter: 'MT5 거래 센터 도구',
+    desc1:
+      'Trading Center에서 제공하는 독점적인 기술 분석 지표를 사용하여 거래 수준을 향상시키십시오. 새로운 거래 기회를 식별하고, 진입 및 퇴장 타이밍을 개선하고, 지지선과 가격 축을 기반으로 한 목표 수준과 대안뿐만 아니라 거래 센터의 선호 방향에 대한 즉각적인 통찰력을 얻으십시오.',
     autoTrade: 'MT5로 자동 거래',
     meta: '메타 편집기•전략 테스터•MclpPro',
     userGuide: '백테스팅 사용자 가이드 다운로드',
@@ -538,6 +552,7 @@ export default {
     requirement2:
       '기기의 모든 웹 브라우저를 통해 로그인할 수 있습니다(브라우저가 최신 버전인 경우 권장)',
     customizeDisplay: '사용자 지정 차트 표시',
+    clickTrade: '거래하려면 클릭',
     safeData: '보안 데이터 전송',
     compare:
       'MclpProMT4MT5와 cTrader 거래 계정 및 플랫폼의 특성을 비교하고, 비교표 보기',
@@ -573,6 +588,7 @@ export default {
       "Trader's Wisdom에 액세스하고 70명이 넘는 업계 전문가의 일일 시장 논평을 읽어보세요.",
     trader: '액세스 트레이더의 지혜',
     listen: '듣고, 배우고, 묻다',
+    free: '무료 실시간 웨비나와 녹화된 웨비나의 풍부한 리소스 라이브러리를 통해 최신 시장 동향을 파악할 수 있습니다.',
     research: '웹 세미나 액세스',
     discuss: '들을 가치가 있는 토론',
     subscribe:
@@ -707,6 +723,8 @@ export default {
     enable: '할 수 있게 하다',
   },
   header: {
+    deposit: '보증금',
+    withdraw: '철회하다',
     transfer: '옮기다',
     buyCrypto: '디지털 통화 구매',
     max: '최고',

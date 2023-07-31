@@ -201,7 +201,6 @@ export default {
     btc100cor: '请输入正确的比特币返点金额',
     otherrebate: '请输入数字货币返点',
     corofcrypt: '请输入正确的数字货币返点金额',
-
     ukoilrebate: '英国原油返点不能大于上级返点',
     chi300: '中华300返点不能大于上级返点',
     chi50: '中华50返点不能大于上级返点',

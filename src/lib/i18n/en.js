@@ -680,7 +680,7 @@ export default {
     passErr2: 'Contains uppercase and lowercase, numbers, at least 9 digits',
     passAgain: 'Please enter the password again',
     notMatch: 'The two passwords do not match',
-    sendCode: 'Send code',
+    sendCode: 'Send the verification code',
     passChangeSuccess: 'Password changed successfully, please log in again',
     status: 'state',
     failReason: 'failure reason',

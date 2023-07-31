@@ -78,6 +78,7 @@ export default {
     myAssets: 'Tài sản của tôi',
     estimatedTotalAssets: 'Tổng tài sản ước tính',
     tradingAccountAssets: 'Vốn chủ sở hữu tài khoản giao dịch',
+    wallet: 'cái ví',
     walletAssets: 'Tài sản ví',
     rechargeCurrency: 'Nạp điện',
     copyAddress: 'sao chép địa chỉ',
@@ -378,6 +379,7 @@ export default {
     about: 'về chúng tôi',
     aboutp:
       'MagicCompass Group (MagicCompassHoldingsLimited) là công ty cổ phần chính của MagicCompassLtd, MagicCompassSecuritiesLimited, MagicCompassFinancialServicesOÜ, MagicCompassInternationalCapitalLtd và MagicCompassInvestmentsLimited. Địa chỉ đã đăng ký. CistraCorporateServicesCentreWickhamsCayIIRoadTownTortolaVG1110BritishVirgin Islands.',
+    title: 'Đáng tin cậy! Đáng tin cậy! Toàn diện!',
     desc: 'Phủ sóng tới hơn 90 thị trường chứng khoán toàn cầu bao gồm NYSE, NASDAQ, LSE và HKSE, cộng với quyền chọn và tiền điện tử như Bitcoin, Bitcoin Cash, Ethereum và Litecoin - tất cả đều trực tiếp từ thiết bị di động của bạn',
     down: 'Tải ứng dụng ngay bây giờ',
     loginWap: 'Đăng nhập phiên bản web',
@@ -393,6 +395,7 @@ export default {
     powerAndSafe: 'Sức mạnh và An ninh',
     tenBillion:
       'MCLiquidityProvider có vốn chủ sở hữu hơn 10 tỷ đô la Mỹ và được hơn 1,8 triệu nhà đầu tư từ hơn 200 quốc gia và khu vực tin tưởng',
+    stock: 'hợp đồng chứng khoán',
     joinUs:
       'Hãy cùng chúng tôi biến mỗi cổ phiếu thành một hợp đồng tiêu chuẩn để bạn lựa chọn đầu tư. Bất kể giá cổ phiếu là bao nhiêu, bạn có thể nắm giữ cổ phiếu bằng cách giao dịch hợp đồng tiêu chuẩn',
     desc1:
@@ -403,6 +406,7 @@ export default {
       'Nếu bạn đã sẵn sàng mở một tài khoản thực, bạn chỉ cần điền vào đơn đăng ký mở tài khoản và nạp tiền vào tài khoản để bắt đầu giao dịch toàn cầu',
     feature: 'Chức năng',
     product: 'sản phẩm',
+    price: 'định giá',
     plat: 'nền tảng',
     mobile: 'Di động',
     mt5: 'Nền tảng giao dịch MT5',
@@ -452,6 +456,7 @@ export default {
     invest: 'đầu tư',
     investDesc:
       'Hợp đồng cho phép bạn nhanh chóng xem và theo dõi các ký hiệu. Nhấp vào Đặt giá thầu hoặc Hỏi trên bảng nhập lệnh để tải các ký hiệu hoặc sử dụng cửa sổ ký hiệu để thêm lệnh hoặc lệnh vào danh sách theo dõi',
+    trade: 'đặt hàng',
     tradeDesc:
       'Nếu bạn có một chiến lược nhiều nhánh phức tạp và muốn tận dụng hành động của công ty để nắm bắt cổ tức, thì hợp đồng cho phép bạn thực hiện các quyền chọn theo cách thủ công trước khi hết hạn. Bạn cũng có thể thực hiện các quyền chọn được phép mất hiệu lực theo quy tắc của cơ quan thanh toán bù trừ khi hết hạn vào thứ Sáu ',
     notSure: 'Không chắc MT5 có phù hợp với bạn không',
@@ -460,10 +465,14 @@ export default {
     ETF: 'ETFs và chỉ số',
     ETFDesc:
       'Giao dịch ETF và Chỉ số và tìm thêm cơ hội trên các tin tức biến động thị trường, trong giờ thị trường địa phương hoặc khi thuận tiện cho bạn',
+    index: 'Giao dịch Chỉ số Hoa Kỳ Linh hoạt Hoạt động như thế nào',
+    sample:
+      'Các ký hiệu chỉ mục sau đây có sẵn để giao dịch, mang đến cơ hội tham gia vào nhiều lĩnh vực:',
     scanDownload: 'Quét mã QR để tải ứng dụng MCLiquidityProvider',
   },
   product: {
     followingItems: 'Giao dịch các sản phẩm sau qua MCLiquidityProvider',
+    index: 'mục lục',
     fastTrade: 'Chỉ mất vài phút để mở tài khoản và bắt đầu giao dịch',
     preciousMetal: 'kim loại quý',
     cryptocurrency: 'Tiền điện tử',
@@ -500,6 +509,7 @@ export default {
     tradeNow: 'Giao dịch ngay bây giờ',
     or: 'hoặc',
     tryDemo: 'Thử tài khoản demo',
+    p1: 'Ngoại hối, Kim loại quý, Chỉ số, Năng lượng, Cổ phiếu & Hợp đồng tương lai • Chênh lệch cạnh tranh và 0 khoản hoa hồng • Khớp lệnh thị trường • Khả năng thanh toán ròng',
     mt5Down: 'MetaTrader5-Tải xuống',
     applyTo: 'Áp dụng cho PC Mac Phiên bản Android, Laptop, Web, Windows',
     wide: 'MT5 đã trở thành một trong những nền tảng được sử dụng rộng rãi nhất trong ngành, tích hợp tất cả các tính năng chính mà MT4 đã có trong nhiều năm qua',
@@ -509,6 +519,8 @@ export default {
     frame: '3 loại biểu đồ & 21 khung thời gian',
     orderType: 'Các loại lệnh chờ khác (Giới hạn dừng bán & Giới hạn dừng mua)',
     chart: 'Biểu đồ có thể tháo rời',
+    trade:
+      'chọn giao dịch bằng một cú nhấp chuột và giao dịch thông thường từ biểu đồ',
     trackLoss: 'Dường cụt',
     interface: 'Giao diện dễ sử dụng',
     customizable: 'Biểu đồ có thể tùy chỉnh hoàn toàn',
@@ -523,9 +535,12 @@ export default {
     osRequire: 'Yêu cầu hệ thống',
     requirement:
       'Tương thích với hệ điều hành Microsoft Windows 2008/7/8/10, với tốc độ mạng từ 56kbps trở lên',
+    attention: 'Xin lưu ý',
     a1: 'Các tài khoản FxProMT5 được đặt thành Netting theo mặc định, có nghĩa là các giao dịch được tổng hợp',
     a2: "và không thể được phòng ngừa rủi ro, mặc dù chúng tôi có thể cung cấp phiên bản 'được phòng ngừa rủi ro' của nền tảng theo yêu cầu",
     tradeCenter: 'Công cụ Trung tâm Giao dịch MT5',
+    desc1:
+      'Sử dụng các chỉ báo phân tích kỹ thuật độc quyền do Trung tâm Giao dịch cung cấp để cải thiện trình độ giao dịch của bạn. Xác định các cơ hội giao dịch mới, cải thiện thời gian vào và thoát lệnh của bạn, đồng thời có được thông tin chi tiết tức thì về hướng ưa thích của trung tâm giao dịch cũng như các mức mục tiêu và các lựa chọn thay thế dựa trên các đường hỗ trợ và trục giá.',
     autoTrade: 'Giao dịch tự động với MT5',
     meta: 'Trình chỉnh sửa meta • Trình kiểm tra chiến lược • MclpPro',
     userGuide: 'Tải xuống Hướng dẫn sử dụng Backtesting',
@@ -546,6 +561,7 @@ export default {
     requirement2:
       'Bạn có thể đăng nhập thông qua bất kỳ trình duyệt web nào trên thiết bị của mình (khuyến cáo rằng trình duyệt của bạn là phiên bản mới nhất)',
     customizeDisplay: 'Hiển thị biểu đồ tùy chỉnh',
+    clickTrade: 'nhấp để giao dịch',
     safeData: 'Truyền dữ liệu an toàn',
     compare:
       'So sánh các đặc điểm của nền tảng & tài khoản giao dịch MclpProMT4MT5 và cTrader, xem bảng so sánh',
@@ -582,6 +598,7 @@ export default {
       'Truy cập Trí tuệ của Nhà giao dịch và đọc bình luận thị trường hàng ngày từ hơn 70 chuyên gia trong ngành',
     trader: 'Tiếp cận trí tuệ của thương nhân',
     listen: 'Nghe, Học, Hỏi',
+    free: 'Hội thảo trên web miễn phí theo thời gian thực và thư viện tài nguyên phong phú gồm các hội thảo trên web được ghi lại giúp bạn theo kịp các xu hướng thị trường mới nhất',
     research: 'Truy cập hội thảo trên web',
     discuss: 'Một cuộc thảo luận đáng nghe',
     subscribe:
@@ -719,6 +736,8 @@ export default {
     enable: 'cho phép',
   },
   header: {
+    deposit: 'tiền gửi',
+    withdraw: 'rút',
     transfer: 'chuyển khoản',
     buyCrypto: 'Mua tiền kỹ thuật số',
     max: 'tối đa',

@@ -18,8 +18,8 @@
           <div class="down_view hidden-xs-only">
             <div class="down_view_button">
               <div class="down_view_button-flex">
-                <img src="../../assets/img/newIndex/Andriod.png" />
-                <img src="../../assets/img/newIndex/IOS.png" />
+                <img :src="androidSrc" alt="Andriod" />
+                <img :src="iosSrc" alt="IOS" />
               </div>
               <div class="down_view_button_2">{{ t('index.loginWap') }}</div>
             </div>
@@ -53,7 +53,13 @@
 <script setup>
 import 'element-plus/theme-chalk/display.css';
 import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import androidImg from '@/assets/img/newIndex/Andriod.png';
+import androidImgEn from '@/assets/img/newIndex/Andriod_en.png';
+import iosImg from '@/assets/img/newIndex/IOS.png';
+import iosImgEn from '@/assets/img/newIndex/IOS_en.png';
+const { t, locale } = useI18n();
+const androidSrc = locale.value === 'cn' ? androidImg : androidImgEn;
+const iosSrc = locale.value === 'cn' ? iosImg : iosImgEn;
 </script>
 <style lang="less" scoped>
 .download {

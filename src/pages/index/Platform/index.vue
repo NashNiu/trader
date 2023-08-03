@@ -174,8 +174,8 @@
             <img src="../../../assets/img/newIndex/P_img_3.png" />
           </el-col>
           <el-col :md="9" :push="3" class="MT5Model_mobile_down">
-            <img src="../../../assets/img/newIndex/Andriod.png" />
-            <img src="../../../assets/img/newIndex/IOS.png" />
+            <img :src="androidSrc" alt="Andriod" />
+            <img :src="iosSrc" alt="IOS" />
           </el-col>
         </el-row>
         <el-row :gutter="40">
@@ -344,7 +344,13 @@
 <script setup>
 import Model_4 from '../model_4.vue';
 import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import androidImg from '@/assets/img/newIndex/Andriod.png';
+import androidImgEn from '@/assets/img/newIndex/Andriod_en.png';
+import iosImg from '@/assets/img/newIndex/IOS.png';
+import iosImgEn from '@/assets/img/newIndex/IOS_en.png';
+const { t, locale } = useI18n();
+const androidSrc = locale.value === 'cn' ? androidImg : androidImgEn;
+const iosSrc = locale.value === 'cn' ? iosImg : iosImgEn;
 </script>
 <style lang="less" scoped>
 .banner {

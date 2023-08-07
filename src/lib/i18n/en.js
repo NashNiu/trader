@@ -408,7 +408,7 @@ export default {
       'MC LiquidityProvider has an equity capital of over US$10 billion and is trusted by more than 1.8 million investors from more than 200 countries and regions',
     stock: 'Stock contract',
     joinUs:
-      'Join us to make each stock into a standard contract for you to choose to invest in. No matter what the share price is, you can hold shares by trading standard contracts',
+      'We have selected industry leaders and representative stocks for global investors, which represent the characteristics and history of the countries where the stocks are located. When users enjoy high-quality underlying assets, they can increase their confidence creatively by holding stock contracts designed for you. By holding contracts, they can do big things with less cost. Concentrate on enjoying the benefits of selected stocks.',
     desc1:
       'Before officially opening an account, you can open a demo trading account in seconds to try MC LiquidityProvider',
     desc2: 'Get $10,000 Demo Funding Instantly',
@@ -425,7 +425,7 @@ export default {
     teach: 'teaching',
     support: 'support',
     download: 'Download the app',
-    reliant: 'A liquidity provider trusted by global investors',
+    reliant: 'Feature',
     service: 'service',
     term: 'terms and conditions',
     disclosure: 'Forms and Disclosures',
@@ -442,7 +442,7 @@ export default {
     ODD: 'Options trading involves risk and is not suitable for all investors. For more information, read Characteristics and Risks of Standardized Options (also known as the "Option Disclosure Document (ODD)"). Alternatively, a copy of the ODD can also be requested by calling +35725023880. Before starting to trade, clients must read the relevant risk disclosure statement on our Warnings and Disclosures page. Margin trading is only suitable for experienced investors with a high risk tolerance. Your losses could exceed your initial investment. For more information on Margin Lending Rates, see the Margin Lending Rates page. Securities futures carry a high degree of risk and are not suitable for all investors. Your losses could exceed your initial investment. Before you begin trading security futures, please read the Security Futures Risk Disclosure Statement. Structured products and fixed income products such as bonds are complex products with high risks and may not be suitable for all investors. Before trading, please read the Risk Warning and Disclosure Statement',
     LTD: 'MC LiquityProvider by MAGIC COMPASS LTD',
     CFTC: 'Is a member of NYSE - FINRA - SIPC, regulated by Cyprus and the Commodity Futures Trading Commission (Commodity Futures Trading Commission)',
-    address: 'Headquarters address',
+    address: 'Headquarters address:Sarlo 9, Aios Athanasios, 4106 Limassol, Cyprus',
     website: 'website',
     other: 'Information about other Magic Compass Securities MCLP affiliates',
   },
@@ -477,7 +477,7 @@ export default {
     ETF: 'ETFs and Indices',
     ETFDesc:
       'Trade ETFs and indices and find more opportunities on market-moving news, during local market hours, or at your convenience',
-    index: 'How Flexible US Indices Trading Works',
+    index: 'Participate in flexible global indices for asset allocation and hedging',
     sample:
       'The following index symbols are available for trading, offering the opportunity to participate in a broad range of sectors:',
     scanDownload:

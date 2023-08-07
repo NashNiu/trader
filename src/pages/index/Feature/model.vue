@@ -88,42 +88,40 @@
       </el-row>
     </div>
     <div class="model_4">
-      <div class="model_3_text">
+      <!-- <div class="model_3_text">
         <h4>{{ t('feature.ETF') }}</h4>
         <p>
           {{ t('feature.ETFDesc') }}
         </p>
-      </div>
+      </div> -->
       <div class="model_3_text">
         <h4>{{ t('feature.index') }}</h4>
         <p>{{ t('feature.sample') }}</p>
       </div>
       <div class="model_4_table">
         <el-row>
-          <el-col :md="6">
-            <p>AGG</p>
-            <p>EFA</p>
-            <p>EWA</p>
-            <p>EWJ</p>
-            <p>FXI</p>
-            <p>GLD</p>
-          </el-col>
-          <el-col :md="6">
-            <p>DIA</p>
-            <p>CHINA300</p>
-            <p>GER30</p>
-            <p>JPN225</p>
+          <el-col :md="4">
+            <p>USA</p>
             <p>US30</p>
-            <p>CHA50</p>
-            <p>HK50</p>
-            <p>US500</p>
             <p>NAS100</p>
+            <p>US500</p>
           </el-col>
-          <el-col :md="6">
-            <p>DOG</p>
+          <el-col :md="4">
+            <p>CHN</p>
+            <p>CHA50</p>
+            <p>CHINA300</p>
           </el-col>
-          <el-col :md="6">
-            <p>EEM</p>
+          <el-col :md="4">
+            <p>HK</p>
+            <p>HK50</p>
+          </el-col>
+          <el-col :md="4">
+            <p>JPN</p>
+            <p>JPN225</p>
+          </el-col>
+          <el-col :md="4">
+            <p>GER</p>
+            <p>GER30</p>
           </el-col>
         </el-row>
       </div>

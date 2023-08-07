@@ -69,3 +69,11 @@ export function uploadFile(data) {
     data,
   });
 }
+// 获取下载协议文件接口
+export function getDownList(params) {
+  return request({
+    url: '/api/users/officialFile/getList',
+    method: 'get',
+    params,
+  });
+}

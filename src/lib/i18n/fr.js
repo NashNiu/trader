@@ -411,7 +411,7 @@ export default {
       "MCLiquidityProvider dispose d'un capital social de plus de 10 milliards de dollars américains et bénéficie de la confiance de plus de 1,8 million d'investisseurs de plus de 200 pays et régions",
     stock: "Contrat d'actions",
     joinUs:
-      "Rejoignez-nous pour transformer chaque action en un contrat standard dans lequel vous pourrez choisir d'investir. Quel que soit le cours de l'action, vous pouvez détenir des actions en négociant des contrats standard",
+      "Nous certains investisseurs mondiaux de l’industrie et représentatif, ces actions représentent et l’historique de la situation, caractérisée par des utilisateurs actifs au rez-de-chaussée de qualité, nous vous proposons par l’intermédiaire de contrats la conception d’actions novatrices pour votre confiance, par l’intermédiaire de contrats avec moins de grandes choses. Concentrez-vous à profiter des gains des actions sélectionnées.",
     desc1:
       "Avant d'ouvrir officiellement un compte, vous pouvez ouvrir un compte de trading simulé en quelques secondes pour essayer MCLquidityProvider",
     desc2: 'Obtenez 10 000 $ de financement de démonstration instantanément',
@@ -430,7 +430,7 @@ export default {
     support: 'soutien',
     download: 'télécharger',
     reliant:
-      '« Un fournisseur de liquidités auquel les investisseurs mondiaux font confiance »',
+      'La fonction',
     service: 'Servir',
     term: 'Termes et conditions',
     disclosure: 'Formulaires et divulgations',
@@ -446,7 +446,7 @@ export default {
     ODD: "Le trading d'options comporte des risques et ne convient pas à tous les investisseurs. Pour plus d'informations, veuillez lire les caractéristiques et les risques des options standard (également appelées Option Disclosure Document (ODD)). Vous pouvez également appeler le +35725023880 pour demander une copie de l'ODD. Commencer Avant de négocier, les clients doivent lire la déclaration de divulgation des risques pertinente sur notre page d'avertissement et de divulgation. Le trading sur marge ne convient qu'aux investisseurs expérimentés ayant une tolérance au risque élevée. Vos pertes peuvent dépasser votre investissement initial. À propos des prêts sur marge taux d'intérêt Pour plus d'informations, consultez la page Taux de prêt sur marge. Les contrats à terme sur titres comportent un risque élevé et ne conviennent pas à tous les investisseurs. Vos pertes peuvent dépasser votre investissement initial. Les produits structurels et les produits à revenu fixe (tels que les obligations) sont des produits complexes présentant des risques élevés et ne conviennent pas à tous les investisseurs. Veuillez lire l'avertissement sur les risques et la déclaration de divulgation avant de commencer à négocier",
     LTD: 'Fournisseur MCLiquity pour MAGIC COMPASSLTD',
     CFTC: 'Un membre de NYSE-FINRA-SIPC, réglementé par Chypre et la Commodity Futures Trading Commission',
-    address: 'Votre adresse de dépôt de pièces',
+    address: 'Votre adresse de dépôt de pièces:Sarlo 9, ayos athanasios, 4106 limassol, Chypre',
     website: 'site Internet',
     other: 'Informations sur les autres filiales de Moshi Securities MCLP',
   },
@@ -481,7 +481,7 @@ export default {
     ETF: '«ETF et indices»',
     ETFDesc:
       "Tradez des ETF et des indices et trouvez plus d'opportunités sur les actualités du marché, pendant les heures d'ouverture du marché local ou à votre convenance",
-    index: 'Comment fonctionne le trading flexible des indices américains',
+    index: 'Participation à des indices mondiaux flexibles pour la répartition des actifs et la couverture',
     sample:
       "Les symboles d'indices suivants sont disponibles à la négociation, offrant la possibilité de participer à un large éventail de secteurs:",
     scanDownload:

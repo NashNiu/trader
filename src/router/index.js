@@ -56,7 +56,7 @@ const router = createRouter({
           component: () => import('@/pages/index/table/index.vue'),
         },
         {
-          path: 'agreement',
+          path: 'agreement/:type',
           name: 'agreement',
           component: () => import('@/pages/index/agreement/index.vue'),
         },

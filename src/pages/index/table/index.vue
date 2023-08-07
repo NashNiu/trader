@@ -34,78 +34,14 @@
       <div class="table_down">
         <h4>{{ t('table.IB') }}</h4>
         <div>
-          <div class="down_list">
+          <div v-for="item in data.downList" :key="item.id" class="down_list" >
             <div>
-              {{ t('table.AMEX') }}
+              <!-- {{ t('table.AMEX') }} -->
+              {{ item.name }}
             </div>
-            <div>{{ t('table.download') }}</div>
+            <div @click="downItem(item)">{{ t('table.download') }}</div>
           </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
-          <div class="down_list">
-            <div>
-              {{ t('table.AMEX') }}
-            </div>
-            <div>{{ t('table.download') }}</div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -113,9 +49,12 @@
   </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive, onMounted } from 'vue';
 import Model_4 from '../model_4.vue';
 import { useI18n } from 'vue-i18n';
+import {
+  getDownList
+} from '@/api/commonapi.js';
 const { t } = useI18n();
 const data = reactive({
   bannerTab: '1',
@@ -145,7 +84,21 @@ const data = reactive({
       id: '6',
     },
   ],
+  downList: []
 });
+const getList = () => {
+  getDownList({}).then(res => {
+    if (res.data.status === 0) {
+      data.downList = res.data.data
+    }
+  })
+}
+const downItem = (item) => {
+  document.location.href = item.url
+}
+onMounted(() => {
+  getList()
+})
 </script>
 <style lang="less" scoped>
 .table_view {

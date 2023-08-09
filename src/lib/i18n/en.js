@@ -328,6 +328,8 @@ export default {
     switchToReal: 'Switch to real account',
   },
   login: {
+    loginTabs: "Email login",
+    regTabs: 'Email register',
     login: 'Log in',
     reg: 'register',
     emailadress: 'email address',
@@ -409,6 +411,8 @@ export default {
     stock: 'Stock contract',
     joinUs:
       'We have selected industry leaders and representative stocks for global investors, which represent the characteristics and history of the countries where the stocks are located. When users enjoy high-quality underlying assets, they can increase their confidence creatively by holding stock contracts designed for you. By holding contracts, they can do big things with less cost. Concentrate on enjoying the benefits of selected stocks.',
+    community: 'Join our community',
+    communityTip: 'Keep up to date with the MCLP team and our traders from around the world. We have everything you need to become a trading expert.',
     desc1:
       'Before officially opening an account, you can open a demo trading account in seconds to try MC LiquidityProvider',
     desc2: 'Get $10,000 Demo Funding Instantly',

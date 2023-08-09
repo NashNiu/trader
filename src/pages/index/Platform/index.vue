@@ -339,12 +339,10 @@
       </div>
     </div>
     <Model_4 />
-    <LoginRegister v-if="centerDialogVisible" ref="Login" @hide="hideDialog" />
   </div>
 </template>
 <script setup>
 import Model_4 from '../model_4.vue';
-import LoginRegister from '../../../components/common/login.vue';
 import {
   ref
 } from 'vue';
@@ -353,18 +351,19 @@ import androidImg from '@/assets/img/newIndex/Andriod.png';
 import androidImgEn from '@/assets/img/newIndex/Andriod_en.png';
 import iosImg from '@/assets/img/newIndex/IOS.png';
 import iosImgEn from '@/assets/img/newIndex/IOS_en.png';
+import { useHeaderStore } from '@/store/index.js';
+const headerStore = useHeaderStore();
 const { t, locale } = useI18n();
 const androidSrc = locale.value === 'cn' ? androidImg : androidImgEn;
 const iosSrc = locale.value === 'cn' ? iosImg : iosImgEn;
-const centerDialogVisible = ref(false);
 const downMt5 = () => {
   window.location.href = 'https://www.metatrader5.com/en/download'
 }
 const goTrade = () => {
-  centerDialogVisible.value = true;
+  headerStore.setCenterDialogVisible(true)
 };
 const hideDialog = () => {
-  centerDialogVisible.value = false;
+  headerStore.setCenterDialogVisible(false)
 };
 </script>
 <style lang="less" scoped>

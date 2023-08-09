@@ -77,3 +77,11 @@ export function getDownList(params) {
     params,
   });
 }
+// 提交问题反馈
+export function saveAndFlush(data) {
+  return request({
+    url: '/api/users/suggest/saveAndFlush',
+    method: 'post',
+    data,
+  });
+}

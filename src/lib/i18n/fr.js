@@ -412,6 +412,8 @@ export default {
     stock: "Contrat d'actions",
     joinUs:
       "Nous certains investisseurs mondiaux de l’industrie et représentatif, ces actions représentent et l’historique de la situation, caractérisée par des utilisateurs actifs au rez-de-chaussée de qualité, nous vous proposons par l’intermédiaire de contrats la conception d’actions novatrices pour votre confiance, par l’intermédiaire de contrats avec moins de grandes choses. Concentrez-vous à profiter des gains des actions sélectionnées.",
+    community: 'Rejoignez notre communauté',
+    communityTip: 'Découvrez les dernières actualités de l’équipe MCLP et de nos traders du monde entier. Nous avons tout ce dont vous avez besoin pour devenir un expert du trading.',
     desc1:
       "Avant d'ouvrir officiellement un compte, vous pouvez ouvrir un compte de trading simulé en quelques secondes pour essayer MCLquidityProvider",
     desc2: 'Obtenez 10 000 $ de financement de démonstration instantanément',

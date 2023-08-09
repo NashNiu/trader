@@ -2,13 +2,14 @@
   <div class="positionBox">
     <div class="login">
       <el-card class="box-card">
+        <img src="../../assets/img/header/close.png"  class="close_style" @click="resetForm(formRef)"/>
         <!-- <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div> -->
         <el-tabs
           v-model="activeName"
           class="demo-tabs"
           @tab-click="handleClick"
         >
-          <el-tab-pane :label="t('login.login')" name="second">
+          <el-tab-pane :label="t('login.loginTabs')" name="second">
             <el-form
               ref="formRef"
               :label-position="labelPosition"
@@ -31,25 +32,18 @@
                   show-password
                 />
               </el-form-item>
+              <div class="forgot">忘记密码</div>
               <el-form-item>
                 <el-button type="primary" @click="onSubmitLogin">
                   {{ t('login.login') }}
                 </el-button>
-                <el-button @click="resetForm(formRef)">
+                <!-- <el-button @click="resetForm(formRef)">
                   {{ t('login.cancal') }}
-                </el-button>
+                </el-button> -->
               </el-form-item>
             </el-form>
-            <div class="line">
-              <p class="title">
-                <span>{{ t('login.orP') }}</span>
-              </p>
-            </div>
-            <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
-              <img :src="googleImg" class="googleImg" alt="" />
-            </div>
           </el-tab-pane>
-          <el-tab-pane :label="t('login.reg')" name="first">
+          <el-tab-pane :label="t('login.regTabs')" name="first">
             <el-form
               :label-position="labelPosition"
               :model="registerFrom"
@@ -93,14 +87,24 @@
                 <el-button type="primary" @click="onSubmitRegister">
                   {{ t('login.reg') }}
                 </el-button>
-                <el-button @click="resetForm(formRef)">
+                <!-- <el-button @click="resetForm(formRef)">
                   {{ t('login.cancal') }}
-                </el-button>
+                </el-button> -->
               </el-form-item>
             </el-form>
           </el-tab-pane>
         </el-tabs>
+        <div class="line">
+          <p class="title">
+            <span>{{ t('login.orP') }}</span>
+          </p>
+        </div>
+        <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
+          <img :src="googleImg" class="googleImg" alt="" />
+          <span>Google</span>
+        </div>
       </el-card>
+      <!-- 忘记密码窗口 -->
     </div>
   </div>
   <div class="positionBoxWindowMaing"></div>
@@ -127,11 +131,11 @@ const emit = defineEmits(['hide']);
 const formRef = ref();
 const activeName = ref('second');
 const handleClick = (tab) => {
-  nextTick(() => {
-    let ele = document.getElementsByClassName('el-tabs__active-bar')[0];
-    let distance = tab.index === 0 ? 0 : tab.index * 200 + 'px';
-    ele.style.transform = 'translateX(' + distance + ')';
-  });
+  // nextTick(() => {
+  //   let ele = document.getElementsByClassName('el-tabs__active-bar')[0];
+  //   let distance = tab.index === 0 ? 0 : tab.index * 200 + 'px';
+  //   ele.style.transform = 'translateX(' + distance + ')';
+  // });
 };
 const tims = ref(30);
 const labelPosition = ref('left');
@@ -348,49 +352,93 @@ onMounted(() => {
   transition: all 300ms ease-in-out;
   opacity: 1;
 }
+:deep(.el-form-item) {
+  width: 443px;
+  margin: 0 auto 30px;
+}
 :deep(.el-card__body) {
   padding-top: 50px;
+  padding-bottom: 74px;
 }
 :deep(.el-input__wrapper) {
+  width: 443px;
   padding: 0;
   background-color: unset;
   box-shadow: unset;
 }
+:deep(.el-form-item.is-error) {
+  .el-input__wrapper {
+    box-shadow: none;
+  }
+}
 .login {
   .box-card {
-    width: 600px;
+    width: 687px;
+    position: relative;
+    .close_style {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      cursor: pointer;
+    }
+    .forgot {
+      margin: -17px auto 28px;
+      width: 443px;
+      font-size: 16px;
+      color: #2963A4;
+      line-height: 19.36px;
+      text-align: right;
+      cursor: pointer;
+    }
     .demo-tabs > .el-tabs__content {
       padding: 32px;
       color: #6b778c;
       font-size: 32px;
       font-weight: 600;
     }
+    :deep(.el-tabs__nav-scroll) {
+      // overflow: visible;
+    }
     :deep(.el-tabs__nav) {
-      width: 560px !important;
+      width: 100% !important;
+      margin: 0 auto;
       .el-tabs__active-bar {
-        width: 50px !important;
-        background-color: #0c3d93;
+        width: 52px !important;
+        height: 4px;
+        background-color: #2963a4;
+        border-radius: 4px;
+        margin-left: 40px;
+        margin-top: 10px;
       }
       .el-tabs__item {
         padding: 0 96px;
-        font-size: 24px;
-        font-weight: 600;
+        font-size: 20px;
+        // font-weight: 600;
         width: 50%;
-        color: #888888;
+        color: #000;
+        padding-bottom: 50px;
+        text-align: center;
       }
     }
   }
   :deep(.el-tabs__header) {
-    margin: 0 0 20px;
+    margin: 0 0 45px;
+  }
+  :deep(.el-tabs__nav-wrap) {
+    &::after {
+      background-color: transparent;
+    }
   }
   :deep(.el-input__inner) {
-    background: #f4f4f4;
-    height: 60px;
+    // width: 443px;
+    height: 40px;
     padding: 0 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
   }
 
   :deep(.el-tabs__item.is-active) {
-    color: #0c3d93 !important;
+    // color: #0c3d93 !important;
   }
   :deep(.el-tabs__item:hover) {
     color: #0c3d93 !important;
@@ -412,12 +460,20 @@ onMounted(() => {
     border-radius: unset;
   }
   .el-button--primary {
-    background: #0c3d93 !important;
+    width: 400px;
+    height: 40px;
+    border-radius: 100px;
+    background: linear-gradient(270deg, #0e305d 0.44%, #239ffe 99.88%);
     color: #fff;
-    margin-right: 10px;
+    margin: 0 auto 30px;
+    // background: #0c3d93 !important;
+    // color: #fff;
+    // margin-right: 10px;
   }
   .line {
     margin-bottom: 38px;
+    width: 443px;
+    margin: 0 auto 20px;
     .title {
       margin-bottom: 10px;
       color: var(--placeholdColor);
@@ -435,11 +491,18 @@ onMounted(() => {
     }
   }
   #g_id_signin {
-    width: 220px;
+    width: 50px;
+    margin: 0 auto;
+    text-align: center;
     .googleImg {
       width: 50px;
       height: 50px;
       cursor: pointer;
+    }
+    span {
+      font-size: 14px;
+      color: #000;
+      font-weight: bold;
     }
   }
 }

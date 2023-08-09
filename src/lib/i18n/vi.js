@@ -398,6 +398,8 @@ export default {
     stock: 'hợp đồng chứng khoán',
     joinUs:
       'Chúng tôi cho các nhà đầu tư toàn cầu lên mức một ngành công nghiệp xuống cổ phiếu đại diện, và những đặc điểm và lịch sử của những đại diện cho SuoZaiGuo cổ phiếu chứng khoán này, với tài sản khi người dùng đang tận hưởng chất lượng cao dưới đáy, thông qua hợp đồng của chúng ta thiết kế cho ngài đang nắm giữ cổ phiếu, tôi có thể sáng tạo cho đức tin của anh tăng gấp, bằng cách nắm giữ hợp đồng, dùng ít chi phí làm lớn chuyện hơn. Tận hưởng lợi nhuận từ những cổ phiếu nổi bật',
+    community: 'Gia nhập cộng đồng của chúng tôi',
+    communityTip: 'Tìm hiểu về tình hình mới nhất của đội MCLP và các thương gia trên khắp thế giới. Chúng tôi có mọi thứ ông cần để trở thành chuyên gia giao dịch.',
     desc1:
       'Trước khi chính thức mở tài khoản, bạn có thể mở tài khoản giao dịch mô phỏng trong vài giây để dùng thử MCLquidityProvider',
     desc2: 'Nhận ngay 10.000 đô la tài trợ demo',

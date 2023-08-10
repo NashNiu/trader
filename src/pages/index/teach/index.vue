@@ -33,7 +33,7 @@
             <p>
               {{ t('teach.course') }}
             </p>
-            <div class="urlButton" @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')">
+            <div class="urlButton" @click="goHref('https://www.youtube.com/@MCLiquidityProvider')">
               <span>{{ t('teach.visit') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
@@ -49,7 +49,7 @@
           <div class="introduce_text">
             <h4>{{ t('teach.daily') }}</h4>
             <p>{{ t('teach.reviews') }}</p>
-            <div class="urlButton" @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')">
+            <div class="urlButton" @click="goHref('https://www.youtube.com/@MCLiquidityProvider')">
               <span>{{ t('teach.trader') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>

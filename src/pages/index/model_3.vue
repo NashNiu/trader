@@ -68,7 +68,7 @@
           />
           <img
             src="../../assets/img/newIndex/s_icon_4.png"
-            @click="goHref('')"
+            @click="goHref('https://www.linkedin.com/company/magic-compass-ltd/')"
           />
           <img
             src="../../assets/img/newIndex/s_icon_5.png"
@@ -76,7 +76,7 @@
           />
           <img
             src="../../assets/img/newIndex/s_icon_6.png"
-            @click="goHref('')"
+            @click="goHref('https://www.instagram.com/magiccompassofficial/')"
           />
         </div>
       </div>

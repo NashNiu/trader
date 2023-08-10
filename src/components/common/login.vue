@@ -213,6 +213,7 @@ const goForgot = () => {
   forgotShow.value = true;
 };
 const backTo = () => {
+  forgotForm.value.resetFields();
   forgotShow.value = false;
 };
 const handleClick = (tab) => {
@@ -276,7 +277,12 @@ const getCode = () => {
 const onSubmitForgot = () => {
   forgotForm.value.validate((valid) => {
     if (valid) {
-      postChpwd(forgotFrom).then((res) => {});
+      postChpwd(forgotFrom).then((res) => {
+        if (res.data.status) {
+          forgotForm.value.resetField();
+          backTo();
+        }
+      });
     }
   });
 };

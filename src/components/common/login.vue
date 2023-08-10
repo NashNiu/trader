@@ -2,63 +2,140 @@
   <div class="positionBox">
     <div class="login">
       <el-card class="box-card">
-        <img src="../../assets/img/header/close.png"  class="close_style" @click="resetForm(formRef)"/>
-        <!-- <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div> -->
-        <el-tabs
-          v-model="activeName"
-          class="demo-tabs"
-          @tab-click="handleClick"
-        >
-          <el-tab-pane :label="t('login.loginTabs')" name="second">
-            <el-form
-              ref="formRef"
-              :label-position="labelPosition"
-              :model="loginFrom"
-              :rules="rules"
-            >
-              <el-form-item prop="email">
-                <el-input
-                  v-model="loginFrom.email"
-                  :placeholder="t('login.emailadress')"
-                  clearable
-                />
-              </el-form-item>
-              <el-form-item prop="password">
-                <el-input
-                  v-model="loginFrom.password"
-                  type="password"
-                  :placeholder="t('login.pPassword')"
-                  clearable
-                  show-password
-                />
-              </el-form-item>
-              <div class="forgot">忘记密码</div>
-              <el-form-item>
-                <el-button type="primary" @click="onSubmitLogin">
-                  {{ t('login.login') }}
-                </el-button>
-                <!-- <el-button @click="resetForm(formRef)">
+        <img
+          v-if="!forgotShow"
+          src="../../assets/img/header/close.png"
+          class="close_style"
+          @click="resetForm(formRef)"
+        />
+        <img
+          v-else
+          src="../../assets/img/newIndex/arrow.png"
+          class="back_style"
+          @click="backTo"
+        />
+        <template v-if="!forgotShow">
+          <!-- <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div> -->
+          <el-tabs
+            v-model="activeName"
+            class="demo-tabs"
+            @tab-click="handleClick"
+          >
+            <el-tab-pane :label="t('login.loginTabs')" name="second">
+              <el-form
+                ref="formRef"
+                :label-position="labelPosition"
+                :model="loginFrom"
+                :rules="rules"
+              >
+                <el-form-item prop="email">
+                  <el-input
+                    v-model="loginFrom.email"
+                    :placeholder="t('login.emailadress')"
+                    clearable
+                  />
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input
+                    v-model="loginFrom.password"
+                    type="password"
+                    :placeholder="t('login.pPassword')"
+                    clearable
+                    show-password
+                  />
+                </el-form-item>
+                <div class="forgot" @click="goForgot">忘记密码</div>
+                <el-form-item>
+                  <el-button type="primary" @click="onSubmitLogin">
+                    {{ t('login.login') }}
+                  </el-button>
+                  <!-- <el-button @click="resetForm(formRef)">
                   {{ t('login.cancal') }}
                 </el-button> -->
-              </el-form-item>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane :label="t('login.regTabs')" name="first">
+                </el-form-item>
+              </el-form>
+            </el-tab-pane>
+            <el-tab-pane :label="t('login.regTabs')" name="first">
+              <el-form
+                :label-position="labelPosition"
+                :model="registerFrom"
+                :rules="rules"
+              >
+                <el-form-item prop="email">
+                  <el-input
+                    v-model="registerFrom.email"
+                    :placeholder="t('login.pEmail')"
+                    clearable
+                  />
+                </el-form-item>
+                <el-form-item prop="region">
+                  <el-input
+                    v-model="registerFrom.region"
+                    :placeholder="t('login.pExa')"
+                    clearable
+                  >
+                    <template #append>
+                      <button
+                        class="sendEMail"
+                        style="cursor: pointer"
+                        :disabled="isSend"
+                        @click="getCode"
+                      >
+                        {{ getCodeInfo }}
+                      </button>
+                    </template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input
+                    v-model="registerFrom.password"
+                    type="password"
+                    :placeholder="t('login.pLeight')"
+                    clearable
+                    show-password
+                  />
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="onSubmitRegister">
+                    {{ t('login.reg') }}
+                  </el-button>
+                  <!-- <el-button @click="resetForm(formRef)">
+                  {{ t('login.cancal') }}
+                </el-button> -->
+                </el-form-item>
+              </el-form>
+            </el-tab-pane>
+          </el-tabs>
+          <div class="line">
+            <p class="title">
+              <span>{{ t('login.orP') }}</span>
+            </p>
+          </div>
+          <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
+            <img :src="googleImg" class="googleImg" alt="" />
+            <span>Google</span>
+          </div>
+        </template>
+        <!-- 忘记密码窗口 -->
+        <template v-else>
+          <div class="forgotView">
+            <div class="F_title">忘记密码</div>
             <el-form
+              ref="forgotForm"
               :label-position="labelPosition"
-              :model="registerFrom"
-              :rules="rules"
+              :model="forgotFrom"
+              :rules="forgotRules"
             >
               <el-form-item prop="email">
                 <el-input
-                  v-model="registerFrom.email"
+                  v-model="forgotFrom.email"
                   :placeholder="t('login.pEmail')"
                   clearable
                 />
               </el-form-item>
               <el-form-item prop="region">
                 <el-input
-                  v-model="registerFrom.region"
+                  v-model="forgotFrom.region"
                   :placeholder="t('login.pExa')"
                   clearable
                 >
@@ -76,35 +153,34 @@
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
-                  v-model="registerFrom.password"
+                  v-model="forgotFrom.password"
                   type="password"
-                  :placeholder="t('login.pLeight')"
+                  :placeholder="t('login.rLeight')"
+                  clearable
+                  show-password
+                />
+              </el-form-item>
+              <el-form-item prop="passwordOK">
+                <el-input
+                  v-model="forgotFrom.passwordOK"
+                  type="password"
+                  :placeholder="t('login.rLeight2')"
                   clearable
                   show-password
                 />
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSubmitRegister">
-                  {{ t('login.reg') }}
+                <el-button type="primary" @click="onSubmitForgot">
+                  {{ t('common.confirm') }}
                 </el-button>
-                <!-- <el-button @click="resetForm(formRef)">
-                  {{ t('login.cancal') }}
-                </el-button> -->
+                <div class="backButton">
+                  {{ t('login.backButtonText') }}<span @click="backTo">{{ t('login.backLogin') }}</span>
+                </div>
               </el-form-item>
             </el-form>
-          </el-tab-pane>
-        </el-tabs>
-        <div class="line">
-          <p class="title">
-            <span>{{ t('login.orP') }}</span>
-          </p>
-        </div>
-        <div id="g_id_signin" class="g_id_signin" @click="googleBtn">
-          <img :src="googleImg" class="googleImg" alt="" />
-          <span>Google</span>
-        </div>
+          </div>
+        </template>
       </el-card>
-      <!-- 忘记密码窗口 -->
     </div>
   </div>
   <div class="positionBoxWindowMaing"></div>
@@ -118,6 +194,7 @@ import {
   registerGoogleInterface,
   loginInterface,
 } from '@/api/commonapi.js';
+import { postChpwd } from '@/api/user';
 import { useI18n } from 'vue-i18n';
 import googleImg from '@/assets/img/sidebar/google_icon.png';
 import { ElMessage } from 'element-plus';
@@ -127,9 +204,17 @@ import { configConst } from '@/config/index.js';
 const { t } = useI18n();
 const router = useRouter();
 const isSend = ref(false);
+const forgotShow = ref(false);
 const emit = defineEmits(['hide']);
 const formRef = ref();
 const activeName = ref('second');
+const forgotForm = ref();
+const goForgot = () => {
+  forgotShow.value = true;
+};
+const backTo = () => {
+  forgotShow.value = false;
+};
 const handleClick = (tab) => {
   // nextTick(() => {
   //   let ele = document.getElementsByClassName('el-tabs__active-bar')[0];
@@ -148,6 +233,12 @@ const registerFrom = reactive({
 const loginFrom = reactive({
   email: '',
   password: '',
+});
+const forgotFrom = reactive({
+  email: '',
+  region: '',
+  password: '',
+  passwordOK: '',
 });
 const timsGO = () => {
   tims.value--;
@@ -181,6 +272,13 @@ const getCode = () => {
       type: 'warning',
     });
   }
+};
+const onSubmitForgot = () => {
+  forgotForm.value.validate((valid) => {
+    if (valid) {
+      postChpwd(forgotFrom).then((res) => {});
+    }
+  });
 };
 
 // 注册表单提交
@@ -242,6 +340,24 @@ const rules = reactive({
   password: [
     { required: true, message: t('login.passwordBlank'), trigger: 'blur' },
   ],
+});
+const validatePass2 = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error(t('login.rLeight2')));
+  } else if (value !== forgotFrom.password) {
+    callback(new Error(t('login.rErrorTip')));
+  } else {
+    callback();
+  }
+};
+// 忘记密码表单验证
+const forgotRules = reactive({
+  email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
+  region: [{ required: true, message: t('login.pExa'), trigger: 'blur' }],
+  password: [
+    { required: true, message: t('login.passwordBlank'), trigger: 'blur' },
+  ],
+  passwordOK: [{ validator: validatePass2, trigger: 'blur' }],
 });
 const GoLogin = (username, password) => {
   loginInterface({ username: username, password: password, type: 3 }).then(
@@ -331,6 +447,15 @@ onMounted(() => {
 </script>
 
 <style scoped lang="less">
+.backButton {
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  span {
+    color: #2963A4;
+    cursor: pointer;
+  }
+}
 .positionBox {
   width: 600px;
   height: 290px;
@@ -381,11 +506,33 @@ onMounted(() => {
       top: 20px;
       cursor: pointer;
     }
+    .back_style {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      cursor: pointer;
+    }
+    .forgotView {
+      width: 443px;
+      margin: 0 auto;
+      .F_title {
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+        background-color: #f1f4f6;
+        border-radius: 5px;
+        font-size: 18px;
+        color: #2d3436;
+        text-align: center;
+        margin-bottom: 38px;
+        margin-top: 27px;
+      }
+    }
     .forgot {
       margin: -17px auto 28px;
       width: 443px;
       font-size: 16px;
-      color: #2963A4;
+      color: #2963a4;
       line-height: 19.36px;
       text-align: right;
       cursor: pointer;

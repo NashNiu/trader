@@ -269,3 +269,12 @@ export function changePhone(params) {
     params,
   });
 }
+
+// 修改账号密码
+export function postChpwd(data) {
+  return request({
+    url: '/api/users/user/chpwd',
+    method: 'post',
+    data,
+  });
+}

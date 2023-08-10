@@ -320,6 +320,11 @@ export default {
     pExa: '인증번호를 입력해주세요',
     pLeight:
       '비밀번호는 대문자와 소문자, 숫자, 문자를 모두 포함해야 하며 9자 이상이어야 합니다.',
+    rleight:"새 비밀번호를 입력해주세요.",
+    rleight2:"새 비밀번호를 다시 입력해주세요.",
+    rerrortip:"암호를 두 번 입력한 것은 일치하지 않습니다!",
+    backbuttontext:'네, 맞아요?',
+    backlogin:"로그인 가기",
     code: '인증 코드 받기',
     codeSuccess: '인증 코드가 성공적으로 전송되었습니다!',
     codefail: '인증 코드를 받지 못했습니다!',

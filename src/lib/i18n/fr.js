@@ -341,6 +341,11 @@ export default {
     pExa: 'veuillez entrer le code de vérification',
     pLeight:
       'Le mot de passe doit contenir à la fois des lettres majuscules et minuscules, des chiffres, des caractères et être supérieur à 9 caractères',
+    RLeight: '«veuillez entrer un nouveau mot de passe»',
+    RLeight2: 's`il vous plaît entrer à nouveau le nouveau mot de passe ',
+    RErrorTip: 'deux entrées de mot de passe incohérentes! ',
+    BackButtonText: 'vous vous souvenez? ',
+    BackLogin: 'aller à login',
     code: 'obtenir le code de vérification',
     codeSuccess: 'Code de vérification envoyé avec succès !',
     codefail: "Impossible d'obtenir le code de vérification !",

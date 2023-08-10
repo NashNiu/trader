@@ -340,6 +340,11 @@ export default {
     pExa: 'please enter verification code',
     pLeight:
       'The password must contain both uppercase and lowercase letters, numbers, characters and be greater than 9 characters',
+    rLeight: 'Please enter a new password ',
+    rLeight2: 'Please enter your new password again ',
+    rErrorTip: 'Two password inconsistencies! ',
+    backButtonText: 'Remember? ',
+    backLogin: 'Go to login ',
     code: 'get verification code',
     codeSuccess: 'Verification code sent successfully!',
     codefail: 'Failed to obtain verification code!',

@@ -47,6 +47,7 @@
         </el-form-item>
         <el-form-item label="意见补充">
           <el-upload
+            ref="uploadImg"
             action="/lpapi/api/users/user/uploadFile?expire=620000000"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
@@ -75,6 +76,7 @@ import { saveAndFlush } from '@/api/commonapi';
 import { ElMessage } from 'element-plus';
 const { t } = useI18n();
 const form = ref();
+const uploadImg = ref();
 const data = reactive({
   dialogVisible: false,
   imagesList: [],
@@ -97,6 +99,8 @@ const showDialog = () => {
 };
 const handleClose = () => {
   data.dialogVisible = false;
+  data.imagesList = [];
+  uploadImg.value.clearFiles(); 
   form.value.resetFields();
 };
 const handleSubmin = () => {
@@ -105,9 +109,10 @@ const handleSubmin = () => {
       saveAndFlush(data.form).then((res) => {
         if (res.data.status === 0) {
           ElMessage({
-            message: t('login.codeSuccess'),
+            message: t('common.operateSuccess'),
             type: 'success',
           });
+          handleClose();
         }
       });
     }

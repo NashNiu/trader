@@ -434,7 +434,7 @@ export default {
     teach: 'teaching',
     support: 'support',
     download: 'Download the app',
-    reliant: 'Feature',
+    reliant: 'A Liquidity Provider Trusted by Global Investors',
     service: 'service',
     term: 'terms and conditions',
     disclosure: 'Forms and Disclosures',

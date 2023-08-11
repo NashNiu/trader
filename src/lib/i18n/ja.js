@@ -421,7 +421,7 @@ export default {
     teach: '「教える」',
     support: 'サポート',
     download: 'ダウンロード',
-    reliant: '機能です',
+    reliant: '「世界の投資家から信頼される流動性プロバイダー」',
     service: '仕える',
     term: '規約と条件',
     disclosure: '「フォームと開示」',

@@ -482,8 +482,8 @@ const data = reactive({
   type: '1', // 1=隐私条款与政策 2风险申明
 });
 onMounted(() => {
-  if (route.query.type) {
-    data.type = route.params.type
+  if (route.params.type) {
+    data.type = route.params.type;
   }
 })
 </script>

@@ -437,7 +437,7 @@ export default {
     support: 'soutien',
     download: 'télécharger',
     reliant:
-      'La fonction',
+      'Un fournisseur de liquidités auquel les investisseurs mondiaux font confiance',
     service: 'Servir',
     term: 'Termes et conditions',
     disclosure: 'Formulaires et divulgations',

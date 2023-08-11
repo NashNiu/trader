@@ -19,7 +19,7 @@
                 <img :src="androidSrc" alt="Andriod" />
                 <img :src="iosSrc" alt="IOS" />
               </div>
-              <div class="down_view_button_2">{{ t('feature.loginWap') }}</div>
+              <div class="down_view_button_2" @click="loginOpen">{{ t('feature.loginWap') }}</div>
             </div>
             <div class="down_view_ewm">
               <img src="../../../assets/img/newIndex/ewm.png" />

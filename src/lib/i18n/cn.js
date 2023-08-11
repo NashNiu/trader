@@ -416,7 +416,7 @@ export default {
     teach: '教学',
     support: '支持',
     download: '下载应用',
-    reliant: '功能',
+    reliant: '备受全球投资者信赖的流动性供应商',
     service: '服务',
     term: '条款说明',
     disclosure: '表格与披露',

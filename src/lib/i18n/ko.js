@@ -412,7 +412,7 @@ export default {
     teach: '가르치는',
     support: '지원하다',
     download: '다운로드',
-    reliant: '기능',
+    reliant: '글로벌 투자자들이 신뢰하는 유동성 공급자',
     service: '제공하다',
     term: '이용약관',
     disclosure: '양식 및 공개',

@@ -12,7 +12,7 @@
           <div class="menu_ul">
             <div class="menu_li">MCLP</div>
             <div class="menu_li" @click="goPage('/Feature')">
-              {{ t('index.reliant') }}
+              {{ t('index.feature') }}
             </div>
             <div class="menu_li" @click="goPage('/Product')">
               {{ t('index.product') }}

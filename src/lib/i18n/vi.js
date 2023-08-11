@@ -416,7 +416,7 @@ export default {
     teach: 'giảng bài',
     support: 'ủng hộ',
     download: 'Tải xuống',
-    reliant: 'Chức năng',
+    reliant: 'Nhà cung cấp thanh khoản được các nhà đầu tư toàn cầu tin tưởng',
     service: 'Phục vụ',
     term: 'Các điều khoản và điều kiện',
     disclosure: 'Các hình thức và tiết lộ',

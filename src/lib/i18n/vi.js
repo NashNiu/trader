@@ -37,6 +37,17 @@ export default {
     unauthorized: 'Đăng nhập đã hết hạn, vui lòng đăng nhập lại!',
     submit: 'nộp',
     modifyOrder: 'Thay đổi thứ tự',
+    forgotPassword: 'Quên mật khẩu',
+    feedback: {
+      title: 'phản hồi câu hỏi',
+      form: {
+        type: 'Loại vấn đề',
+        title: 'Vấn đề tiêu đề',
+        content: 'Mô tả vấn đề',
+        upload: 'Ý kiến bổ sung',
+        contacts: 'Thông tin liên lạc'
+      }
+    }
   },
   menu: {
     profile: 'tài khoản',

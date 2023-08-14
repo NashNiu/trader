@@ -37,6 +37,17 @@ export default {
     unauthorized: 'Login has expired, please log in again!',
     submit: 'submit',
     modifyOrder: 'Change Order',
+    forgotPassword: 'Forgot Password',
+    feedback: {
+      title: 'Feedback',
+      form: {
+        type: 'Problem type ',
+        title: 'Question title ',
+        content: 'Problem Description ',
+        upload: 'Comments added ',
+        contacts: 'Contact information'
+      }
+    }
   },
   menu: {
     profile: 'account',

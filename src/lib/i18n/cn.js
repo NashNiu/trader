@@ -37,6 +37,17 @@ export default {
     unauthorized: '登录已失效，请重新登录！',
     submit: '提交',
     modifyOrder: '修改订单',
+    forgotPassword: '忘记密码',
+    feedback: {
+      title: '问题反馈',
+      form: {
+        type: '问题类型',
+        title: '问题标题',
+        content: '问题描述',
+        upload: '意见补充',
+        contacts: '联系方式'
+      }
+    }
   },
   menu: {
     profile: '账户',

@@ -38,6 +38,17 @@ export default {
       '「ログイン期限が切れていますので、再度ログインしてください。」',
     submit: '送信',
     modifyOrder: '「注文変更」',
+    forgotPassword: 'パスワードを忘れました',
+    feedback: {
+      title: 'フィードバックです',
+      form: {
+        type: '質問タイプです',
+        title: '質問タイトルです',
+        content: '問題記述です',
+        upload: '意見の補足です。',
+        contacts: '連絡先です'
+      }
+    }
   },
   menu: {
     profile: 'アカウント',

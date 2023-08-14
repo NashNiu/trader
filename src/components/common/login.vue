@@ -119,7 +119,7 @@
         <!-- 忘记密码窗口 -->
         <template v-else>
           <div class="forgotView">
-            <div class="F_title">忘记密码</div>
+            <div class="F_title">{{t('common.forgotPassword')}}</div>
             <el-form
               ref="forgotForm"
               :label-position="labelPosition"
@@ -254,7 +254,7 @@ const timsGO = () => {
   }
 };
 const getCode = () => {
-  if (registerFrom.email) {
+  if (registerFrom.email || forgotFrom.email) {
     isSend.value = true;
     getCodeInterface(registerFrom.email).then((res) => {
       if (res.status === 200) {

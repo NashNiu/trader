@@ -20,14 +20,14 @@
       :before-close="handleClose"
       width="40%"
     >
-      <h4 class="dialog-h4">问题反馈</h4>
+      <h4 class="dialog-h4">{{ t('common.feedback.title') }}</h4>
       <el-form
         ref="form"
         :model="data.form"
         :rules="data.rules"
         label-width="80px"
       >
-        <el-form-item label="问题类型" prop="type">
+        <el-form-item label="t('common.feedback.form.type')" prop="type">
           <el-select v-model="data.form.type" placeholder="请选择问题类型">
             <el-option label="注册" value="1"></el-option>
             <el-option label="开户" value="2"></el-option>
@@ -39,13 +39,13 @@
             <el-option label="其他" value="8"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="问题标题" prop="title">
+        <el-form-item label="t('common.feedback.form.title')" prop="title">
           <el-input v-model="data.form.title"></el-input>
         </el-form-item>
-        <el-form-item label="问题描述" prop="content">
+        <el-form-item label="t('common.feedback.form.content')" prop="content">
           <el-input type="textarea" v-model="data.form.content"></el-input>
         </el-form-item>
-        <el-form-item label="意见补充">
+        <el-form-item label="t('common.feedback.form.upload')">
           <el-upload
             ref="uploadImg"
             action="/lpapi/api/users/user/uploadFile?expire=620000000"
@@ -57,13 +57,13 @@
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="联系方式" prop="contacts">
+        <el-form-item label="t('common.feedback.form.contacts')" prop="contacts">
           <el-input v-model="data.form.contacts"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="handleSubmin">提 交</el-button>
+        <el-button @click="handleClose">{{ t('common.cancel') }}</el-button>
+        <el-button type="primary" @click="handleSubmin">{{ t('common.submit') }}</el-button>
       </span>
     </el-dialog>
   </div>

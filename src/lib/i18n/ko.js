@@ -37,6 +37,17 @@ export default {
     unauthorized: '로그인이 만료되었습니다. 다시 로그인하십시오!',
     submit: '제출하다',
     modifyOrder: '주문 변경',
+    forgotPassword: '비밀번호를 잊어버리다',
+    feedback: {
+      title: '문제 피드백',
+      form: {
+        type: '문제 유형',
+        title: '문제 제목',
+        content: '문제 설명',
+        upload: '의견 보충',
+        contacts: '연락처'
+      }
+    }
   },
   menu: {
     profile: '계정',

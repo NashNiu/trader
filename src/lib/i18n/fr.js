@@ -37,6 +37,17 @@ export default {
     unauthorized: 'La connexion a expiré, veuillez vous reconnecter !',
     submit: 'soumettre',
     modifyOrder: "Change l'ordre",
+    forgotPassword: 'Mot de passe oublié',
+    feedback: {
+      title: 'feedback sur le problème',
+      form: {
+        type: 'Types de questions',
+        title: 'Titre de la question',
+        content: 'Description du problème',
+        upload: 'Complément de l’avis',
+        contacts: 'Contact contact contact'
+      }
+    }
   },
   menu: {
     profile: 'compte',

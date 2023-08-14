@@ -282,8 +282,8 @@ const onSubmitForgot = () => {
         verifyCode: forgotFrom.verifyCode,
         password: forgotFrom.password
       }).then((res) => {
-        if (res.data.status) {
-          forgotForm.value.resetField();
+        if (res.data.status === 0) {
+          // forgotForm.value.resetField();
           backTo();
         }
       });

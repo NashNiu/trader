@@ -47,6 +47,12 @@ export default {
         content: '問題記述です',
         upload: '意見の補足です。',
         contacts: '連絡先です'
+      },
+      rulesLabel: {
+        type: '質問の種類を選びます。',
+        title: '質問タイトルの入力をお願いします。',
+        content: '質問の説明をお願いします。',
+        contacts: '連絡先をお願いします。'
       }
     }
   },

@@ -46,6 +46,12 @@ export default {
         content: '문제 설명',
         upload: '의견 보충',
         contacts: '연락처'
+      },
+      rulesLabel: {
+        type: '문제 유형을 선택하십시오',
+        title: '질문 제목을 입력하십시오',
+        content: '문제 설명을 입력하십시오',
+        contacts: '연락처를 입력해주세요'
       }
     }
   },

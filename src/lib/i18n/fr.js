@@ -46,6 +46,12 @@ export default {
         content: 'Description du problème',
         upload: 'Complément de l’avis',
         contacts: 'Contact contact contact'
+      },
+      rulesLabel: {
+        type: 'Veuillez sélectionner le type de question',
+        title: 'Veuillez entrer le titre de la question',
+        content: 'Veuillez entrer une description du problème',
+        contacts: 'Veuillez entrer vos coordonnées'
       }
     }
   },

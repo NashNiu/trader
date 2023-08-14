@@ -46,6 +46,12 @@ export default {
         content: 'Problem Description ',
         upload: 'Comments added ',
         contacts: 'Contact information'
+      },
+      rulesLabel: {
+        type: 'Please select the question type ',
+        title: 'Please enter the question title ',
+        content: 'Please enter a description of the problem ',
+        contacts: 'Please enter your contact details'
       }
     }
   },

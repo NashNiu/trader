@@ -46,6 +46,12 @@ export default {
         content: '问题描述',
         upload: '意见补充',
         contacts: '联系方式'
+      },
+      rulesLabel: {
+        type: '请选择问题类型',
+        title: '请输入问题标题',
+        content: '请输入问题描述',
+        contacts: '请输入联系方式'
       }
     }
   },

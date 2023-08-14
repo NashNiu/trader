@@ -27,7 +27,7 @@
         :rules="data.rules"
         label-width="80px"
       >
-        <el-form-item label="t('common.feedback.form.type')" prop="type">
+        <el-form-item :label="t('common.feedback.form.type')" prop="type">
           <el-select v-model="data.form.type" placeholder="请选择问题类型">
             <el-option label="注册" value="1"></el-option>
             <el-option label="开户" value="2"></el-option>
@@ -39,13 +39,13 @@
             <el-option label="其他" value="8"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="t('common.feedback.form.title')" prop="title">
+        <el-form-item :label="t('common.feedback.form.title')" prop="title">
           <el-input v-model="data.form.title"></el-input>
         </el-form-item>
-        <el-form-item label="t('common.feedback.form.content')" prop="content">
+        <el-form-item :label="t('common.feedback.form.content')" prop="content">
           <el-input type="textarea" v-model="data.form.content"></el-input>
         </el-form-item>
-        <el-form-item label="t('common.feedback.form.upload')">
+        <el-form-item :label="t('common.feedback.form.upload')">
           <el-upload
             ref="uploadImg"
             action="/lpapi/api/users/user/uploadFile?expire=620000000"
@@ -57,7 +57,7 @@
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="t('common.feedback.form.contacts')" prop="contacts">
+        <el-form-item :label="t('common.feedback.form.contacts')" prop="contacts">
           <el-input v-model="data.form.contacts"></el-input>
         </el-form-item>
       </el-form>
@@ -88,10 +88,10 @@ const data = reactive({
     images: '',
   },
   rules: {
-    type: [{ required: true, message: '请选择问题类型', trigger: 'change' }],
-    title: [{ required: true, message: '请输入问题标题', trigger: 'blur' }],
-    content: [{ required: true, message: '请输入问题描述', trigger: 'blur' }],
-    contacts: [{ required: true, message: '请输入联系方式', trigger: 'blur' }],
+    type: [{ required: true, message: `${t('common.feedback.rulesLabel.type')}`, trigger: 'change' }],
+    title: [{ required: true, message: `${t('common.feedback.rulesLabel.title')}`, trigger: 'blur' }],
+    content: [{ required: true, message: `${t('common.feedback.rulesLabel.content')}`, trigger: 'blur' }],
+    contacts: [{ required: true, message: `${t('common.feedback.rulesLabel.contacts')}`, trigger: 'blur' }],
   },
 });
 const showDialog = () => {

@@ -28,15 +28,15 @@
         label-width="170px"
       >
         <el-form-item :label="t('common.feedback.form.type')" prop="type">
-          <el-select v-model="data.form.type" :placeholder="t('common.feedback.rulesLabel.type')">
-            <el-option label="注册" value="1"></el-option>
-            <el-option label="开户" value="2"></el-option>
-            <el-option label="提现" value="3"></el-option>
-            <el-option label="交易" value="4"></el-option>
-            <el-option label="充值" value="5"></el-option>
-            <el-option label="KYC" value="6"></el-option>
-            <el-option label="系统问题" value="7"></el-option>
-            <el-option label="其他" value="8"></el-option>
+          <el-select v-model="data.form.type" :placeholder="t('common.feedback.rulesLabel.type')" style="width:300px;">
+            <el-option :label="t('common.feedback.typeOption[0]')" value="1"></el-option>
+            <el-option :label="t('common.feedback.typeOption[1]')" value="2"></el-option>
+            <el-option :label="t('common.feedback.typeOption[2]')" value="3"></el-option>
+            <el-option :label="t('common.feedback.typeOption[3]')" value="4"></el-option>
+            <el-option :label="t('common.feedback.typeOption[4]')" value="5"></el-option>
+            <el-option :label="t('common.feedback.typeOption[5]')" value="6"></el-option>
+            <el-option :label="t('common.feedback.typeOption[6]')" value="7"></el-option>
+            <el-option :label="t('common.feedback.typeOption[7]')" value="8"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="t('common.feedback.form.title')" prop="title">

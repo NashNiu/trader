@@ -52,7 +52,8 @@ export default {
         title: 'Veuillez entrer le titre de la question',
         content: 'Veuillez entrer une description du problème',
         contacts: 'Veuillez entrer vos coordonnées'
-      }
+      },
+      typeOption: ["inscription", "ouverture de compte", "retrait", "transaction", "recharge", "KYC", "problème système", "autre"]
     }
   },
   menu: {

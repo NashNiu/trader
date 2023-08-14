@@ -46,7 +46,8 @@ export default {
         content: 'Mô tả vấn đề',
         upload: 'Ý kiến bổ sung',
         contacts: 'Thông tin liên lạc'
-      }
+      },
+      typeOption: ['Đăng ký','Mở tài khoản','Rút tiền','Giao dịch','Nạp tiền','KYC','Vấn đề hệ thống','Khác']
     }
   },
   menu: {

@@ -52,7 +52,8 @@ export default {
         title: 'Please enter the question title ',
         content: 'Please enter a description of the problem ',
         contacts: 'Please enter your contact details'
-      }
+      },
+      typeOption: ['Registration ',' Account Opening ',' Withdrawal ',' Transaction ',' Recharge ',' KYC ',' System Issues', 'Other'],
     }
   },
   menu: {

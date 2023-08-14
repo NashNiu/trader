@@ -52,7 +52,8 @@ export default {
         title: '请输入问题标题',
         content: '请输入问题描述',
         contacts: '请输入联系方式'
-      }
+      },
+      typeOption: ['注册', '开户', '提现', '交易', '充值', 'KYC', '系统问题', '其他'],
     }
   },
   menu: {

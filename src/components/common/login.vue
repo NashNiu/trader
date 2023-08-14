@@ -44,7 +44,7 @@
                     show-password
                   />
                 </el-form-item>
-                <div class="forgot" @click="goForgot">忘记密码</div>
+                <div class="forgot" @click="goForgot">{{t('common.forgotPassword')}}</div>
                 <el-form-item>
                   <el-button type="primary" @click="onSubmitLogin">
                     {{ t('login.login') }}
@@ -256,7 +256,7 @@ const timsGO = () => {
 const getCode = () => {
   if (registerFrom.email || forgotFrom.email) {
     isSend.value = true;
-    getCodeInterface(registerFrom.email).then((res) => {
+    getCodeInterface(forgotFrom.email).then((res) => {
       if (res.status === 200) {
         ElMessage({
           message: t('login.codeSuccess'),
@@ -522,7 +522,9 @@ onMounted(() => {
       width: 443px;
       margin: 0 auto;
       .F_title {
-        width: 120px;
+        display: inline-block;
+        padding: 0 20px;
+        width: auto;
         height: 40px;
         line-height: 40px;
         background-color: #f1f4f6;

@@ -25,10 +25,10 @@
         ref="form"
         :model="data.form"
         :rules="data.rules"
-        label-width="80px"
+        label-width="170px"
       >
         <el-form-item :label="t('common.feedback.form.type')" prop="type">
-          <el-select v-model="data.form.type" placeholder="请选择问题类型">
+          <el-select v-model="data.form.type" :placeholder="t('common.feedback.rulesLabel.type')">
             <el-option label="注册" value="1"></el-option>
             <el-option label="开户" value="2"></el-option>
             <el-option label="提现" value="3"></el-option>

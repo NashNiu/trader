@@ -253,13 +253,15 @@ import {
   computed,
 } from 'vue';
 import { configConst } from '@/config/index.js';
-import { useUserStore } from '@/store/index.js';
+import { useUserStore, useHeaderStore } from '@/store/index.js';
 import { getUserInfoByToken } from '@/api/user.js';
 import { tools } from '@/utils/index.js';
 const { locale, t } = useI18n();
 const router = useRouter();
 const userStore = useUserStore();
+const headerStore = useHeaderStore();
 const userInfo = computed(() => userStore.userInfo);
+const centerDialogVisible = computed(() => { return headerStore.centerDialogVisible })
 const token = localStorage.getItem(configConst.TOKEN);
 const data = reactive({
   activeIndex: 1,
@@ -389,7 +391,7 @@ const data = reactive({
     },
   ],
 });
-const centerDialogVisible = ref(false);
+// const centerDialogVisible = ref(false);
 onMounted(() => {
   screenLang();
 });
@@ -414,14 +416,16 @@ const screenLang = () => {
   });
 };
 const hideDialog = () => {
-  centerDialogVisible.value = false;
+  headerStore.setCenterDialogVisible(false)
+  // centerDialogVisible.value = false;
 };
 const toggleTab = () => {
-  centerDialogVisible.value = true;
-  nextTick(() => {
-    const Login = ref(null);
-    console.log(Login.value);
-  });
+  headerStore.setCenterDialogVisible(true)
+  // centerDialogVisible.value = true;
+  // nextTick(() => {
+  //   const Login = ref(null);
+  //   console.log(Login.value);
+  // });
 };
 const changeLanguage = (command) => {
   localStorage.setItem(configConst.LANGUAGE, command.id);
@@ -446,7 +450,8 @@ const goTrade = () => {
       query: {},
     });
   } else {
-    centerDialogVisible.value = true;
+    headerStore.setCenterDialogVisible(true)
+    // centerDialogVisible.value = true;
   }
 };
 const goPage = (url) => {

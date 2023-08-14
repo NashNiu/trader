@@ -37,6 +37,24 @@ export default {
     unauthorized: 'Login has expired, please log in again!',
     submit: 'Submit',
     modifyOrder: 'Change Order',
+    forgotPassword: 'Forgot Password',
+    feedback: {
+      title: 'Feedback',
+      form: {
+        type: 'Problem type ',
+        title: 'Question title ',
+        content: 'Problem Description ',
+        upload: 'Comments added ',
+        contacts: 'Contact information'
+      },
+      rulesLabel: {
+        type: 'Please select the question type ',
+        title: 'Please enter the question title ',
+        content: 'Please enter a description of the problem ',
+        contacts: 'Please enter your contact details'
+      },
+      typeOption: ['Registration ',' Account Opening ',' Withdrawal ',' Transaction ',' Recharge ',' KYC ',' System Issues', 'Other'],
+    }
   },
   menu: {
     profile: 'Account',
@@ -328,6 +346,8 @@ export default {
     switchToReal: 'Switch to Real Account',
   },
   login: {
+    loginTabs: "Email login",
+    regTabs: 'Email register',
     login: 'Log in',
     reg: 'Register',
     emailadress: 'Email Address',
@@ -337,17 +357,22 @@ export default {
     pEmail: 'Please Input the Email Address',
     pExa: 'please Enter Verification Code',
     pLeight:
-      'The Password must Contain Both Uppercase and Lowercase Letters, Numbers, Characters and be Greater than 9 Characters',
-    code: 'Get Verification Code',
-    codeSuccess: 'Verification Code Sent Successfully!',
-    codefail: 'Failed to Obtain Verification Code!',
-    regSuccess: 'Registration Success!',
-    tips: 'Please Enter the Correct Email Address, Password and Verification Code!',
-    emailBlank: 'E-mail can not be Empty',
-    emailRight: 'Please Enter the Correct Email Format',
-    passwordBlank: 'Password can not be Blank!',
-    loginSuccess: 'login Successful',
-    loginFail: 'Login Failed',
+      'The password must contain both uppercase and lowercase letters, numbers, characters and be greater than 9 characters',
+    rLeight: 'Please enter a new password ',
+    rLeight2: 'Please enter your new password again ',
+    rErrorTip: 'Two password inconsistencies! ',
+    backButtonText: 'Remember? ',
+    backLogin: 'Go to login ',
+    code: 'get verification code',
+    codeSuccess: 'Verification code sent successfully!',
+    codefail: 'Failed to obtain verification code!',
+    regSuccess: 'registration success!',
+    tips: 'Please enter the correct email address, password and verification code!',
+    emailBlank: 'E-mail can not be empty',
+    emailRight: 'Please enter the correct email format',
+    passwordBlank: 'password can not be blank!',
+    loginSuccess: 'login successful',
+    loginFail: 'Login failed',
   },
   index: {
     goTrade: 'Business Center',
@@ -408,7 +433,9 @@ export default {
       'MC LiquidityProvider has an equity capital of over US$10 billion and is trusted by more than 1.8 million investors from more than 200 countries and regions',
     stock: 'Stock contract',
     joinUs:
-      'Join us to make each stock into a standard contract for you to choose to invest in. No matter what the share price is, you can hold shares by trading standard contracts',
+      'We have selected industry leaders and representative stocks for global investors, which represent the characteristics and history of the countries where the stocks are located. When users enjoy high-quality underlying assets, they can increase their confidence creatively by holding stock contracts designed for you. By holding contracts, they can do big things with less cost. Concentrate on enjoying the benefits of selected stocks.',
+    community: 'Join our community',
+    communityTip: 'Keep up to date with the MCLP team and our traders from around the world. We have everything you need to become a trading expert.',
     desc1:
       'Before officially opening an account, you can open a demo trading account in seconds to try MC LiquidityProvider',
     desc2: 'Get $10,000 Demo Funding Instantly',
@@ -478,7 +505,7 @@ export default {
     ETF: 'ETFs and Indices',
     ETFDesc:
       'Trade ETFs and indices and find more opportunities on market-moving news, during local market hours, or at your convenience',
-    index: 'How Flexible US Indices Trading Works',
+    index: 'Participate in flexible global indices for asset allocation and hedging',
     sample:
       'The following index symbols are available for trading, offering the opportunity to participate in a broad range of sectors:',
     scanDownload:

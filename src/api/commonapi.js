@@ -69,3 +69,19 @@ export function uploadFile(data) {
     data,
   });
 }
+// 获取下载协议文件接口
+export function getDownList(params) {
+  return request({
+    url: '/api/users/officialFile/getList',
+    method: 'get',
+    params,
+  });
+}
+// 提交问题反馈
+export function saveAndFlush(data) {
+  return request({
+    url: '/api/users/suggest/saveAndFlush',
+    method: 'post',
+    data,
+  });
+}

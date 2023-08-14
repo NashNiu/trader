@@ -19,7 +19,7 @@
                 <img :src="androidSrc" alt="Andriod" />
                 <img :src="iosSrc" alt="IOS" />
               </div>
-              <div class="down_view_button_2">{{ t('feature.loginWap') }}</div>
+              <div class="down_view_button_2" @click="loginOpen">{{ t('feature.loginWap') }}</div>
             </div>
             <div class="down_view_ewm">
               <img src="../../../assets/img/newIndex/ewm.png" />
@@ -40,9 +40,21 @@ import androidImg from '@/assets/img/newIndex/Andriod.png';
 import androidImgEn from '@/assets/img/newIndex/Andriod_en.png';
 import iosImg from '@/assets/img/newIndex/IOS.png';
 import iosImgEn from '@/assets/img/newIndex/IOS_en.png';
+import { useHeaderStore } from '@/store/index.js';
 const { t, locale } = useI18n();
 const androidSrc = locale.value === 'cn' ? androidImg : androidImgEn;
 const iosSrc = locale.value === 'cn' ? iosImg : iosImgEn;
+const headerStore = useHeaderStore();
+const loginOpen = () => {
+  if (localStorage.getItem('token')) {
+    router.push({
+      path: '/t/trade',
+      query: {},
+    });
+  } else {
+    headerStore.setCenterDialogVisible(true)
+  }
+}
 </script>
 <style lang="less" scoped>
 .download {

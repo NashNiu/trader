@@ -37,6 +37,24 @@ export default {
     unauthorized: '登录已失效，请重新登录！',
     submit: '提交',
     modifyOrder: '修改订单',
+    forgotPassword: '忘记密码',
+    feedback: {
+      title: '问题反馈',
+      form: {
+        type: '问题类型',
+        title: '问题标题',
+        content: '问题描述',
+        upload: '意见补充',
+        contacts: '联系方式'
+      },
+      rulesLabel: {
+        type: '请选择问题类型',
+        title: '请输入问题标题',
+        content: '请输入问题描述',
+        contacts: '请输入联系方式'
+      },
+      typeOption: ['注册', '开户', '提现', '交易', '充值', 'KYC', '系统问题', '其他'],
+    }
   },
   menu: {
     profile: '账户',
@@ -314,6 +332,8 @@ export default {
     switchToReal: '切换至真实账户',
   },
   login: {
+    loginTabs: "邮箱登录",
+    regTabs: '邮箱注册',
     login: '登录',
     reg: '注册',
     emailadress: '邮箱地址',
@@ -323,6 +343,11 @@ export default {
     pEmail: '请输入邮箱地址',
     pExa: '请输入验证码',
     pLeight: '密码必须同时包含大小写字母、数字、字符且大于9位',
+    rLeight: '请输入新密码',
+    rLeight2: '请再次输入新密码',
+    rErrorTip: '两次输入密码不一致!',
+    backButtonText: '想起来了?',
+    backLogin: '前往登录',
     code: '获取验证码',
     codeSuccess: '验证码发送成功！',
     codefail: '验证码获取失败！',
@@ -391,7 +416,9 @@ export default {
       'MC LiquidityProvider有着超100亿美元的权益资本，深受来自200多个国家和地区的180多万投资者信赖',
     stock: '股票合约玩法',
     joinUs:
-      '加入我们将每一只股票做成标准合约供您选择投资。不论股价是多少，你都可以通过交易标准合约持有股票',
+      '我们为全球投资者精选个行业龙头和代表性股票，这些股票代表了股票所在国的特点和历史，用户在享受高质量底层资产时，通过持有我们为您设计的股票合约，可以创新性的为您的信心倍增，通过持有合约，用较少成本做大事情。专心享受精选股票带来的收益。 ',
+    community: '加入我们的社区',
+    communityTip: '了解 MCLP 团队和我们来自世界各地的交易者的最新动态。我们拥有您成为交易专家所需的一切。',
     desc1:
       '正式开户前，您可在几秒钟内开立一个模拟交易账户试用一下MC LiquidityProvider',
     desc2: '即刻获取1万美元模拟资金',
@@ -424,7 +451,7 @@ export default {
     ODD: '期权交易涉及风险，并不适合所有投资者。更多信息，请阅读标准期权的特征和风险（也称“期权披露文件（ODD）”）。或者，也可以致电+35725023880索要ODD副本。开始交易之前，客户必须阅读我们警告和披露页面上的相关风险披露声明。保证金交易只适合风险承受能力较高的有经验的投资者。您的损失可能会超过您的初始投资。有关保证金借贷利率的详细信息，请参见保证金贷款利率页面。证券期货具有高风险，并不适合所有投资者。您的损失可能会超过您的初始投资。开始交易证券期货之前，请阅读证券期货风险披露声明。结构性产品和固定收益产品（如债券）属于复杂产品，风险较高，并不适合所有投资者。开始交易前，请阅读风险警告和披露声明',
     LTD: '摩石有限责任公司（MAGIC COMPASS LTD）的MC LiquityProvider',
     CFTC: '是NYSE - FINRA - SIPC的成员，受塞浦路斯和商品期货交易委员会（Commodity Futures Trading Commission）监管',
-    address: '总部地址',
+    address: '总部地址:Sarlo 9, 阿伊奥斯阿塔纳西奥斯, 4106 利马索尔, 塞浦路斯',
     website: '网站',
     other: '有关其他摩石证券MCLP联属公司的信息',
   },
@@ -457,7 +484,7 @@ export default {
     ETF: 'ETF和指数',
     ETFDesc:
       '在推动市场走向的新闻发生时、在当地市场的交易时段或您方便的时候，交易ETF和指数并寻找到更多机会',
-    index: '灵活的美国指数交易是如何运作的',
+    index: '参与灵活的全球指数进行资产配置和对冲',
     sample: '下列可供交易的指数代码，提供了参与广泛板块的机会:',
     scanDownload: '扫描二维码下载MC LiquidityProvider应用程序',
   },

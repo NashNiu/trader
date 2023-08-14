@@ -9,17 +9,126 @@
         </div>
         <div class="right">
           <div>{{ t('support.chat') }}</div>
-          <div>{{ t('support.consult') }}</div>
+          <div @click="showDialog">{{ t('support.consult') }}</div>
         </div>
       </div>
     </div>
     <Model_4 />
+    <!-- 支持咨询单 -->
+    <el-dialog
+      v-model="data.dialogVisible"
+      :before-close="handleClose"
+      width="40%"
+    >
+      <h4 class="dialog-h4">{{ t('common.feedback.title') }}</h4>
+      <el-form
+        ref="form"
+        :model="data.form"
+        :rules="data.rules"
+        label-width="170px"
+      >
+        <el-form-item :label="t('common.feedback.form.type')" prop="type">
+          <el-select v-model="data.form.type" :placeholder="t('common.feedback.rulesLabel.type')" style="width:300px;">
+            <el-option :label="t('common.feedback.typeOption[0]')" value="1"></el-option>
+            <el-option :label="t('common.feedback.typeOption[1]')" value="2"></el-option>
+            <el-option :label="t('common.feedback.typeOption[2]')" value="3"></el-option>
+            <el-option :label="t('common.feedback.typeOption[3]')" value="4"></el-option>
+            <el-option :label="t('common.feedback.typeOption[4]')" value="5"></el-option>
+            <el-option :label="t('common.feedback.typeOption[5]')" value="6"></el-option>
+            <el-option :label="t('common.feedback.typeOption[6]')" value="7"></el-option>
+            <el-option :label="t('common.feedback.typeOption[7]')" value="8"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('common.feedback.form.title')" prop="title">
+          <el-input v-model="data.form.title"></el-input>
+        </el-form-item>
+        <el-form-item :label="t('common.feedback.form.content')" prop="content">
+          <el-input type="textarea" v-model="data.form.content"></el-input>
+        </el-form-item>
+        <el-form-item :label="t('common.feedback.form.upload')">
+          <el-upload
+            ref="uploadImg"
+            action="/lpapi/api/users/user/uploadFile?expire=620000000"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-success="handleAvatarSuccess"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </el-form-item>
+        <el-form-item :label="t('common.feedback.form.contacts')" prop="contacts">
+          <el-input v-model="data.form.contacts"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="handleClose">{{ t('common.cancel') }}</el-button>
+        <el-button type="primary" @click="handleSubmin">{{ t('common.submit') }}</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script setup>
+import { ref, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Model_4 from '../model_4.vue';
+import { saveAndFlush } from '@/api/commonapi';
+import { ElMessage } from 'element-plus';
 const { t } = useI18n();
+const form = ref();
+const uploadImg = ref();
+const data = reactive({
+  dialogVisible: false,
+  imagesList: [],
+  form: {
+    type: '',
+    title: '',
+    content: '',
+    contacts: '',
+    images: '',
+  },
+  rules: {
+    type: [{ required: true, message: `${t('common.feedback.rulesLabel.type')}`, trigger: 'change' }],
+    title: [{ required: true, message: `${t('common.feedback.rulesLabel.title')}`, trigger: 'blur' }],
+    content: [{ required: true, message: `${t('common.feedback.rulesLabel.content')}`, trigger: 'blur' }],
+    contacts: [{ required: true, message: `${t('common.feedback.rulesLabel.contacts')}`, trigger: 'blur' }],
+  },
+});
+const showDialog = () => {
+  data.dialogVisible = true;
+};
+const handleClose = () => {
+  data.dialogVisible = false;
+  data.imagesList = [];
+  uploadImg.value.clearFiles(); 
+  form.value.resetFields();
+};
+const handleSubmin = () => {
+  form.value?.validate((valid) => {
+    if (valid) {
+      saveAndFlush(data.form).then((res) => {
+        if (res.data.status === 0) {
+          ElMessage({
+            message: t('common.operateSuccess'),
+            type: 'success',
+          });
+          handleClose();
+        }
+      });
+    }
+  });
+};
+const handlePictureCardPreview = (file) => {
+  console.log(file);
+};
+const handleRemove = (file, fileList) => {
+  data.imagesList = fileList;
+  data.form.images = data.imagesList.join(';');
+};
+const handleAvatarSuccess = (res, file) => {
+  data.imagesList.push(res.data);
+  data.form.images = data.imagesList.join(';');
+};
 </script>
 <style lang="less" scoped>
 .support {
@@ -71,5 +180,15 @@ const { t } = useI18n();
       }
     }
   }
+}
+.dialog-h4 {
+  font-size: 30px;
+  color: #333;
+  margin-bottom: 25px;
+}
+.dialog-footer {
+  display: inline-block;
+  width: 100%;
+  text-align: right;
 }
 </style>

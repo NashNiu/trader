@@ -133,9 +133,9 @@
                   clearable
                 />
               </el-form-item>
-              <el-form-item prop="region">
+              <el-form-item prop="verifyCode">
                 <el-input
-                  v-model="forgotFrom.region"
+                  v-model="forgotFrom.verifyCode"
                   :placeholder="t('login.pExa')"
                   clearable
                 >
@@ -237,7 +237,7 @@ const loginFrom = reactive({
 });
 const forgotFrom = reactive({
   email: '',
-  region: '',
+  verifyCode: '',
   password: '',
   passwordOK: '',
 });
@@ -277,7 +277,11 @@ const getCode = () => {
 const onSubmitForgot = () => {
   forgotForm.value.validate((valid) => {
     if (valid) {
-      postChpwd(forgotFrom).then((res) => {
+      postChpwd({
+        email: forgotFrom.email,
+        verifyCode: forgotFrom.verifyCode,
+        password: forgotFrom.password
+      }).then((res) => {
         if (res.data.status) {
           forgotForm.value.resetField();
           backTo();
@@ -311,7 +315,7 @@ const onSubmitRegister = () => {
 };
 // 邮箱验证方法
 const checkEmail = (rule, value, callback) => {
-  const mailReg = /^([.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+  const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
   if (!value) {
     return callback(new Error(t('login.emailBlank')));
   }
@@ -359,7 +363,7 @@ const validatePass2 = (rule, value, callback) => {
 // 忘记密码表单验证
 const forgotRules = reactive({
   email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
-  region: [{ required: true, message: t('login.pExa'), trigger: 'blur' }],
+  verifyCode: [{ required: true, message: t('login.pExa'), trigger: 'blur' }],
   password: [
     { required: true, message: t('login.passwordBlank'), trigger: 'blur' },
   ],

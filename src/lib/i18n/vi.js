@@ -45,10 +45,19 @@ export default {
         title: 'Vấn đề tiêu đề',
         content: 'Mô tả vấn đề',
         upload: 'Ý kiến bổ sung',
-        contacts: 'Thông tin liên lạc'
+        contacts: 'Thông tin liên lạc',
       },
-      typeOption: ['Đăng ký','Mở tài khoản','Rút tiền','Giao dịch','Nạp tiền','KYC','Vấn đề hệ thống','Khác']
-    }
+      typeOption: [
+        'Đăng ký',
+        'Mở tài khoản',
+        'Rút tiền',
+        'Giao dịch',
+        'Nạp tiền',
+        'KYC',
+        'Vấn đề hệ thống',
+        'Khác',
+      ],
+    },
   },
   menu: {
     profile: 'tài khoản',
@@ -411,7 +420,8 @@ export default {
     joinUs:
       'Chúng tôi cho các nhà đầu tư toàn cầu lên mức một ngành công nghiệp xuống cổ phiếu đại diện, và những đặc điểm và lịch sử của những đại diện cho SuoZaiGuo cổ phiếu chứng khoán này, với tài sản khi người dùng đang tận hưởng chất lượng cao dưới đáy, thông qua hợp đồng của chúng ta thiết kế cho ngài đang nắm giữ cổ phiếu, tôi có thể sáng tạo cho đức tin của anh tăng gấp, bằng cách nắm giữ hợp đồng, dùng ít chi phí làm lớn chuyện hơn. Tận hưởng lợi nhuận từ những cổ phiếu nổi bật',
     community: 'Gia nhập cộng đồng của chúng tôi',
-    communityTip: 'Tìm hiểu về tình hình mới nhất của đội MCLP và các thương gia trên khắp thế giới. Chúng tôi có mọi thứ ông cần để trở thành chuyên gia giao dịch.',
+    communityTip:
+      'Tìm hiểu về tình hình mới nhất của đội MCLP và các thương gia trên khắp thế giới. Chúng tôi có mọi thứ ông cần để trở thành chuyên gia giao dịch.',
     desc1:
       'Trước khi chính thức mở tài khoản, bạn có thể mở tài khoản giao dịch mô phỏng trong vài giây để dùng thử MCLquidityProvider',
     desc2: 'Nhận ngay 10.000 đô la tài trợ demo',
@@ -444,7 +454,8 @@ export default {
     ODD: 'Giao dịch quyền chọn liên quan đến rủi ro và không phù hợp với tất cả các nhà đầu tư. Để biết thêm thông tin, vui lòng đọc các đặc điểm và rủi ro của quyền chọn tiêu chuẩn (còn được gọi là Tài liệu tiết lộ quyền chọn (ODD)). Ngoài ra, bạn có thể gọi đến số +35725023880 để yêu cầu một bản sao của ODD. Bắt đầu Trước khi giao dịch, khách hàng phải đọc tuyên bố tiết lộ rủi ro có liên quan trên trang cảnh báo và tiết lộ của chúng tôi. Giao dịch ký quỹ chỉ phù hợp với các nhà đầu tư có kinh nghiệm với mức độ chấp nhận rủi ro cao. Khoản lỗ của bạn có thể vượt quá khoản đầu tư ban đầu của bạn. Về việc cho vay ký quỹ lãi suất Để biết thêm thông tin, hãy xem trang Lãi suất cho vay ký quỹ. Hợp đồng tương lai chứng khoán có rủi ro cao và không phù hợp với tất cả các nhà đầu tư. Khoản lỗ của bạn có thể vượt quá khoản đầu tư ban đầu của bạn. Trước khi bạn bắt đầu giao dịch hợp đồng tương lai chứng khoán, vui lòng đọc Tuyên bố Tiết lộ Rủi ro Hợp đồng Tương lai Chứng khoán. Sản phẩm Cơ cấu và các sản phẩm có thu nhập cố định (chẳng hạn như trái phiếu) là những sản phẩm phức tạp, có rủi ro cao và không phù hợp với tất cả các nhà đầu tư. Vui lòng đọc Cảnh báo Rủi ro và Tuyên bố Tiết lộ trước khi bắt đầu giao dịch',
     LTD: 'MCLiquityProvider cho MAGIC COMPASSLTD',
     CFTC: 'Thành viên của NYSE-FINRA-SIPC, được quản lý bởi Síp và Ủy ban giao dịch hàng hóa tương lai',
-    address: 'Địa chỉ gửi tiền xu của bạn:Sarlo 9, ayos atanasios, 4106 limassol, Cyprus',
+    address:
+      'Địa chỉ gửi tiền xu của bạn:Sarlo 9, ayos atanasios, 4106 limassol, Cyprus',
     website: 'trang mạng',
     other: 'Thông tin về các chi nhánh MCLP khác của Moshi Securities',
   },
@@ -479,7 +490,8 @@ export default {
     ETF: 'ETFs và chỉ số',
     ETFDesc:
       'Giao dịch ETF và Chỉ số và tìm thêm cơ hội trên các tin tức biến động thị trường, trong giờ thị trường địa phương hoặc khi thuận tiện cho bạn',
-    index: 'Tham gia vào chỉ số toàn cầu linh hoạt về việc phân bổ tài sản và bảo hiểm',
+    index:
+      'Tham gia vào chỉ số toàn cầu linh hoạt về việc phân bổ tài sản và bảo hiểm',
     sample:
       'Các ký hiệu chỉ mục sau đây có sẵn để giao dịch, mang đến cơ hội tham gia vào nhiều lĩnh vực:',
     scanDownload: 'Quét mã QR để tải ứng dụng MCLiquidityProvider',

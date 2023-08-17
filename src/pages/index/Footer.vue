@@ -42,7 +42,9 @@
             <div class="menu_li" @click="goPage('/agreement/1')">
               {{ t('index.privacy') }}
             </div>
-            <div class="menu_li" @click="goPage('/agreement/2')">{{ t('index.risk') }}</div>
+            <div class="menu_li" @click="goPage('/agreement/2')">
+              {{ t('index.risk') }}
+            </div>
           </div>
         </el-col>
       </el-row>

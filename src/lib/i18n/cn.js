@@ -45,16 +45,25 @@ export default {
         title: '问题标题',
         content: '问题描述',
         upload: '意见补充',
-        contacts: '联系方式'
+        contacts: '联系方式',
       },
       rulesLabel: {
         type: '请选择问题类型',
         title: '请输入问题标题',
         content: '请输入问题描述',
-        contacts: '请输入联系方式'
+        contacts: '请输入联系方式',
       },
-      typeOption: ['注册', '开户', '提现', '交易', '充值', 'KYC', '系统问题', '其他'],
-    }
+      typeOption: [
+        '注册',
+        '开户',
+        '提现',
+        '交易',
+        '充值',
+        'KYC',
+        '系统问题',
+        '其他',
+      ],
+    },
   },
   menu: {
     profile: '账户',
@@ -332,7 +341,7 @@ export default {
     switchToReal: '切换至真实账户',
   },
   login: {
-    loginTabs: "邮箱登录",
+    loginTabs: '邮箱登录',
     regTabs: '邮箱注册',
     login: '登录',
     reg: '注册',
@@ -418,7 +427,8 @@ export default {
     joinUs:
       '我们为全球投资者精选个行业龙头和代表性股票，这些股票代表了股票所在国的特点和历史，用户在享受高质量底层资产时，通过持有我们为您设计的股票合约，可以创新性的为您的信心倍增，通过持有合约，用较少成本做大事情。专心享受精选股票带来的收益。 ',
     community: '加入我们的社区',
-    communityTip: '了解 MCLP 团队和我们来自世界各地的交易者的最新动态。我们拥有您成为交易专家所需的一切。',
+    communityTip:
+      '了解 MCLP 团队和我们来自世界各地的交易者的最新动态。我们拥有您成为交易专家所需的一切。',
     desc1:
       '正式开户前，您可在几秒钟内开立一个模拟交易账户试用一下MC LiquidityProvider',
     desc2: '即刻获取1万美元模拟资金',

@@ -28,22 +28,50 @@
         label-width="170px"
       >
         <el-form-item :label="t('common.feedback.form.type')" prop="type">
-          <el-select v-model="data.form.type" :placeholder="t('common.feedback.rulesLabel.type')" style="width:300px;">
-            <el-option :label="t('common.feedback.typeOption[0]')" value="1"></el-option>
-            <el-option :label="t('common.feedback.typeOption[1]')" value="2"></el-option>
-            <el-option :label="t('common.feedback.typeOption[2]')" value="3"></el-option>
-            <el-option :label="t('common.feedback.typeOption[3]')" value="4"></el-option>
-            <el-option :label="t('common.feedback.typeOption[4]')" value="5"></el-option>
-            <el-option :label="t('common.feedback.typeOption[5]')" value="6"></el-option>
-            <el-option :label="t('common.feedback.typeOption[6]')" value="7"></el-option>
-            <el-option :label="t('common.feedback.typeOption[7]')" value="8"></el-option>
+          <el-select
+            v-model="data.form.type"
+            :placeholder="t('common.feedback.rulesLabel.type')"
+            style="width: 300px"
+          >
+            <el-option
+              :label="t('common.feedback.typeOption[0]')"
+              value="1"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[1]')"
+              value="2"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[2]')"
+              value="3"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[3]')"
+              value="4"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[4]')"
+              value="5"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[5]')"
+              value="6"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[6]')"
+              value="7"
+            ></el-option>
+            <el-option
+              :label="t('common.feedback.typeOption[7]')"
+              value="8"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="t('common.feedback.form.title')" prop="title">
           <el-input v-model="data.form.title"></el-input>
         </el-form-item>
         <el-form-item :label="t('common.feedback.form.content')" prop="content">
-          <el-input type="textarea" v-model="data.form.content"></el-input>
+          <el-input v-model="data.form.content" type="textarea"></el-input>
         </el-form-item>
         <el-form-item :label="t('common.feedback.form.upload')">
           <el-upload
@@ -57,14 +85,21 @@
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item :label="t('common.feedback.form.contacts')" prop="contacts">
+        <el-form-item
+          :label="t('common.feedback.form.contacts')"
+          prop="contacts"
+        >
           <el-input v-model="data.form.contacts"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">{{ t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="handleSubmin">{{ t('common.submit') }}</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="handleClose">{{ t('common.cancel') }}</el-button>
+          <el-button type="primary" @click="handleSubmin">
+            {{ t('common.submit') }}
+          </el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -88,10 +123,34 @@ const data = reactive({
     images: '',
   },
   rules: {
-    type: [{ required: true, message: `${t('common.feedback.rulesLabel.type')}`, trigger: 'change' }],
-    title: [{ required: true, message: `${t('common.feedback.rulesLabel.title')}`, trigger: 'blur' }],
-    content: [{ required: true, message: `${t('common.feedback.rulesLabel.content')}`, trigger: 'blur' }],
-    contacts: [{ required: true, message: `${t('common.feedback.rulesLabel.contacts')}`, trigger: 'blur' }],
+    type: [
+      {
+        required: true,
+        message: `${t('common.feedback.rulesLabel.type')}`,
+        trigger: 'change',
+      },
+    ],
+    title: [
+      {
+        required: true,
+        message: `${t('common.feedback.rulesLabel.title')}`,
+        trigger: 'blur',
+      },
+    ],
+    content: [
+      {
+        required: true,
+        message: `${t('common.feedback.rulesLabel.content')}`,
+        trigger: 'blur',
+      },
+    ],
+    contacts: [
+      {
+        required: true,
+        message: `${t('common.feedback.rulesLabel.contacts')}`,
+        trigger: 'blur',
+      },
+    ],
   },
 });
 const showDialog = () => {
@@ -100,7 +159,7 @@ const showDialog = () => {
 const handleClose = () => {
   data.dialogVisible = false;
   data.imagesList = [];
-  uploadImg.value.clearFiles(); 
+  uploadImg.value.clearFiles();
   form.value.resetFields();
 };
 const handleSubmin = () => {

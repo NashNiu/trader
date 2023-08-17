@@ -459,12 +459,36 @@
       <div v-if="data.type === '2'">
         <div class="title">{{ t('index.risk') }}</div>
         <div class="content">
-          <p>Magic Compass LTDs' conservative and prudent risk management helps keep your assets safe.</p>
-          <p>We invest your cash in very short-term government securities maturing in a few months.</p>
-          <p>As they mature, we continuously roll them forward into freshly issued securities.</p>
-          <p>As their interest rate sensitivity is very low, the realized loss would be minimal if they ever needed to be sold.</p>
-          <p>We are required to mark ALL investments to market and report their value to the regulators and investors, so that any issues are immediately recognized.</p>
-          <p>Compare our risk management policies with other banks and brokers that are not required to immediately recognize losses on their investments and invest in longer-term assets to maximize their current profits. Our prudent risk management allows us to pay the highest rates on deposits and charge the lowest rates on margin loans because we are always invested in the current short-term benchmark rate.</p>
+          <p>
+            Magic Compass LTDs' conservative and prudent risk management helps
+            keep your assets safe.
+          </p>
+          <p>
+            We invest your cash in very short-term government securities
+            maturing in a few months.
+          </p>
+          <p>
+            As they mature, we continuously roll them forward into freshly
+            issued securities.
+          </p>
+          <p>
+            As their interest rate sensitivity is very low, the realized loss
+            would be minimal if they ever needed to be sold.
+          </p>
+          <p>
+            We are required to mark ALL investments to market and report their
+            value to the regulators and investors, so that any issues are
+            immediately recognized.
+          </p>
+          <p>
+            Compare our risk management policies with other banks and brokers
+            that are not required to immediately recognize losses on their
+            investments and invest in longer-term assets to maximize their
+            current profits. Our prudent risk management allows us to pay the
+            highest rates on deposits and charge the lowest rates on margin
+            loans because we are always invested in the current short-term
+            benchmark rate.
+          </p>
         </div>
       </div>
     </div>
@@ -485,7 +509,7 @@ onMounted(() => {
   if (route.params.type) {
     data.type = route.params.type;
   }
-})
+});
 </script>
 <style lang="less" scoped>
 .agreement {

@@ -331,8 +331,8 @@
             </template>
           </el-table>
           <el-pagination
-            layout="prev, pager, next"
             ref="pageTrade"
+            layout="prev, pager, next"
             :page-size="data.pageSize"
             :total="data.tradeInfo.count"
             @current-change="_pageChange($event)"

@@ -44,7 +44,9 @@
                     show-password
                   />
                 </el-form-item>
-                <div class="forgot" @click="goForgot">{{t('common.forgotPassword')}}</div>
+                <div class="forgot" @click="goForgot">
+                  {{ t('common.forgotPassword') }}
+                </div>
                 <el-form-item>
                   <el-button type="primary" @click="onSubmitLogin">
                     {{ t('login.login') }}
@@ -119,7 +121,7 @@
         <!-- 忘记密码窗口 -->
         <template v-else>
           <div class="forgotView">
-            <div class="F_title">{{t('common.forgotPassword')}}</div>
+            <div class="F_title">{{ t('common.forgotPassword') }}</div>
             <el-form
               ref="forgotForm"
               :label-position="labelPosition"
@@ -174,7 +176,8 @@
                   {{ t('common.confirm') }}
                 </el-button>
                 <div class="backButton">
-                  {{ t('login.backButtonText') }}<span @click="backTo">{{ t('login.backLogin') }}</span>
+                  {{ t('login.backButtonText') }}
+                  <span @click="backTo">{{ t('login.backLogin') }}</span>
                 </div>
               </el-form-item>
             </el-form>
@@ -280,7 +283,7 @@ const onSubmitForgot = () => {
       postChpwd({
         email: forgotFrom.email,
         verifyCode: forgotFrom.verifyCode,
-        password: forgotFrom.password
+        password: forgotFrom.password,
       }).then((res) => {
         if (res.data.status === 0) {
           // forgotForm.value.resetField();
@@ -462,7 +465,7 @@ onMounted(() => {
   text-align: center;
   width: 100%;
   span {
-    color: #2963A4;
+    color: #2963a4;
     cursor: pointer;
   }
 }

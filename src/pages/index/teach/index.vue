@@ -33,7 +33,10 @@
             <p>
               {{ t('teach.course') }}
             </p>
-            <div class="urlButton" @click="goHref('https://www.youtube.com/@MCLiquidityProvider')">
+            <div
+              class="urlButton"
+              @click="goHref('https://www.youtube.com/@MCLiquidityProvider')"
+            >
               <span>{{ t('teach.visit') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
@@ -49,7 +52,10 @@
           <div class="introduce_text">
             <h4>{{ t('teach.daily') }}</h4>
             <p>{{ t('teach.reviews') }}</p>
-            <div class="urlButton" @click="goHref('https://www.youtube.com/@MCLiquidityProvider')">
+            <div
+              class="urlButton"
+              @click="goHref('https://www.youtube.com/@MCLiquidityProvider')"
+            >
               <span>{{ t('teach.trader') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
@@ -61,7 +67,10 @@
             <p>
               {{ t('teach.free') }}
             </p>
-            <div class="urlButton" @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')">
+            <div
+              class="urlButton"
+              @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')"
+            >
               <span>{{ t('teach.research') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
@@ -79,7 +88,10 @@
             <p>
               {{ t('teach.subscribe') }}
             </p>
-            <div class="urlButton" @click="goHref('https://mc-liquidityprovider.blogspot.com/')">
+            <div
+              class="urlButton"
+              @click="goHref('https://mc-liquidityprovider.blogspot.com/')"
+            >
               <span>{{ t('teach.blog') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
             </div>
@@ -95,8 +107,8 @@ import { useI18n } from 'vue-i18n';
 import Model_4 from '../model_4.vue';
 const { t } = useI18n();
 const goHref = (url) => {
-  window.location.href = url
-}
+  window.location.href = url;
+};
 </script>
 <style lang="less" scoped>
 .teach {

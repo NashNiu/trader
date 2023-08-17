@@ -45,16 +45,25 @@ export default {
         title: 'Question title ',
         content: 'Problem Description ',
         upload: 'Comments added ',
-        contacts: 'Contact information'
+        contacts: 'Contact information',
       },
       rulesLabel: {
         type: 'Please select the question type ',
         title: 'Please enter the question title ',
         content: 'Please enter a description of the problem ',
-        contacts: 'Please enter your contact details'
+        contacts: 'Please enter your contact details',
       },
-      typeOption: ['Registration ',' Account Opening ',' Withdrawal ',' Transaction ',' Recharge ',' KYC ',' System Issues', 'Other'],
-    }
+      typeOption: [
+        'Registration ',
+        ' Account Opening ',
+        ' Withdrawal ',
+        ' Transaction ',
+        ' Recharge ',
+        ' KYC ',
+        ' System Issues',
+        'Other',
+      ],
+    },
   },
   menu: {
     profile: 'Account',
@@ -346,7 +355,7 @@ export default {
     switchToReal: 'Switch to Real Account',
   },
   login: {
-    loginTabs: "Email login",
+    loginTabs: 'Email login',
     regTabs: 'Email register',
     login: 'Log in',
     reg: 'Register',
@@ -435,7 +444,8 @@ export default {
     joinUs:
       'We have selected industry leaders and representative stocks for global investors, which represent the characteristics and history of the countries where the stocks are located. When users enjoy high-quality underlying assets, they can increase their confidence creatively by holding stock contracts designed for you. By holding contracts, they can do big things with less cost. Concentrate on enjoying the benefits of selected stocks.',
     community: 'Join our community',
-    communityTip: 'Keep up to date with the MCLP team and our traders from around the world. We have everything you need to become a trading expert.',
+    communityTip:
+      'Keep up to date with the MCLP team and our traders from around the world. We have everything you need to become a trading expert.',
     desc1:
       'Before officially opening an account, you can open a demo trading account in seconds to try MC LiquidityProvider',
     desc2: 'Get $10,000 Demo Funding Instantly',
@@ -505,7 +515,8 @@ export default {
     ETF: 'ETFs and Indices',
     ETFDesc:
       'Trade ETFs and indices and find more opportunities on market-moving news, during local market hours, or at your convenience',
-    index: 'Participate in flexible global indices for asset allocation and hedging',
+    index:
+      'Participate in flexible global indices for asset allocation and hedging',
     sample:
       'The following index symbols are available for trading, offering the opportunity to participate in a broad range of sectors:',
     scanDownload:

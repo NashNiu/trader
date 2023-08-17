@@ -1094,7 +1094,7 @@ const postAgentUpdateInfo = async (row) => {
 </script>
 <script>
 export default {
-  name: 'newTable',
+  name: 'NewTable',
 };
 </script>
 <style lang="less">

@@ -261,7 +261,9 @@ const router = useRouter();
 const userStore = useUserStore();
 const headerStore = useHeaderStore();
 const userInfo = computed(() => userStore.userInfo);
-const centerDialogVisible = computed(() => { return headerStore.centerDialogVisible })
+const centerDialogVisible = computed(() => {
+  return headerStore.centerDialogVisible;
+});
 const token = localStorage.getItem(configConst.TOKEN);
 const data = reactive({
   activeIndex: 1,
@@ -416,11 +418,11 @@ const screenLang = () => {
   });
 };
 const hideDialog = () => {
-  headerStore.setCenterDialogVisible(false)
+  headerStore.setCenterDialogVisible(false);
   // centerDialogVisible.value = false;
 };
 const toggleTab = () => {
-  headerStore.setCenterDialogVisible(true)
+  headerStore.setCenterDialogVisible(true);
   // centerDialogVisible.value = true;
   // nextTick(() => {
   //   const Login = ref(null);
@@ -450,7 +452,7 @@ const goTrade = () => {
       query: {},
     });
   } else {
-    headerStore.setCenterDialogVisible(true)
+    headerStore.setCenterDialogVisible(true);
     // centerDialogVisible.value = true;
   }
 };

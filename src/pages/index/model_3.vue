@@ -68,7 +68,9 @@
           />
           <img
             src="../../assets/img/newIndex/s_icon_4.png"
-            @click="goHref('https://www.linkedin.com/company/magic-compass-ltd/')"
+            @click="
+              goHref('https://www.linkedin.com/company/magic-compass-ltd/')
+            "
           />
           <img
             src="../../assets/img/newIndex/s_icon_5.png"
@@ -201,7 +203,7 @@ const goHref = (url) => {
       display: block;
       padding: 40px 0 0;
       text-align: center;
-      >img {
+      > img {
         width: 350px;
       }
       h4 {

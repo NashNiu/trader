@@ -144,7 +144,7 @@ const _toggleRowExpansion = (row) => {
 </script>
 <script>
 export default {
-  name: 'tableCount',
+  name: 'TableCount',
 };
 </script>
 <style>

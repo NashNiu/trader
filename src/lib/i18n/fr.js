@@ -45,16 +45,25 @@ export default {
         title: 'Titre de la question',
         content: 'Description du problème',
         upload: 'Complément de l’avis',
-        contacts: 'Contact contact contact'
+        contacts: 'Contact contact contact',
       },
       rulesLabel: {
         type: 'Veuillez sélectionner le type de question',
         title: 'Veuillez entrer le titre de la question',
         content: 'Veuillez entrer une description du problème',
-        contacts: 'Veuillez entrer vos coordonnées'
+        contacts: 'Veuillez entrer vos coordonnées',
       },
-      typeOption: ["inscription", "ouverture de compte", "retrait", "transaction", "recharge", "KYC", "problème système", "autre"]
-    }
+      typeOption: [
+        'inscription',
+        'ouverture de compte',
+        'retrait',
+        'transaction',
+        'recharge',
+        'KYC',
+        'problème système',
+        'autre',
+      ],
+    },
   },
   menu: {
     profile: 'Compte',
@@ -434,9 +443,10 @@ export default {
       "MCLiquidityProvider dispose d'un capital social de plus de 10 milliards de dollars américains et bénéficie de la confiance de plus de 1,8 million d'investisseurs de plus de 200 pays et régions",
     stock: "Contrat d'actions",
     joinUs:
-      "Nous certains investisseurs mondiaux de l’industrie et représentatif, ces actions représentent et l’historique de la situation, caractérisée par des utilisateurs actifs au rez-de-chaussée de qualité, nous vous proposons par l’intermédiaire de contrats la conception d’actions novatrices pour votre confiance, par l’intermédiaire de contrats avec moins de grandes choses. Concentrez-vous à profiter des gains des actions sélectionnées.",
+      'Nous certains investisseurs mondiaux de l’industrie et représentatif, ces actions représentent et l’historique de la situation, caractérisée par des utilisateurs actifs au rez-de-chaussée de qualité, nous vous proposons par l’intermédiaire de contrats la conception d’actions novatrices pour votre confiance, par l’intermédiaire de contrats avec moins de grandes choses. Concentrez-vous à profiter des gains des actions sélectionnées.',
     community: 'Rejoignez notre communauté',
-    communityTip: 'Découvrez les dernières actualités de l’équipe MCLP et de nos traders du monde entier. Nous avons tout ce dont vous avez besoin pour devenir un expert du trading.',
+    communityTip:
+      'Découvrez les dernières actualités de l’équipe MCLP et de nos traders du monde entier. Nous avons tout ce dont vous avez besoin pour devenir un expert du trading.',
     desc1:
       "Avant d'ouvrir officiellement un compte, vous pouvez ouvrir un compte de trading simulé en quelques secondes pour essayer MCLquidityProvider",
     desc2: 'Obtenez 10 000 $ de financement de démonstration instantanément',
@@ -471,7 +481,8 @@ export default {
     ODD: "Le trading d'options comporte des risques et ne convient pas à tous les investisseurs. Pour plus d'informations, veuillez lire les caractéristiques et les risques des options standard (également appelées Option Disclosure Document (ODD)). Vous pouvez également appeler le +35725023880 pour demander une copie de l'ODD. Commencer Avant de négocier, les clients doivent lire la déclaration de divulgation des risques pertinente sur notre page d'avertissement et de divulgation. Le trading sur marge ne convient qu'aux investisseurs expérimentés ayant une tolérance au risque élevée. Vos pertes peuvent dépasser votre investissement initial. À propos des prêts sur marge taux d'intérêt Pour plus d'informations, consultez la page Taux de prêt sur marge. Les contrats à terme sur titres comportent un risque élevé et ne conviennent pas à tous les investisseurs. Vos pertes peuvent dépasser votre investissement initial. Les produits structurels et les produits à revenu fixe (tels que les obligations) sont des produits complexes présentant des risques élevés et ne conviennent pas à tous les investisseurs. Veuillez lire l'avertissement sur les risques et la déclaration de divulgation avant de commencer à négocier",
     LTD: 'Fournisseur MCLiquity pour MAGIC COMPASSLTD',
     CFTC: 'Un membre de NYSE-FINRA-SIPC, réglementé par Chypre et la Commodity Futures Trading Commission',
-    address: 'Votre adresse de dépôt de pièces:Sarlo 9, ayos athanasios, 4106 limassol, Chypre',
+    address:
+      'Votre adresse de dépôt de pièces:Sarlo 9, ayos athanasios, 4106 limassol, Chypre',
     website: 'site Internet',
     other: 'Informations sur les autres filiales de Moshi Securities MCLP',
   },
@@ -506,7 +517,8 @@ export default {
     ETF: 'ETF et indices',
     ETFDesc:
       "Tradez des ETF et des indices et trouvez plus d'opportunités sur les actualités du marché, pendant les heures d'ouverture du marché local ou à votre convenance",
-    index: 'Participation à des indices mondiaux flexibles pour la répartition des actifs et la couverture',
+    index:
+      'Participation à des indices mondiaux flexibles pour la répartition des actifs et la couverture',
     sample:
       "Les symboles d'indices suivants sont disponibles à la négociation, offrant la possibilité de participer à un large éventail de secteurs:",
     scanDownload:

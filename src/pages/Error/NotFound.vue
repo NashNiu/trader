@@ -18,6 +18,6 @@ import Footer from '../index/Footer.vue';
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 </style>

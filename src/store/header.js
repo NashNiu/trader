@@ -6,7 +6,7 @@ export default defineStore('header', {
   state: () => ({
     walletData: [],
     addressData: [],
-    centerDialogVisible: false
+    centerDialogVisible: false,
   }),
   actions: {
     async getWalletData({ forceFresh } = { forceFresh: false }) {
@@ -40,7 +40,7 @@ export default defineStore('header', {
       }
     },
     setCenterDialogVisible(data) {
-      this.centerDialogVisible = data
-    }
+      this.centerDialogVisible = data;
+    },
   },
 });

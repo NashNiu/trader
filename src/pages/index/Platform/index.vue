@@ -110,7 +110,9 @@
             <h4>
               {{ t('plat.freeDown') }}
             </h4>
-            <div class="down_button" @click="downMt5">{{ t('plat.forWin') }}</div>
+            <div class="down_button" @click="downMt5">
+              {{ t('plat.forWin') }}
+            </div>
             <div class="down_button down_button_black" @click="downMt5">
               {{ t('plat.forMac') }}
             </div>
@@ -343,9 +345,7 @@
 </template>
 <script setup>
 import Model_4 from '../model_4.vue';
-import {
-  ref
-} from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import androidImg from '@/assets/img/newIndex/Andriod.png';
 import androidImgEn from '@/assets/img/newIndex/Andriod_en.png';
@@ -357,13 +357,13 @@ const { t, locale } = useI18n();
 const androidSrc = locale.value === 'cn' ? androidImg : androidImgEn;
 const iosSrc = locale.value === 'cn' ? iosImg : iosImgEn;
 const downMt5 = () => {
-  window.location.href = 'https://www.metatrader5.com/en/download'
-}
+  window.location.href = 'https://www.metatrader5.com/en/download';
+};
 const goTrade = () => {
-  headerStore.setCenterDialogVisible(true)
+  headerStore.setCenterDialogVisible(true);
 };
 const hideDialog = () => {
-  headerStore.setCenterDialogVisible(false)
+  headerStore.setCenterDialogVisible(false);
 };
 </script>
 <style lang="less" scoped>

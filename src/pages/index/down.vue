@@ -12,7 +12,9 @@
                 <img :src="androidSrc" alt="Andriod" />
                 <img :src="iosSrc" alt="IOS" />
               </div>
-              <div class="down_view_button_2" @click="loginOpen">{{ t('index.loginWap') }}</div>
+              <div class="down_view_button_2" @click="loginOpen">
+                {{ t('index.loginWap') }}
+              </div>
             </div>
             <div class="down_view_ewm">
               <img src="../../assets/img/newIndex/ewm.png" />
@@ -39,6 +41,8 @@ import iosImg from '@/assets/img/newIndex/IOS.png';
 import iosImgEn from '@/assets/img/newIndex/IOS_en.png';
 import { useI18n } from 'vue-i18n';
 import { useHeaderStore } from '@/store/index.js';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const { t, locale } = useI18n();
 const headerStore = useHeaderStore();
 const androidSrc = locale.value === 'cn' ? androidImg : androidImgEn;
@@ -50,9 +54,9 @@ const loginOpen = () => {
       query: {},
     });
   } else {
-    headerStore.setCenterDialogVisible(true)
+    headerStore.setCenterDialogVisible(true);
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .download {

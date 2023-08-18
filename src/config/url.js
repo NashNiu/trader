@@ -4,4 +4,5 @@ export default {
   demoSocketUrl: `${location.host}/wss/api/lp/demoauth/websocks/mt5sock`,
   klineHistoryDataUrl: '/kline/TradeInfo/ChartRequestBinary',
   helpUrl: 'https://support.mcgrp.com/hc', // 帮助中心
+  newWalletUrl: 'http://www.dwallet.lan/', // 钱包嵌入页的域名
 };

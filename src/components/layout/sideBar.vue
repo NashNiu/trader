@@ -73,6 +73,11 @@ const menuItemData = [
     icon: 'icon-wallet',
     title: t?.('menu.wallet'),
   },
+  {
+    index: '/t/newWallet',
+    icon: 'icon-wallet',
+    title: t?.('menu.wallet'),
+  },
 ];
 // 如果是机构客户展示代理模块
 if (userInfo.agentType === '1') {

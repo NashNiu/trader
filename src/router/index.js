@@ -94,6 +94,12 @@ const router = createRouter({
           component: () => import('@/pages/Wallet/index.vue'),
         },
         {
+          path: 'newWallet',
+          name: 'newWallet',
+          meta: { hideChart: true },
+          component: () => import('@/pages/newWallet/index.vue'),
+        },
+        {
           path: 'userCenter',
           name: 'UserCenter',
           meta: { hideChart: true },

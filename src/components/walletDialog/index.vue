@@ -36,7 +36,7 @@
             parent="depositToWallet"
             @finish="certificateFinish"
           />
-          <Deposit v-if="!ifNeedVerification" />
+          <Recharge v-if="!ifNeedVerification" />
         </div>
         <div v-if="activeTab === 2">
           <Verification
@@ -44,7 +44,7 @@
             parent="walletToOut"
             @finish="certificateFinish"
           />
-          <Withdraw v-if="!ifNeedVerification" @hide="hide" />
+          <WithdrawCoin v-if="!ifNeedVerification" @hide="hide" />
         </div>
         <div v-if="activeTab === 3">
           <Verification
@@ -65,35 +65,39 @@
   </el-dialog>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import wallerImg from '@/assets/img/header/wallet.png';
 import closeImg from '@/assets/img/header/close.png';
 import Verification from '@/components/walletDialog/verification.vue';
 import Deposit from '@/components/walletDialog/deposit.vue';
 import Withdraw from '@/components/walletDialog/withdraw.vue';
 import Transfer from '@/components/walletDialog/transfer.vue';
+import Recharge from './recharge.vue';
+import WithdrawCoin from './withdrawCoin.vue';
+import { useWalletStore } from '@/store/index.js';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const visible = ref(false);
 const tabData = [
   {
-    label: t('header.deposit'),
+    label: t('header.recharge'),
     value: 1,
   },
   {
-    label: t('header.withdraw'),
+    label: t('header.withdrawCoin'),
     value: 2,
   },
   {
-    label: t('header.transfer'),
+    label: t('header.deposit'),
     value: 3,
   },
   {
-    label: t('header.buyCrypto'),
+    label: t('header.withdraw'),
     value: 4,
   },
 ];
 const ifNeedVerification = ref(true);
+const walletStore = useWalletStore();
 const activeTab = ref(1);
 const tabChange = (value) => {
   if (value !== activeTab.value) {
@@ -104,13 +108,16 @@ const tabChange = (value) => {
 const hide = () => {
   visible.value = false;
 };
-const show = () => {
+const show = async () => {
   visible.value = true;
 };
 const certificateFinish = () => {
   ifNeedVerification.value = false;
 };
 defineExpose({ show });
+onMounted(() => {
+  walletStore.getNewWalletToken();
+});
 </script>
 <style lang="less" scoped>
 .walletDialogHeader {

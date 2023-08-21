@@ -760,6 +760,8 @@ export default {
     deposit: '入金',
     withdraw: '出金',
     transfer: '转入',
+    recharge: '充币',
+    withdrawCoin: '提币',
     buyCrypto: '购买数字货币',
     max: '最大',
     rateExchange: '目前汇率是{rate},钱包将会到账{amount} {coin}',
@@ -781,6 +783,8 @@ export default {
       '交易账户将会收到 <strong style="color: #333333">USDT</strong> 的存款',
     transferToAccount: '转到交易账户',
     enterTransferAmount: '输入转入金额',
+    withdrawalFee: '手续费',
+    actualArrival: '实际到账',
   },
   symbol: {
     Crypto: '数字货币',

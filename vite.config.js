@@ -63,6 +63,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/lpapi/, ''),
       },
+      '/walletapi': {
+        target: 'http://fgateway.dwallet.lan',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/walletapi/, ''),
+      },
       '/wss': {
         target: 'http://trader.lp.lan/wss',
         changeOrigin: true,

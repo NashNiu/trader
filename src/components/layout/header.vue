@@ -42,7 +42,7 @@
                   :key="item.id"
                   class="walletItemBox"
                 >
-                  <span class="balance">{{ item.available.toFixed(8) }}</span>
+                  <span class="balance">{{ item.amount?.toFixed(8) }}</span>
                   <span class="currency">{{ item.currency }}</span>
                   <CoinIco class="icon" :size="22" :coin="item.currency" />
                 </div>
@@ -99,36 +99,24 @@
           </template>
         </div>
       </div>
-      <div class="outBtn">
-        <el-button
-          class="withdrawBtn"
-          type="primary"
-          @click="showWithdrawDialog"
-        >
-          {{ t('header.withdraw') }}
-        </el-button>
-      </div>
     </div>
     <WalletDialog ref="walletDialogRef" />
-    <WithdrawDialog ref="withdrawDialogRef" />
   </header>
 </template>
 <script setup>
 import { Search } from '@element-plus/icons-vue';
-import { useSocketStore, useUserStore, useHeaderStore } from '@/store/index.js';
+import { useSocketStore, useUserStore, useWalletStore } from '@/store/index.js';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import DownArrowImg from '@/assets/img/header/down.png';
 import WalletDialog from '@/components/walletDialog/index.vue';
-import WithdrawDialog from '@/components/withdrawDialog/index.vue';
 import { ElMessage } from 'element-plus';
 const { t } = useI18n();
 const socketStore = useSocketStore();
 const userStore = useUserStore();
-const headerStore = useHeaderStore();
+const walletStore = useWalletStore();
 const walletDialogRef = ref();
-const withdrawDialogRef = ref();
 const userFunds = computed(() => socketStore.userFunds);
 const netWorth = computed(() => socketStore.userNetWorth);
 const profit = computed(
@@ -143,7 +131,7 @@ const setFundsVisible = (visible) => {
 };
 
 const getWalletDataLoading = ref(false);
-const walletData = computed(() => headerStore.walletData);
+const walletData = computed(() => walletStore.coinBalance);
 const searchWalletText = ref('');
 const filterWalletData = computed(() => {
   if (searchWalletText.value.trim()) {
@@ -156,19 +144,13 @@ const filterWalletData = computed(() => {
 });
 const getWalletData = async () => {
   getWalletDataLoading.value = true;
-  await headerStore.getWalletData();
+  // await headerStore.getWalletData();
+  await walletStore.getBalance();
   getWalletDataLoading.value = false;
 };
 const showWalletDialog = () => {
   if (isRealAccount.value) {
     walletDialogRef?.value?.show();
-  } else {
-    ElMessage.info('请切换至真实账户进行操作');
-  }
-};
-const showWithdrawDialog = () => {
-  if (isRealAccount.value) {
-    withdrawDialogRef.value.show();
   } else {
     ElMessage.info('请切换至真实账户进行操作');
   }

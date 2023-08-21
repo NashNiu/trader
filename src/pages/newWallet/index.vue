@@ -1,7 +1,8 @@
 <script setup>
 import { configUrl } from '@/config';
-import { tools } from '@/utils';
 import { ref, computed } from 'vue';
+import { useWalletStore } from '@/store';
+const walletStore = useWalletStore();
 const loading = ref(false);
 const token = ref('');
 const url = computed(
@@ -9,7 +10,7 @@ const url = computed(
 );
 const getToken = async () => {
   loading.value = true;
-  token.value = await tools.getNewWalletToken();
+  token.value = await walletStore.getNewWalletToken();
   loading.value = false;
 };
 getToken();

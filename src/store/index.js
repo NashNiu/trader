@@ -4,3 +4,4 @@ export { default as useCommonStore } from './common.js';
 export { default as useUserStore } from './user.js';
 export { default as useChartStore } from './chart.js';
 export { default as useHeaderStore } from './header.js';
+export { default as useWalletStore } from './wallet.js';

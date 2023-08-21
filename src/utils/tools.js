@@ -10,7 +10,6 @@ import {
 import { configConst, configKey } from '@/config/index.js';
 import cryptoJS from 'crypto-js';
 import { getSymbolType, symbolArr } from '@/config/symbol.js';
-import { newWalletApi } from '@/api';
 // 计算持仓 价格变化
 export function calcOrderChange({ order, liveData }) {
   // let profit = 0;
@@ -239,16 +238,4 @@ export const currency = {
       sign + currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float
     );
   },
-};
-
-// 获取新钱包token
-export const getNewWalletToken = async () => {
-  const res = await newWalletApi.getToken();
-  if (res.data.status === 0 && res.data.data.status === 0) {
-    return res.data.data.token;
-  } else {
-    await newWalletApi.createWallet();
-    const res = await newWalletApi.getToken();
-    return res.data.data.token;
-  }
 };

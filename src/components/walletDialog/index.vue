@@ -52,7 +52,15 @@
             parent="walletToTrader"
             @finish="certificateFinish"
           />
-          <Transfer v-if="!ifNeedVerification" @hide="hide" />
+          <Deposit v-if="!ifNeedVerification" @hide="hide" />
+        </div>
+        <div v-if="activeTab === 4">
+          <Verification
+            v-show="ifNeedVerification"
+            parent="traderWithdraw"
+            @finish="certificateFinish"
+          />
+          <Withdraw v-if="!ifNeedVerification" @hide="hide" />
         </div>
       </div>
       <!--      <div class="footerBox">-->
@@ -71,7 +79,6 @@ import closeImg from '@/assets/img/header/close.png';
 import Verification from '@/components/walletDialog/verification.vue';
 import Deposit from '@/components/walletDialog/deposit.vue';
 import Withdraw from '@/components/walletDialog/withdraw.vue';
-import Transfer from '@/components/walletDialog/transfer.vue';
 import Recharge from './recharge.vue';
 import WithdrawCoin from './withdrawCoin.vue';
 import { useWalletStore } from '@/store/index.js';
@@ -135,7 +142,6 @@ onMounted(() => {
   }
   span {
     margin-left: 10px;
-    font-family: MicrosoftYaHei-Bold;
     font-size: 22px;
     color: #333333;
   }

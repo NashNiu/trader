@@ -785,6 +785,10 @@ export default {
     enterTransferAmount: '输入转入金额',
     withdrawalFee: '手续费',
     actualArrival: '实际到账',
+    availableAmount: '可入金金额',
+    payAmount: '支付金额',
+    withdrawAmount: '出金金额',
+    availableWithdrawAmount: '可用出金金额',
   },
   symbol: {
     Crypto: '数字货币',

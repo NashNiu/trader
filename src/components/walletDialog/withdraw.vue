@@ -134,8 +134,8 @@ const coinItemClick = async (coin) => {
 };
 const passCheck = () => {
   ElMessageBox.prompt(t('header.inputPayPass'), '', {
-    confirmButtonText: t('header.confirm'),
-    cancelButtonText: t('header.cancel'),
+    confirmButtonText: t('common.confirm'),
+    cancelButtonText: t('common.cancel'),
     inputType: 'password',
     inputPattern: /^.+$/,
     inputErrorMessage: 'Required',

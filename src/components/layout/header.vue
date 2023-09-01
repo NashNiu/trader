@@ -76,7 +76,11 @@
         </div>
         <div class="itemBox small">
           <span class="itemValue">
-            {{ userFundsVisible ? '$' + (userFunds?.margin || 0) : ' *** ' }}
+            {{
+              userFundsVisible
+                ? '$' + (userFunds?.margin?.toFixed(2) || 0)
+                : ' *** '
+            }}
           </span>
           <span class="itemKey">{{ t('common.occupy') }}</span>
         </div>

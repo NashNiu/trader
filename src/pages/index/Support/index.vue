@@ -7,9 +7,38 @@
           <h4>{{ t('support.question') }}？</h4>
           <p>{{ t('support.contact') }}！</p>
         </div>
-        <div class="right">
+        <!-- <div class="right">
           <div>{{ t('support.chat') }}</div>
           <div @click="showDialog">{{ t('support.consult') }}</div>
+        </div> -->
+        <div class="form">
+          <el-form
+            ref="form"
+            :model="data.form"
+            :rules="data.rules"
+            label-position="top"
+            label-width="170px"
+          >
+            <div class="form-item">
+              <el-form-item :label="t('common.feedback.form.name')" prop="name">
+                <el-input v-model="data.form.name" :placeholder="t('common.feedback.placeholder.name')"></el-input>
+              </el-form-item>
+              <el-form-item :label="t('common.feedback.form.phone')" prop="phone">
+                <el-input v-model="data.form.phone" :placeholder="t('common.feedback.placeholder.phone')"></el-input>
+              </el-form-item>
+              <el-form-item :label="t('common.feedback.form.email')" prop="email">
+                <el-input v-model="data.form.email" :placeholder="t('common.feedback.placeholder.email')"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="handleSubmin" class="submin-style">{{ t('common.consult') }}</el-button>
+              </el-form-item>
+            </div>
+            <div class="form-item">
+              <el-form-item :label="t('common.feedback.form.content2')">
+                <el-input v-model="data.form.content" :placeholder="t('common.feedback.placeholder.content2')" maxlength="500" show-word-limit type="textarea"></el-input>
+              </el-form-item>
+            </div>
+          </el-form>
         </div>
       </div>
     </div>
@@ -116,41 +145,40 @@ const data = reactive({
   dialogVisible: false,
   imagesList: [],
   form: {
-    type: '',
-    title: '',
-    content: '',
-    contacts: '',
-    images: '',
+    name: '',
+    phone: '',
+    email: '',
+    content: ''
   },
   rules: {
-    type: [
+    name: [
       {
         required: true,
-        message: `${t('common.feedback.rulesLabel.type')}`,
-        trigger: 'change',
+        message: `${t('common.feedback.rulesLabel.name')}`,
+        trigger: 'blur',
       },
     ],
-    title: [
+    phone: [
       {
         required: true,
-        message: `${t('common.feedback.rulesLabel.title')}`,
+        message: `${t('common.feedback.rulesLabel.phone')}`,
+        trigger: 'blur',
+      },
+    ],
+    email: [
+      {
+        required: true,
+        message: `${t('common.feedback.rulesLabel.phone')}`,
         trigger: 'blur',
       },
     ],
     content: [
       {
         required: true,
-        message: `${t('common.feedback.rulesLabel.content')}`,
+        message: `${t('common.feedback.rulesLabel.content2')}`,
         trigger: 'blur',
       },
-    ],
-    contacts: [
-      {
-        required: true,
-        message: `${t('common.feedback.rulesLabel.contacts')}`,
-        trigger: 'blur',
-      },
-    ],
+    ]
   },
 });
 const showDialog = () => {
@@ -171,7 +199,9 @@ const handleSubmin = () => {
             message: t('common.operateSuccess'),
             type: 'success',
           });
-          handleClose();
+          // handleClose();
+          form.value.resetFields();
+          data.form.content = ''
         }
       });
     }
@@ -200,13 +230,10 @@ const handleAvatarSuccess = (res, file) => {
     margin-bottom: 25px;
   }
   .chat {
-    background: #f6f8f9;
-    padding: 26px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 26px 0;
     border-radius: 10px;
     .left {
+      margin-bottom: 30px;
       h4 {
         font-size: 26px;
         line-height: 41px;
@@ -249,5 +276,32 @@ const handleAvatarSuccess = (res, file) => {
   display: inline-block;
   width: 100%;
   text-align: right;
+}
+</style>
+<style lang="less">
+.submin-style {
+  width: 100%;
+  height: 44px;
+  background-color: #2963A4;
+}
+.form-item {
+  display: inline-block;
+  width: 580px;
+  vertical-align: top;
+  &:nth-child(1) {
+    margin-right: 40px;
+  }
+  .el-input {
+    height: 44px;
+    .el-input__wrapper {
+      background-color: #F9F9F9;
+    }
+  }
+  .el-textarea {
+    .el-textarea__inner {
+      height: 232px;
+      background-color: #F9F9F9;
+    }
+  }
 }
 </style>

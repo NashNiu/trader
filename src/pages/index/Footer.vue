@@ -11,13 +11,13 @@
         <el-col :xs="8" :sm="8" :md="5">
           <div class="menu_ul">
             <div class="menu_li">MCLP</div>
-            <div class="menu_li" @click="goPage('/Feature')">
+            <div class="menu_li hover_li" @click="goPage('/Feature')">
               {{ t('index.feature') }}
             </div>
-            <div class="menu_li" @click="goPage('/Product')">
+            <div class="menu_li hover_li" @click="goPage('/Product')">
               {{ t('index.product') }}
             </div>
-            <div class="menu_li" @click="goPage('/FixPrice')">
+            <div class="menu_li hover_li" @click="goPage('/FixPrice')">
               {{ t('index.price') }}
             </div>
           </div>
@@ -25,10 +25,10 @@
         <el-col :xs="8" :sm="8" :md="5">
           <div class="menu_ul">
             <div class="menu_li">{{ t('index.service') }}</div>
-            <div class="menu_li" @click="goPage('/teach')">
+            <div class="menu_li hover_li" @click="goPage('/teach')">
               {{ t('index.teach') }}
             </div>
-            <div class="menu_li" @click="goPage('/Support')">
+            <div class="menu_li hover_li" @click="goPage('/Support')">
               {{ t('index.support') }}
             </div>
           </div>
@@ -36,18 +36,38 @@
         <el-col :xs="8" :sm="8" :md="5">
           <div class="menu_ul">
             <div class="menu_li">{{ t('index.term') }}</div>
-            <div class="menu_li" @click="goPage('/table')">
+            <div class="menu_li hover_li" @click="goPage('/table')">
               {{ t('index.disclosure') }}
             </div>
-            <div class="menu_li" @click="goPage('/agreement/1')">
+            <div class="menu_li hover_li" @click="goPage('/agreement/1')">
               {{ t('index.privacy') }}
             </div>
-            <div class="menu_li" @click="goPage('/agreement/2')">
+            <div class="menu_li hover_li" @click="goPage('/agreement/2')">
               {{ t('index.risk') }}
             </div>
           </div>
         </el-col>
       </el-row>
+    </div>
+    <!-- 加入我们社区 -->
+    <div class="join">
+      <h4>{{ t('index.community') }}:</h4>
+      <div class="href-list">
+        <img
+          src="../../assets/img/newIndex/f_icon_1.png"
+          @click="
+            goHref('https://www.youtube.com/@MCLiquidityProvider')
+          "
+        />
+        <img
+          src="../../assets/img/newIndex/f_icon_2.png"
+          @click="goHref('https://twitter.com/MagicCompassO')"
+        />
+        <img
+          src="../../assets/img/newIndex/f_icon_3.png"
+          @click="goHref('https://www.facebook.com/MagicCompassOfficial')"
+        />
+      </div>
     </div>
     <div class="footer_text">
       <strong>
@@ -84,6 +104,9 @@ const goPage = (url) => {
     path: url,
   });
 };
+const goHref = (url) => {
+  window.open(url, '_black');
+};
 </script>
 <style lang="less" scoped>
 a {
@@ -107,6 +130,12 @@ a {
         margin-bottom: 17px;
         &:last-child {
           margin-bottom: 0;
+        }
+      }
+      .hover_li {
+        &:hover {
+          color: #2963a4;
+          cursor: pointer;
         }
       }
     }
@@ -137,6 +166,27 @@ a {
       &:nth-child(5) {
         font-size: 16px;
         font-weight: bold;
+      }
+    }
+  }
+  .join {
+    display: flex;
+    align-items: center;
+    padding: 45px 0;
+    margin: 26px 0 20px;
+    h4 {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0em;
+      margin-right: 30px;
+    }
+    .href-list {
+      display: flex;
+      align-items: center;
+      > img {
+        margin-right: 52px;
+        cursor: pointer;
       }
     }
   }

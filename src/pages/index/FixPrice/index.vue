@@ -6,11 +6,15 @@
         <div class="price_table-title">{{ t('price.commission') }}</div>
         <div class="price_table-tr">
           <div>{{ t('price.stock') }}</div>
-          <div>{{ t('price.free') }}</div>
+          <div>{{ t('price.p5') }}</div>
         </div>
         <div class="price_table-tr">
-          <div></div>
+          <div>{{ t('price.commodities') }}</div>
           <div>{{ t('price.p1') }}</div>
+        </div>
+        <div class="price_table-tr">
+          <div>{{ t('price.index') }}</div>
+          <div>{{ t('price.p4') }}</div>
         </div>
         <div class="price_table-tr">
           <div>{{ t('price.coin') }}</div>
@@ -18,8 +22,8 @@
             <p>
               {{ t('price.p2') }}
             </p>
-            <p>{{ t('price.view') }}</p>
-            <p>{{ t('price.p3') }}</p>
+            <!-- <p>{{ t('price.view') }}</p>
+            <p>{{ t('price.p3') }}</p> -->
           </div>
         </div>
       </div>
@@ -27,6 +31,10 @@
         <div class="price_table-title">{{ t('price.allFee') }}</div>
         <div class="price_table-tr">
           <div>{{ t('price.deposit') }}</div>
+          <div>{{ t('price.free') }}</div>
+        </div>
+        <div class="price_table-tr">
+          <div>{{ t('price.transaction') }}</div>
           <div>{{ t('price.free') }}</div>
         </div>
         <div class="price_table-tr">

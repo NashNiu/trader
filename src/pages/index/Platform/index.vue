@@ -135,7 +135,7 @@
           </div>
         </el-col>
       </el-row>
-      <div class="MT5Model_tool">
+      <!-- <div class="MT5Model_tool">
         <div class="MT5Model_title">
           <h1>{{ t('plat.tradeCenter') }}</h1>
           <p>
@@ -146,8 +146,8 @@
           <img src="../../../assets/img/newIndex/P_tool_button.png" />
           <img src="../../../assets/img/newIndex/P_tool_button2.png" />
         </div>
-      </div>
-      <div class="MT5Model_trading">
+      </div> -->
+      <!-- <div class="MT5Model_trading">
         <div class="MT5Model_title">
           <h1>{{ t('plat.autoTrade') }}</h1>
           <p>{{ t('plat.meta') }}</p>
@@ -162,9 +162,8 @@
             <span>{{ t('plat.eaGuide') }}</span>
           </div>
         </div>
-        <!-- <div class="MT5Model_trading_switch"></div> -->
-      </div>
-      <div id="Mobile" class="MT5Model_mobile">
+      </div> -->
+      <!-- <div id="Mobile" class="MT5Model_mobile">
         <div class="MT5Model_title">
           <h1>{{ t('plat.mt5Mobile') }}</h1>
           <p>
@@ -222,8 +221,8 @@
             </div>
           </el-col>
         </el-row>
-      </div>
-      <div id="WAB" class="MT5Model_wab">
+      </div> -->
+      <!-- <div id="WAB" class="MT5Model_wab">
         <div class="MT5Model_title">
           <h1>
             <span>{{ t('plat.web') }}</span>
@@ -338,7 +337,7 @@
             <span>{{ t('plat.tryDemo') }}</span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <Model_4 />
   </div>

@@ -36,6 +36,11 @@ const router = createRouter({
           component: () => import('@/pages/index/Platform/index.vue'),
         },
         {
+          path: 'Platform/MCLP',
+          name: 'MCLP',
+          component: () => import('@/pages/index/Platform/MCLP.vue'),
+        },
+        {
           path: 'teach',
           name: 'teach',
           component: () => import('@/pages/index/teach/index.vue'),

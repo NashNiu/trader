@@ -5,22 +5,22 @@
         <h1>{{ t('teach.teach') }}</h1>
         <div class="teach_video_list">
           <div>
-            <div class="video_img">
+            <div class="video_img" @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')">
               <img src="../../../assets/img/newIndex/video_b.png" />
               <img src="../../../assets/img/newIndex/play.png" />
             </div>
             <p>{{ t('teach.learn') }}</p>
-            <el-button type="primary" color="#2963a4" size="large" round>
+            <el-button type="primary" color="#2963a4" size="large" round @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')">
               {{ t('teach.video') }}
             </el-button>
           </div>
           <div>
-            <div class="video_img">
+            <div class="video_img" @click="goHref('https://www.youtube.com/watch?v=mO-rWR725LE&t=3s')">
               <img src="../../../assets/img/newIndex/video_b2.png" />
               <img src="../../../assets/img/newIndex/play.png" />
             </div>
-            <p>{{ t('teach.learn') }}</p>
-            <el-button type="primary" color="#2963a4" size="large" round>
+            <p>{{ t('teach.learn2') }}</p>
+            <el-button type="primary" color="#2963a4" size="large" round @click="goHref('https://www.youtube.com/watch?v=mO-rWR725LE&t=3s')">
               {{ t('teach.video') }}
             </el-button>
           </div>
@@ -35,7 +35,7 @@
             </p>
             <div
               class="urlButton"
-              @click="goHref('https://www.youtube.com/@MCLiquidityProvider')"
+              @click="goHref('https://www.youtube.com/watch?v=RDu7GIKY6Ok')"
             >
               <span>{{ t('teach.visit') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
@@ -54,7 +54,7 @@
             <p>{{ t('teach.reviews') }}</p>
             <div
               class="urlButton"
-              @click="goHref('https://www.youtube.com/@MCLiquidityProvider')"
+              @click="goHref('https://www.youtube.com/watch?v=RDu7GIKY6Ok')"
             >
               <span>{{ t('teach.trader') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
@@ -69,7 +69,7 @@
             </p>
             <div
               class="urlButton"
-              @click="goHref('https://www.youtube.com/watch?v=RXbst0uYS1I')"
+              @click="goHref('https://www.youtube.com/watch?v=RDu7GIKY6Ok')"
             >
               <span>{{ t('teach.research') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />
@@ -90,7 +90,7 @@
             </p>
             <div
               class="urlButton"
-              @click="goHref('https://mc-liquidityprovider.blogspot.com/')"
+              @click="goHref('https://www.youtube.com/watch?v=RDu7GIKY6Ok')"
             >
               <span>{{ t('teach.blog') }}</span>
               <img src="../../../assets/img/newIndex/vector.png" />

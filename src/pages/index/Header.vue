@@ -100,14 +100,14 @@
       </el-menu-item>
       <el-sub-menu index="4">
         <template #title>{{ t('index.plat') }}</template>
-        <el-menu-item index="4-1" @click="goPage('/Platform')">
+        <!-- <el-menu-item index="4-1" @click="goPage('/Platform')">
           {{ t('index.mobile') }}
-        </el-menu-item>
+        </el-menu-item> -->
         <el-menu-item index="4-2" @click="goPage('/Platform')">
           {{ t('index.mt5') }}
         </el-menu-item>
-        <el-menu-item index="4-3" @click="goPage('/Platform')">
-          {{ t('index.wap') }}
+        <el-menu-item index="4-3" @click="goPage('/Platform/MCLP')">
+          {{ t('index.mclp') }}
         </el-menu-item>
       </el-sub-menu>
       <el-menu-item index="5" @click="goPage('/teach')">

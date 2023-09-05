@@ -25,7 +25,7 @@
       </div>
     </div>
     <!-- 下载模块 -->
-    <!-- <div class="model_down">
+    <div class="model_down">
       <div class="down_view">
         <div class="down_text">
           {{ t('index.down_text') }}
@@ -38,7 +38,7 @@
           <img src="../../assets/img/newIndex/ewm.png" class="ewm_img"/>
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- 经验丰富的交易者 -->
     <div class="model_2">
       <div class="model_2_left">

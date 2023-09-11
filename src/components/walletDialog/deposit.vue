@@ -1,21 +1,25 @@
 <template>
-  <div class="container">
-    <div class="assetBox">
+  <div class="transferContainer">
+    <div class="currencyBox">
+      <span class="s1">{{ t('header.currency') }}</span>
       <el-popover
         :show-arrow="false"
         trigger="hover"
         :offset="10"
         popper-class="walletCoinPop"
+        :popper-style="{ width: 'auto' }"
         placement="bottom-start"
-        @show="getWalletData"
+        @show="() => getWalletData()"
       >
         <template #reference>
-          <div class="coinBox dropdown">
-            <p>
+          <div class="coinDropdown">
+            <p class="p1">
               <CoinIco :size="24" :coin="selectedCoin" class="icon" />
-              <span>{{ selectedCoin }}</span>
+              <span class="amount">
+                {{ selectedCoin }}
+              </span>
             </p>
-            <img :src="DownArrowImg" alt="" />
+            <img :src="DownArrowImg" alt="" class="downArrow" />
           </div>
         </template>
         <template #default>
@@ -23,259 +27,247 @@
             <el-scrollbar max-height="270px">
               <div
                 v-for="item in walletData"
-                :key="item.id"
+                :key="item.currency"
                 class="walletItemBox"
                 :class="{ active: item.currency === selectedCoin }"
                 @click="coinItemClick(item.currency)"
               >
-                <CoinIco class="icon" :size="24" :coin="item.currency" />
-                <span class="currency">{{ item.currency }}</span>
+                <p class="p2">
+                  <CoinIco class="icon" :size="24" :coin="item.currency" />
+                  <span class="currency">{{ item.currency }}</span>
+                </p>
               </div>
             </el-scrollbar>
           </div>
         </template>
       </el-popover>
-      <el-popover
-        v-if="selectedCoin"
-        :show-arrow="false"
-        trigger="hover"
-        :offset="10"
-        popper-class="walletCoinPop"
-        :popper-style="{ width: 'auto' }"
-        placement="bottom-start"
-      >
-        <template #reference>
-          <div class="networkBox dropdown">
-            <span>{{ selectedType }}</span>
-            <img :src="DownArrowImg" alt="" />
-          </div>
-        </template>
-        <template #default>
-          <div class="allTypeBox">
-            <div
-              v-for="item in activeTypeArray"
-              :key="item.id"
-              class="typeItemBox"
-              :class="{ active: item.assetType === selectedType }"
-              @click="selectedType = item.assetType"
-            >
-              <span class="currency">{{ item.assetType }}</span>
-            </div>
-          </div>
-        </template>
-      </el-popover>
     </div>
-    <div class="sec2">
-      <div class="title">{{ t('header.address', { coin: selectedCoin }) }}</div>
-      <div class="addressBox">
-        <span class="address">
-          {{ currentAddress }}
+    <div class="amountBox">
+      <div class="labelBox">
+        <span class="label">{{ t('header.amount') }}</span>
+        <span class="price">
+          {{ t('header.availableAmount') }}
+          {{ activeCoinBalance }}
+          {{ selectedCoin }}
         </span>
-        <div v-if="currentAddress" class="copyBox">
-          <img :src="copyImg" alt="" @click="copyAddress" />
+      </div>
+      <div class="amountInputBox">
+        <el-input
+          v-model="depositAmount"
+          class="inputAmount"
+          type="number"
+          step="0.000000001"
+          :placeholder="t('header.enterTransferAmount')"
+        ></el-input>
+      </div>
+      <div class="payInfoBox">
+        <div class="payBox itemBox">
+          <span>
+            {{ t('header.payAmount') }}
+          </span>
+          <span>{{ depositAmount }} {{ selectedCoin }}</span>
+        </div>
+        <div class="itemBox">
+          <span>
+            {{ t('header.actualArrival') }}
+          </span>
+          <span>{{ depositAmount * (orderData?.price ?? 1) }} USD</span>
         </div>
       </div>
-      <div v-if="currentAddress" class="qrBox">
-        <img class="qrImg" :src="qrcode" alt="qr code" />
-        <span>
-          {{ t('header.sendAddress', { coin: selectedCoin }) }}
-        </span>
-      </div>
+      <el-button
+        type="primary"
+        :disabled="submitDisabled"
+        :loading="submitting"
+        class="submitBtn"
+        @click="submit"
+      >
+        {{ t('header.transferToAccount') }}
+      </el-button>
     </div>
   </div>
 </template>
 <script setup>
-import CoinIco from '@/pages/Wallet/component/coinIco.vue';
 import DownArrowImg from '@/assets/img/header/down.png';
-import { useHeaderStore } from '@/store/index.js';
-import { computed, ref, onMounted } from 'vue';
-import copyImg from '@/assets/img/header/copy.png';
-import { promiseTimeout, useClipboard } from '@vueuse/core';
+import CoinIco from '@/pages/Wallet/component/coinIco.vue';
+import { computed, onMounted, ref } from 'vue';
+import { useUserStore, useWalletStore } from '@/store/index.js';
+import { userApi } from '@/api/index.js';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { useQRCode } from '@vueuse/integrations/useQRCode';
-const headerStore = useHeaderStore();
-const { t } = useI18n();
-const walletData = computed(() => headerStore.walletData);
-const addressData = computed(() => headerStore.addressData);
-const getWalletDataLoading = ref(false);
+const emit = defineEmits(['hide']);
 const selectedCoin = ref('');
-const selectedType = ref('');
-const activeTypeArray = computed(() => {
-  if (selectedCoin.value) {
-    const target = addressData.value.find(
-      (item) => item.assetCoin === selectedCoin.value
-    );
-    return target?.children ?? [];
-  } else {
-    return [];
-  }
-});
-const currentAddress = computed(() => {
-  if (selectedType.value) {
-    const target = activeTypeArray.value.find(
-      (item) => item.assetType === selectedType.value
-    );
-    return target?.address ?? '';
-  } else {
-    return '';
-  }
-});
-const qrcode = useQRCode(currentAddress, { margin: 0 });
-
+const { t } = useI18n();
+const walletStore = useWalletStore();
+const userStore = useUserStore();
+const walletData = computed(() => walletStore.withdrawCoinList);
+const getWalletDataLoading = ref(false);
+const depositAmount = ref('');
+const orderData = ref({});
+const submitting = ref(false);
+const submitDisabled = computed(() => depositAmount.value <= 0);
+// 可用余额
+const activeCoinBalance = computed(
+  () =>
+    walletStore.coinBalance.find((item) => item.currency === selectedCoin.value)
+      ?.amount ?? 0
+);
 const getWalletData = async () => {
   getWalletDataLoading.value = true;
-  await headerStore.getWalletData();
+  await walletStore.getWithdrawList();
   getWalletDataLoading.value = false;
 };
-
+const createOrderBefore = async (coin) => {
+  const res = await userApi.depositBefore({
+    vaultId: userStore.userInfo.fb,
+    platName: 'LP',
+    assetCoin: coin,
+    symbolName: coin + 'USDT',
+  });
+  if (res.data.status === 0) {
+    orderData.value = res.data.data;
+  }
+};
 const coinItemClick = async (coin) => {
   if (coin !== selectedCoin.value) {
     selectedCoin.value = coin;
-    await promiseTimeout(50);
-    selectedType.value = activeTypeArray.value[0]?.assetType;
+    await createOrderBefore(coin);
   }
 };
-const { isSupported, copy } = useClipboard({
-  source: currentAddress,
-  legacy: true,
-});
-const copyAddress = () => {
-  if (isSupported) {
-    copy?.();
-    ElMessage.success(t?.('common.copySuccess'));
-  } else {
-    ElMessage.error(t?.('header.notSupport'));
+const submit = async () => {
+  if (depositAmount.value > activeCoinBalance.value) {
+    ElMessage.error(t?.('common.insufficientBalance'));
+    return;
   }
+  const params = {
+    id: orderData.value.id,
+    amount: depositAmount.value,
+  };
+  submitting.value = true;
+  const res = await userApi.confirmDeposit(params);
+  if (res.data.status === 0) {
+    ElMessage.success(t?.('common.success'));
+    await walletStore.getBalance({ forceFresh: true });
+    emit('hide');
+  }
+  submitting.value = false;
 };
 onMounted(() => {
-  headerStore.getAddressData().then();
+  walletStore.getBalance();
 });
 </script>
 <style scoped lang="less">
-.container {
-  --el-popover-padding: 0;
-  .assetBox {
+.transferContainer {
+  padding: 0 30px;
+  box-sizing: border-box;
+  .currencyBox {
+    width: 300px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
-    .dropdown {
-      width: 155px;
+    align-items: center;
+    .s1 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #666666;
+    }
+    .coinDropdown {
+      margin-left: 20px;
+      //width: 270px;
+      flex: 1;
       height: 52px;
-      min-width: 150px;
       background-color: #f6f6f6;
       border-radius: 8px;
       border: solid 1px #eeeeee;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
       box-sizing: border-box;
-      padding: 0 15px;
       cursor: pointer;
-      &.coinBox {
-        margin-right: 35px;
-      }
-      &.networkBox {
-        width: 330px;
-      }
-      p {
+      .p1 {
         display: flex;
         align-items: center;
-        margin: 0;
-        span {
-          margin-left: 10px;
+        .amount {
+          margin-left: 15px;
+          font-size: 20px;
+          //font-weight: bold;
+          color: #666666;
         }
       }
-      span {
-        font-size: 20px;
-        //font-weight: bold;
-        color: #666666;
-        margin-right: 10px;
+
+      .downArrow {
+        width: 24px;
       }
     }
   }
-  .sec2 {
-    width: 100%;
-    padding: 0 30px;
-    margin-top: 30px;
-    box-sizing: border-box;
-    .title {
-      font-size: 16px;
-      color: #333333;
-    }
-    .addressBox {
-      width: 100%;
-      height: 52px;
-      background-color: #f6f6f6;
-      border-radius: 8px;
-      border: solid 1px #eeeeee;
+  .amountBox {
+    margin-top: 20px;
+    .labelBox {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 0 15px;
-      box-sizing: border-box;
-      margin-top: 5px;
-      .address {
-        font-size: 16px;
-        color: #333333;
-      }
-      .copyBox {
-        width: 42px;
-        height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        border-left: 2px solid #333333;
-        img {
-          cursor: pointer;
-        }
+      font-size: 16px;
+      font-weight: bold;
+      color: #666666;
+    }
+    .amountInputBox {
+      margin-top: 10px;
+      .inputAmount {
+        height: 52px;
+        background-color: #f6f6f6;
+        border-radius: 8px;
+        border: solid 1px #eeeeee;
+        font-size: 20px;
       }
     }
-    .qrBox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      margin-top: 30px;
-      .qrImg {
-        width: 240px;
+    .payInfoBox {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #666666;
+      .itemBox {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
       }
-      span {
-        font-size: 16px;
-        color: #333333;
-        margin-top: 30px;
-      }
+    }
+    .submitBtn {
+      width: 100%;
+      height: 52px;
+      background-color: #0c3d93;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 20px;
     }
   }
 }
-.allCoinBox,
-.allTypeBox {
-  .walletItemBox,
-  .typeItemBox {
-    //width: 146px;
+.allCoinBox {
+  .walletItemBox {
+    //width: 270px;
     height: 48px;
+    padding: 0 15px;
     display: flex;
-    //justify-content: center;
+    justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    .amount {
+      margin-right: 15px;
+    }
+    .p2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .icon {
+        margin-right: 5px;
+      }
+    }
+    span {
+      font-size: 20px;
+      //font-weight: bold;
+      color: #666666;
+    }
     &:hover,
     &.active {
       background-color: #eef2f7;
     }
-    .icon {
-      margin-left: 15px;
-    }
-    .currency {
-      font-size: 20px;
-      //font-weight: bold;
-      color: #666666;
-      margin-left: 15px;
-    }
   }
-}
-</style>
-<style lang="less">
-.walletCoinPop {
-  --el-popover-border-radius: 8px;
-  --el-popover-padding: 0;
 }
 </style>

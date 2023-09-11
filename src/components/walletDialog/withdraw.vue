@@ -1,378 +1,303 @@
 <template>
   <div class="withdrawContainer">
-    <div v-if="step === 1" class="step1">
-      <div class="currencyBox">
-        <span class="s1">{{ t('header.currency') }}</span>
-        <el-popover
-          :show-arrow="false"
-          trigger="hover"
-          :offset="10"
-          popper-class="walletCoinPop"
-          :popper-style="{ width: 'auto' }"
-          placement="bottom-start"
-          @show="() => getWalletData()"
-        >
-          <template #reference>
-            <div class="coinDropdown">
-              <p class="p1">
-                <span class="amount">
-                  {{ selectedCoin?.available?.toFixed(8) }}
-                </span>
-                <CoinIco
-                  :size="24"
-                  :coin="selectedCoin.currency"
-                  class="icon"
-                />
-              </p>
-              <img :src="DownArrowImg" alt="" class="downArrow" />
-            </div>
-          </template>
-          <template #default>
-            <div v-loading="getWalletDataLoading" class="allCoinBox">
-              <el-scrollbar max-height="270px">
-                <div
-                  v-for="item in walletData"
-                  :key="item.id"
-                  class="walletItemBox"
-                  :class="{ active: item.currency === selectedCoin }"
-                  @click="coinItemClick(item)"
-                >
-                  <span class="amount">{{ item.available?.toFixed(8) }}</span>
-                  <p class="p2">
-                    <CoinIco class="icon" :size="24" :coin="item.currency" />
-                    <span class="currency">{{ item.currency }}</span>
-                  </p>
-                </div>
-              </el-scrollbar>
-            </div>
-          </template>
-        </el-popover>
-      </div>
-      <div class="chainBox">
-        <p class="p3">
-          <CoinIco :size="16" :coin="selectedCoin.currency" />
-          {{ t('header.receiptAddress', { coin: selectedCoin.currency }) }}
-        </p>
-        <div class="selectBox">
-          <span class="s2">{{ t('header.selectChain') }}</span>
-          <el-popover
-            v-if="selectedCoin"
-            :show-arrow="false"
-            trigger="hover"
-            :offset="10"
-            popper-class="walletCoinPop"
-            :popper-style="{ width: 'auto' }"
-            placement="bottom-start"
-          >
-            <template #reference>
-              <div class="typeDropdown">
-                <span>{{ selectedType }}</span>
-                <img :src="DownArrowImg" alt="" />
-              </div>
-            </template>
-            <template #default>
-              <div class="allTypeBox">
-                <div
-                  v-for="item in activeTypeArray"
-                  :key="item.id"
-                  class="typeItemBox"
-                  :class="{ active: item.assetType === selectedType }"
-                  @click="selectedType = item.assetType"
-                >
-                  <span class="currency">{{ item.assetType }}</span>
-                </div>
-              </div>
-            </template>
-          </el-popover>
-        </div>
-        <el-input
-          v-model="withdrawAddress"
-          class="inputAddress"
-          placeholder="Receipt Address"
-        />
-        <div class="amountBox">
-          <div class="labelBox">
-            <span class="label">{{ t('header.amount') }}</span>
-            <span class="price">{{ selectedCoin?.available }}</span>
+    <div class="currencyBox">
+      <span class="s1">{{ t('header.currency') }}</span>
+      <el-popover
+        :show-arrow="false"
+        trigger="hover"
+        :offset="10"
+        popper-class="walletCoinPop"
+        :popper-style="{ width: 'auto' }"
+        placement="bottom-start"
+        @show="() => getWalletData()"
+      >
+        <template #reference>
+          <div class="coinDropdown">
+            <p class="p1">
+              <CoinIco :size="24" :coin="selectedCoin" class="icon" />
+              <span class="amount">
+                {{ selectedCoin }}
+              </span>
+            </p>
+            <img :src="DownArrowImg" alt="" class="downArrow" />
           </div>
-          <div class="amountInputBox">
-            <el-input
-              v-model="withdrawAmount"
-              class="inputAmount"
-              type="number"
-              step="0.000000001"
-              placeholder="Withdraw Amount"
-            >
-              <template #suffix>
-                <CoinIco :size="24" :coin="selectedCoin.currency" />
-              </template>
-              <template #append>
-                <div
-                  class="max"
-                  @click="withdrawAmount = selectedCoin?.available"
-                >
-                  {{ t('header.max') }}
-                </div>
-              </template>
-            </el-input>
+        </template>
+        <template #default>
+          <div v-loading="getWalletDataLoading" class="allCoinBox">
+            <el-scrollbar max-height="270px">
+              <div
+                v-for="item in walletData"
+                :key="item.currency"
+                class="walletItemBox"
+                :class="{ active: item.currency === selectedCoin }"
+                @click="coinItemClick(item.currency)"
+              >
+                <p class="p2">
+                  <CoinIco class="icon" :size="24" :coin="item.currency" />
+                  <span class="currency">{{ item.currency }}</span>
+                </p>
+              </div>
+            </el-scrollbar>
           </div>
-        </div>
-        <el-button type="primary" class="submitBtn" @click="submit">
-          {{ t('header.withdraw') }}
-        </el-button>
-        <div class="tips">
-          {{ t('header.minWithdraw') }} 0.00020000
-          <CoinIco :size="16" :coin="selectedCoin.currency" />
-          .
-          {{
-            t('header.withdrawFee', {
-              coin: selectedCoin.currency,
-              fee: '0.00007',
-            })
-          }}
-        </div>
-      </div>
+        </template>
+      </el-popover>
     </div>
-    <div v-if="step === 2" class="step2">
-      <div class="label">{{ t('header.enterWithdrawPass') }}</div>
+    <div class="amountBox">
+      <div class="labelBox">
+        <span>{{ t('header.withdrawAmount') }}</span>
+        <span>{{ t('header.availableWithdrawAmount') }} {{ balance }}</span>
+      </div>
       <el-input
-        v-model="password"
-        class="inputPass"
-        placeholder="password"
-        type="password"
-        show-password
-      />
-      <el-button type="primary" class="submitBtn" @click="enterPass">
-        {{ t('common.submit') }}
+        v-model="withdrawAmount"
+        type="number"
+        class="inputAmount"
+      ></el-input>
+      <div class="infoBox">
+        <!-- <div class="itemBox">
+          <span>{{ t('header.payAmount') }}</span>
+          <span>230</span>
+        </div> -->
+        <div class="itemBox">
+          <span>{{ t('header.actualArrival') }}</span>
+          <span>{{ transferAmount }} {{ selectedCoin }}</span>
+        </div>
+      </div>
+      <el-button
+        :disabled="confirmDisabled"
+        type="primary"
+        :loading="submitting"
+        class="submitBtn"
+        @click="beforeSubmit"
+      >
+        {{ t('wallet.confirmPay') }}
       </el-button>
-      <div class="back" @click="back">{{ t('uc.back') }}</div>
     </div>
+
+    <PayPassDialog ref="payPassDialogRef" @next="beforeSubmit" />
   </div>
 </template>
 <script setup>
-import DownArrowImg from '@/assets/img/header/down.png';
-import { computed, ref } from 'vue';
-import { useHeaderStore } from '@/store/index.js';
+import { computed, onMounted, ref, watch } from 'vue';
 import CoinIco from '@/pages/Wallet/component/coinIco.vue';
-import { promiseTimeout } from '@vueuse/core';
-import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
+import { useUserStore, useWalletStore, useSocketStore } from '@/store/index.js';
+import NP from 'number-precision';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import { userApi } from '@/api';
+import PayPassDialog from '@/components/common/payPassDialog.vue';
+
 const emit = defineEmits(['hide']);
 const { t } = useI18n();
-const headerStore = useHeaderStore();
-const walletData = computed(() => headerStore.walletData);
-const addressData = computed(() => headerStore.addressData);
+const socketStore = useSocketStore();
+const userStore = useUserStore();
+const walletStore = useWalletStore();
+const userInfo = computed(() => userStore.userInfo);
+const balance = computed(() => socketStore.balance);
+const walletData = computed(() => walletStore.rechargeList);
+const payPassDialogRef = ref(null);
+const userAssetsArr = computed(() => userStore.userAssetsArr);
+const beforeOrderLoading = ref(false);
+const submitting = ref(false);
+const formData = ref({
+  method: 0,
+  currency: '',
+  assetType: '',
+  amount: '',
+  externalAddress: '',
+});
+const currencyPrice = ref(0);
+const orderId = ref();
 const getWalletDataLoading = ref(false);
-const selectedCoin = ref({});
-const selectedType = ref('');
-const withdrawAddress = ref('');
+const selectedCoin = ref('');
 const withdrawAmount = ref('');
-const password = ref('');
-const step = ref(1);
-const activeTypeArray = computed(() => {
-  if (selectedCoin.value.currency) {
-    const target = addressData.value.find(
-      (item) => item.assetCoin === selectedCoin.value.currency
-    );
-    return target?.children ?? [];
+const transferAmount = computed(() => {
+  if (!currencyPrice.value || isNaN(currencyPrice.value)) {
+    return 0;
   } else {
-    return [];
+    return NP.round(NP.divide(withdrawAmount.value, currencyPrice.value), 6);
   }
 });
-const getWalletData = async (forceFresh = false) => {
+
+const confirmDisabled = computed(() => {
+  return !selectedCoin.value || !transferAmount.value;
+});
+
+const getWalletData = async () => {
   getWalletDataLoading.value = true;
-  await headerStore.getWalletData({ forceFresh });
+  await walletStore.getRechargeList();
   getWalletDataLoading.value = false;
 };
 const coinItemClick = async (coin) => {
   if (coin !== selectedCoin.value) {
     selectedCoin.value = coin;
-    await promiseTimeout(50);
-    selectedType.value = activeTypeArray.value[0]?.assetType;
   }
 };
-const submit = async () => {
-  if (selectedType.value && withdrawAddress.value && withdrawAmount.value) {
-    const params = {
-      platName: 'LP',
-      amount: withdrawAmount.value,
-      externalAddress: withdrawAddress.value,
-      withdrawChannel: 1,
-      assetCoin: selectedCoin.value?.currency,
-      assetType: selectedType.value,
-    };
-    const res = await userApi.walletWithdraw(params);
-    if (!res.data.status) {
-      ElMessage.success(t('common.operateSuccess'));
-      await getWalletData(true);
-      emit('hide');
-    } else {
-      ElMessage.error(res.data.message || t('common.operateFailed'));
-    }
+const passCheck = () => {
+  ElMessageBox.prompt(t('header.inputPayPass'), '', {
+    confirmButtonText: t('common.confirm'),
+    cancelButtonText: t('common.cancel'),
+    inputType: 'password',
+    inputPattern: /^.+$/,
+    inputErrorMessage: 'Required',
+    beforeClose: (action, instance, done) => {
+      if (action === 'confirm') {
+        console.log(action, instance, done);
+        instance.confirmButtonLoading = true;
+        userApi
+          .verifyPayPass({
+            payPassword: instance.inputValue,
+          })
+          .then((res) => {
+            if (res.data.status === 0) {
+              confirmOut();
+            }
+          })
+          .finally(() => {
+            instance.confirmButtonLoading = false;
+            done();
+          });
+      } else {
+        done();
+      }
+    },
+  });
+};
+const beforeSubmit = () => {
+  if (userInfo.value.paypassword) {
+    passCheck();
   } else {
-    ElMessage.error(t('wallet.amountOrAddressWrong'));
+    ElMessage.info(t('header.setPayPassFirst'));
+    payPassDialogRef.value.show();
   }
 };
-const enterPass = () => {
-  console.log(password.value);
+
+const confirmOut = async () => {
+  const params = {
+    id: orderId.value,
+    amount: transferAmount.value,
+    withdrawChannel: 0,
+  };
+  submitting.value = true;
+  const res = await userApi.withdrawConfirm(params);
+  submitting.value = false;
+  if (res.data.status === 0) {
+    ElMessage.success(t?.('common.success'));
+    emit('hide');
+  }
 };
-const back = () => {
-  step.value = 1;
-};
+
+watch(selectedCoin, async (nv) => {
+  if (nv) {
+    if (formData.value.method === 0) {
+      const currentCoin = userAssetsArr.value.find(
+        (item) => item.assetCoin === formData.value.currency
+      );
+      const currentType = currentCoin?.children.find(
+        (item) => item.assetType === formData.value.assetType
+      );
+      formData.value.externalAddress = currentType?.address ?? '';
+    }
+    beforeOrderLoading.value = true;
+    const res = await userApi.withdrawBefore({
+      vaultId: userStore.userInfo.fb,
+      platName: 'LP',
+      assetCoin: nv,
+      assetType: 'TRON',
+      withdrawChannel: 1,
+      symbolName: nv + 'USDT',
+    });
+    beforeOrderLoading.value = false;
+    if (res.data.status === 0) {
+      currencyPrice.value = res.data.data.price;
+      orderId.value = res.data.data.id;
+    }
+  }
+});
+onMounted(() => {
+  // walletStore.getRechargeList();
+});
 </script>
 <style scoped lang="less">
 .withdrawContainer {
   padding: 0 30px;
   box-sizing: border-box;
-  .step1 {
-    .currencyBox {
-      width: 300px;
-      margin: 0 auto;
-      .s1 {
-        font-size: 16px;
-        font-weight: bold;
-        color: #666666;
-      }
-      .coinDropdown {
-        margin-top: 10px;
-        width: 270px;
-        height: 52px;
-        background-color: #f6f6f6;
-        border-radius: 8px;
-        border: solid 1px #eeeeee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        box-sizing: border-box;
-        cursor: pointer;
-        .p1 {
-          display: flex;
-          align-items: center;
-          .amount {
-            margin-right: 5px;
-            font-size: 20px;
-            //font-weight: bold;
-            color: #666666;
-          }
-        }
-
-        .downArrow {
-          width: 24px;
-        }
-      }
-    }
-    .chainBox {
-      margin-top: 30px;
-      .p3 {
-        font-size: 16px;
-        font-weight: bold;
-        color: #666666;
-      }
-      .selectBox {
-        display: flex;
-        align-items: center;
-        margin-top: 10px;
-        .s2 {
-          font-size: 16px;
-          font-weight: bold;
-          color: #666666;
-        }
-        .typeDropdown {
-          margin-left: 20px;
-          padding: 0 15px;
-          height: 52px;
-          background-color: #f6f6f6;
-          border-radius: 8px;
-          border: solid 1px #eeeeee;
-          box-sizing: border-box;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          cursor: pointer;
-          font-size: 20px;
-          //font-weight: bold;
-          color: #666666;
-          img {
-            margin-left: 15px;
-          }
-        }
-      }
-      .inputAddress {
-        height: 52px;
-        background-color: #f6f6f6;
-        border-radius: 8px;
-        border: solid 1px #eeeeee;
-        font-size: 20px;
-        margin-top: 10px;
-      }
-      .amountBox {
-        margin-top: 20px;
-        .labelBox {
-          display: flex;
-          justify-content: space-between;
-          font-size: 16px;
-          font-weight: bold;
-          color: #666666;
-        }
-        .amountInputBox {
-          margin-top: 10px;
-          .inputAmount {
-            height: 52px;
-            background-color: #f6f6f6;
-            border-radius: 8px;
-            border: solid 1px #eeeeee;
-            font-size: 20px;
-            .max {
-              cursor: pointer;
-            }
-          }
-        }
-      }
-      .submitBtn {
-        width: 100%;
-        height: 52px;
-        background-color: #0c3d93;
-        border-radius: 8px;
-        font-size: 20px;
-        margin-top: 20px;
-      }
-      .tips {
-        margin-top: 15px;
-        font-size: 16px;
-        color: #666666;
-        word-break: break-word;
-        line-height: 20px;
-      }
-    }
-  }
-  .step2 {
-    .label {
+  .currencyBox {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    .s1 {
       font-size: 16px;
       font-weight: bold;
       color: #666666;
     }
-    .inputPass {
-      margin-top: 15px;
+    .coinDropdown {
+      margin-left: 20px;
+      //width: 270px;
+      flex: 1;
+      height: 52px;
+      background-color: #f6f6f6;
+      border-radius: 8px;
+      border: solid 1px #eeeeee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+      cursor: pointer;
+      .p1 {
+        display: flex;
+        align-items: center;
+        .amount {
+          margin-left: 15px;
+          font-size: 20px;
+          //font-weight: bold;
+          color: #666666;
+        }
+      }
+
+      .downArrow {
+        width: 24px;
+      }
+    }
+  }
+  .amountBox {
+    margin-top: 20px;
+    .labelBox {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: bold;
+      color: #666666;
+      margin-bottom: 10px;
+    }
+    .inputAmount {
       height: 52px;
       background-color: #f6f6f6;
       border-radius: 8px;
       border: solid 1px #eeeeee;
       font-size: 20px;
     }
+    .infoBox {
+      font-size: 16px;
+      font-weight: bold;
+      color: #666666;
+      margin-top: 20px;
+      .itemBox {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
     .submitBtn {
+      margin: 30px 0;
       width: 100%;
       height: 52px;
       background-color: #0c3d93;
       border-radius: 8px;
-      margin: 20px 0;
+      font-family: MicrosoftYaHei;
       font-size: 20px;
-    }
-    .back {
-      font-size: 16px;
-      color: #333333;
-      cursor: pointer;
+      color: #ffffff;
     }
   }
 }
@@ -407,26 +332,12 @@ const back = () => {
     }
   }
 }
-
-.allTypeBox {
-  .typeItemBox {
-    height: 48px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    &:hover,
-    &.active {
-      background-color: #eef2f7;
-    }
-    .icon {
-      margin-left: 15px;
-    }
-    .currency {
-      font-size: 20px;
-      //font-weight: bold;
-      color: #666666;
-      margin-left: 15px;
-    }
+</style>
+<style lang="less">
+.withdrawContainer {
+  --el-dialog-padding-primary: 0;
+  .el-form--default.el-form--label-top .el-form-item .el-form-item__label {
+    margin-bottom: 2px;
   }
 }
 </style>

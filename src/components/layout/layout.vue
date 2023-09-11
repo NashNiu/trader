@@ -59,13 +59,13 @@ const contentHeight = useStorage(configConst.LCH, '400px');
 const startY = ref(0);
 const shadowRef = ref();
 const showShadow = ref(false);
-const createWallet = async () => {
-  const res = await createUserWallet();
-  if (res?.data?.status === 0) {
-    userStore.setUserInfo({});
-    await checkToken();
-  }
-};
+// const createWallet = async () => {
+//   const res = await createUserWallet();
+//   if (res?.data?.status === 0) {
+//     userStore.setUserInfo({});
+//     await checkToken();
+//   }
+// };
 const showChart = computed(
   () =>
     !router.currentRoute.value.meta.hideChart && commonStore.chartDataAvailable
@@ -79,9 +79,9 @@ const checkToken = async () => {
   } else {
     // 如果userStore 中有用户信息，往下走
     if (userStore.userInfo.status) {
-      if (!userStore.userInfo.fb) {
-        await createWallet();
-      }
+      // if (!userStore.userInfo.fb) {
+      //   await createWallet();
+      // }
       if (!socketStore.socket) {
         socketStore.initSocket();
       }
@@ -111,9 +111,9 @@ const checkToken = async () => {
             });
           }
         }
-        if (!res.data.data.fb) {
-          await createWallet();
-        }
+        // if (!res.data.data.fb) {
+        //   await createWallet();
+        // }
         if (!socketStore.socket) {
           socketStore.initSocket();
         }

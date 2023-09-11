@@ -23,7 +23,7 @@ export default defineStore('header', {
       if (this.addressData.length) return;
       const userStore = useUserStore();
       const res = await userApi.getWalletInfo(userStore.userInfo?.fb);
-      if (res.data.status === 0) {
+      if (res?.data?.status === 0) {
         this.addressData = res.data.data.reduce((pre, cur) => {
           const target = pre.find((item) => item.assetCoin === cur.assetCoin);
           if (target) {

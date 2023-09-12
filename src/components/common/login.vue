@@ -259,7 +259,7 @@ const timsGO = () => {
 const getCode = () => {
   if (registerFrom.email || forgotFrom.email) {
     isSend.value = true;
-    getCodeInterface(forgotFrom.email).then((res) => {
+    getCodeInterface(forgotFrom.email || registerFrom.email).then((res) => {
       if (res.status === 200) {
         ElMessage({
           message: t('login.codeSuccess'),

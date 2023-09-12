@@ -12,16 +12,16 @@
         <div class="model_1_button">
           <div class="button_style button_1" @click="goTrade">
             <span>{{ t('index.model_1_button_1') }}</span>
-            <img src="../../assets/img/newIndex/model/arrow_1.png">
+            <img src="../../assets/img/newIndex/model/arrow_1.png" />
           </div>
           <div class="button_style button_2" @click="goTrade">
             <span>{{ t('index.model_1_button_2') }}</span>
-            <img src="../../assets/img/newIndex/model/arrow_2.png">
+            <img src="../../assets/img/newIndex/model/arrow_2.png" />
           </div>
         </div>
       </div>
       <div class="model_1_right">
-        <img src="../../assets/img/newIndex/model/model_1.png">
+        <img src="../../assets/img/newIndex/model/model_1.png" />
       </div>
     </div>
     <!-- 下载模块 -->
@@ -35,7 +35,7 @@
             <img :src="androidSrc" alt="Andriod" />
             <img :src="iosSrc" alt="IOS" />
           </div>
-          <img src="../../assets/img/newIndex/ewm.png" class="ewm_img"/>
+          <img src="../../assets/img/newIndex/ewm.png" class="ewm_img" />
         </div>
       </div>
     </div>
@@ -150,7 +150,7 @@
         <div class="model_6_title">{{ t('index.model_6.model_6_title') }}</div>
         <div class="model_6_p">{{ t('index.model_6.model_6_p') }}</div>
         <div v-for="item in 4" :key="item" class="model_6_list">
-          {{ t(`index.model_6.model_6_list[${item-1}]`) }}
+          {{ t(`index.model_6.model_6_list[${item - 1}]`) }}
         </div>
       </div>
     </div>
@@ -160,35 +160,23 @@
         {{ t('index.model_7') }}
       </div>
       <div class="model_7_table">
-        <el-table
-          :data="tableData"
-          style="width: 1200px; margin:0 auto;">
-          <el-table-column
-            prop="name"
-            label="Name"
-          >
-          </el-table-column>
-          <el-table-column
-            label="Sell"
-          >
+        <el-table :data="tableData" style="width: 1200px; margin: 0 auto">
+          <el-table-column prop="name" label="Name"></el-table-column>
+          <el-table-column label="Sell">
             <template #default="scope">
               <span :class="`${scope.row.changeColor} bold`">
                 {{ scope.row.sell }}
               </span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="Buy"
-          >
+          <el-table-column label="Buy">
             <template #default="scope">
               <span :class="`${scope.row.changeColor} bold`">
                 {{ scope.row.buy }}
               </span>
             </template>
           </el-table-column>
-          <el-table-column
-            label="Change"
-          >
+          <el-table-column label="Change">
             <template #default="scope">
               <span :class="`${scope.row.changeColor} bold`">
                 {{ scope.row.change }}
@@ -218,11 +206,11 @@
         <div class="model_1_button">
           <div class="button_style button_1" @click="goTrade">
             <span>{{ t('index.model_1_button_1') }}</span>
-            <img src="../../assets/img/newIndex/model/arrow_1.png">
+            <img src="../../assets/img/newIndex/model/arrow_1.png" />
           </div>
           <div class="button_style button_2" @click="goTrade">
             <span>{{ t('index.model_1_button_2') }}</span>
-            <img src="../../assets/img/newIndex/model/arrow_2.png">
+            <img src="../../assets/img/newIndex/model/arrow_2.png" />
           </div>
         </div>
         <div class="down_img">
@@ -230,7 +218,7 @@
             <img :src="androidSrc" alt="Andriod" />
             <img :src="iosSrc" alt="IOS" />
           </div>
-          <img src="../../assets/img/newIndex/ewm.png" class="ewm_img"/>
+          <img src="../../assets/img/newIndex/ewm.png" class="ewm_img" />
         </div>
       </div>
     </div>
@@ -241,7 +229,11 @@ import androidImg from '@/assets/img/newIndex/Andriod.png';
 import androidImgEn from '@/assets/img/newIndex/Andriod_en.png';
 import iosImg from '@/assets/img/newIndex/IOS.png';
 import iosImgEn from '@/assets/img/newIndex/IOS_en.png';
-import { useHeaderStore, useTradeStore, useSocketStore } from '@/store/index.js';
+import {
+  useHeaderStore,
+  useTradeStore,
+  useSocketStore,
+} from '@/store/index.js';
 import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 const tradeStore = useTradeStore();
@@ -301,12 +293,13 @@ const goTrade = () => {
 }
 .model_1 {
   display: flex;
-  .model_1_left,.model_1_right {
+  .model_1_left,
+  .model_1_right {
     flex: 1;
     padding: 96px 0 21px;
   }
   .model_1_left {
-    background-color: #F1F4F6;
+    background-color: #f1f4f6;
     text-align: right;
     padding-right: 39px;
     .model_1_title {
@@ -331,46 +324,46 @@ const goTrade = () => {
     }
   }
   .model_1_right {
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
   }
 }
 .model_1_button {
-      width: 601px;
-      display: inline-block;
-      text-align: left;
-    }
-    .button_style {
-      display: inline-block;
-      height: 50px;
-      border-radius: 5px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 26px;
-      letter-spacing: 0em;
-      line-height: 50px;
-      text-align: left;
-      padding: 0 15px;
-      cursor: pointer;
-      span {
-        margin-right: 12px;
-        vertical-align: middle;
-      }
-      img {
-        vertical-align: middle;
-      }
-    }
-    .button_1 {
-      border: 1px solid #2963A4;
-      color: #2963A4;
-      margin-right: 15px;
-    }
-    .button_2 {
-      background-color: #2963A4;
-      color: #fff;
-    }
+  width: 601px;
+  display: inline-block;
+  text-align: left;
+}
+.button_style {
+  display: inline-block;
+  height: 50px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: 0em;
+  line-height: 50px;
+  text-align: left;
+  padding: 0 15px;
+  cursor: pointer;
+  span {
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+  img {
+    vertical-align: middle;
+  }
+}
+.button_1 {
+  border: 1px solid #2963a4;
+  color: #2963a4;
+  margin-right: 15px;
+}
+.button_2 {
+  background-color: #2963a4;
+  color: #fff;
+}
 .model_down {
-  background-color: #EDECEC;
+  background-color: #edecec;
   .down_view {
     width: 1240px;
     margin: 0 auto;
@@ -384,7 +377,7 @@ const goTrade = () => {
       line-height: 26px;
       letter-spacing: 0em;
       text-align: left;
-      color: #2D3436;
+      color: #2d3436;
       padding-top: 8px;
     }
   }
@@ -411,9 +404,10 @@ const goTrade = () => {
   align-items: center;
   justify-content: center;
   padding: 60px 0;
-  .model_2_left,.model_2_right {
+  .model_2_left,
+  .model_2_right {
     width: 459px;
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
     padding: 31px 57px 49px 64px;
   }
   .model_2_left {
@@ -442,13 +436,13 @@ const goTrade = () => {
     letter-spacing: 0em;
     text-align: left;
     margin-bottom: 20px;
-    &:last-child{
+    &:last-child {
       margin-bottom: 0;
     }
   }
 }
 .model_3 {
-  background-color: #F1F4F6;
+  background-color: #f1f4f6;
   padding: 60px 0 117px;
 }
 .model_3_icon {
@@ -475,7 +469,7 @@ const goTrade = () => {
 }
 .model_5 {
   padding: 60px 0 103px;
-  background-color: #F1F4F6;
+  background-color: #f1f4f6;
   .model_5_list {
     display: flex;
     justify-content: center;
@@ -543,7 +537,7 @@ const goTrade = () => {
         content: '';
         width: 10px;
         height: 10px;
-        background-color: #2963A4;
+        background-color: #2963a4;
         display: inline-block;
         margin-right: 15px;
         border-radius: 10px;
@@ -558,15 +552,15 @@ const goTrade = () => {
   }
 }
 .model_8 {
-  background-color: #F1F4F6;
+  background-color: #f1f4f6;
   padding: 60px 0;
   display: flex;
   justify-content: center;
   .model_8_right {
     width: 630px;
     padding: 40px 36px 40px 54px;
-    background-color: #F9F9F9;
-    > h2{
+    background-color: #f9f9f9;
+    > h2 {
       font-size: 40px;
       font-weight: 600;
       line-height: 64px;
@@ -600,7 +594,6 @@ const goTrade = () => {
         line-height: 26px;
         letter-spacing: 0em;
         text-align: left;
-
       }
     }
     .model_1_button {

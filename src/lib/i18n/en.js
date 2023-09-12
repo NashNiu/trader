@@ -49,13 +49,13 @@ export default {
         name: 'name',
         phone: 'phone',
         email: 'email',
-        content2: 'content'
+        content2: 'content',
       },
       placeholder: {
         name: 'Please enter your name (required)',
         phone: 'Please enter a phone number (required)',
         email: 'Please enter an email address (required)',
-        content2: 'Please enter a description (within 500 words, not required)'
+        content2: 'Please enter a description (within 500 words, not required)',
       },
       rulesLabel: {
         type: 'Please select the question type ',
@@ -64,7 +64,7 @@ export default {
         contacts: 'Please enter your contact details',
         name: 'Please enter your name',
         phone: 'Please enter a phone number',
-        email: 'Please enter an email address'
+        email: 'Please enter an email address',
       },
       typeOption: [
         'Registration ',
@@ -77,7 +77,7 @@ export default {
         'Other',
       ],
     },
-    consult: 'Immediately consult'
+    consult: 'Immediately consult',
   },
   menu: {
     profile: 'Account',
@@ -498,23 +498,74 @@ export default {
       'Headquarters address: Sarlo 9, Ayios Athanasios, 4106 Limassol, Cyprus',
     website: 'Website',
     other: 'Information about other Magic Compass Securities MCLP affiliates',
-    model_1_title: 'Trade confidently with MC, Top-Rated CFD Liquidity Provider',
-    model_1_p: 'Acquire a user-friendly broker offering skillful trade ideas, strategies, tight spreads, fast execution, comprehensive risk safeguard services with robust risk prevention alerts, and 24/7 support for your CFD trading needs.',
+    model_1_title:
+      'Trade confidently with MC, Top-Rated CFD Liquidity Provider',
+    model_1_p:
+      'Acquire a user-friendly broker offering skillful trade ideas, strategies, tight spreads, fast execution, comprehensive risk safeguard services with robust risk prevention alerts, and 24/7 support for your CFD trading needs.',
     model_1_button_1: 'Create demo account',
     model_1_button_2: 'Create live account',
     down_text: `Embark on your trading journey today. For inquiries regarding account opening, please connect with us through our online support from 9 am to 6 pm (GMT+8) on weekdays. Alternatively, you can reach us via email at business{'@'}mcgrp.com.`,
-    model_2_left: ['For experienced trader', 'Experience competitive spreads, rapid execution, and a dedicated team of professionals available 24/7 to address your needs.', 'Choose the ideal trading platform tailored to your preferences', 'Discover competitive pricing and tight spreads', 'Enhance your trading skills with our educational support', 'Implement effective risk management strategies', 'Take advantage of weekend trading opportunities', 'Boost your earnings through our affiliate program'],
-    model_2_right: ['For newbie trader', 'Exhaustive education, continuous 1v1 assistance and a free demo account to start your trading journey.', 'Learn CFD trading A to Z', 'Trading strategies and methods', 'Discover a diverse trading tactics', 'Learn effective risk management', 'Access perceptive analysis and ideas', 'Get $10,000 Demo Funding'],
-    model_3: ['Unlock limitless financial opportunities with access to 1650+ markets across the US, Canada, Europe, and Asia', 'Trade CFDs with MC Liquidity Provider and unlock diverse market opportunities through our comprehensive investment offerings including ETFs.'],
-    model_4: ['Maximising trading success with huge equity capital protection', 'Empower Your Trading Journey: Secure Your Capital, Confidently Trade CFDs with MC Liquidity Provider, and join thousands of successful traders.', 'US$10 Billion', '1.8 Million Investors', '201 Countries'],
-    model_5: ['Why is MC Liquidity Provider？', 'Renowned and Regulated', 'Licensed by the Bermuda Monetary Authority, MC Liquidity Provider specializes in investment and digital asset business. With a reputation for trustworthiness, we attract more traders to invest their money with us than any other platform.', 'Committed to your success', 'MC Liquidity Provider prioritize client retention by fostering successful and profitable trading experiences. Stay ahead with our real-time monitoring tools designed to track market trends and alert you to potential risks, empowering you to respond quickly and effectively.', 'As a pioneer in the industry', 'Established in 2006, we have consistently remained at the forefront of our industry. Our dedication to innovation has enabled us to expand our business and serve clients across 200 countries and five continents, further solidifying our position as pioneers in the field.'],
+    model_2_left: [
+      'For experienced trader',
+      'Experience competitive spreads, rapid execution, and a dedicated team of professionals available 24/7 to address your needs.',
+      'Choose the ideal trading platform tailored to your preferences',
+      'Discover competitive pricing and tight spreads',
+      'Enhance your trading skills with our educational support',
+      'Implement effective risk management strategies',
+      'Take advantage of weekend trading opportunities',
+      'Boost your earnings through our affiliate program',
+    ],
+    model_2_right: [
+      'For newbie trader',
+      'Exhaustive education, continuous 1v1 assistance and a free demo account to start your trading journey.',
+      'Learn CFD trading A to Z',
+      'Trading strategies and methods',
+      'Discover a diverse trading tactics',
+      'Learn effective risk management',
+      'Access perceptive analysis and ideas',
+      'Get $10,000 Demo Funding',
+    ],
+    model_3: [
+      'Unlock limitless financial opportunities with access to 1650+ markets across the US, Canada, Europe, and Asia',
+      'Trade CFDs with MC Liquidity Provider and unlock diverse market opportunities through our comprehensive investment offerings including ETFs.',
+    ],
+    model_4: [
+      'Maximising trading success with huge equity capital protection',
+      'Empower Your Trading Journey: Secure Your Capital, Confidently Trade CFDs with MC Liquidity Provider, and join thousands of successful traders.',
+      'US$10 Billion',
+      '1.8 Million Investors',
+      '201 Countries',
+    ],
+    model_5: [
+      'Why is MC Liquidity Provider？',
+      'Renowned and Regulated',
+      'Licensed by the Bermuda Monetary Authority, MC Liquidity Provider specializes in investment and digital asset business. With a reputation for trustworthiness, we attract more traders to invest their money with us than any other platform.',
+      'Committed to your success',
+      'MC Liquidity Provider prioritize client retention by fostering successful and profitable trading experiences. Stay ahead with our real-time monitoring tools designed to track market trends and alert you to potential risks, empowering you to respond quickly and effectively.',
+      'As a pioneer in the industry',
+      'Established in 2006, we have consistently remained at the forefront of our industry. Our dedication to innovation has enabled us to expand our business and serve clients across 200 countries and five continents, further solidifying our position as pioneers in the field.',
+    ],
     model_6: {
       model_6_title: 'MC Born for Traders, Tailored for Traders',
-      model_6_p: 'Capture Your Opportunity, Cutting-Edge Technology Guard for Seamless Transactions.',
-      model_6_list: ['Fast and intuitive web platform', 'Acclaimed apps tailored for seamless performance on all devices', 'Advanced trading platforms and charting tools, Tradingview and MT5', 'Comprehensive range of alerts and risk management instruments']
+      model_6_p:
+        'Capture Your Opportunity, Cutting-Edge Technology Guard for Seamless Transactions.',
+      model_6_list: [
+        'Fast and intuitive web platform',
+        'Acclaimed apps tailored for seamless performance on all devices',
+        'Advanced trading platforms and charting tools, Tradingview and MT5',
+        'Comprehensive range of alerts and risk management instruments',
+      ],
     },
     model_7: 'Real-time pricing on most-welcome markets',
-    model_8: ['Real-time, in-depth analysis', 'Experience lightning-fast trades in a vast array of markets', 'Dive into a world of over 1650+ global markets, offering you flexible access and dependable execution.', 'Trade with ease, no matter where you are', 'Effortlessly conduct transactions from any location using our intuitive, award-winning mobile trading app.', 'Trust in a dependable partner for your trading journey', 'Protect your investments and enjoy 24/7 round-the-clock support from us.']
+    model_8: [
+      'Real-time, in-depth analysis',
+      'Experience lightning-fast trades in a vast array of markets',
+      'Dive into a world of over 1650+ global markets, offering you flexible access and dependable execution.',
+      'Trade with ease, no matter where you are',
+      'Effortlessly conduct transactions from any location using our intuitive, award-winning mobile trading app.',
+      'Trust in a dependable partner for your trading journey',
+      'Protect your investments and enjoy 24/7 round-the-clock support from us.',
+    ],
   },
   feature: {
     title: 'Put the World in Your Hands',
@@ -566,7 +617,7 @@ export default {
     otherProduct: 'Want to trade other products',
     findMore: 'Discover More Opportunities at MCLP',
     tools: 'Analytical Charting Tools',
-    Commodities: 'Commodities'
+    Commodities: 'Commodities',
   },
   price: {
     title: 'MC Liquidity provider new customer pricing',
@@ -597,7 +648,8 @@ export default {
       'MCLP MT5 trading platform inherits the advantages of MT4 and provides you with everything you need to trade financial markets',
     title2:
       'MT5 is easy to use and completely customized according to your trading style, with advanced environment and other functions developed by EA',
-    title3: 'he MCLP trading platform is an efficient and comprehensive multi asset trading platform designed to provide trading services in foreign exchange, stocks, futures, options, and contract for difference trading markets for investors worldwide. Our platform adopts the most advanced technology, providing real-time data transmission, flexible transaction interfaces, and comprehensive technical analysis tools to help customers quickly and accurately analyze the market and seize trading opportunities. We are committed to providing customers with a high-quality trading experience, ensuring the security and reliability of their transactions through strict risk control measures and security protection mechanisms.',
+    title3:
+      'he MCLP trading platform is an efficient and comprehensive multi asset trading platform designed to provide trading services in foreign exchange, stocks, futures, options, and contract for difference trading markets for investors worldwide. Our platform adopts the most advanced technology, providing real-time data transmission, flexible transaction interfaces, and comprehensive technical analysis tools to help customers quickly and accurately analyze the market and seize trading opportunities. We are committed to providing customers with a high-quality trading experience, ensuring the security and reliability of their transactions through strict risk control measures and security protection mechanisms.',
     tradeNow: 'Trade now',
     or: 'Or',
     tryDemo: 'Try Demo Account',
@@ -691,22 +743,22 @@ export default {
       'Comprehensive Economic Calendar',
       'DOM (Market Depth)',
       'Flexible trading methods',
-      'Quick and secure withdrawal'
-    ]
+      'Quick and secure withdrawal',
+    ],
   },
   teach: {
     teach: 'Teaching',
     learn: 'Understanding MCLP',
     learn2: 'Advantages of using MCLP',
-      // 'Learn step-by-step how to screen global stocks using the MCLP Global CFD Analyzer tool',
+    // 'Learn step-by-step how to screen global stocks using the MCLP Global CFD Analyzer tool',
     video: 'Watch the video',
-    smart: 'What is Forex?',//'Smart investors never stop learning',
+    smart: 'What is Forex?', //'Smart investors never stop learning',
     course:
       'In-depth analysis of the basic knowledge and mechanism of foreign exchange trading market',
     visit: 'Visit Traders University',
     daily: 'What is a stock',
     reviews:
-      "Understand the basic concepts and investment opportunities of the stock market",
+      'Understand the basic concepts and investment opportunities of the stock market',
     trader: "Access Trader's Wisdom",
     listen: 'What is a stock index',
     free: 'Market insight and investment reference',

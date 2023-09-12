@@ -21,21 +21,48 @@
           >
             <div class="form-item">
               <el-form-item :label="t('common.feedback.form.name')" prop="name">
-                <el-input v-model="data.form.name" :placeholder="t('common.feedback.placeholder.name')"></el-input>
+                <el-input
+                  v-model="data.form.name"
+                  :placeholder="t('common.feedback.placeholder.name')"
+                ></el-input>
               </el-form-item>
-              <el-form-item :label="t('common.feedback.form.phone')" prop="phone">
-                <el-input v-model="data.form.phone" :placeholder="t('common.feedback.placeholder.phone')"></el-input>
+              <el-form-item
+                :label="t('common.feedback.form.phone')"
+                prop="phone"
+              >
+                <el-input
+                  v-model="data.form.phone"
+                  :placeholder="t('common.feedback.placeholder.phone')"
+                ></el-input>
               </el-form-item>
-              <el-form-item :label="t('common.feedback.form.email')" prop="email">
-                <el-input v-model="data.form.email" :placeholder="t('common.feedback.placeholder.email')"></el-input>
+              <el-form-item
+                :label="t('common.feedback.form.email')"
+                prop="email"
+              >
+                <el-input
+                  v-model="data.form.email"
+                  :placeholder="t('common.feedback.placeholder.email')"
+                ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="handleSubmin" class="submin-style">{{ t('common.consult') }}</el-button>
+                <el-button
+                  type="primary"
+                  class="submin-style"
+                  @click="handleSubmin"
+                >
+                  {{ t('common.consult') }}
+                </el-button>
               </el-form-item>
             </div>
             <div class="form-item">
               <el-form-item :label="t('common.feedback.form.content2')">
-                <el-input v-model="data.form.content" :placeholder="t('common.feedback.placeholder.content2')" maxlength="500" show-word-limit type="textarea"></el-input>
+                <el-input
+                  v-model="data.form.content"
+                  :placeholder="t('common.feedback.placeholder.content2')"
+                  maxlength="500"
+                  show-word-limit
+                  type="textarea"
+                ></el-input>
               </el-form-item>
             </div>
           </el-form>
@@ -148,7 +175,7 @@ const data = reactive({
     name: '',
     phone: '',
     email: '',
-    content: ''
+    content: '',
   },
   rules: {
     name: [
@@ -178,7 +205,7 @@ const data = reactive({
         message: `${t('common.feedback.rulesLabel.content2')}`,
         trigger: 'blur',
       },
-    ]
+    ],
   },
 });
 const showDialog = () => {
@@ -201,7 +228,7 @@ const handleSubmin = () => {
           });
           // handleClose();
           form.value.resetFields();
-          data.form.content = ''
+          data.form.content = '';
         }
       });
     }
@@ -282,7 +309,7 @@ const handleAvatarSuccess = (res, file) => {
 .submin-style {
   width: 100%;
   height: 44px;
-  background-color: #2963A4;
+  background-color: #2963a4;
 }
 .form-item {
   display: inline-block;
@@ -294,13 +321,13 @@ const handleAvatarSuccess = (res, file) => {
   .el-input {
     height: 44px;
     .el-input__wrapper {
-      background-color: #F9F9F9;
+      background-color: #f9f9f9;
     }
   }
   .el-textarea {
     .el-textarea__inner {
       height: 232px;
-      background-color: #F9F9F9;
+      background-color: #f9f9f9;
     }
   }
 }

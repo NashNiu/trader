@@ -55,9 +55,7 @@
       <div class="href-list">
         <img
           src="../../assets/img/newIndex/f_icon_1.png"
-          @click="
-            goHref('https://www.youtube.com/@MCLiquidityProvider')
-          "
+          @click="goHref('https://www.youtube.com/@MCLiquidityProvider')"
         />
         <img
           src="../../assets/img/newIndex/f_icon_2.png"

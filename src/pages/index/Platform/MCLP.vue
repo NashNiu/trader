@@ -188,7 +188,7 @@ const loginOpen = () => {
 }
 .MCLP_advantage {
   padding: 60px 0;
-  background: #F1F4F6;
+  background: #f1f4f6;
   h2 {
     font-size: 40px;
     font-weight: 800;

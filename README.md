@@ -1,10 +1,10 @@
-# 祥瑞金业 线上分支
+# trader
 
 <img src="https://img.shields.io/badge/node-16.13.1-success" alt="node 16.13.1">
 
-### 装包
+### install
 `npm install`
-### 开发
+### dev
 `npm run dev`
-### 编译
+### build
 `npm run build`
